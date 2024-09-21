@@ -1,3 +1,4 @@
+import 'package:ct484_project/ui/workspace/workspace_creation_screen.dart';
 import 'package:flutter/material.dart';
 
 import './ui/screen.dart';
@@ -16,7 +17,7 @@ class ChanHub extends StatelessWidget {
       title: 'ChanHub',
       debugShowCheckedModeBanner: false,
       theme: lightTheme,
-      initialRoute: GetStartedScreen.routeName,
+      initialRoute: WorkspaceScreen.routeName,
       onGenerateRoute: (settings) {
         // Authenticated routes
         if (settings.name == GetStartedScreen.routeName) {
@@ -41,6 +42,13 @@ class ChanHub extends StatelessWidget {
         if (settings.name == WorkspaceScreen.routeName) {
           return MaterialPageRoute(
             builder: (context) => const WorkspaceScreen(),
+          );
+        }
+
+        // Create Workspace
+        if (settings.name == WorkspaceCreationScreen.routeName) {
+          return MaterialPageRoute(
+            builder: (context) => const WorkspaceCreationScreen(),
           );
         }
 
