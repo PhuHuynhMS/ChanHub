@@ -2,7 +2,7 @@ import 'package:flutter/material.dart';
 
 import '../../../models/workspace.dart';
 import '../../workspace/workspace_screen.dart';
-import '../../workspace/workspace_creation_screen.dart';
+import '../../workspace/create_workspace_screen.dart';
 import '../widget/workspace_tile.dart';
 
 class WorkSpaceDrawer extends StatefulWidget {
@@ -92,8 +92,7 @@ class _WorkSpaceDrawerState extends State<WorkSpaceDrawer> {
             children: [
               ListTile(
                 onTap: () {
-                  Navigator.pushNamed(
-                      context, WorkspaceCreationScreen.routeName);
+                  Navigator.pushNamed(context, CreateWorkspaceScreen.routeName);
                 },
                 leading: const Icon(Icons.add),
                 title: const Text('Add workspace'),

@@ -1,6 +1,6 @@
 import 'package:flutter/material.dart';
 
-import 'workspace_creation_screen.dart';
+import 'create_workspace_screen.dart';
 import 'workspace_screen.dart';
 import 'workspaces_manager.dart';
 
@@ -26,7 +26,7 @@ class WelcomeScreen extends StatelessWidget {
           ),
           ElevatedButton(
             onPressed: () {
-              Navigator.pushNamed(context, WorkspaceCreationScreen.routeName);
+              Navigator.pushNamed(context, CreateWorkspaceScreen.routeName);
             },
             style: ButtonStyle(
               elevation: const WidgetStatePropertyAll(5.0),
