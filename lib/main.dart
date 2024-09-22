@@ -1,6 +1,7 @@
 import 'package:flutter/material.dart';
 
-import './ui/screen.dart';
+import './ui/screens.dart';
+import './models/index.dart';
 import './themes/chanhub_theme.dart';
 
 void main() {
@@ -16,7 +17,7 @@ class ChanHub extends StatelessWidget {
       title: 'ChanHub',
       debugShowCheckedModeBanner: false,
       theme: lightTheme,
-      initialRoute: GetStartedScreen.routeName,
+      initialRoute: ChannelScreen.routeName,
       onGenerateRoute: (settings) {
         // Authenticated routes
         if (settings.name == GetStartedScreen.routeName) {
@@ -51,8 +52,10 @@ class ChanHub extends StatelessWidget {
 
         // Channel
         if (settings.name == ChannelScreen.routeName) {
+          final Channel channel = ChannelsManager().getById('1')!;
+
           return MaterialPageRoute(
-            builder: (context) => const ChannelScreen(),
+            builder: (context) => ChannelScreen(channel),
           );
         }
 

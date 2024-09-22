@@ -7,26 +7,32 @@ final TextTheme lightTextTheme = TextTheme(
   titleLarge: GoogleFonts.notoSans(
     fontSize: 20.0,
     fontWeight: FontWeight.w600,
+    color: ChanHubColors.onPrimary,
   ),
   titleMedium: GoogleFonts.notoSans(
     fontSize: 14.0,
     fontWeight: FontWeight.w600,
+    color: ChanHubColors.onPrimary,
   ),
   titleSmall: GoogleFonts.notoSans(
     fontSize: 12.0,
     fontWeight: FontWeight.w600,
+    color: ChanHubColors.onPrimary,
   ),
   bodyLarge: GoogleFonts.notoSans(
     fontSize: 16.0,
     fontWeight: FontWeight.w500,
+    color: ChanHubColors.onSurface,
   ),
   bodyMedium: GoogleFonts.notoSans(
     fontSize: 14.0,
     fontWeight: FontWeight.w500,
+    color: ChanHubColors.onSurface,
   ),
   bodySmall: GoogleFonts.notoSans(
     fontSize: 12.0,
     fontWeight: FontWeight.w500,
+    color: ChanHubColors.onSurface,
   ),
   displayLarge: GoogleFonts.nabla(
     fontSize: 32.0,
@@ -42,15 +48,18 @@ final TextTheme lightTextTheme = TextTheme(
   ),
   labelLarge: GoogleFonts.notoSans(
     fontSize: 16.0,
-    fontWeight: FontWeight.w400,
+    fontWeight: FontWeight.w500,
+    color: ChanHubColors.onSurface,
   ),
   labelMedium: GoogleFonts.notoSans(
     fontSize: 14.0,
-    fontWeight: FontWeight.w400,
+    fontWeight: FontWeight.w500,
+    color: ChanHubColors.onSurface,
   ),
   labelSmall: GoogleFonts.notoSans(
     fontSize: 12.0,
-    fontWeight: FontWeight.w400,
+    fontWeight: FontWeight.w500,
+    color: ChanHubColors.onSurface,
   ),
 );
 
@@ -75,10 +84,9 @@ final ThemeData lightTheme = ThemeData(
   textTheme: lightTextTheme,
 
   // Define the default color of the app.
-  appBarTheme: AppBarTheme(
+  appBarTheme: const AppBarTheme(
     foregroundColor: ChanHubColors.onPrimary,
     backgroundColor: ChanHubColors.primary,
-    titleTextStyle: lightTextTheme.titleLarge,
     centerTitle: true,
   ),
   floatingActionButtonTheme: const FloatingActionButtonThemeData(
