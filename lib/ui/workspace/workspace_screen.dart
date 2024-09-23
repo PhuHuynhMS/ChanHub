@@ -1,62 +1,59 @@
 import 'package:flutter/material.dart';
 
+import '../../common/enums.dart';
 import '../../models/user.dart';
 import '../../models/workspace.dart';
-import '../../common/constants.dart';
-import '../../common/enums.dart';
-import '../shared/widget/workspace_drawer.dart';
-import 'welcome_screen.dart';
-import '../shared/utils/string_format.dart';
-import '../channel/channel_screen.dart';
 import '../../models/channel.dart';
+import '../shared/widget/workspace_drawer.dart';
+import '../shared/utils/string_format.dart';
+import '../profile/profile_screen.dart';
+import '../channel/channel_screen.dart';
+import './welcome_screen.dart';
 
 class WorkspaceScreen extends StatelessWidget {
   static const String routeName = '/workspace';
 
-  const WorkspaceScreen({super.key});
+  WorkspaceScreen(
+    this.workspaces, {
+    super.key,
+    this.selectedWorkspace,
+  });
+
+  final List<Workspace> workspaces;
+  final Workspace? selectedWorkspace;
+
+  // TODO: User who is logged in
+  final User user = User(
+    id: '1',
+    fullName: 'John Doe',
+    userName: 'johndoe',
+    email: 'john@gmail.com',
+    avatarUrl: 'https://picsum.photos/300/300',
+  );
 
   @override
   Widget build(BuildContext context) {
-    final User? user = User(
-      id: '1',
-      fullName: 'John Doe',
-      userName: 'johndoe',
-      email: 'john@gmail.com',
-      avatarUrl: 'https://picsum.photos/300/300',
-    );
-    final List<Workspace> workspaces = [];
-    final Workspace? selectedWorkspace = null;
-    return SafeArea(
-      child: Scaffold(
-        appBar: AppBar(
-          centerTitle: false,
-          title: const Text('ChanHub'),
-          actions: [
-            GestureDetector(
-              onTap: () {
-                print('Go to profile page');
-              },
-              child: Padding(
-                padding: const EdgeInsets.all(8.0),
-                child: CircleAvatar(
-                  backgroundImage:
-                      NetworkImage(user?.avatarUrl ?? defaultUserAvatarUrl),
-                ),
-              ),
-            ),
-          ],
-        ),
-        body: buildWorkspaceBody(selectedWorkspace, context, workspaces),
-        drawer: WorkSpaceDrawer(
-          workspaces,
-          selectedWorkspace: selectedWorkspace,
-        ),
+    return Scaffold(
+      appBar: AppBar(
+        centerTitle: false,
+        title: const Text('ChanHub'),
+        actions: [
+          ProfileButton(user: user),
+        ],
+      ),
+      body: buildWorkspaceBody(selectedWorkspace, context, workspaces),
+      drawer: WorkSpaceDrawer(
+        workspaces,
+        selectedWorkspace: selectedWorkspace,
       ),
     );
   }
 
   Widget buildWorkspaceBody(
-      Workspace? workspace, BuildContext context, List<Workspace> workspaces) {
+    Workspace? workspace,
+    BuildContext context,
+    List<Workspace> workspaces,
+  ) {
     if (workspaces.isNotEmpty) {
       return Column(
         children: [
@@ -75,9 +72,43 @@ class WorkspaceScreen extends StatelessWidget {
   }
 }
 
+class ProfileButton extends StatelessWidget {
+  const ProfileButton({
+    super.key,
+    required this.user,
+  });
+
+  final User user;
+
+  void goToProfilePage(BuildContext context) {
+    Navigator.of(context).pushNamed(
+      ProfileScreen.routeName,
+      arguments: user,
+    );
+  }
+
+  @override
+  Widget build(BuildContext context) {
+    return GestureDetector(
+      onTap: () => goToProfilePage(context),
+      child: Padding(
+        padding: const EdgeInsets.only(right: 10.0),
+        child: CircleAvatar(
+          backgroundImage: NetworkImage(user.avatarUrl),
+        ),
+      ),
+    );
+  }
+}
+
 class WorkspaceHeader extends StatelessWidget {
-  const WorkspaceHeader(this.workspace, {super.key});
+  const WorkspaceHeader(
+    this.workspace, {
+    super.key,
+  });
+
   final Workspace workspace;
+
   @override
   Widget build(BuildContext context) {
     return Padding(
@@ -103,10 +134,9 @@ class WorkspaceHeader extends StatelessWidget {
               // Workspace Name
               Text(
                 truncate(workspace.name.toUpperCase(), 20),
-                style: TextStyle(
-                  color: Theme.of(context).colorScheme.primary,
-                  fontSize: Theme.of(context).textTheme.titleMedium!.fontSize,
-                ),
+                style: Theme.of(context).textTheme.titleMedium!.copyWith(
+                      color: Theme.of(context).colorScheme.primary,
+                    ),
               ),
               const SizedBox(
                 height: 10.0,
@@ -116,19 +146,19 @@ class WorkspaceHeader extends StatelessWidget {
               Row(
                 children: [
                   IconButton(
-                    iconSize: 30.0,
+                    iconSize: 25.0,
                     onPressed: () {},
                     icon: const Icon(Icons.manage_accounts),
                     color: Theme.of(context).colorScheme.primary,
                   ),
                   IconButton(
-                    iconSize: 30.0,
+                    iconSize: 25.0,
                     color: Theme.of(context).colorScheme.primary,
                     onPressed: () {},
                     icon: const Icon(Icons.person_add_alt),
                   ),
                   IconButton(
-                    iconSize: 30.0,
+                    iconSize: 25.0,
                     onPressed: () {},
                     icon: const Icon(Icons.exit_to_app),
                     color: Theme.of(context).colorScheme.error,
@@ -144,7 +174,10 @@ class WorkspaceHeader extends StatelessWidget {
 }
 
 class WorkSpaceContent extends StatelessWidget {
-  const WorkSpaceContent(this.workspace, {super.key});
+  const WorkSpaceContent(
+    this.workspace, {
+    super.key,
+  });
 
   final Workspace workspace;
 
@@ -152,12 +185,14 @@ class WorkSpaceContent extends StatelessWidget {
   Widget build(BuildContext context) {
     return ExpansionTile(
       initiallyExpanded: true,
+      collapsedIconColor: Theme.of(context).colorScheme.primary,
       shape: const Border(),
-      title: Text('Channels',
-          style: TextStyle(
-            color: Theme.of(context).colorScheme.primary,
-            fontSize: Theme.of(context).textTheme.titleMedium!.fontSize,
-          )),
+      title: Text(
+        'Channels',
+        style: Theme.of(context).textTheme.titleMedium!.copyWith(
+              color: Theme.of(context).colorScheme.primary,
+            ),
+      ),
       children: [
         // Channels
         ...(workspace.channels.map((channel) => ChannelTile(channel)).toList()),
@@ -168,10 +203,9 @@ class WorkSpaceContent extends StatelessWidget {
           leading: const Icon(Icons.add),
           title: Text(
             'Add channel',
-            style: TextStyle(
-              fontSize: Theme.of(context).textTheme.titleSmall!.fontSize,
-              color: Theme.of(context).colorScheme.primary,
-            ),
+            style: Theme.of(context).textTheme.titleSmall!.copyWith(
+                  color: Theme.of(context).colorScheme.primary,
+                ),
           ),
         )
       ],
@@ -180,13 +214,15 @@ class WorkSpaceContent extends StatelessWidget {
 }
 
 class ChannelTile extends StatelessWidget {
-  const ChannelTile(this.channel, {super.key});
+  const ChannelTile(
+    this.channel, {
+    super.key,
+  });
 
   final Channel channel;
 
   void navigateToChannel(BuildContext context, Channel channel) {
-    Navigator.pushNamed(
-      context,
+    Navigator.of(context).pushNamed(
       ChannelScreen.routeName,
       arguments: channel,
     );
@@ -201,10 +237,7 @@ class ChannelTile extends StatelessWidget {
           : const Icon(Icons.lock_outlined),
       title: Text(
         channel.name,
-        style: TextStyle(
-          color: Theme.of(context).colorScheme.onSurface,
-          fontSize: Theme.of(context).textTheme.titleSmall!.fontSize,
-        ),
+        style: Theme.of(context).textTheme.labelSmall,
       ),
     );
   }

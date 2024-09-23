@@ -1,15 +1,15 @@
 import 'package:flutter/material.dart';
 
 class WorkspaceCreationScreen extends StatelessWidget {
-  const WorkspaceCreationScreen({super.key});
-
   static const String routeName = '/workspace_creation_screen';
+
+  const WorkspaceCreationScreen({super.key});
 
   @override
   Widget build(BuildContext context) {
     return Scaffold(
       appBar: AppBar(
-        title: Text('Create workspace'),
+        title: const Text('Create workspace'),
       ),
       body: Column(
         mainAxisAlignment: MainAxisAlignment.center,
@@ -32,9 +32,9 @@ class WorkspaceCreationScreen extends StatelessWidget {
               style: Theme.of(context).textTheme.bodyLarge,
             ),
           ),
-          SizedBox(child: WorkspaceCreationForm()),
+          const SizedBox(child: WorkspaceCreationForm()),
           Container(
-            padding: EdgeInsets.all(8),
+            padding: const EdgeInsets.all(8.0),
             child: Row(
               mainAxisAlignment: MainAxisAlignment.center,
               children: [

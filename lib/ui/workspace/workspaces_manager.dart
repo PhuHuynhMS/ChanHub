@@ -78,6 +78,10 @@ class WorkspacesManager {
         channels: []),
   ];
 
+  Workspace? getDefaultWorkspace() {
+    return workspaces[0];
+  }
+
   List<Workspace> getAll() {
     return [...workspaces];
   }
@@ -98,15 +102,10 @@ class WorkspacesManager {
   }
 
   Workspace? getById(String id) {
-    return workspaces.firstWhere((w) => w.id == id,
-        orElse: () => Workspace(
-              name: '',
-              createdBy: User(
-                  id: '', fullName: '', userName: '', email: '', avatarUrl: ''),
-              createdAt: DateTime.now(),
-              id: '',
-              imageUrl: '',
-              channels: [],
-            ));
+    try {
+      return workspaces.firstWhere((w) => w.id == id);
+    } catch (e) {
+      return null;
+    }
   }
 }

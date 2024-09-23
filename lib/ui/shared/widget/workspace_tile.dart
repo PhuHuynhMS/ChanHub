@@ -1,4 +1,5 @@
 import 'package:flutter/material.dart';
+
 import '../../../models/workspace.dart';
 import '../utils/string_format.dart';
 
@@ -16,6 +17,7 @@ class WorkspaceTile extends StatelessWidget {
 
   void showWorkspaceActions(BuildContext context) {
     showModalBottomSheet(
+      // TODO: Use custom modal bottom sheet
       shape: const RoundedRectangleBorder(
         borderRadius: BorderRadius.only(
           topLeft: Radius.circular(20.0),
@@ -36,17 +38,17 @@ class WorkspaceTile extends StatelessWidget {
       child: Padding(
         padding: const EdgeInsets.all(5.0),
         child: Container(
-          width: double.infinity,
-          padding: const EdgeInsets.fromLTRB(5.0, 5.0, 0.0, 5.0),
+          padding: const EdgeInsets.all(5.0),
           alignment: Alignment.centerLeft,
           decoration: BoxDecoration(
-              borderRadius: BorderRadius.circular(15.0),
-              border: Border.all(
-                color: isSelectedWorkspace
-                    ? Theme.of(context).colorScheme.primary
-                    : Theme.of(context).colorScheme.surface,
-                width: 3.0,
-              )),
+            borderRadius: BorderRadius.circular(15.0),
+            border: isSelectedWorkspace
+                ? Border.all(
+                    color: Theme.of(context).colorScheme.primary,
+                    width: 3.0,
+                  )
+                : null,
+          ),
           child: Row(
             mainAxisAlignment: MainAxisAlignment.spaceBetween,
             children: [
@@ -68,11 +70,11 @@ class WorkspaceTile extends StatelessWidget {
                   // Workspace Name
                   Text(
                     truncate(workspace.name, 20),
-                    style: TextStyle(
-                      color: Theme.of(context).colorScheme.onSurface,
-                      fontSize:
-                          Theme.of(context).textTheme.titleSmall!.fontSize,
-                    ),
+                    style: Theme.of(context).textTheme.titleSmall!.copyWith(
+                          color: isSelectedWorkspace
+                              ? Theme.of(context).colorScheme.primary
+                              : Theme.of(context).colorScheme.onSurface,
+                        ),
                   )
                 ],
               ),
@@ -124,9 +126,9 @@ class WorkspaceActions extends StatelessWidget {
             // Workspace Name
             Text(
               workspace.name,
-              style: TextStyle(
-                  color: Theme.of(context).colorScheme.onSurface,
-                  fontSize: Theme.of(context).textTheme.titleLarge!.fontSize),
+              style: Theme.of(context).textTheme.titleMedium!.copyWith(
+                    color: Theme.of(context).colorScheme.primary,
+                  ),
             )
           ],
         ),
@@ -143,9 +145,9 @@ class WorkspaceActions extends StatelessWidget {
           leading: const Icon(Icons.person_add_alt),
           title: Text(
             'Invite',
-            style: TextStyle(
-              fontSize: Theme.of(context).textTheme.titleSmall!.fontSize,
-            ),
+            style: Theme.of(context).textTheme.titleSmall!.copyWith(
+                  color: Theme.of(context).colorScheme.primary,
+                ),
           ),
         ),
         ListTile(
@@ -157,10 +159,9 @@ class WorkspaceActions extends StatelessWidget {
           ),
           title: Text(
             'Leave',
-            style: TextStyle(
-              fontSize: Theme.of(context).textTheme.titleSmall!.fontSize,
-              color: Theme.of(context).colorScheme.error,
-            ),
+            style: Theme.of(context).textTheme.titleSmall!.copyWith(
+                  color: Theme.of(context).colorScheme.error,
+                ),
           ),
         ),
       ],

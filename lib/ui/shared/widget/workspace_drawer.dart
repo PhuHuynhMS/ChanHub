@@ -5,7 +5,7 @@ import '../../workspace/workspace_screen.dart';
 import '../../workspace/workspace_creation_screen.dart';
 import '../widget/workspace_tile.dart';
 
-class WorkSpaceDrawer extends StatefulWidget {
+class WorkSpaceDrawer extends StatelessWidget {
   const WorkSpaceDrawer(
     this.workspaces, {
     super.key,
@@ -15,32 +15,23 @@ class WorkSpaceDrawer extends StatefulWidget {
   final List<Workspace> workspaces;
   final Workspace? selectedWorkspace;
 
-  @override
-  State<WorkSpaceDrawer> createState() => _WorkSpaceDrawerState();
-}
+  void changeWorkspace(BuildContext context, Workspace workspace) {
+    Navigator.of(context).pushReplacementNamed(
+      WorkspaceScreen.routeName,
+      arguments: workspace,
+    );
+  }
 
-class _WorkSpaceDrawerState extends State<WorkSpaceDrawer> {
-  void changeWorkspace(Workspace workspace) {
-    if (isSelectedWorkspace(workspace)) {
-      return;
-    }
+  void createWorkspace(BuildContext context) {
+    Navigator.of(context).pushNamed(WorkspaceCreationScreen.routeName);
+  }
 
-    setState(() {
-      Navigator.pushReplacement(
-        context,
-        MaterialPageRoute(
-          builder: (context) => const WorkspaceScreen(),
-          settings: RouteSettings(
-            arguments: workspace,
-          ),
-        ),
-      );
-    });
+  void goToHelp(BuildContext context) {
+    print('Help');
   }
 
   bool isSelectedWorkspace(Workspace workspace) {
-    return widget.selectedWorkspace != null &&
-        widget.selectedWorkspace!.id == workspace.id;
+    return selectedWorkspace != null && selectedWorkspace!.id == workspace.id;
   }
 
   @override
@@ -69,16 +60,13 @@ class _WorkSpaceDrawerState extends State<WorkSpaceDrawer> {
 
           // Workspaces List
           Expanded(
-            child: ListView(
-              children: widget.workspaces
-                  .map(
-                    (workspace) => WorkspaceTile(
-                      workspace,
-                      onTap: () => changeWorkspace(workspace),
-                      isSelectedWorkspace: isSelectedWorkspace(workspace),
-                    ),
-                  )
-                  .toList(),
+            child: ListView.builder(
+              itemCount: workspaces.length,
+              itemBuilder: (context, index) => WorkspaceTile(
+                workspaces[index],
+                isSelectedWorkspace: isSelectedWorkspace(workspaces[index]),
+                onTap: () => changeWorkspace(context, workspaces[index]),
+              ),
             ),
           ),
           Divider(
@@ -88,24 +76,15 @@ class _WorkSpaceDrawerState extends State<WorkSpaceDrawer> {
           ),
 
           // Workspace Actions
-          Column(
-            children: [
-              ListTile(
-                onTap: () {
-                  Navigator.pushNamed(
-                      context, WorkspaceCreationScreen.routeName);
-                },
-                leading: const Icon(Icons.add),
-                title: const Text('Add workspace'),
-              ),
-              ListTile(
-                onTap: () {
-                  print('Help');
-                },
-                leading: const Icon(Icons.help),
-                title: const Text('Help'),
-              ),
-            ],
+          ListTile(
+            onTap: () => createWorkspace(context),
+            leading: const Icon(Icons.add),
+            title: const Text('Add workspace'),
+          ),
+          ListTile(
+            onTap: () => goToHelp(context),
+            leading: const Icon(Icons.help),
+            title: const Text('Help'),
           ),
         ],
       ),

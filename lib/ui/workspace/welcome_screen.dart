@@ -1,8 +1,8 @@
 import 'package:flutter/material.dart';
 
-import 'workspace_creation_screen.dart';
-import 'workspace_screen.dart';
-import 'workspaces_manager.dart';
+import './workspace_creation_screen.dart';
+import './workspace_screen.dart';
+import './workspaces_manager.dart';
 
 class WelcomeScreen extends StatelessWidget {
   const WelcomeScreen({super.key});
@@ -13,6 +13,7 @@ class WelcomeScreen extends StatelessWidget {
       child: Column(
         mainAxisAlignment: MainAxisAlignment.center,
         children: [
+          // Welcome message
           Text(
             'Welcome to ChanHub!',
             style: Theme.of(context).textTheme.displayLarge,
@@ -21,9 +22,9 @@ class WelcomeScreen extends StatelessWidget {
             'We\'re excited to help you bla bla bla...',
             style: Theme.of(context).textTheme.displaySmall,
           ),
-          const SizedBox(
-            height: 10.0,
-          ),
+          const SizedBox(height: 10.0),
+
+          // Create workspace action
           ElevatedButton(
             onPressed: () {
               Navigator.pushNamed(context, WorkspaceCreationScreen.routeName);
