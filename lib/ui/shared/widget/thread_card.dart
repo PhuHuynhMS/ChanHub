@@ -130,7 +130,9 @@ class ThreadContent extends StatelessWidget {
   Widget build(BuildContext context) {
     return Text(
       content,
-      style: Theme.of(context).textTheme.bodyMedium,
+      style: Theme.of(context).textTheme.bodyMedium!.copyWith(
+            color: Theme.of(context).colorScheme.onSurface.withOpacity(0.8),
+          ),
     );
   }
 }

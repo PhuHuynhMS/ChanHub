@@ -210,13 +210,12 @@ class ListReactionBottomSheet extends StatelessWidget {
   Widget build(BuildContext context) {
     return SizedBox(
       height: 200.0,
-      child: ListView.separated(
+      child: ListView.builder(
         itemCount: reactions.length,
         itemBuilder: (context, index) => ListTile(
-          leading: UserAvatar(reactions[index].creator, size: 30.0),
+          leading: UserAvatar(reactions[index].creator, size: 40.0),
           title: Text(reactions[index].creator.fullName),
         ),
-        separatorBuilder: (context, index) => const SizedBox(height: 5.0),
       ),
     );
   }

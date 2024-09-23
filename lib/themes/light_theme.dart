@@ -26,12 +26,12 @@ final TextTheme lightTextTheme = TextTheme(
   ),
   bodyMedium: GoogleFonts.notoSans(
     fontSize: 14.0,
-    fontWeight: FontWeight.w500,
+    fontWeight: FontWeight.w400,
     color: ChanHubColors.onSurface,
   ),
   bodySmall: GoogleFonts.notoSans(
     fontSize: 12.0,
-    fontWeight: FontWeight.w500,
+    fontWeight: FontWeight.w400,
     color: ChanHubColors.onSurface,
   ),
   displayLarge: GoogleFonts.nabla(

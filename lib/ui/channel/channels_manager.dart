@@ -28,7 +28,7 @@ class ChannelsManager {
           'Dart is a client-optimized language for fast apps on any platform.',
       privacy: ChannelPrivacy.public,
       creatorId: '1',
-      createdAt: DateTime.now(),
+      createdAt: DateTime.parse('2021-09-01'),
       memberCount: 10,
       creator: User(
         id: '1',

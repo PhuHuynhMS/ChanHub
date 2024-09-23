@@ -9,12 +9,12 @@ class ThreadsManager {
     Thread(
       content: null,
       mediaUrls: [
-        'https://picsum.photos/400/300',
+        'https://picsum.photos/600/300',
         'https://picsum.photos/200/500',
       ],
       id: '1',
       creatorId: '1',
-      createdAt: DateTime.now(),
+      createdAt: DateTime.parse('2024-09-23'),
       reactions: <ReactionType, List<Reaction>>{
         ReactionType.like: [
           Reaction(
@@ -157,7 +157,7 @@ class ThreadsManager {
       ],
       id: '2',
       creatorId: '2',
-      createdAt: DateTime.now(),
+      createdAt: DateTime.parse('2024-09-22'),
       reactions: <ReactionType, List<Reaction>>{
         ReactionType.like: [
           Reaction(
@@ -236,6 +236,112 @@ class ThreadsManager {
               email: 'anwir@gmail.com'),
         )
       ],
+    ),
+    Thread(
+      content:
+          'Lorem ipsum dolor sit amet, consectetur adipiscing elit. Sed do eiusmod tempor incididunt ut labore et dolore magna aliqua.',
+      mediaUrls: [
+        'https://picsum.photos/700/700',
+        'https://picsum.photos/800/500',
+      ],
+      id: '1',
+      creatorId: '1',
+      createdAt: DateTime.parse('2024-09-21'),
+      reactions: <ReactionType, List<Reaction>>{
+        ReactionType.like: [
+          Reaction(
+            id: '10',
+            creatorId: '3',
+            type: ReactionType.like,
+            createdAt: DateTime.now(),
+            creator: User(
+                id: '1',
+                fullName: 'John Doe',
+                userName: 'johndoe',
+                avatarUrl: 'https://picsum.photos/300/300',
+                email: ''),
+          ),
+          Reaction(
+            id: '2',
+            creatorId: '2',
+            type: ReactionType.like,
+            createdAt: DateTime.now(),
+            creator: User(
+              id: '2',
+              fullName: 'Anwir Keith',
+              userName: 'anwirkeith',
+              avatarUrl: 'https://picsum.photos/400/300',
+              email: 'anwir@gmail.com',
+            ),
+          ),
+        ],
+        ReactionType.love: [
+          Reaction(
+            id: '3',
+            creatorId: '3',
+            type: ReactionType.love,
+            createdAt: DateTime.now(),
+            creator: User(
+              id: '3',
+              fullName: 'Jane Doe',
+              userName: 'janedoe',
+              avatarUrl: 'https://picsum.photos/300/400',
+              email: 'jane@gmail.com',
+            ),
+          ),
+          Reaction(
+            id: '4',
+            creatorId: '4',
+            type: ReactionType.love,
+            createdAt: DateTime.now(),
+            creator: User(
+              id: '4',
+              fullName: 'Anwir Keith',
+              userName: 'anwirkeith',
+              avatarUrl: 'https://picsum.photos/400/300',
+              email: 'anwir@gmail.com',
+            ),
+          ),
+          Reaction(
+            id: '5',
+            creatorId: '5',
+            type: ReactionType.love,
+            createdAt: DateTime.now(),
+            creator: User(
+              id: '5',
+              fullName: 'Yuya Keith',
+              userName: 'yuyakeith',
+              avatarUrl: 'https://picsum.photos/400/600',
+              email: 'yuya@gmail.com',
+            ),
+          ),
+          Reaction(
+            id: '6',
+            creatorId: '6',
+            type: ReactionType.love,
+            createdAt: DateTime.now(),
+            creator: User(
+              id: '6',
+              fullName: 'Sherry',
+              userName: 'sherry',
+              avatarUrl: 'https://picsum.photos/400/800',
+              email: 'sherry@gmail.com',
+            ),
+          ),
+        ],
+        ReactionType.haha: [],
+        ReactionType.seen: [],
+        ReactionType.completed: [],
+        ReactionType.dislike: [],
+      },
+      creator: User(
+        id: '2',
+        fullName: 'Yuya Keith',
+        userName: 'yuyakeith',
+        avatarUrl: 'https://picsum.photos/600/600',
+        email: 'yuya@gmail.com',
+      ),
+      comments: <Comment>[],
     ),
   ];
 
