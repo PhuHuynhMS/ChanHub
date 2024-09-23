@@ -17,7 +17,7 @@ class ChanHub extends StatelessWidget {
       title: 'ChanHub',
       debugShowCheckedModeBanner: false,
       theme: lightTheme,
-      initialRoute: ChannelScreen.routeName,
+      initialRoute: WorkspaceScreen.routeName,
       onGenerateRoute: (settings) {
         // Authenticated routes
         if (settings.name == GetStartedScreen.routeName) {
@@ -40,8 +40,23 @@ class ChanHub extends StatelessWidget {
 
         // Workspace
         if (settings.name == WorkspaceScreen.routeName) {
+          final List<Workspace> workspaces = WorkspacesManager().getAll();
+          final Workspace? selectedWorkspace =
+              settings.arguments as Workspace? ??
+                  WorkspacesManager().getDefaultWorkspace();
+
           return MaterialPageRoute(
-            builder: (context) => const WorkspaceScreen(),
+            builder: (context) => WorkspaceScreen(
+              workspaces,
+              selectedWorkspace: selectedWorkspace,
+            ),
+          );
+        }
+
+        // Create Workspace
+        if (settings.name == CreateWorkspaceScreen.routeName) {
+          return MaterialPageRoute(
+            builder: (context) => const CreateWorkspaceScreen(),
           );
         }
 
