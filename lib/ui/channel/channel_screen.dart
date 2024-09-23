@@ -43,34 +43,36 @@ class ChannelScreen extends StatelessWidget {
       print('Send message: $message');
     }
 
-    return Scaffold(
-      appBar: AppBar(
-        centerTitle: false,
-        title: ChannelTitle(channel),
-        actions: [
-          // Edit channel and add member buttons
-          IconButton(
-            icon: const Icon(Icons.edit),
-            onPressed: onEditChannelDescription,
+    return SafeArea(
+      child: Scaffold(
+        appBar: AppBar(
+          centerTitle: false,
+          title: ChannelTitle(channel),
+          actions: [
+            // Edit channel and add member buttons
+            IconButton(
+              icon: const Icon(Icons.edit),
+              onPressed: onEditChannelDescription,
+            ),
+            IconButton(
+              icon: const Icon(Icons.person_add),
+              onPressed: onAddChannelMember,
+            ),
+          ],
+        ),
+        body: ListView.builder(
+          padding: const EdgeInsets.only(bottom: 60.0),
+          reverse: true,
+          itemCount: threads.length + 1,
+          itemBuilder: (context, index) => buildThreadDetail(index),
+        ),
+        bottomSheet: BottomSheet(
+          onClosing: () {},
+          enableDrag: false,
+          builder: (context) => MessageInput(
+            onAddMedia: () {},
+            onSend: onSendMessage,
           ),
-          IconButton(
-            icon: const Icon(Icons.person_add),
-            onPressed: onAddChannelMember,
-          ),
-        ],
-      ),
-      body: ListView.builder(
-        padding: const EdgeInsets.only(bottom: 60.0),
-        reverse: true,
-        itemCount: threads.length + 1,
-        itemBuilder: (context, index) => buildThreadDetail(index),
-      ),
-      bottomSheet: BottomSheet(
-        onClosing: () {},
-        enableDrag: false,
-        builder: (context) => MessageInput(
-          onAddMedia: () {},
-          onSend: onSendMessage,
         ),
       ),
     );

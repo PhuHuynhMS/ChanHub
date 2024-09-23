@@ -2,6 +2,7 @@ import 'package:flutter/material.dart';
 
 import '../../../models/workspace.dart';
 import '../utils/string_format.dart';
+import '../utils/bottomsheetactions.dart';
 
 class WorkspaceTile extends StatelessWidget {
   const WorkspaceTile(
@@ -16,18 +17,10 @@ class WorkspaceTile extends StatelessWidget {
   final bool isSelectedWorkspace;
 
   void showWorkspaceActions(BuildContext context) {
-    showModalBottomSheet(
-      // TODO: Use custom modal bottom sheet
-      shape: const RoundedRectangleBorder(
-        borderRadius: BorderRadius.only(
-          topLeft: Radius.circular(20.0),
-          topRight: Radius.circular(20.0),
-        ),
-      ),
+    showModalBottomSheetActions(
       context: context,
-      builder: (BuildContext context) {
-        return WorkspaceActions(workspace: workspace);
-      },
+      header: WorkspaceActionsHeader(workspace),
+      body: WorkspaceActions(workspace),
     );
   }
 
@@ -92,10 +85,49 @@ class WorkspaceTile extends StatelessWidget {
   }
 }
 
-class WorkspaceActions extends StatelessWidget {
-  const WorkspaceActions({
+class WorkspaceActionsHeader extends StatelessWidget {
+  const WorkspaceActionsHeader(
+    this.workspace, {
     super.key,
-    required this.workspace,
+  });
+
+  final Workspace workspace;
+
+  @override
+  Widget build(BuildContext context) {
+    return Row(
+      // mainAxisAlignment: MainAxisAlignment.center,
+      children: [
+        // Workspace Image
+        Padding(
+          padding: const EdgeInsets.symmetric(vertical: 20.0, horizontal: 10.0),
+          child: ClipRRect(
+            borderRadius: BorderRadius.circular(10.0),
+            child: Image.network(
+              width: 50,
+              height: 50,
+              workspace.imageUrl,
+              fit: BoxFit.cover,
+            ),
+          ),
+        ),
+
+        // Workspace Name
+        Text(
+          workspace.name,
+          style: Theme.of(context).textTheme.titleMedium!.copyWith(
+                color: Theme.of(context).colorScheme.primary,
+              ),
+        )
+      ],
+    );
+  }
+}
+
+class WorkspaceActions extends StatelessWidget {
+  const WorkspaceActions(
+    this.workspace, {
+    super.key,
   });
 
   final Workspace workspace;
@@ -104,41 +136,6 @@ class WorkspaceActions extends StatelessWidget {
   Widget build(BuildContext context) {
     return Wrap(
       children: [
-        // Header
-        Row(
-          mainAxisAlignment: MainAxisAlignment.center,
-          children: [
-            // Workspace Image
-            Padding(
-              padding: const EdgeInsets.all(10.0),
-              child: ClipRRect(
-                borderRadius: BorderRadius.circular(10.0),
-                child: Image.network(
-                  width: 60,
-                  height: 60,
-                  workspace.imageUrl,
-                  fit: BoxFit.cover,
-                ),
-              ),
-            ),
-            const SizedBox(width: 10.0),
-
-            // Workspace Name
-            Text(
-              workspace.name,
-              style: Theme.of(context).textTheme.titleMedium!.copyWith(
-                    color: Theme.of(context).colorScheme.primary,
-                  ),
-            )
-          ],
-        ),
-        Divider(
-          height: 0.0,
-          thickness: 1.0,
-          color: Theme.of(context).colorScheme.primary.withOpacity(0.3),
-        ),
-
-        // Actions
         ListTile(
           onTap: () {},
           minTileHeight: 50.0,
