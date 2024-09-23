@@ -1,9 +1,8 @@
-import 'package:ct484_project/models/workspace.dart';
-import 'package:ct484_project/ui/workspace/workspaces_manager.dart';
 import 'package:flutter/material.dart';
 
-import 'ui/screen.dart';
+import 'ui/screens.dart';
 import './themes/chanhub_theme.dart';
+import './models/workspace.dart';
 
 void main() {
   runApp(const ChanHub());
@@ -41,7 +40,7 @@ class ChanHub extends StatelessWidget {
 
         // Workspace
         if (settings.name == WorkspaceScreen.routeName) {
-          final List<Workspace> workspaces = WorkspacesManager().getAll();
+          final List<Workspace> workspaces = [];
           final Workspace? selectedWorkspace =
               settings.arguments as Workspace? ??
                   WorkspacesManager().getDefaultWorkspace();
@@ -55,9 +54,9 @@ class ChanHub extends StatelessWidget {
         }
 
         // Create Workspace
-        if (settings.name == WorkspaceCreationScreen.routeName) {
+        if (settings.name == CreateWorkspaceScreen.routeName) {
           return MaterialPageRoute(
-            builder: (context) => const WorkspaceCreationScreen(),
+            builder: (context) => const CreateWorkspaceScreen(),
           );
         }
 

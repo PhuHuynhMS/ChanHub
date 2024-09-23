@@ -33,18 +33,20 @@ class WorkspaceScreen extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    return Scaffold(
-      appBar: AppBar(
-        centerTitle: false,
-        title: const Text('ChanHub'),
-        actions: [
-          ProfileButton(user: user),
-        ],
-      ),
-      body: buildWorkspaceBody(selectedWorkspace, context, workspaces),
-      drawer: WorkSpaceDrawer(
-        workspaces,
-        selectedWorkspace: selectedWorkspace,
+    return SafeArea(
+      child: Scaffold(
+        appBar: AppBar(
+          centerTitle: false,
+          title: const Text('ChanHub'),
+          actions: [
+            ProfileButton(user: user),
+          ],
+        ),
+        body: buildWorkspaceBody(selectedWorkspace, context, workspaces),
+        drawer: WorkSpaceDrawer(
+          workspaces,
+          selectedWorkspace: selectedWorkspace,
+        ),
       ),
     );
   }
@@ -67,7 +69,7 @@ class WorkspaceScreen extends StatelessWidget {
         ],
       );
     } else {
-      return WelcomeScreen();
+      return const WelcomeScreen();
     }
   }
 }

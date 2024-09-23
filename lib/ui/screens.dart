@@ -17,4 +17,5 @@ export './thread/thread_screen.dart';
 
 // Workspace
 export './workspace/workspace_screen.dart';
-export './workspace/workspace_creation_screen.dart';
+export './workspace/create_workspace_screen.dart';
+export './workspace/workspaces_manager.dart';

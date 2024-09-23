@@ -2,7 +2,7 @@ import 'package:flutter/material.dart';
 
 import '../../../models/workspace.dart';
 import '../../workspace/workspace_screen.dart';
-import '../../workspace/workspace_creation_screen.dart';
+import '../../workspace/create_workspace_screen.dart';
 import '../widget/workspace_tile.dart';
 
 class WorkSpaceDrawer extends StatelessWidget {
@@ -23,7 +23,7 @@ class WorkSpaceDrawer extends StatelessWidget {
   }
 
   void createWorkspace(BuildContext context) {
-    Navigator.of(context).pushNamed(WorkspaceCreationScreen.routeName);
+    Navigator.of(context).pushNamed(CreateWorkspaceScreen.routeName);
   }
 
   void goToHelp(BuildContext context) {
@@ -45,11 +45,9 @@ class WorkSpaceDrawer extends StatelessWidget {
             padding: const EdgeInsets.only(left: 10.0, top: 15.0),
             child: Text(
               'Workspaces',
-              style: TextStyle(
-                color: Theme.of(context).primaryColor,
-                fontSize: Theme.of(context).textTheme.titleLarge!.fontSize,
-                fontWeight: FontWeight.bold,
-              ),
+              style: Theme.of(context).textTheme.titleLarge!.copyWith(
+                    color: Theme.of(context).colorScheme.primary,
+                  ),
             ),
           ),
           Divider(
