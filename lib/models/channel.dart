@@ -1,5 +1,5 @@
-import '../models/user.dart';
 import '../common/enums.dart';
+import './user.dart';
 
 class Channel {
   final String? id;

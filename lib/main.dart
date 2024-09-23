@@ -1,8 +1,8 @@
 import 'package:flutter/material.dart';
 
-import 'ui/screens.dart';
+import './ui/screens.dart';
+import './models/index.dart';
 import './themes/chanhub_theme.dart';
-import './models/workspace.dart';
 
 void main() {
   runApp(const ChanHub());
@@ -40,7 +40,7 @@ class ChanHub extends StatelessWidget {
 
         // Workspace
         if (settings.name == WorkspaceScreen.routeName) {
-          final List<Workspace> workspaces = [];
+          final List<Workspace> workspaces = WorkspacesManager().getAll();
           final Workspace? selectedWorkspace =
               settings.arguments as Workspace? ??
                   WorkspacesManager().getDefaultWorkspace();
@@ -67,8 +67,10 @@ class ChanHub extends StatelessWidget {
 
         // Channel
         if (settings.name == ChannelScreen.routeName) {
+          final Channel channel = ChannelsManager().getById('1')!;
+
           return MaterialPageRoute(
-            builder: (context) => const ChannelScreen(),
+            builder: (context) => ChannelScreen(channel),
           );
         }
 
