@@ -36,7 +36,7 @@ class ThreadDetail extends StatelessWidget {
   void showThreadDetails(BuildContext context) {
     Navigator.of(context).pushNamed(
       ThreadScreen.routeName,
-      arguments: thread,
+      arguments: thread.id,
     );
   }
 
@@ -69,12 +69,12 @@ class ThreadDetail extends StatelessWidget {
       onTap: () => showThreadDetails(context),
       onLongPress: () => showThreadActions(context),
       child: ThreadCard(
+        thread.creator,
         thread.createdAt,
         thread.content,
         thread.mediaUrls,
         thread.reactions,
         thread.comments,
-        thread.creator,
         onReactionPressed: onReactionPressed,
       ),
     );

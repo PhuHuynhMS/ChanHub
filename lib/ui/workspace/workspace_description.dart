@@ -1,7 +1,7 @@
 import 'package:flutter/material.dart';
 
 import '../../models/index.dart';
-import '../../common/enums.dart';
+import '../shared/utils/channelicon.dart';
 import '../shared/utils/string_format.dart';
 import '../channel/channel_screen.dart';
 
@@ -160,9 +160,10 @@ class ChannelTile extends StatelessWidget {
   Widget build(BuildContext context) {
     return ListTile(
       onTap: () => navigateToChannel(context, channel),
-      leading: channel.privacy == ChannelPrivacy.public
-          ? const Icon(Icons.public)
-          : const Icon(Icons.lock_outlined),
+      leading: Icon(
+        getChannelIcon(channel.privacy),
+        color: Theme.of(context).colorScheme.primary,
+      ),
       title: Text(
         channel.name,
         style: Theme.of(context).textTheme.labelSmall,

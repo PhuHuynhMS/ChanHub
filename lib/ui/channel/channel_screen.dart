@@ -6,6 +6,7 @@ import '../../models/channel.dart';
 import '../../models/thread.dart';
 import '../thread/threads_manager.dart';
 import '../shared/widget/message_input.dart';
+import '../shared/utils/channelicon.dart';
 import './channel_description.dart';
 import './thread_detail.dart';
 
@@ -19,29 +20,29 @@ class ChannelScreen extends StatelessWidget {
 
   final Channel channel;
 
+  void onEditChannelDescription() {
+    print('Edit channel');
+  }
+
+  void onAddChannelMember() {
+    print('Add channel member');
+  }
+
+  void onSendMessage(String message, List<File> mediaUrls) {
+    print('Send message: $message');
+  }
+
+  Widget buildThreadDetail(List<Thread> threads, int index) {
+    if (index < threads.length) {
+      return ThreadDetail(threads[index]);
+    }
+    return ChannelDescription(channel);
+  }
+
   @override
   Widget build(BuildContext context) {
     // TODO: Get all threads of the channel
     final List<Thread> threads = ThreadsManager().getAll();
-
-    Widget buildThreadDetail(int index) {
-      if (index < threads.length) {
-        return ThreadDetail(threads[index]);
-      }
-      return ChannelDescription(channel);
-    }
-
-    void onEditChannelDescription() {
-      print('Edit channel');
-    }
-
-    void onAddChannelMember() {
-      print('Add channel member');
-    }
-
-    void onSendMessage(String message, List<File> mediaUrls) {
-      print('Send message: $message');
-    }
 
     return SafeArea(
       child: Scaffold(
@@ -61,10 +62,10 @@ class ChannelScreen extends StatelessWidget {
           ],
         ),
         body: ListView.builder(
-          padding: const EdgeInsets.only(bottom: 60.0),
+          padding: const EdgeInsets.only(bottom: 50.0),
           reverse: true,
           itemCount: threads.length + 1,
-          itemBuilder: (context, index) => buildThreadDetail(index),
+          itemBuilder: (context, index) => buildThreadDetail(threads, index),
         ),
         bottomSheet: BottomSheet(
           onClosing: () {},
@@ -92,9 +93,17 @@ class ChannelTitle extends StatelessWidget {
     return Column(
       crossAxisAlignment: CrossAxisAlignment.start,
       children: <Widget>[
-        Text(
-          '# ${channel.name}',
-          style: Theme.of(context).textTheme.titleLarge,
+        Row(
+          children: [
+            Icon(
+              getChannelIcon(channel.privacy),
+              size: Theme.of(context).textTheme.titleLarge!.fontSize,
+            ),
+            Text(
+              ' ${channel.name}',
+              style: Theme.of(context).textTheme.titleLarge,
+            ),
+          ],
         ),
         Text(
           '${channel.memberCount} members',
