@@ -76,8 +76,15 @@ class ChanHub extends StatelessWidget {
 
         // Thread
         if (settings.name == ThreadScreen.routeName) {
+          final String threadId = settings.arguments as String;
+          final Thread thread = ThreadsManager().getById(threadId)!;
+          final Channel channel = ChannelsManager().getById('1')!;
+
           return MaterialPageRoute(
-            builder: (context) => const ThreadScreen(),
+            builder: (context) => ThreadScreen(
+              thread,
+              channelName: channel.name,
+            ),
           );
         }
 

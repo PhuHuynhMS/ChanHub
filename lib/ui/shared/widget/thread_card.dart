@@ -12,17 +12,17 @@ import './user_avatar.dart';
 
 class ThreadCard extends StatelessWidget {
   const ThreadCard(
+    this.creator,
     this.createdAt,
     this.content,
     this.mediaUrls,
     this.reactions,
-    this.comments,
-    this.user, {
+    this.comments, {
     super.key,
     required this.onReactionPressed,
   });
 
-  final User user;
+  final User creator;
   final DateTime createdAt;
   final String? content;
   final List<String>? mediaUrls;
@@ -38,7 +38,7 @@ class ThreadCard extends StatelessWidget {
         crossAxisAlignment: CrossAxisAlignment.start,
         children: <Widget>[
           // Avatar
-          UserAvatar(user),
+          UserAvatar(creator),
           const SizedBox(width: 10.0),
 
           // Content
@@ -48,7 +48,7 @@ class ThreadCard extends StatelessWidget {
               crossAxisAlignment: CrossAxisAlignment.start,
               children: <Widget>[
                 // Header
-                ThreadTitle(user, createdAt),
+                ThreadTitle(creator, createdAt),
 
                 // Body (Content, Media, Reaction)
                 if (content != null) ThreadContent(content!),
