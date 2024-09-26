@@ -1,7 +1,6 @@
 // Authentication
 export './authentication/get_started_screen.dart';
-export './authentication/login_screen.dart';
-export './authentication/register_screen.dart';
+export './authentication/login_or_register_screen.dart';
 
 // Channel
 export './channel/channel_screen.dart';
