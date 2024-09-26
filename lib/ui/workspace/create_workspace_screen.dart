@@ -71,14 +71,19 @@ class _CreateWorkspaceScreenState extends State<CreateWorkspaceScreen> {
               controller: _nameController,
               decoration: InputDecoration(
                 border: const OutlineInputBorder(),
-                label: Text('Workspace name',
-                    style: Theme.of(context).textTheme.bodyMedium),
+                label: const Text('Workspace name'),
                 hintText: 'Eg. Acme Co.',
                 hintStyle: Theme.of(context).textTheme.bodyMedium!.copyWith(
                     color: Theme.of(context)
                         .colorScheme
                         .onSurface
                         .withOpacity(0.5)),
+                labelStyle: Theme.of(context).textTheme.bodyMedium,
+                floatingLabelStyle:
+                    Theme.of(context).textTheme.bodyMedium!.copyWith(
+                          color: Theme.of(context).colorScheme.primary,
+                          fontWeight: FontWeight.bold,
+                        ),
               ),
             ),
 

@@ -3,6 +3,7 @@ import 'package:flutter/material.dart';
 import './ui/screens.dart';
 import './models/index.dart';
 import './themes/chanhub_theme.dart';
+import './ui/shared/transition/transitions.dart';
 
 void main() {
   runApp(const ChanHub());
@@ -17,8 +18,15 @@ class ChanHub extends StatelessWidget {
       title: 'ChanHub',
       debugShowCheckedModeBanner: false,
       theme: lightTheme,
-      initialRoute: WorkspaceScreen.routeName,
+      home: const FirstScreen(),
       onGenerateRoute: (settings) {
+        // Onboarding
+        if (settings.name == OnboardingView.routeName) {
+          return MaterialPageRoute(
+            builder: (context) => const FirstScreen(),
+          );
+        }
+
         // Authenticated routes
         if (settings.name == GetStartedScreen.routeName) {
           return MaterialPageRoute(
@@ -26,15 +34,11 @@ class ChanHub extends StatelessWidget {
           );
         }
 
-        if (settings.name == LoginScreen.routeName) {
-          return MaterialPageRoute(
-            builder: (context) => const LoginScreen(),
-          );
-        }
+        if (settings.name == LoginOrRegisterScreen.routeName) {
+          final bool isLogin = settings.arguments as bool;
 
-        if (settings.name == RegisterScreen.routeName) {
           return MaterialPageRoute(
-            builder: (context) => const RegisterScreen(),
+            builder: (context) => LoginOrRegisterScreen(isLogin: isLogin),
           );
         }
 
@@ -45,8 +49,8 @@ class ChanHub extends StatelessWidget {
               settings.arguments as Workspace? ??
                   WorkspacesManager().getDefaultWorkspace();
 
-          return MaterialPageRoute(
-            builder: (context) => WorkspaceScreen(
+          return CustomSlideTransition(
+            page: WorkspaceScreen(
               workspaces,
               selectedWorkspace: selectedWorkspace,
             ),
@@ -69,8 +73,8 @@ class ChanHub extends StatelessWidget {
         if (settings.name == ChannelScreen.routeName) {
           final Channel channel = ChannelsManager().getById('1')!;
 
-          return MaterialPageRoute(
-            builder: (context) => ChannelScreen(channel),
+          return CustomSlideTransition(
+            page: ChannelScreen(channel),
           );
         }
 
