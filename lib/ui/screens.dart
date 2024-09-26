@@ -1,3 +1,7 @@
+// Onboarding
+export './onboarding/first_screen.dart';
+export './onboarding/onboarding_view.dart';
+
 // Authentication
 export './authentication/get_started_screen.dart';
 export './authentication/login_or_register_screen.dart';

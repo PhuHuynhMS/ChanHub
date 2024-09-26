@@ -18,8 +18,15 @@ class ChanHub extends StatelessWidget {
       title: 'ChanHub',
       debugShowCheckedModeBanner: false,
       theme: lightTheme,
-      home: const GetStartedScreen(),
+      home: const FirstScreen(),
       onGenerateRoute: (settings) {
+        // Onboarding
+        if (settings.name == OnboardingView.routeName) {
+          return MaterialPageRoute(
+            builder: (context) => const FirstScreen(),
+          );
+        }
+
         // Authenticated routes
         if (settings.name == GetStartedScreen.routeName) {
           return MaterialPageRoute(
