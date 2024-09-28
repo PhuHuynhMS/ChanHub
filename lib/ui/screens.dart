@@ -20,4 +20,5 @@ export './thread/threads_manager.dart';
 // Workspace
 export './workspace/workspace_screen.dart';
 export './workspace/create_workspace_screen.dart';
+export './workspace/add_workspace_friends_screen.dart';
 export './workspace/workspaces_manager.dart';

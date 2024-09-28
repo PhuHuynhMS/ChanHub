@@ -60,6 +60,13 @@ class ChanHub extends StatelessWidget {
           );
         }
 
+        // Invite friends at create workspace
+        if (settings.name == AddWorkspaceFriendsScreen.routeName) {
+          return MaterialPageRoute(
+            builder: (context) => const AddWorkspaceFriendsScreen(),
+          );
+        }
+
         if (settings.name == ManagementScreen.routeName) {
           return MaterialPageRoute(
               builder: (context) => const ManagementScreen());

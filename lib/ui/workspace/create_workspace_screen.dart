@@ -1,5 +1,8 @@
 import 'package:flutter/material.dart';
 
+import 'add_workspace_friends_screen.dart';
+import '../shared/utils/string_format.dart';
+
 class CreateWorkspaceScreen extends StatefulWidget {
   static const String routeName = '/workspace_creation_screen';
 
@@ -22,13 +25,16 @@ class _CreateWorkspaceScreenState extends State<CreateWorkspaceScreen> {
   void onInput(value) {
     setState(() {
       isValidName = value.toString().trim().length >= 6;
+      if (isValidName) {
+        _nameController.text = truncate(value, 15);
+      }
     });
   }
 
   void onContinue() {
     if (isValidName) {
       // TODO: Navigate to next screen
-      print('Workspace name: ${_nameController.text}');
+      Navigator.of(context).pushNamed(AddWorkspaceFriendsScreen.routeName);
     }
   }
 
