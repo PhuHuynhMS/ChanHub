@@ -1,10 +1,10 @@
 import 'package:flutter/material.dart';
 
 import '../../../models/user.dart';
+import 'customized_text_field.dart';
 
 class InviteFriendsBar extends StatefulWidget {
   const InviteFriendsBar({super.key});
-
   @override
   State<InviteFriendsBar> createState() => _FriendSearchBarState();
 }
@@ -65,16 +65,14 @@ class _FriendSearchBarState extends State<InviteFriendsBar> {
   @override
   Widget build(BuildContext context) {
     return SizedBox(
-      height: 200.0,
+      height: 250.0,
       width: double.infinity,
       child: Column(
         children: [
-          TextField(
+          CustomizedTextField(
             onChanged: _filterFriends,
-            decoration: const InputDecoration(
-                border: OutlineInputBorder(),
-                labelText: 'Search',
-                hintText: 'Your friend\'s username'),
+            labelText: 'Search',
+            hintText: 'Your friend\'s username',
           ),
           Expanded(
             child: Container(

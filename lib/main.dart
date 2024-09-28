@@ -39,6 +39,12 @@ class ChanHub extends StatelessWidget {
         }
 
         // Workspace
+        if (settings.name == WorkspaceGetStarted.routeName) {
+          return MaterialPageRoute(
+            builder: (context) => const WorkspaceGetStarted(),
+          );
+        }
+
         if (settings.name == WorkspaceScreen.routeName) {
           final List<Workspace> workspaces = WorkspacesManager().getAll();
           final Workspace? selectedWorkspace =
@@ -78,6 +84,13 @@ class ChanHub extends StatelessWidget {
 
           return MaterialPageRoute(
             builder: (context) => ChannelScreen(channel),
+          );
+        }
+
+        // Add channel
+        if (settings.name == AddChannelScreen.routeName) {
+          return MaterialPageRoute(
+            builder: (context) => const AddChannelScreen(),
           );
         }
 

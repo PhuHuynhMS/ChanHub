@@ -1,7 +1,7 @@
 import 'package:flutter/material.dart';
 
 import 'add_workspace_friends_screen.dart';
-import '../shared/utils/string_format.dart';
+import '../shared/widget/customized_text_field.dart';
 
 class CreateWorkspaceScreen extends StatefulWidget {
   static const String routeName = '/workspace_creation_screen';
@@ -25,9 +25,6 @@ class _CreateWorkspaceScreenState extends State<CreateWorkspaceScreen> {
   void onInput(value) {
     setState(() {
       isValidName = value.toString().trim().length >= 6;
-      if (isValidName) {
-        _nameController.text = truncate(value, 15);
-      }
     });
   }
 
@@ -36,6 +33,15 @@ class _CreateWorkspaceScreenState extends State<CreateWorkspaceScreen> {
       // TODO: Navigate to next screen
       Navigator.of(context).pushNamed(AddWorkspaceFriendsScreen.routeName);
     }
+  }
+
+  String? _nameValidator(String? value) {
+    if (value == null || value.trim().length < 6) {
+      return 'Workspace name must be at least 6 characters long';
+    } else if (value.trim().length > 15) {
+      return 'Workspace name must be at most 15 characters long';
+    }
+    return null;
   }
 
   @override
@@ -72,20 +78,12 @@ class _CreateWorkspaceScreenState extends State<CreateWorkspaceScreen> {
             const SizedBox(height: 10.0),
 
             // Input field
-            TextFormField(
+            CustomizedTextField(
               onChanged: onInput,
               controller: _nameController,
-              decoration: InputDecoration(
-                border: const OutlineInputBorder(),
-                label: Text('Workspace name',
-                    style: Theme.of(context).textTheme.bodyMedium),
-                hintText: 'Eg. Acme Co.',
-                hintStyle: Theme.of(context).textTheme.bodyMedium!.copyWith(
-                    color: Theme.of(context)
-                        .colorScheme
-                        .onSurface
-                        .withOpacity(0.5)),
-              ),
+              validator: _nameValidator,
+              labelText: 'Workspace Name',
+              hintText: 'Eg. Acme Co.',
             ),
 
             // Next button
@@ -99,9 +97,9 @@ class _CreateWorkspaceScreenState extends State<CreateWorkspaceScreen> {
                       : Theme.of(context).colorScheme.primary.withOpacity(0.3)),
                 ),
                 onPressed: isValidName ? onContinue : null,
-                child: Text('Next',
-                    style: Theme.of(context).textTheme.bodyLarge!.copyWith(
-                        color: Theme.of(context).colorScheme.onPrimary)),
+                child: const Text(
+                  'Next',
+                ),
               ),
             ),
 

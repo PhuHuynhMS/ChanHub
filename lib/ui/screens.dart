@@ -5,6 +5,7 @@ export './authentication/register_screen.dart';
 
 // Channel
 export './channel/channel_screen.dart';
+export './channel/add_channel_screen.dart';
 export './channel/channels_manager.dart';
 
 // Management
@@ -22,3 +23,4 @@ export './workspace/workspace_screen.dart';
 export './workspace/create_workspace_screen.dart';
 export './workspace/add_workspace_friends_screen.dart';
 export './workspace/workspaces_manager.dart';
+export './workspace/workspace_get_started.dart';
