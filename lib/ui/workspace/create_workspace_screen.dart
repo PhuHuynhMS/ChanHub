@@ -1,6 +1,6 @@
 import 'package:flutter/material.dart';
 
-import 'add_workspace_friends_screen.dart';
+import './add_workspace_friends_screen.dart';
 import '../shared/widget/customized_text_field.dart';
 
 class CreateWorkspaceScreen extends StatefulWidget {

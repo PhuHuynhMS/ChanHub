@@ -16,42 +16,49 @@ class AddWorkspaceFriendsScreen extends StatelessWidget {
             onPressed: () {
               //TODO: Next screen
             },
-            style: const ButtonStyle(
-                backgroundColor: WidgetStatePropertyAll(Colors.transparent)),
             child: Text('Skip',
-                style: Theme.of(context)
-                    .textTheme
-                    .labelLarge!
-                    .copyWith(color: Theme.of(context).colorScheme.onPrimary)),
+                style: Theme.of(context).textTheme.labelLarge!.copyWith(
+                      color: Theme.of(context).colorScheme.onPrimary,
+                    )),
           ),
         ],
       ),
       body: Padding(
-        padding: const EdgeInsets.all(12.0),
+        padding: const EdgeInsets.symmetric(horizontal: 20.0),
         child: Column(
             crossAxisAlignment: CrossAxisAlignment.center,
             mainAxisAlignment: MainAxisAlignment.center,
             children: [
+              // Title
               Text(
                 'Invite Collaborators',
-                style: Theme.of(context)
-                    .textTheme
-                    .titleLarge!
-                    .copyWith(color: Theme.of(context).colorScheme.onSurface),
-                textAlign: TextAlign.center,
+                style: Theme.of(context).textTheme.titleLarge!.copyWith(
+                    color: Theme.of(context).colorScheme.onSurface,
+                    fontWeight: FontWeight.w900),
               ),
-              const SizedBox(
-                height: 10.0,
-              ),
+              const SizedBox(height: 10.0),
               Text(
-                'Search for and add collaborators to your workspace',
+                'Search for your friends and add them to your workspace to start collaborating.',
                 textAlign: TextAlign.center,
-                style: Theme.of(context).textTheme.bodyLarge,
+                style: Theme.of(context).textTheme.bodyMedium,
               ),
-              const SizedBox(
-                height: 20.0,
+              const SizedBox(height: 20.0),
+
+              // Invite friends bar
+              const InviteFriendsBar(),
+              const SizedBox(height: 20.0),
+
+              // Invite friends description
+              Text(
+                'Note that your friends will receive an invitation to join your workspace. You can also invite them later. Currently, you can only invite friends who are already on the platform.',
+                style: Theme.of(context).textTheme.bodySmall!.copyWith(
+                    color: Theme.of(context)
+                        .colorScheme
+                        .onSurface
+                        .withOpacity(0.4)),
+                maxLines: 4,
+                softWrap: true,
               ),
-              const InviteFriendsBar()
             ]),
       ),
     );
