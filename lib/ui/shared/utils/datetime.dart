@@ -1,3 +1,5 @@
+import 'package:intl/intl.dart';
+
 String formatDateTime(DateTime dateTime) {
   final now = DateTime.now();
   final diff = now.difference(dateTime);
@@ -19,4 +21,8 @@ String formatDateTime(DateTime dateTime) {
   } else {
     return 'now';
   }
+}
+
+String formatDeadlineTime(DateTime dateTime) {
+  return DateFormat('HH:mm dd/MM/yyyy').format(dateTime);
 }

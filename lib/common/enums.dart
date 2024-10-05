@@ -11,3 +11,10 @@ enum ReactionType {
   completed,
   dislike,
 }
+
+enum TaskStatus {
+  inProgress,
+  completed,
+  overdue,
+  overdueCompleted,
+}

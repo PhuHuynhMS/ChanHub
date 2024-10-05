@@ -3,6 +3,7 @@ import '../../models/comment.dart';
 import '../../models/reaction.dart';
 import '../../models/thread.dart';
 import '../../models/user.dart';
+import '../../models/task.dart';
 
 class ThreadsManager {
   final List<Thread> _threads = [
@@ -633,6 +634,64 @@ class ThreadsManager {
         email: 'yuya@gmail.com',
       ),
       comments: <Comment>[],
+      tasks: [
+        Task(
+          id: '1',
+          title: 'Complete the first task',
+          description:
+              'This is the first task that you need to complete. It is very important to complete this task as soon as possible.',
+          assignee: User(
+            id: '1',
+            fullName: 'John Doe',
+            userName: 'johndoe',
+            avatarUrl: 'https://picsum.photos/300/300',
+            email: 'john@gmail.com',
+          ),
+          deadline: DateTime(2021, 9, 30),
+        ),
+        Task(
+          id: '2',
+          title: 'FE UI/UX Design',
+          description:
+              'Design a new UI/UX for the new feature. The design should be user-friendly and easy to use.',
+          assignee: User(
+            id: '1',
+            fullName: 'John Doe',
+            userName: 'johndoe',
+            avatarUrl: 'https://picsum.photos/300/300',
+            email: 'john@gmail.com',
+          ),
+          deadline: DateTime(2024, 10, 4),
+        ),
+        Task(
+          id: '3',
+          title: 'BE API',
+          description:
+              'Design a new UI/UX for the new feature. The design should be user-friendly and easy to use.',
+          assignee: User(
+            id: '1',
+            fullName: 'John Doe',
+            userName: 'johndoe',
+            avatarUrl: 'https://picsum.photos/300/300',
+            email: 'john@gmail.com',
+          ),
+          deadline: DateTime(2024, 10, 15),
+        ),
+        Task(
+          id: '4',
+          title: 'FE API Integration',
+          description:
+              'Design a new UI/UX for the new feature. The design should be user-friendly and easy to use.',
+          assignee: User(
+            id: '1',
+            fullName: 'John Doe',
+            userName: 'johndoe',
+            avatarUrl: 'https://picsum.photos/300/300',
+            email: 'john@gmail.com',
+          ),
+          deadline: DateTime(2024, 10, 20),
+        ),
+      ],
     ),
   ];
 

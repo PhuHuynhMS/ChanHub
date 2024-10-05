@@ -48,12 +48,11 @@ class CommentDetail extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return ThreadCard(
-      comment.creator,
-      comment.createdAt,
-      comment.content,
-      comment.mediaUrls,
-      comment.reactions,
-      null,
+      creator: comment.creator,
+      createdAt: comment.createdAt,
+      content: comment.content,
+      mediaUrls: comment.mediaUrls,
+      reactions: comment.reactions,
       onReactionPressed: onReactionPressed,
     );
   }

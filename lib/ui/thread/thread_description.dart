@@ -50,12 +50,12 @@ class ThreadDescription extends StatelessWidget {
     return Container(
       color: Theme.of(context).colorScheme.primary.withOpacity(0.15),
       child: ThreadCard(
-        thread.creator,
-        thread.createdAt,
-        thread.content,
-        thread.mediaUrls,
-        thread.reactions,
-        null,
+        creator: thread.creator,
+        createdAt: thread.createdAt,
+        content: thread.content,
+        mediaUrls: thread.mediaUrls,
+        reactions: thread.reactions,
+        tasks: thread.tasks,
         onReactionPressed: onReactionPressed,
       ),
     );
