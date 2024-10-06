@@ -13,7 +13,6 @@ class AddChannelScreen extends StatefulWidget {
 
 class _AddChannelScreenState extends State<AddChannelScreen> {
   final _globalKey = GlobalKey<FormState>();
-  bool? isPrivacy = false;
 
   String? _channelNameValidator(String? value) {
     value = value.toString().trim();
@@ -42,66 +41,109 @@ class _AddChannelScreenState extends State<AddChannelScreen> {
           style: Theme.of(context).textTheme.titleLarge,
         ),
       ),
-      body: Padding(
-        padding: const EdgeInsets.all(30.0),
-        child: Form(
-          key: _globalKey,
-          child: Column(
-            mainAxisAlignment: MainAxisAlignment.center,
-            children: [
-              Image.asset(
-                'assets/images/channel_logo.png',
-                fit: BoxFit.cover,
-                height: 200.0,
-              ),
-              const SizedBox(
-                height: 20.0,
-              ),
-              // Channel name
-              CustomizedTextField(
-                labelText: 'Channel Name',
-                hintText: 'Enter channel name',
-                validator: _channelNameValidator,
-              ),
-              const SizedBox(
-                height: 10.0,
-              ),
-
-              // Channel description
-              const CustomizedTextField(
-                labelText: 'Channel Description',
-                hintText: 'Enter channel description',
-                maxLength: 300,
-                maxLines: 2,
-              ),
-
-              Row(
+      body: Center(
+        child: SingleChildScrollView(
+          child: Padding(
+            padding: const EdgeInsets.all(30.0),
+            child: Form(
+              key: _globalKey,
+              child: Column(
                 children: [
-                  Text(
-                    'Privacy',
-                    style: Theme.of(context).textTheme.bodyLarge,
+                  //tilte image
+                  Image.asset(
+                    'assets/images/channel_logo.png',
+                    fit: BoxFit.cover,
+                    height: 200.0,
                   ),
-                  Checkbox(
-                      value: isPrivacy,
-                      onChanged: (value) {
-                        setState(() {
-                          isPrivacy = value!;
-                        });
-                      })
+                  const SizedBox(
+                    height: 20.0,
+                  ),
+                  // Channel name
+                  CustomizedTextField(
+                    labelText: 'Channel Name',
+                    hintText: 'Enter channel name',
+                    validator: _channelNameValidator,
+                  ),
+                  const SizedBox(
+                    height: 10.0,
+                  ),
+
+                  // Channel description
+                  const CustomizedTextField(
+                    labelText: 'Channel Description',
+                    hintText: 'Enter channel description',
+                    maxLength: 300,
+                    maxLines: 2,
+                  ),
+
+                  EncapsulatedSwitch(),
+                  SizedBox(
+                    height: 40.0,
+                    width: double.infinity,
+                    child: ElevatedButton(
+                        onPressed: onAddChannel,
+                        child: const Text(
+                          'Create',
+                        )),
+                  )
                 ],
               ),
-              SizedBox(
-                height: 40.0,
-                width: double.infinity,
-                child: ElevatedButton(
-                    onPressed: onAddChannel,
-                    child: const Text(
-                      'Create',
-                    )),
-              )
-            ],
+            ),
           ),
         ),
+      ),
+    );
+  }
+}
+
+class EncapsulatedSwitch extends StatefulWidget {
+  const EncapsulatedSwitch({super.key});
+
+  @override
+  State<EncapsulatedSwitch> createState() => _EncapsulatedSwitchState();
+}
+
+class _EncapsulatedSwitchState extends State<EncapsulatedSwitch> {
+  bool isPrivacy = false;
+
+  @override
+  Widget build(BuildContext context) {
+    return Padding(
+      padding: const EdgeInsets.all(8.0),
+      child: Row(
+        mainAxisAlignment: MainAxisAlignment.spaceBetween,
+        children: [
+          Expanded(
+            child: Column(
+              crossAxisAlignment: CrossAxisAlignment.start,
+              children: [
+                Text(
+                  'Privacy mode',
+                  style: Theme.of(context).textTheme.titleLarge!.copyWith(
+                        color: Theme.of(context).colorScheme.onSurface,
+                      ),
+                ),
+                Text(
+                  'Privacy mode helps protect your channel\'s information. When this mode is activated, you can control who can view and interact with your channel\'s content.',
+                  style: Theme.of(context).textTheme.bodyMedium!.copyWith(
+                        color: Theme.of(context)
+                            .colorScheme
+                            .onSurface
+                            .withOpacity(0.4),
+                      ),
+                ),
+              ],
+            ),
+          ),
+          Switch(
+              activeColor: Theme.of(context).colorScheme.primary,
+              value: isPrivacy,
+              onChanged: (value) {
+                setState(() {
+                  isPrivacy = value;
+                });
+              })
+        ],
       ),
     );
   }

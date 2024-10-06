@@ -1,7 +1,8 @@
 import 'package:flutter/material.dart';
+import 'package:dropdown_search/dropdown_search.dart';
 
 import '../../../models/user.dart';
-import 'customized_text_field.dart';
+import './user_avatar.dart';
 
 class InviteFriendsBar extends StatefulWidget {
   const InviteFriendsBar({super.key});
@@ -19,110 +20,229 @@ class _FriendSearchBarState extends State<InviteFriendsBar> {
       avatarUrl: 'https://picsum.photos/200',
     ),
     User(
-      id: '1',
+      id: '2',
       fullName: 'John Doe',
       userName: 'johndoe',
       email: 'johndoe@me.com',
       avatarUrl: 'https://picsum.photos/200',
     ),
     User(
-      id: '1',
+      id: '3',
       fullName: 'John Doe',
       userName: 'johndoe',
       email: 'johndoe@me.com',
       avatarUrl: 'https://picsum.photos/200',
     ),
     User(
-      id: '1',
+      id: '4',
       fullName: 'John Doe',
       userName: 'johndoe',
       email: 'johndoe@me.com',
       avatarUrl: 'https://picsum.photos/200',
     ),
     User(
-      id: '1',
+      id: '5',
       fullName: 'John Doe',
-      userName: 'johndoe',
+      userName: 'mrTeo',
+      email: 'johndoe@me.com',
+      avatarUrl: 'https://picsum.photos/200',
+    ),
+    User(
+      id: '6',
+      fullName: 'John Doe',
+      userName: 'mrTeo',
+      email: 'johndoe@me.com',
+      avatarUrl: 'https://picsum.photos/200',
+    ),
+    User(
+      id: '7',
+      fullName: 'John Doe',
+      userName: 'mrTeo',
+      email: 'johndoe@me.com',
+      avatarUrl: 'https://picsum.photos/200',
+    ),
+    User(
+      id: '8',
+      fullName: 'John Doe',
+      userName: 'mrTeo',
+      email: 'johndoe@me.com',
+      avatarUrl: 'https://picsum.photos/200',
+    ),
+    User(
+      id: '9',
+      fullName: 'John Doe',
+      userName: 'mrTeo',
+      email: 'johndoe@me.com',
+      avatarUrl: 'https://picsum.photos/200',
+    ),
+    User(
+      id: '10',
+      fullName: 'John Doe',
+      userName: 'mrTeo',
+      email: 'johndoe@me.com',
+      avatarUrl: 'https://picsum.photos/200',
+    ),
+    User(
+      id: '11',
+      fullName: 'John Doe',
+      userName: 'mrTeo',
+      email: 'johndoe@me.com',
+      avatarUrl: 'https://picsum.photos/200',
+    ),
+    User(
+      id: '12',
+      fullName: 'John Doe',
+      userName: 'mrTeo',
+      email: 'johndoe@me.com',
+      avatarUrl: 'https://picsum.photos/200',
+    ),
+    User(
+      id: '13',
+      fullName: 'John Doe',
+      userName: 'mrTeo',
+      email: 'johndoe@me.com',
+      avatarUrl: 'https://picsum.photos/200',
+    ),
+    User(
+      id: '14',
+      fullName: 'John Doe',
+      userName: 'mrTeo',
+      email: 'johndoe@me.com',
+      avatarUrl: 'https://picsum.photos/200',
+    ),
+    User(
+      id: '15',
+      fullName: 'John Doe',
+      userName: 'mrTeo',
+      email: 'johndoe@me.com',
+      avatarUrl: 'https://picsum.photos/200',
+    ),
+    User(
+      id: '5',
+      fullName: 'John Doe',
+      userName: 'mrTeo',
+      email: 'johndoe@me.com',
+      avatarUrl: 'https://picsum.photos/200',
+    ),
+    User(
+      id: '5',
+      fullName: 'John Doe',
+      userName: 'mrTeo',
+      email: 'johndoe@me.com',
+      avatarUrl: 'https://picsum.photos/200',
+    ),
+    User(
+      id: '5',
+      fullName: 'John Doe',
+      userName: 'mrTeo',
+      email: 'johndoe@me.com',
+      avatarUrl: 'https://picsum.photos/200',
+    ),
+    User(
+      id: '5',
+      fullName: 'John Doe',
+      userName: 'mrTeo',
       email: 'johndoe@me.com',
       avatarUrl: 'https://picsum.photos/200',
     ),
   ];
-  List<User> filteredFriends = []; // List of filtered friends
 
-  void _filterFriends(String query) {
-    if (query.isEmpty) {
-      filteredFriends = [];
+  List<User> _filterFriends(String filter) {
+    if (filter.isEmpty) {
+      return friends;
     } else {
-      filteredFriends = friends
-          .where((friends) =>
-              friends.userName.toLowerCase().contains(query.toLowerCase()))
+      return friends
+          .where((user) =>
+              user.userName.toLowerCase().contains(filter.toLowerCase()))
           .toList();
     }
-
-    setState(() {});
   }
+
+  List<User> selectedItems = [];
 
   @override
   Widget build(BuildContext context) {
-    return SizedBox(
-      height: 250.0,
-      width: double.infinity,
-      child: Column(
-        children: [
-          CustomizedTextField(
-            onChanged: _filterFriends,
-            labelText: 'Search',
-            hintText: 'Your friend\'s username',
-          ),
-          Expanded(
-            child: Container(
-              decoration: BoxDecoration(
-                  color: filteredFriends.isNotEmpty
-                      ? Theme.of(context).colorScheme.primary.withOpacity(0.1)
-                      : Theme.of(context).colorScheme.surface,
-                  borderRadius: const BorderRadius.only(
-                    bottomLeft: Radius.circular(5.0),
-                    bottomRight: Radius.circular(5.0),
-                  )),
-              child: ListView.builder(
-                  itemCount: filteredFriends.length,
-                  itemBuilder: (ctx, idx) {
-                    return ListTile(
-                      iconColor: Theme.of(context).colorScheme.onSurface,
-                      contentPadding: const EdgeInsets.symmetric(
-                          vertical: 5.0, horizontal: 5.0),
-                      onTap: () {
-                        //TODO: Go to profile
-                        print('Go to profile of ${filteredFriends[idx]}');
-                      },
-                      leading: ClipRRect(
-                        borderRadius: BorderRadius.circular(30.0),
-                        child: Image.network(
-                          filteredFriends[idx].avatarUrl,
-                          fit: BoxFit.cover,
-                        ),
-                      ),
-                      title: Text(
-                        filteredFriends[idx].userName,
-                        style: Theme.of(context)
-                            .textTheme
-                            .titleMedium!
-                            .copyWith(
-                              color: Theme.of(context).colorScheme.onSurface,
-                            ),
-                      ),
-                      trailing: IconButton(
-                          onPressed: () {
-                            //TODO: Add this guy
-                            print('Add this guy');
-                          },
-                          icon: const Icon(Icons.add)),
-                    );
-                  }),
-            ),
-          )
-        ],
+    return DropdownSearch<User>.multiSelection(
+      dropdownBuilder: (context, selectedItems) {
+        if (selectedItems.isEmpty) {
+          return const Text("Invite your collaborators");
+        }
+        return Wrap(
+          children: selectedItems.map((user) {
+            return ColabChip(
+                username: user.userName,
+                onDeleted: () => setState(() => selectedItems
+                    .remove(user))); // Hiển thị tên người dùng đã chọn
+          }).toList(),
+        );
+      },
+      compareFn: (item1, item2) => item1.id == item2.id,
+      items: (filter, loadProps) => _filterFriends(filter),
+      popupProps: const PopupPropsMultiSelection.dialog(
+        showSelectedItems: true,
+        dialogProps: DialogProps(
+            alignment: Alignment.topCenter,
+            contentPadding: EdgeInsets.all(30.0)),
+        itemBuilder: userModelPopupItem,
       ),
+      decoratorProps: DropDownDecoratorProps(
+          decoration: InputDecoration(
+              prefixIcon: const Icon(Icons.people),
+              enabledBorder: OutlineInputBorder(
+                borderSide:
+                    BorderSide(color: Colors.transparent.withOpacity(0.3)),
+                borderRadius: BorderRadius.circular(12),
+              ),
+              contentPadding: const EdgeInsets.all(8.0))),
+    );
+  }
+}
+
+Widget userModelPopupItem(
+    BuildContext context, User user, bool isSelected, bool isDisabled) {
+  return Padding(
+    padding: const EdgeInsets.only(bottom: 10.0, right: 0.0, left: 0.0),
+    child: ListTile(
+      contentPadding: const EdgeInsets.all(0.0),
+      title: Text(
+        user.userName,
+        style: Theme.of(context).textTheme.bodyLarge!.copyWith(
+              color: Theme.of(context).colorScheme.onSurface,
+            ),
+      ),
+      leading: UserAvatar(user),
+      trailing: isSelected ? const Icon(Icons.check) : null,
+    ),
+  );
+}
+
+class ColabChip extends StatelessWidget {
+  const ColabChip({required this.username, required this.onDeleted, super.key});
+
+  final void Function() onDeleted;
+  final String username;
+
+  @override
+  Widget build(BuildContext context) {
+    return Padding(
+      padding: const EdgeInsets.all(3.0),
+      child: Chip(
+          side: const BorderSide(
+            color: Colors.transparent,
+          ),
+          deleteIconBoxConstraints:
+              const BoxConstraints.expand(width: 20.0, height: 20.0),
+          deleteIcon: const Icon(
+            Icons.close,
+          ),
+          padding: const EdgeInsets.only(left: 5.0),
+          labelPadding: const EdgeInsets.only(right: 5.0),
+          deleteIconColor: Theme.of(context).colorScheme.error,
+          onDeleted: onDeleted,
+          backgroundColor:
+              Theme.of(context).colorScheme.tertiary.withOpacity(0.4),
+          label:
+              Text(username, style: Theme.of(context).textTheme.bodyMedium!)),
     );
   }
 }

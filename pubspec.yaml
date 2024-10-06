@@ -18,6 +18,7 @@ dependencies:
   intl: ^0.19.0
   image_picker: ^1.1.2
   photo_view: ^0.15.0
+  dropdown_search: ^6.0.1
 
 dev_dependencies:
   flutter_test:

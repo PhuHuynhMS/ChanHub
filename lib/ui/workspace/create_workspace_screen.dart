@@ -56,63 +56,71 @@ class _CreateWorkspaceScreenState extends State<CreateWorkspaceScreen> {
               ),
         ),
       ),
-      body: Padding(
-        padding: const EdgeInsets.all(30.0),
-        child: Column(
-          mainAxisAlignment: MainAxisAlignment.center,
-          children: [
-            // Title
-            Text(
-              'What\'s is the name of your company or team?',
-              style: Theme.of(context).textTheme.titleLarge!.copyWith(
-                    color: Theme.of(context).colorScheme.onSurface,
-                    fontWeight: FontWeight.w900,
+      body: Center(
+        child: SingleChildScrollView(
+          child: Padding(
+            padding: const EdgeInsets.all(30.0),
+            child: Column(
+              children: [
+                // Title
+                Text(
+                  'What\'s is the name of your company or team?',
+                  style: Theme.of(context).textTheme.titleLarge!.copyWith(
+                        color: Theme.of(context).colorScheme.onSurface,
+                        fontWeight: FontWeight.w900,
+                      ),
+                  textAlign: TextAlign.center,
+                ),
+                const SizedBox(height: 30.0),
+                Text(
+                  'This will be the name of your workspace',
+                  style: Theme.of(context).textTheme.bodyMedium,
+                ),
+                const SizedBox(height: 10.0),
+
+                // Input field
+                CustomizedTextField(
+                  onChanged: onInput,
+                  controller: _nameController,
+                  validator: _nameValidator,
+                  labelText: 'Workspace Name',
+                  hintText: 'Eg. Acme Co.',
+                ),
+
+                // Next button
+                Container(
+                  padding: const EdgeInsets.symmetric(vertical: 15.0),
+                  width: double.infinity,
+                  child: ElevatedButton(
+                    style: ButtonStyle(
+                      backgroundColor: WidgetStatePropertyAll(isValidName
+                          ? Theme.of(context).colorScheme.primary
+                          : Theme.of(context)
+                              .colorScheme
+                              .primary
+                              .withOpacity(0.3)),
+                    ),
+                    onPressed: isValidName ? onContinue : null,
+                    child: const Text(
+                      'Next',
+                    ),
                   ),
-              textAlign: TextAlign.center,
-            ),
-            const SizedBox(height: 30.0),
-            Text(
-              'This will be the name of your workspace',
-              style: Theme.of(context).textTheme.bodyMedium,
-            ),
-            const SizedBox(height: 10.0),
-
-            // Input field
-            CustomizedTextField(
-              onChanged: onInput,
-              controller: _nameController,
-              validator: _nameValidator,
-              labelText: 'Workspace Name',
-              hintText: 'Eg. Acme Co.',
-            ),
-
-            // Next button
-            Container(
-              padding: const EdgeInsets.symmetric(vertical: 15.0),
-              width: double.infinity,
-              child: ElevatedButton(
-                style: ButtonStyle(
-                  backgroundColor: WidgetStatePropertyAll(isValidName
-                      ? Theme.of(context).colorScheme.primary
-                      : Theme.of(context).colorScheme.primary.withOpacity(0.3)),
                 ),
-                onPressed: isValidName ? onContinue : null,
-                child: const Text(
-                  'Next',
-                ),
-              ),
-            ),
 
-            // Terms and conditions
-            Text(
-              'By continuing, you\'re agreeing to our Main Services Agreement, User Terms of Service, and ChanHub Supplemental Terms. Additional disclosures are available in out Privacy Policy and Cookie Policy.',
-              style: Theme.of(context).textTheme.bodySmall!.copyWith(
-                  color:
-                      Theme.of(context).colorScheme.onSurface.withOpacity(0.4)),
-              maxLines: 4,
-              softWrap: true,
+                // Terms and conditions
+                Text(
+                  'By continuing, you\'re agreeing to our Main Services Agreement, User Terms of Service, and ChanHub Supplemental Terms. Additional disclosures are available in out Privacy Policy and Cookie Policy.',
+                  style: Theme.of(context).textTheme.bodySmall!.copyWith(
+                      color: Theme.of(context)
+                          .colorScheme
+                          .onSurface
+                          .withOpacity(0.4)),
+                  maxLines: 4,
+                  softWrap: true,
+                ),
+              ],
             ),
-          ],
+          ),
         ),
       ),
     );
