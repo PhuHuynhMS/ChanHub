@@ -53,13 +53,11 @@ class _BlockTextFieldState extends State<BlockTextField> {
         boxShadow: _isFocused
             ? <BoxShadow>[
                 BoxShadow(
-                  color: Theme.of(context)
-                      .colorScheme
-                      .onSurface
-                      .withOpacity(0.2), // Màu bóng
+                  color:
+                      Theme.of(context).colorScheme.onSurface.withOpacity(0.2),
                   spreadRadius: 0.8,
                   blurRadius: 4,
-                  offset: const Offset(4.0, 4.0), // Vị trí bóng
+                  offset: const Offset(4.0, 4.0),
                 ),
               ]
             : [

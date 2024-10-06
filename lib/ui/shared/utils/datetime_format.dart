@@ -31,38 +31,3 @@ String formatDeadlineTime(DateTime? dateTime) {
     return 'No deadline';
   }
 }
-
-Future<DateTime?> showDateTimePicker(BuildContext context) async {
-  DateTime? pickedDate = await showDatePicker(
-    context: context,
-    initialDate: DateTime.now(),
-    firstDate: DateTime(2000),
-    lastDate: DateTime(2101),
-  );
-
-  if (pickedDate == null) {
-    return null;
-  }
-
-  // Check if the widget is still mounted
-  if (!context.mounted) {
-    return null;
-  }
-
-  final TimeOfDay? pickedTime = await showTimePicker(
-    context: context,
-    initialTime: TimeOfDay.now(),
-  );
-
-  if (pickedTime == null) {
-    return null;
-  }
-
-  return DateTime(
-    pickedDate.year,
-    pickedDate.month,
-    pickedDate.day,
-    pickedTime.hour,
-    pickedTime.minute,
-  );
-}

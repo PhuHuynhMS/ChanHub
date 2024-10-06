@@ -62,14 +62,13 @@ class WorkspaceHeader extends StatelessWidget {
             children: [
               // Workspace Name
               Text(
-                truncate(workspace.name.toUpperCase(), 20),
+                workspace.name.toUpperCase(),
                 style: Theme.of(context).textTheme.titleMedium!.copyWith(
                       color: Theme.of(context).colorScheme.primary,
                     ),
+                overflow: TextOverflow.ellipsis,
               ),
-              const SizedBox(
-                height: 10.0,
-              ),
+              const SizedBox(height: 10.0),
 
               // Workspace Actions
               Row(

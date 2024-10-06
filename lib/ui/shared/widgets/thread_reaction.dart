@@ -3,8 +3,8 @@ import 'package:flutter/material.dart';
 import '../../../common/constants.dart';
 import '../../../common/enums.dart';
 import '../../../models/index.dart';
-import '../utils/index.dart';
 import './index.dart';
+import '../utils/index.dart';
 
 class ThreadReaction extends StatefulWidget {
   const ThreadReaction(
