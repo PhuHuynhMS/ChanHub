@@ -16,13 +16,10 @@ class AddWorkspaceFriendsScreen extends StatelessWidget {
             onPressed: () {
               //TODO: Next screen
             },
-            style: const ButtonStyle(
-                backgroundColor: WidgetStatePropertyAll(Colors.transparent)),
             child: Text('Skip',
-                style: Theme.of(context)
-                    .textTheme
-                    .labelLarge!
-                    .copyWith(color: Theme.of(context).colorScheme.onPrimary)),
+                style: Theme.of(context).textTheme.labelLarge!.copyWith(
+                      color: Theme.of(context).colorScheme.onPrimary,
+                    )),
           ),
         ],
       ),

@@ -1,0 +1,11 @@
+class OnboardingInfo {
+  final String title;
+  final String descriptions;
+  final String svg;
+
+  OnboardingInfo({
+    required this.title,
+    required this.descriptions,
+    required this.svg,
+  });
+}

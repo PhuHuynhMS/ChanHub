@@ -2,7 +2,7 @@ import 'package:ct484_project/ui/screens.dart';
 import 'package:flutter/material.dart';
 
 import '../../models/index.dart';
-import '../../common/enums.dart';
+import '../shared/utils/channelicon.dart';
 import '../shared/utils/string_format.dart';
 
 class WorkspaceDescription extends StatelessWidget {
@@ -167,9 +167,10 @@ class ChannelTile extends StatelessWidget {
   Widget build(BuildContext context) {
     return ListTile(
       onTap: () => navigateToChannel(context, channel),
-      leading: channel.privacy == ChannelPrivacy.public
-          ? const Icon(Icons.public)
-          : const Icon(Icons.lock_outlined),
+      leading: Icon(
+        getChannelIcon(channel.privacy),
+        color: Theme.of(context).colorScheme.primary,
+      ),
       title: Text(
         channel.name,
         style: Theme.of(context).textTheme.labelSmall,
