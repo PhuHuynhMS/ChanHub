@@ -136,7 +136,7 @@ class _ListOtherReactionState extends State<ListOtherReaction> {
               onPressed: () => onReactionPressed(type),
               icon: Text(
                 getReactionEmoji(type),
-                style: Theme.of(context).textTheme.labelMedium,
+                style: Theme.of(context).textTheme.bodyMedium,
               ),
             ),
         ],
@@ -185,8 +185,7 @@ class ReactionButton extends StatelessWidget {
       ),
       child: Text(
         '${getReactionEmoji(type)} ${reactions.length}',
-        style: Theme.of(context).textTheme.labelMedium!.copyWith(
-              color: Theme.of(context).colorScheme.primary,
+        style: Theme.of(context).textTheme.titleMedium!.copyWith(
               fontWeight: hasReaction ? FontWeight.bold : FontWeight.normal,
             ),
       ),

@@ -20,9 +20,7 @@ class WorkspaceGetStarted extends StatelessWidget {
             // Get started
             Text(
               'Get started with ChanHub',
-              style: Theme.of(context).textTheme.titleLarge!.copyWith(
-                    color: Theme.of(context).colorScheme.primary,
-                  ),
+              style: Theme.of(context).textTheme.titleLarge,
             ),
             Image.asset('assets/images/get_started_bg.jpg'),
             Text(

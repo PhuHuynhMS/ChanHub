@@ -124,7 +124,7 @@ class ThreadActions extends StatelessWidget {
           ),
           title: Text(
             'Reply in thread',
-            style: Theme.of(context).textTheme.labelMedium,
+            style: Theme.of(context).textTheme.bodyMedium,
           ),
           onTap: () => showThreadDetails(context),
         ),
@@ -138,7 +138,7 @@ class ThreadActions extends StatelessWidget {
             ),
             title: Text(
               'Edit thread',
-              style: Theme.of(context).textTheme.labelMedium,
+              style: Theme.of(context).textTheme.bodyMedium,
             ),
             onTap: onEditThread,
           ),
@@ -149,7 +149,7 @@ class ThreadActions extends StatelessWidget {
             ),
             title: Text(
               'Delete thread',
-              style: Theme.of(context).textTheme.labelMedium!.copyWith(
+              style: Theme.of(context).textTheme.bodyMedium!.copyWith(
                     color: Theme.of(context).colorScheme.error,
                   ),
             ),

@@ -30,9 +30,7 @@ InputDecoration underlineInputDecoration(
       ),
     ),
     hintText: hintText,
-    hintStyle: Theme.of(context).textTheme.bodyMedium!.copyWith(
-          color: Theme.of(context).colorScheme.onSurface.withOpacity(0.5),
-        ),
+    hintStyle: Theme.of(context).textTheme.labelMedium,
   );
 }
 
@@ -42,9 +40,7 @@ InputDecoration borderlessInputDecoration(
 ) {
   return InputDecoration(
     hintText: 'Type a message',
-    hintStyle: Theme.of(context).textTheme.bodyMedium!.copyWith(
-          color: Theme.of(context).colorScheme.onSurface.withOpacity(0.5),
-        ),
+    hintStyle: Theme.of(context).textTheme.labelMedium,
     border: InputBorder.none,
     contentPadding: const EdgeInsets.all(10.0),
   );

@@ -117,12 +117,6 @@ class _MessageInputState extends State<MessageInput> {
 
   @override
   Widget build(BuildContext context) {
-    // Variables
-    final Color inactiveColor =
-        Theme.of(context).colorScheme.onSurface.withOpacity(0.5);
-    final Color activeColor = Theme.of(context).colorScheme.primary;
-    print(Theme.of(context).dividerColor);
-
     return Container(
       decoration: BoxDecoration(
         borderRadius: const BorderRadius.only(
@@ -158,9 +152,7 @@ class _MessageInputState extends State<MessageInput> {
                   minLines: 1,
                   decoration: InputDecoration(
                     hintText: 'Type a message',
-                    hintStyle: Theme.of(context).textTheme.bodyMedium!.copyWith(
-                          color: inactiveColor,
-                        ),
+                    hintStyle: Theme.of(context).textTheme.labelMedium,
                     border: InputBorder.none,
                     contentPadding: const EdgeInsets.all(10.0),
                   ),
@@ -174,7 +166,9 @@ class _MessageInputState extends State<MessageInput> {
               IconButton(
                 icon: Icon(
                   Icons.send,
-                  color: isMessageEmpty ? inactiveColor : activeColor,
+                  color: isMessageEmpty
+                      ? Theme.of(context).colorScheme.primary.withOpacity(0.3)
+                      : Theme.of(context).colorScheme.primary,
                 ),
                 onPressed: isMessageEmpty ? null : onSend,
               ),
@@ -183,9 +177,7 @@ class _MessageInputState extends State<MessageInput> {
 
           // Media
           if (mediaFiles.isNotEmpty) ...[
-            const Divider(
-              height: 0.0,
-            ),
+            const Divider(),
             ImagePreview(
               mediaFiles: mediaFiles,
               onRemoveMedia: onRemoveMedia,
@@ -195,9 +187,7 @@ class _MessageInputState extends State<MessageInput> {
 
           // Tasks
           if (tasks.isNotEmpty) ...[
-            const Divider(
-              height: 0.0,
-            ),
+            const Divider(),
             TaskPreview(
               tasks: tasks,
               onRemoveTask: onRemoveTask,
@@ -206,9 +196,7 @@ class _MessageInputState extends State<MessageInput> {
 
           //  More actions
           if (showMoreActions) ...[
-            const Divider(
-              height: 0.0,
-            ),
+            const Divider(),
             MoreActionButtons(
               canAddMedia: widget.canAddMedia,
               onAddMedia: onAddMedia,
@@ -289,9 +277,7 @@ class ActionButton extends StatelessWidget {
           Icon(icon, color: Theme.of(context).colorScheme.primary),
           Text(
             text,
-            style: Theme.of(context).textTheme.bodyMedium!.copyWith(
-                  color: Theme.of(context).colorScheme.primary,
-                ),
+            style: Theme.of(context).textTheme.titleMedium,
           ),
         ],
       ),

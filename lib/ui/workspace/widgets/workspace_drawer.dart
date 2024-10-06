@@ -44,16 +44,10 @@ class WorkSpaceDrawer extends StatelessWidget {
             padding: const EdgeInsets.only(left: 10.0, top: 15.0),
             child: Text(
               'Workspaces',
-              style: Theme.of(context).textTheme.titleLarge!.copyWith(
-                    color: Theme.of(context).colorScheme.primary,
-                  ),
+              style: Theme.of(context).textTheme.titleLarge,
             ),
           ),
-          Divider(
-            height: 20.0,
-            thickness: 1.0,
-            color: Theme.of(context).colorScheme.primary.withOpacity(0.3),
-          ),
+          const Divider(height: 20.0),
 
           // Workspaces List
           Expanded(
@@ -66,11 +60,7 @@ class WorkSpaceDrawer extends StatelessWidget {
               ),
             ),
           ),
-          Divider(
-            height: 0.0,
-            thickness: 1.0,
-            color: Theme.of(context).colorScheme.primary.withOpacity(0.3),
-          ),
+          const Divider(),
 
           // Workspace Actions
           ListTile(

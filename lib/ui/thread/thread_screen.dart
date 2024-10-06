@@ -72,11 +72,11 @@ class ThreadTitle extends StatelessWidget {
       children: <Widget>[
         Text(
           '# Thread',
-          style: Theme.of(context).textTheme.titleLarge,
+          style: Theme.of(context).primaryTextTheme.titleLarge,
         ),
         Text(
           'Message in $channelName',
-          style: Theme.of(context).textTheme.titleSmall,
+          style: Theme.of(context).primaryTextTheme.titleSmall,
         ),
       ],
     );

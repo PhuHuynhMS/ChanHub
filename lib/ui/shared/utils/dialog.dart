@@ -29,13 +29,9 @@ Future<bool> showConfirmDialog({
               // Title
               Text(
                 title,
-                style: Theme.of(context).textTheme.titleLarge!.copyWith(
-                      color: Theme.of(context).colorScheme.primary,
-                    ),
+                style: Theme.of(context).textTheme.titleLarge,
               ),
-              Divider(
-                color: Theme.of(context).colorScheme.primary.withOpacity(0.2),
-              ),
+              const Divider(height: 20.0),
               const SizedBox(height: 10.0),
 
               // Content
@@ -53,18 +49,14 @@ Future<bool> showConfirmDialog({
                     onPressed: () => Navigator.of(context).pop(false),
                     child: Text(
                       cancelText,
-                      style: Theme.of(context).textTheme.labelMedium!.copyWith(
-                            color: Theme.of(context).colorScheme.error,
-                          ),
+                      style: Theme.of(context).textTheme.titleMedium,
                     ),
                   ),
                   TextButton(
                     onPressed: () => Navigator.of(context).pop(true),
                     child: Text(
                       confirmText,
-                      style: Theme.of(context).textTheme.labelMedium!.copyWith(
-                            color: Theme.of(context).colorScheme.primary,
-                          ),
+                      style: Theme.of(context).textTheme.titleMedium,
                     ),
                   ),
                 ],
@@ -114,13 +106,9 @@ Future<bool> showInfoDialog({
               // Title
               Text(
                 title,
-                style: Theme.of(context).textTheme.titleLarge!.copyWith(
-                      color: Theme.of(context).colorScheme.primary,
-                    ),
+                style: Theme.of(context).textTheme.titleLarge,
               ),
-              Divider(
-                color: Theme.of(context).colorScheme.primary.withOpacity(0.2),
-              ),
+              const Divider(height: 20.0),
               const SizedBox(height: 10.0),
 
               // Content
@@ -141,9 +129,7 @@ Future<bool> showInfoDialog({
                     onPressed: () => Navigator.of(context).pop(),
                     child: Text(
                       cancelText,
-                      style: Theme.of(context).textTheme.bodyMedium!.copyWith(
-                            color: Theme.of(context).colorScheme.error,
-                          ),
+                      style: Theme.of(context).textTheme.titleMedium,
                     ),
                   ),
                   if (confirmText != null)
@@ -151,9 +137,7 @@ Future<bool> showInfoDialog({
                       onPressed: () => Navigator.of(context).pop(true),
                       child: Text(
                         confirmText,
-                        style: Theme.of(context).textTheme.bodyMedium!.copyWith(
-                              color: Theme.of(context).colorScheme.primary,
-                            ),
+                        style: Theme.of(context).textTheme.titleMedium,
                       ),
                     ),
                 ],
@@ -201,13 +185,9 @@ Future<bool> showInputDialog({
               // Title
               Text(
                 title,
-                style: Theme.of(context).textTheme.titleLarge!.copyWith(
-                      color: Theme.of(context).colorScheme.primary,
-                    ),
+                style: Theme.of(context).textTheme.titleLarge,
               ),
-              Divider(
-                color: Theme.of(context).colorScheme.primary.withOpacity(0.2),
-              ),
+              const Divider(height: 20.0),
               const SizedBox(height: 10.0),
 
               // Content

@@ -87,9 +87,7 @@ class _TaskInputState extends State<TaskInput> {
             // Title
             Text(
               'Add task',
-              style: Theme.of(context).textTheme.titleLarge!.copyWith(
-                    color: Theme.of(context).colorScheme.primary,
-                  ),
+              style: Theme.of(context).textTheme.titleLarge,
             ),
             const SizedBox(height: 10.0),
             const Divider(),

@@ -81,12 +81,8 @@ class _BlockTextFieldState extends State<BlockTextField> {
             borderSide: BorderSide.none,
           ),
           labelText: widget.labelText ?? '',
-          labelStyle: Theme.of(context).textTheme.bodyMedium!.copyWith(
-                color: Theme.of(context).colorScheme.onSurface.withOpacity(0.5),
-              ),
-          floatingLabelStyle: Theme.of(context).textTheme.titleMedium!.copyWith(
-                color: Theme.of(context).colorScheme.primary.withOpacity(1.0),
-              ),
+          labelStyle: Theme.of(context).textTheme.labelMedium,
+          floatingLabelStyle: Theme.of(context).textTheme.titleMedium,
           prefixIcon: widget.prefixIcon,
         ),
         style: widget.textStyle ?? Theme.of(context).textTheme.bodyMedium,

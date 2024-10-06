@@ -61,12 +61,13 @@ class WorkspaceTile extends StatelessWidget {
 
                   // Workspace Name
                   Text(
-                    truncate(workspace.name, 20),
+                    workspace.name,
                     style: Theme.of(context).textTheme.titleSmall!.copyWith(
                           color: isSelectedWorkspace
                               ? Theme.of(context).colorScheme.primary
                               : Theme.of(context).colorScheme.onSurface,
                         ),
+                    overflow: TextOverflow.ellipsis,
                   )
                 ],
               ),
@@ -114,9 +115,7 @@ class WorkspaceActionsHeader extends StatelessWidget {
         // Workspace Name
         Text(
           workspace.name,
-          style: Theme.of(context).textTheme.titleMedium!.copyWith(
-                color: Theme.of(context).colorScheme.primary,
-              ),
+          style: Theme.of(context).textTheme.titleMedium,
         )
       ],
     );
@@ -141,9 +140,7 @@ class WorkspaceActions extends StatelessWidget {
           leading: const Icon(Icons.person_add_alt),
           title: Text(
             'Invite',
-            style: Theme.of(context).textTheme.titleSmall!.copyWith(
-                  color: Theme.of(context).colorScheme.primary,
-                ),
+            style: Theme.of(context).textTheme.titleSmall,
           ),
         ),
         ListTile(

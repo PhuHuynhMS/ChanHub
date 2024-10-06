@@ -38,7 +38,7 @@ class _AddChannelScreenState extends State<AddChannelScreen> {
       appBar: AppBar(
         title: Text(
           'Add Channel',
-          style: Theme.of(context).textTheme.titleLarge,
+          style: Theme.of(context).primaryTextTheme.titleLarge,
         ),
       ),
       body: Center(
@@ -115,13 +115,8 @@ class _EncapsulatedSwitchState extends State<EncapsulatedSwitch> {
         Row(
           mainAxisAlignment: MainAxisAlignment.spaceBetween,
           children: <Widget>[
-            Text(
-              'Privacy mode',
-              style: Theme.of(context).textTheme.bodyMedium!.copyWith(
-                    color: Theme.of(context).colorScheme.onSurface,
-                    fontWeight: FontWeight.w600,
-                  ),
-            ),
+            Text('Privacy mode',
+                style: Theme.of(context).textTheme.titleMedium),
             Transform.scale(
               scale: 0.7,
               child: Switch(
@@ -137,9 +132,7 @@ class _EncapsulatedSwitchState extends State<EncapsulatedSwitch> {
         ),
         Text(
           'When this mode is activated, you can control who can view and interact with your channel\'s content.',
-          style: Theme.of(context).textTheme.bodySmall!.copyWith(
-                color: Theme.of(context).colorScheme.onSurface.withOpacity(0.4),
-              ),
+          style: Theme.of(context).textTheme.labelSmall,
         ),
       ],
     );

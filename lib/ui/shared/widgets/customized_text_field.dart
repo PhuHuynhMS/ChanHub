@@ -30,11 +30,11 @@ class CustomizedTextField extends StatelessWidget {
       decoration: InputDecoration(
         border: const OutlineInputBorder(),
         label:
-            Text('$labelText', style: Theme.of(context).textTheme.bodyMedium),
+            Text('$labelText', style: Theme.of(context).textTheme.titleMedium),
         hintText: hintText,
-        hintStyle: Theme.of(context).textTheme.bodyMedium!.copyWith(
-            color: Theme.of(context).colorScheme.onSurface.withOpacity(0.5)),
+        hintStyle: Theme.of(context).textTheme.labelMedium,
       ),
+      style: Theme.of(context).textTheme.bodyMedium,
       readOnly: readOnly,
     );
   }

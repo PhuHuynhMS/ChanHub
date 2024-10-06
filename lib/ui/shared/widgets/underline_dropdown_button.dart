@@ -26,17 +26,16 @@ class UnderlineDropdownButton<T> extends StatelessWidget {
         child: DropdownButton<T>(
           hint: Text(
             hint,
-            style: Theme.of(context).textTheme.bodyMedium!.copyWith(
-                  color:
-                      Theme.of(context).colorScheme.onSurface.withOpacity(0.5),
-                ),
+            style: Theme.of(context).textTheme.labelMedium,
           ),
           value: selectedValue,
           items: items.map((value) {
             return DropdownMenuItem<T>(
               value: value,
-              child: Text(value.toString(),
-                  style: Theme.of(context).textTheme.bodyMedium),
+              child: Text(
+                value.toString(),
+                style: Theme.of(context).textTheme.bodyMedium,
+              ),
             );
           }).toList(),
           onChanged: onChanged,

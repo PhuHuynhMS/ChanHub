@@ -51,9 +51,7 @@ class _CreateWorkspaceScreenState extends State<CreateWorkspaceScreen> {
         centerTitle: false,
         title: Text(
           'Create workspace',
-          style: Theme.of(context).textTheme.titleLarge!.copyWith(
-                color: Theme.of(context).colorScheme.onPrimary,
-              ),
+          style: Theme.of(context).primaryTextTheme.titleLarge,
         ),
       ),
       body: Center(
@@ -65,10 +63,7 @@ class _CreateWorkspaceScreenState extends State<CreateWorkspaceScreen> {
                 // Title
                 Text(
                   'What\'s is the name of your company or team?',
-                  style: Theme.of(context).textTheme.titleLarge!.copyWith(
-                        color: Theme.of(context).colorScheme.onSurface,
-                        fontWeight: FontWeight.w900,
-                      ),
+                  style: Theme.of(context).textTheme.headlineSmall,
                   textAlign: TextAlign.center,
                 ),
                 const SizedBox(height: 30.0),
@@ -110,11 +105,7 @@ class _CreateWorkspaceScreenState extends State<CreateWorkspaceScreen> {
                 // Terms and conditions
                 Text(
                   'By continuing, you\'re agreeing to our Main Services Agreement, User Terms of Service, and ChanHub Supplemental Terms. Additional disclosures are available in out Privacy Policy and Cookie Policy.',
-                  style: Theme.of(context).textTheme.bodySmall!.copyWith(
-                      color: Theme.of(context)
-                          .colorScheme
-                          .onSurface
-                          .withOpacity(0.4)),
+                  style: Theme.of(context).textTheme.labelSmall,
                   maxLines: 4,
                   softWrap: true,
                 ),

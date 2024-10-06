@@ -88,17 +88,17 @@ class ChannelTitle extends StatelessWidget {
           children: [
             Icon(
               getChannelIcon(channel.privacy),
-              size: Theme.of(context).textTheme.titleLarge!.fontSize,
+              size: Theme.of(context).primaryTextTheme.titleLarge!.fontSize,
             ),
             Text(
               ' ${channel.name}',
-              style: Theme.of(context).textTheme.titleLarge,
+              style: Theme.of(context).primaryTextTheme.titleLarge,
             ),
           ],
         ),
         Text(
           '${channel.memberCount} members',
-          style: Theme.of(context).textTheme.titleSmall,
+          style: Theme.of(context).primaryTextTheme.titleSmall,
         ),
       ],
     );

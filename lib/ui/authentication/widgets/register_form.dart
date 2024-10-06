@@ -92,10 +92,7 @@ class RegisterForm extends StatelessWidget {
                 style: ElevatedButton.styleFrom(
                   backgroundColor: Theme.of(context).colorScheme.primary,
                 ),
-                child: Text(
-                  'Register',
-                  style: Theme.of(context).textTheme.titleMedium,
-                ),
+                child: const Text('Register'),
                 onPressed: () => navigateToWorkspace(context),
               ),
             ),
@@ -104,10 +101,7 @@ class RegisterForm extends StatelessWidget {
             Row(
               mainAxisAlignment: MainAxisAlignment.center,
               children: <Widget>[
-                Text(
-                  'You have an account?',
-                  style: Theme.of(context).textTheme.bodyMedium,
-                ),
+                const Text('You have an account?'),
                 TextButton(
                   onPressed: toggleLoginRegister,
                   child: Text(

@@ -68,17 +68,14 @@ class _OnboardingScreenState extends State<OnboardingScreen> {
         color: Theme.of(context).colorScheme.primary,
       ),
       width: MediaQuery.of(context).size.width * 0.9,
-      child: TextButton(
+      child: ElevatedButton(
         onPressed: () {
           // TODO: Save the onboarding state
           Navigator.of(context).pushReplacementNamed(
             GetStartedScreen.routeName,
           );
         },
-        child: Text(
-          "Get Started",
-          style: Theme.of(context).textTheme.titleMedium,
-        ),
+        child: const Text("Get Started"),
       ),
     );
   }
@@ -92,9 +89,7 @@ class _OnboardingScreenState extends State<OnboardingScreen> {
           onPressed: onSkip,
           child: Text(
             "Skip",
-            style: Theme.of(context).textTheme.labelLarge!.copyWith(
-                  color: Theme.of(context).colorScheme.primary,
-                ),
+            style: Theme.of(context).textTheme.titleMedium,
           ),
         ),
 
@@ -117,9 +112,7 @@ class _OnboardingScreenState extends State<OnboardingScreen> {
           onPressed: onNext,
           child: Text(
             "Next",
-            style: Theme.of(context).textTheme.labelLarge!.copyWith(
-                  color: Theme.of(context).colorScheme.primary,
-                ),
+            style: Theme.of(context).textTheme.titleMedium,
           ),
         ),
       ],
@@ -148,10 +141,7 @@ class OnboardingPage extends StatelessWidget {
         const SizedBox(height: 15),
         Text(
           page.title,
-          style: Theme.of(context).textTheme.titleLarge!.copyWith(
-                color: Theme.of(context).colorScheme.primary,
-                fontWeight: FontWeight.bold,
-              ),
+          style: Theme.of(context).textTheme.titleLarge,
         ),
         const SizedBox(height: 15),
         Text(

@@ -103,17 +103,13 @@ class ThreadTitle extends StatelessWidget {
           // Username
           Text(
             user.fullName,
-            style: Theme.of(context).textTheme.titleMedium!.copyWith(
-                  color: Theme.of(context).colorScheme.primary,
-                ),
+            style: Theme.of(context).textTheme.titleMedium,
           ),
 
           // Timestamp
           Text(
             formatDateTime(createdAt),
-            style: Theme.of(context).textTheme.bodySmall!.copyWith(
-                  color: Theme.of(context).colorScheme.secondary,
-                ),
+            style: Theme.of(context).textTheme.labelSmall,
           ),
         ],
       ),
@@ -133,9 +129,7 @@ class ThreadContent extends StatelessWidget {
   Widget build(BuildContext context) {
     return Text(
       content,
-      style: Theme.of(context).textTheme.bodyMedium!.copyWith(
-            color: Theme.of(context).colorScheme.onSurface.withOpacity(0.8),
-          ),
+      style: Theme.of(context).textTheme.bodyMedium,
     );
   }
 }
@@ -152,9 +146,7 @@ class ThreadComment extends StatelessWidget {
   Widget build(BuildContext context) {
     return Text(
       formatTotalReplies(totalReplies),
-      style: Theme.of(context).textTheme.titleMedium!.copyWith(
-            color: Theme.of(context).colorScheme.secondary,
-          ),
+      style: Theme.of(context).textTheme.titleMedium,
     );
   }
 }
@@ -224,8 +216,7 @@ class _ThreadTaskState extends State<ThreadTask> {
           subtitle: Text(
             'Assignee: ${task.assignee.fullName} \nDeadline: ${formatDeadlineTime(task.deadline)}',
             style: Theme.of(context).textTheme.bodySmall!.copyWith(
-                  color:
-                      Theme.of(context).colorScheme.secondary.withOpacity(0.6),
+                  color: getTaskStatusColor(status, context).withOpacity(0.8),
                 ),
           ),
         ),
@@ -318,13 +309,7 @@ class _ThreadTaskState extends State<ThreadTask> {
                           Text(
                             textAlign: TextAlign.end,
                             '${task.assignee.fullName} - ${formatDeadlineTime(task.deadline)}',
-                            style:
-                                Theme.of(context).textTheme.bodySmall!.copyWith(
-                                      color: Theme.of(context)
-                                          .colorScheme
-                                          .secondary
-                                          .withOpacity(0.6),
-                                    ),
+                            style: Theme.of(context).textTheme.labelSmall,
                           ),
                         ],
                       ),

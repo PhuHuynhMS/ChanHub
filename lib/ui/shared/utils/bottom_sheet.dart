@@ -19,19 +19,10 @@ void showModalBottomSheetActions({
           if (header != null) header,
           if (title != null) DefaultBottomSheetActionHeader(title),
 
-          Divider(
-            color: Theme.of(context).colorScheme.primary.withOpacity(0.2),
-            height: 0.0,
-          ),
+          const Divider(),
           // Body
           if (body != null) body,
         ],
-      ),
-    ),
-    shape: const RoundedRectangleBorder(
-      borderRadius: BorderRadius.only(
-        topLeft: Radius.circular(20.0),
-        topRight: Radius.circular(20.0),
       ),
     ),
   );
@@ -51,9 +42,7 @@ class DefaultBottomSheetActionHeader extends StatelessWidget {
       padding: const EdgeInsets.symmetric(vertical: 15.0, horizontal: 20.0),
       child: Text(
         title,
-        style: Theme.of(context).textTheme.titleMedium!.copyWith(
-              color: Theme.of(context).colorScheme.primary,
-            ),
+        style: Theme.of(context).textTheme.titleMedium,
       ),
     );
   }

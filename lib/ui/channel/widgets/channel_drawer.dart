@@ -22,16 +22,10 @@ class ChannelDrawer extends StatelessWidget {
             padding: const EdgeInsets.only(left: 20.0, top: 15.0),
             child: Text(
               'Channel Actions',
-              style: Theme.of(context).textTheme.titleLarge!.copyWith(
-                    color: Theme.of(context).colorScheme.primary,
-                  ),
+              style: Theme.of(context).textTheme.titleLarge,
             ),
           ),
-          Divider(
-            height: 20.0,
-            thickness: 1.0,
-            color: Theme.of(context).colorScheme.primary.withOpacity(0.3),
-          ),
+          const Divider(height: 20.0),
 
           // Workspaces List
           Expanded(
@@ -64,11 +58,7 @@ class ChannelDrawer extends StatelessWidget {
               ],
             ),
           ),
-          Divider(
-            height: 0.0,
-            thickness: 1.0,
-            color: Theme.of(context).colorScheme.primary.withOpacity(0.3),
-          ),
+          const Divider(),
 
           // Workspace Actions
           ListTile(

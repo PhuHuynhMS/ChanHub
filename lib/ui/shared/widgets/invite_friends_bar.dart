@@ -227,9 +227,7 @@ Widget userModelPopupItem(
       contentPadding: const EdgeInsets.all(0.0),
       title: Text(
         user.userName,
-        style: Theme.of(context).textTheme.bodyLarge!.copyWith(
-              color: Theme.of(context).colorScheme.onSurface,
-            ),
+        style: Theme.of(context).textTheme.bodyMedium,
       ),
       leading: UserAvatar(user),
       trailing: isSelected ? const Icon(Icons.check) : null,
@@ -262,8 +260,7 @@ class ColabChip extends StatelessWidget {
           onDeleted: onDeleted,
           backgroundColor:
               Theme.of(context).colorScheme.tertiary.withOpacity(0.4),
-          label:
-              Text(username, style: Theme.of(context).textTheme.bodyMedium!)),
+          label: Text(username, style: Theme.of(context).textTheme.bodyMedium)),
     );
   }
 }

@@ -18,11 +18,7 @@ class WorkspaceDescription extends StatelessWidget {
       child: Column(
         children: [
           WorkspaceHeader(workspace),
-          Divider(
-            thickness: 1.0,
-            height: 0.0,
-            color: Theme.of(context).colorScheme.primary.withOpacity(0.3),
-          ),
+          const Divider(),
           WorkSpaceContent(workspace),
         ],
       ),
@@ -63,9 +59,7 @@ class WorkspaceHeader extends StatelessWidget {
               // Workspace Name
               Text(
                 workspace.name.toUpperCase(),
-                style: Theme.of(context).textTheme.titleMedium!.copyWith(
-                      color: Theme.of(context).colorScheme.primary,
-                    ),
+                style: Theme.of(context).textTheme.titleMedium,
                 overflow: TextOverflow.ellipsis,
               ),
               const SizedBox(height: 10.0),
@@ -123,9 +117,7 @@ class WorkSpaceContent extends StatelessWidget {
       shape: const Border(),
       title: Text(
         'Channels',
-        style: Theme.of(context).textTheme.titleMedium!.copyWith(
-              color: Theme.of(context).colorScheme.primary,
-            ),
+        style: Theme.of(context).textTheme.titleMedium,
       ),
       children: [
         // Channels
@@ -138,9 +130,7 @@ class WorkSpaceContent extends StatelessWidget {
           leading: const Icon(Icons.add),
           title: Text(
             'Add channel',
-            style: Theme.of(context).textTheme.titleSmall!.copyWith(
-                  color: Theme.of(context).colorScheme.primary,
-                ),
+            style: Theme.of(context).textTheme.titleSmall,
           ),
         )
       ],
@@ -173,7 +163,7 @@ class ChannelTile extends StatelessWidget {
       ),
       title: Text(
         channel.name,
-        style: Theme.of(context).textTheme.labelSmall,
+        style: Theme.of(context).textTheme.bodyMedium,
       ),
     );
   }

@@ -27,7 +27,7 @@ class ChannelDescription extends StatelessWidget {
             // Channel title
             Text(
               '# ${channel.name}',
-              style: Theme.of(context).textTheme.displayLarge,
+              style: Theme.of(context).textTheme.headlineSmall,
             ),
             const SizedBox(height: 10.0),
 
@@ -36,13 +36,7 @@ class ChannelDescription extends StatelessWidget {
               TextSpan(
                 style: Theme.of(context).textTheme.bodySmall,
                 children: [
-                  createUserTag(
-                    user: channel.creator,
-                    style: Theme.of(context).textTheme.bodySmall!.copyWith(
-                          color: Theme.of(context).colorScheme.primary,
-                          fontWeight: FontWeight.bold,
-                        ),
-                  ),
+                  createUserTag(user: channel.creator),
                   TextSpan(
                     text:
                         ' created this channel on ${channel.createdAt.day}/${channel.createdAt.month}/${channel.createdAt.year}. '
@@ -82,6 +76,7 @@ class ChannelDescription extends StatelessWidget {
   }
 }
 
+// TODO: Update the BlockButton widget
 class BlockButton extends StatelessWidget {
   const BlockButton({
     super.key,
@@ -132,9 +127,7 @@ class BlockButton extends StatelessWidget {
                 ),
                 Text(
                   text,
-                  style: Theme.of(context).textTheme.bodyMedium!.copyWith(
-                        color: Theme.of(context).colorScheme.primary,
-                      ),
+                  style: Theme.of(context).textTheme.titleMedium,
                 ),
               ],
             ),

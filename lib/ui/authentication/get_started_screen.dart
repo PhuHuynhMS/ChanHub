@@ -35,20 +35,12 @@ class GetStartedScreen extends StatelessWidget {
                 mainAxisAlignment: MainAxisAlignment.center,
                 crossAxisAlignment: CrossAxisAlignment.center,
                 children: <Widget>[
-                  Text(
-                    'ChanHub',
-                    style: Theme.of(context).textTheme.displaySmall!.copyWith(
-                          color: Theme.of(context).colorScheme.primary,
-                          fontSize: 40.0,
-                          fontWeight: FontWeight.bold,
-                        ),
-                  ),
+                  Text('ChanHub',
+                      style: Theme.of(context).textTheme.headlineLarge),
                   const SizedBox(height: 10),
                   Text(
                     'Connect with your team now!',
-                    style: Theme.of(context).textTheme.labelMedium!.copyWith(
-                          color: Theme.of(context).colorScheme.primary,
-                        ),
+                    style: Theme.of(context).textTheme.titleMedium,
                   ),
                   const SizedBox(height: 20),
 
@@ -60,12 +52,7 @@ class GetStartedScreen extends StatelessWidget {
                       style: ElevatedButton.styleFrom(
                         backgroundColor: Theme.of(context).colorScheme.primary,
                       ),
-                      child: Text(
-                        'Login',
-                        style: Theme.of(context).textTheme.labelLarge!.copyWith(
-                              color: Theme.of(context).colorScheme.onPrimary,
-                            ),
-                      ),
+                      child: const Text('Login'),
                       onPressed: () => navigateToLogin(context),
                     ),
                   ),

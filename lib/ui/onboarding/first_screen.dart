@@ -39,10 +39,8 @@ class _FirstScreenState extends State<FirstScreen> {
           },
           child: Text(
             "ChanHub",
-            style: Theme.of(context).textTheme.titleLarge!.copyWith(
-                  color: Theme.of(context).colorScheme.onPrimary,
-                  fontSize: 40.0,
-                  fontWeight: FontWeight.bold,
+            style: Theme.of(context).textTheme.headlineLarge!.copyWith(
+                  color: Colors.white,
                 ),
           ),
         ),
