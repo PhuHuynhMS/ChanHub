@@ -158,42 +158,63 @@ class _FriendSearchBarState extends State<InviteFriendsBar> {
     }
   }
 
-  List<User> selectedItems = [];
+  List<User> fiteredFriends = [];
 
   @override
   Widget build(BuildContext context) {
-    return DropdownSearch<User>.multiSelection(
-      dropdownBuilder: (context, selectedItems) {
-        if (selectedItems.isEmpty) {
-          return const Text("Invite your collaborators");
-        }
-        return Wrap(
-          children: selectedItems.map((user) {
-            return ColabChip(
-                username: user.userName,
-                onDeleted: () => setState(() => selectedItems
-                    .remove(user))); // Hiển thị tên người dùng đã chọn
-          }).toList(),
-        );
-      },
-      compareFn: (item1, item2) => item1.id == item2.id,
-      items: (filter, loadProps) => _filterFriends(filter),
-      popupProps: const PopupPropsMultiSelection.dialog(
-        showSelectedItems: true,
-        dialogProps: DialogProps(
-            alignment: Alignment.topCenter,
-            contentPadding: EdgeInsets.all(30.0)),
-        itemBuilder: userModelPopupItem,
-      ),
-      decoratorProps: DropDownDecoratorProps(
-          decoration: InputDecoration(
-              prefixIcon: const Icon(Icons.people),
+    return SingleChildScrollView(
+      child: DropdownSearch<User>.multiSelection(
+        dropdownBuilder: (context, selectedItems) {
+          if (selectedItems.isEmpty) {
+            return const Text("Invite your collaborators");
+          }
+          return Wrap(
+            children: selectedItems.map((user) {
+              return ColabChip(
+                  username: user.userName,
+                  onDeleted: () => setState(() => selectedItems
+                      .remove(user))); // Hiển thị tên người dùng đã chọn
+            }).toList(),
+          );
+        },
+        compareFn: (item1, item2) => item1.id == item2.id,
+        items: (filter, loadProps) {
+          return _filterFriends(filter);
+        },
+        popupProps: PopupPropsMultiSelection.dialog(
+          disableFilter: true,
+          showSearchBox: true,
+          searchFieldProps: TextFieldProps(
+            padding: const EdgeInsets.only(bottom: 5.0),
+            decoration: InputDecoration(
+              prefixIcon: const Icon(Icons.search),
+              hintText: "Search for your friend's username",
               enabledBorder: OutlineInputBorder(
-                borderSide:
-                    BorderSide(color: Colors.transparent.withOpacity(0.3)),
                 borderRadius: BorderRadius.circular(12),
               ),
-              contentPadding: const EdgeInsets.all(8.0))),
+            ),
+            onChanged: (value) {
+              setState(() {
+                fiteredFriends = _filterFriends(value);
+              });
+            },
+          ),
+          showSelectedItems: false,
+          dialogProps: const DialogProps(
+              alignment: Alignment.topCenter,
+              contentPadding: EdgeInsets.all(20.0)),
+          itemBuilder: userModelPopupItem,
+        ),
+        decoratorProps: DropDownDecoratorProps(
+            decoration: InputDecoration(
+                prefixIcon: const Icon(Icons.people),
+                enabledBorder: OutlineInputBorder(
+                  borderSide:
+                      BorderSide(color: Colors.transparent.withOpacity(0.3)),
+                  borderRadius: BorderRadius.circular(12),
+                ),
+                contentPadding: const EdgeInsets.all(8.0))),
+      ),
     );
   }
 }
