@@ -76,7 +76,8 @@ class _AddChannelScreenState extends State<AddChannelScreen> {
                     maxLines: 2,
                   ),
 
-                  EncapsulatedSwitch(),
+                  const EncapsulatedSwitch(),
+                  const SizedBox(height: 10.0),
                   SizedBox(
                     height: 40.0,
                     width: double.infinity,
@@ -108,43 +109,39 @@ class _EncapsulatedSwitchState extends State<EncapsulatedSwitch> {
 
   @override
   Widget build(BuildContext context) {
-    return Padding(
-      padding: const EdgeInsets.all(8.0),
-      child: Row(
-        mainAxisAlignment: MainAxisAlignment.spaceBetween,
-        children: [
-          Expanded(
-            child: Column(
-              crossAxisAlignment: CrossAxisAlignment.start,
-              children: [
-                Text(
-                  'Privacy mode',
-                  style: Theme.of(context).textTheme.titleLarge!.copyWith(
-                        color: Theme.of(context).colorScheme.onSurface,
-                      ),
-                ),
-                Text(
-                  'Privacy mode helps protect your channel\'s information. When this mode is activated, you can control who can view and interact with your channel\'s content.',
-                  style: Theme.of(context).textTheme.bodyMedium!.copyWith(
-                        color: Theme.of(context)
-                            .colorScheme
-                            .onSurface
-                            .withOpacity(0.4),
-                      ),
-                ),
-              ],
+    return ListView(
+      shrinkWrap: true,
+      children: [
+        Row(
+          mainAxisAlignment: MainAxisAlignment.spaceBetween,
+          children: <Widget>[
+            Text(
+              'Privacy mode',
+              style: Theme.of(context).textTheme.bodyMedium!.copyWith(
+                    color: Theme.of(context).colorScheme.onSurface,
+                    fontWeight: FontWeight.w600,
+                  ),
             ),
-          ),
-          Switch(
-              activeColor: Theme.of(context).colorScheme.primary,
-              value: isPrivacy,
-              onChanged: (value) {
-                setState(() {
-                  isPrivacy = value;
-                });
-              })
-        ],
-      ),
+            Transform.scale(
+              scale: 0.7,
+              child: Switch(
+                  activeColor: Theme.of(context).colorScheme.primary,
+                  value: isPrivacy,
+                  onChanged: (value) {
+                    setState(() {
+                      isPrivacy = value;
+                    });
+                  }),
+            )
+          ],
+        ),
+        Text(
+          'When this mode is activated, you can control who can view and interact with your channel\'s content.',
+          style: Theme.of(context).textTheme.bodySmall!.copyWith(
+                color: Theme.of(context).colorScheme.onSurface.withOpacity(0.4),
+              ),
+        ),
+      ],
     );
   }
 }

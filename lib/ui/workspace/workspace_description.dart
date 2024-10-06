@@ -15,16 +15,18 @@ class WorkspaceDescription extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    return Column(
-      children: [
-        WorkspaceHeader(workspace),
-        Divider(
-          thickness: 1.0,
-          height: 0.0,
-          color: Theme.of(context).colorScheme.primary.withOpacity(0.3),
-        ),
-        WorkSpaceContent(workspace),
-      ],
+    return SingleChildScrollView(
+      child: Column(
+        children: [
+          WorkspaceHeader(workspace),
+          Divider(
+            thickness: 1.0,
+            height: 0.0,
+            color: Theme.of(context).colorScheme.primary.withOpacity(0.3),
+          ),
+          WorkSpaceContent(workspace),
+        ],
+      ),
     );
   }
 }
