@@ -2,7 +2,11 @@ import 'package:flutter/material.dart';
 
 import '../../../common/enums.dart';
 
-TaskStatus getTaskStatus(DateTime deadline, DateTime? completedAt) {
+TaskStatus getTaskStatus(DateTime? deadline, DateTime? completedAt) {
+  if (deadline == null) {
+    return completedAt == null ? TaskStatus.inProgress : TaskStatus.completed;
+  }
+
   if (completedAt == null && DateTime.now().isAfter(deadline)) {
     return TaskStatus.overdue;
   }

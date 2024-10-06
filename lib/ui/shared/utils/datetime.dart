@@ -1,3 +1,4 @@
+import 'package:flutter/material.dart';
 import 'package:intl/intl.dart';
 
 String formatDateTime(DateTime dateTime) {
@@ -23,6 +24,45 @@ String formatDateTime(DateTime dateTime) {
   }
 }
 
-String formatDeadlineTime(DateTime dateTime) {
-  return DateFormat('HH:mm dd/MM/yyyy').format(dateTime);
+String formatDeadlineTime(DateTime? dateTime) {
+  if (dateTime != null) {
+    return DateFormat('HH:mm dd/MM/yyyy').format(dateTime);
+  } else {
+    return 'No deadline';
+  }
+}
+
+Future<DateTime?> showDateTimePicker(BuildContext context) async {
+  DateTime? pickedDate = await showDatePicker(
+    context: context,
+    initialDate: DateTime.now(),
+    firstDate: DateTime(2000),
+    lastDate: DateTime(2101),
+  );
+
+  if (pickedDate == null) {
+    return null;
+  }
+
+  // Check if the widget is still mounted
+  if (!context.mounted) {
+    return null;
+  }
+
+  final TimeOfDay? pickedTime = await showTimePicker(
+    context: context,
+    initialTime: TimeOfDay.now(),
+  );
+
+  if (pickedTime == null) {
+    return null;
+  }
+
+  return DateTime(
+    pickedDate.year,
+    pickedDate.month,
+    pickedDate.day,
+    pickedTime.hour,
+    pickedTime.minute,
+  );
 }

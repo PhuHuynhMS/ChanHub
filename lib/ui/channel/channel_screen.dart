@@ -8,6 +8,7 @@ import '../thread/threads_manager.dart';
 import '../shared/widget/message_input.dart';
 import '../shared/utils/channelicon.dart';
 import './channel_description.dart';
+import './channel_drawer.dart';
 import './thread_detail.dart';
 
 class ChannelScreen extends StatelessWidget {
@@ -19,14 +20,6 @@ class ChannelScreen extends StatelessWidget {
   });
 
   final Channel channel;
-
-  void onEditChannelDescription() {
-    print('Edit channel');
-  }
-
-  void onAddChannelMember() {
-    print('Add channel member');
-  }
 
   void onSendMessage(String message, List<File> mediaUrls) {
     print('Send message: $message');
@@ -50,17 +43,18 @@ class ChannelScreen extends StatelessWidget {
           centerTitle: false,
           title: ChannelTitle(channel),
           actions: [
-            // Edit channel and add member buttons
-            IconButton(
-              icon: const Icon(Icons.edit),
-              onPressed: onEditChannelDescription,
-            ),
-            IconButton(
-              icon: const Icon(Icons.person_add),
-              onPressed: onAddChannelMember,
-            ),
+            // More actions
+            Builder(builder: (context) {
+              return IconButton(
+                icon: const Icon(Icons.menu_open),
+                onPressed: () {
+                  Scaffold.of(context).openEndDrawer();
+                },
+              );
+            }),
           ],
         ),
+        endDrawer: const ChannelDrawer(),
         body: ListView.builder(
           padding: const EdgeInsets.only(bottom: 50.0),
           reverse: true,

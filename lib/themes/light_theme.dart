@@ -120,5 +120,9 @@ final ThemeData lightTheme = ThemeData(
     contentPadding: const EdgeInsets.symmetric(horizontal: 16.0, vertical: 0.0),
     dense: true,
   ),
-  // dividerColor: ChanHubColors.onSurface.withOpacity(0.3));
+  dividerTheme: DividerThemeData(
+    color: lightColorScheme.primary.withOpacity(0.3),
+    thickness: 1.0,
+    space: 0.0,
+  ),
 );

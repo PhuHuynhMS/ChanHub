@@ -9,6 +9,7 @@ import '../../../models/user.dart';
 import '../utils/threadcomment.dart';
 import '../utils/task.dart';
 import '../utils/datetime.dart';
+import '../utils/dialog.dart';
 import './media_preview.dart';
 import './thread_reaction.dart';
 import './progress_bar.dart';
@@ -243,84 +244,32 @@ class _ThreadTaskState extends State<ThreadTask> {
 
   void showTaskDetails(BuildContext context) {
     // Open dialog for task details
-    showDialog(
+    showInfoDialog(
       context: context,
-      builder: (context) {
-        return Dialog(
-          shape: RoundedRectangleBorder(
-            borderRadius: BorderRadius.circular(20.0),
+      title: 'Task details',
+      children: <Widget>[
+        ValueListenableBuilder(
+          valueListenable: tasks,
+          builder: (context, value, __) {
+            int completedTasks =
+                tasks.value.where((task) => task.isCompleted ?? false).length;
+            int totalTasks = tasks.value.length;
+            return ProgressBar(
+              title: '$completedTasks/$totalTasks tasks completed',
+              total: totalTasks,
+              completed: completedTasks,
+            );
+          },
+        ),
+        for (int index = 0; index < tasks.value.length; index++)
+          ValueListenableBuilder(
+            valueListenable: tasks,
+            builder: (context, value, __) {
+              Task task = value[index];
+              return buildExpansionCheckboxTile(context, task);
+            },
           ),
-          insetPadding:
-              const EdgeInsets.symmetric(horizontal: 20.0, vertical: 150.0),
-          child: Padding(
-            padding: const EdgeInsets.only(
-              left: 20.0,
-              right: 20.0,
-              top: 20.0,
-              bottom: 10.0,
-            ),
-            child: Column(
-              crossAxisAlignment: CrossAxisAlignment.start,
-              children: <Widget>[
-                // Title
-                Text(
-                  'Tasks',
-                  style: Theme.of(context).textTheme.titleLarge!.copyWith(
-                        color: Theme.of(context).colorScheme.primary,
-                      ),
-                ),
-                Divider(
-                  color: Theme.of(context).colorScheme.primary.withOpacity(0.2),
-                ),
-                const SizedBox(height: 10.0),
-                // Progress bar
-                ValueListenableBuilder(
-                  valueListenable: tasks,
-                  builder: (context, value, __) {
-                    int completedTasks = tasks.value
-                        .where((task) => task.isCompleted ?? false)
-                        .length;
-                    int totalTasks = tasks.value.length;
-                    return ProgressBar(
-                      title: '$completedTasks/$totalTasks tasks completed',
-                      total: totalTasks,
-                      completed: completedTasks,
-                    );
-                  },
-                ),
-                Expanded(
-                  child: ListView.builder(
-                    itemCount: tasks.value.length,
-                    itemBuilder: (context, index) {
-                      return ValueListenableBuilder(
-                        valueListenable: tasks,
-                        builder: (context, value, __) {
-                          final Task task = value[index];
-                          return buildExpansionCheckboxTile(context, task);
-                        },
-                      );
-                    },
-                  ),
-                ),
-
-                // Close button
-                Align(
-                  alignment: Alignment.centerRight,
-                  child: TextButton(
-                    onPressed: () => Navigator.of(context).pop(),
-                    child: Text(
-                      'Close',
-                      style: Theme.of(context).textTheme.bodyMedium!.copyWith(
-                            color: Theme.of(context).colorScheme.primary,
-                          ),
-                    ),
-                  ),
-                ),
-              ],
-            ),
-          ),
-        );
-      },
+      ],
     );
   }
 
@@ -377,7 +326,7 @@ class _ThreadTaskState extends State<ThreadTask> {
                           // Short description (assignee, deadline)
                           Text(
                             textAlign: TextAlign.end,
-                            '${task.assignee.fullName} - ${formatDateTime(task.deadline)}',
+                            '${task.assignee.fullName} - ${formatDeadlineTime(task.deadline)}',
                             style:
                                 Theme.of(context).textTheme.bodySmall!.copyWith(
                                       color: Theme.of(context)
