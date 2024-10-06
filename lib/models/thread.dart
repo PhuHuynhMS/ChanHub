@@ -2,6 +2,7 @@ import '../common/enums.dart';
 import './comment.dart';
 import './reaction.dart';
 import './user.dart';
+import './task.dart';
 
 class Thread {
   final String? id;
@@ -12,6 +13,7 @@ class Thread {
   final DateTime? updatedAt;
   final Map<ReactionType, List<Reaction>> reactions;
   final List<Comment> comments;
+  final List<Task> tasks;
   User creator;
 
   Thread({
@@ -24,6 +26,7 @@ class Thread {
     this.updatedAt,
     this.reactions = const <ReactionType, List<Reaction>>{},
     this.comments = const <Comment>[],
+    this.tasks = const <Task>[],
   });
 
   Thread copyWith({
@@ -35,6 +38,7 @@ class Thread {
     DateTime? updatedAt,
     Map<ReactionType, List<Reaction>>? reactions,
     List<Comment>? comments,
+    List<Task>? tasks,
     User? creator,
   }) {
     return Thread(
@@ -46,6 +50,7 @@ class Thread {
       updatedAt: updatedAt ?? this.updatedAt,
       reactions: reactions ?? this.reactions,
       comments: comments ?? this.comments,
+      tasks: tasks ?? this.tasks,
       creator: creator ?? this.creator,
     );
   }

@@ -32,4 +32,9 @@ class User {
       avatarUrl: avatarUrl ?? this.avatarUrl,
     );
   }
+
+  @override
+  String toString() {
+    return userName;
+  }
 }

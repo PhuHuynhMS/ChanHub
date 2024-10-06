@@ -78,52 +78,58 @@ const lightColorScheme = ColorScheme(
 );
 
 final ThemeData lightTheme = ThemeData(
-    colorScheme: lightColorScheme,
-    splashColor: Colors.white,
-    fontFamily: GoogleFonts.notoSans().fontFamily,
-    textTheme: lightTextTheme,
+  colorScheme: lightColorScheme,
+  splashColor: Colors.white,
+  fontFamily: GoogleFonts.notoSans().fontFamily,
+  textTheme: lightTextTheme,
 
-    // Define the default color of the app.
-    appBarTheme: const AppBarTheme(
-      foregroundColor: ChanHubColors.onPrimary,
-      backgroundColor: ChanHubColors.primary,
-      centerTitle: true,
-    ),
-    floatingActionButtonTheme: const FloatingActionButtonThemeData(
-      foregroundColor: ChanHubColors.onPrimary,
-      backgroundColor: ChanHubColors.primary,
-    ),
-    navigationBarTheme: NavigationBarThemeData(
-      labelTextStyle: WidgetStateProperty.resolveWith((states) {
+  // Define the default color of the app.
+  appBarTheme: const AppBarTheme(
+    foregroundColor: ChanHubColors.onPrimary,
+    backgroundColor: ChanHubColors.primary,
+    centerTitle: true,
+  ),
+  drawerTheme: const DrawerThemeData(
+    backgroundColor: ChanHubColors.surface,
+  ),
+  listTileTheme: ListTileThemeData(
+    titleTextStyle: lightTextTheme.bodyMedium,
+    selectedColor: ChanHubColors.tertiary,
+    iconColor: ChanHubColors.primary,
+    textColor: ChanHubColors.primary,
+    contentPadding: const EdgeInsets.symmetric(horizontal: 16.0, vertical: 0.0),
+    dense: true,
+  ),
+  dividerTheme: DividerThemeData(
+    color: lightColorScheme.primary.withOpacity(0.3),
+    thickness: 1.0,
+    space: 0.0,
+  ),
+  floatingActionButtonTheme: const FloatingActionButtonThemeData(
+    foregroundColor: ChanHubColors.onPrimary,
+    backgroundColor: ChanHubColors.primary,
+  ),
+  navigationBarTheme: NavigationBarThemeData(
+    labelTextStyle: WidgetStateProperty.resolveWith((states) {
+      if (states.contains(WidgetState.selected)) {
+        return const TextStyle(color: ChanHubColors.primary);
+      }
+      return const TextStyle(color: ChanHubColors.secondary);
+    }),
+    iconTheme: WidgetStateProperty.resolveWith(
+      (states) {
         if (states.contains(WidgetState.selected)) {
-          return const TextStyle(color: ChanHubColors.primary);
+          return const IconThemeData(color: ChanHubColors.primary);
         }
-        return const TextStyle(color: ChanHubColors.secondary);
-      }),
-      iconTheme: WidgetStateProperty.resolveWith(
-        (states) {
-          if (states.contains(WidgetState.selected)) {
-            return const IconThemeData(color: ChanHubColors.primary);
-          }
-          return const IconThemeData(color: ChanHubColors.secondary);
-        },
-      ),
+        return const IconThemeData(color: ChanHubColors.secondary);
+      },
     ),
-    drawerTheme: const DrawerThemeData(
-      backgroundColor: ChanHubColors.surface,
-    ),
-    listTileTheme: ListTileThemeData(
-      titleTextStyle: lightTextTheme.bodyMedium,
-      selectedColor: ChanHubColors.tertiary,
-      iconColor: ChanHubColors.primary,
-      textColor: ChanHubColors.primary,
-      contentPadding:
-          const EdgeInsets.symmetric(horizontal: 16.0, vertical: 0.0),
-      dense: true,
-    ),
-    // dividerColor: ChanHubColors.onSurface.withOpacity(0.3));
-    elevatedButtonTheme: const ElevatedButtonThemeData(
-        style: ButtonStyle(
+  ),
+  // dividerColor: ChanHubColors.onSurface.withOpacity(0.3));
+  elevatedButtonTheme: const ElevatedButtonThemeData(
+    style: ButtonStyle(
       backgroundColor: WidgetStatePropertyAll(ChanHubColors.primary),
       foregroundColor: WidgetStatePropertyAll(ChanHubColors.onPrimary),
-    )));
+    ),
+  ),
+);
