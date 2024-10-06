@@ -1,5 +1,8 @@
 import 'package:flutter/material.dart';
 
+import './add_workspace_friends_screen.dart';
+import '../shared/widget/customized_text_field.dart';
+
 class CreateWorkspaceScreen extends StatefulWidget {
   static const String routeName = '/workspace_creation_screen';
 
@@ -28,8 +31,17 @@ class _CreateWorkspaceScreenState extends State<CreateWorkspaceScreen> {
   void onContinue() {
     if (isValidName) {
       // TODO: Navigate to next screen
-      print('Workspace name: ${_nameController.text}');
+      Navigator.of(context).pushNamed(AddWorkspaceFriendsScreen.routeName);
     }
+  }
+
+  String? _nameValidator(String? value) {
+    if (value == null || value.trim().length < 6) {
+      return 'Workspace name must be at least 6 characters long';
+    } else if (value.trim().length > 15) {
+      return 'Workspace name must be at most 15 characters long';
+    }
+    return null;
   }
 
   @override
@@ -44,76 +56,71 @@ class _CreateWorkspaceScreenState extends State<CreateWorkspaceScreen> {
               ),
         ),
       ),
-      body: Padding(
-        padding: const EdgeInsets.all(30.0),
-        child: Column(
-          mainAxisAlignment: MainAxisAlignment.center,
-          children: [
-            // Title
-            Text(
-              'What\'s is the name of your company or team?',
-              style: Theme.of(context).textTheme.titleLarge!.copyWith(
-                    color: Theme.of(context).colorScheme.onSurface,
-                    fontWeight: FontWeight.w900,
-                  ),
-              textAlign: TextAlign.center,
-            ),
-            const SizedBox(height: 30.0),
-            Text(
-              'This will be the name of your workspace',
-              style: Theme.of(context).textTheme.bodyMedium,
-            ),
-            const SizedBox(height: 10.0),
-
-            // Input field
-            TextFormField(
-              onChanged: onInput,
-              controller: _nameController,
-              decoration: InputDecoration(
-                border: const OutlineInputBorder(),
-                label: const Text('Workspace name'),
-                hintText: 'Eg. Acme Co.',
-                hintStyle: Theme.of(context).textTheme.bodyMedium!.copyWith(
-                    color: Theme.of(context)
-                        .colorScheme
-                        .onSurface
-                        .withOpacity(0.5)),
-                labelStyle: Theme.of(context).textTheme.bodyMedium,
-                floatingLabelStyle:
-                    Theme.of(context).textTheme.bodyMedium!.copyWith(
-                          color: Theme.of(context).colorScheme.primary,
-                          fontWeight: FontWeight.bold,
-                        ),
-              ),
-            ),
-
-            // Next button
-            Container(
-              padding: const EdgeInsets.symmetric(vertical: 15.0),
-              width: double.infinity,
-              child: ElevatedButton(
-                style: ButtonStyle(
-                  backgroundColor: WidgetStatePropertyAll(isValidName
-                      ? Theme.of(context).colorScheme.primary
-                      : Theme.of(context).colorScheme.primary.withOpacity(0.3)),
+      body: Center(
+        child: SingleChildScrollView(
+          child: Padding(
+            padding: const EdgeInsets.all(30.0),
+            child: Column(
+              children: [
+                // Title
+                Text(
+                  'What\'s is the name of your company or team?',
+                  style: Theme.of(context).textTheme.titleLarge!.copyWith(
+                        color: Theme.of(context).colorScheme.onSurface,
+                        fontWeight: FontWeight.w900,
+                      ),
+                  textAlign: TextAlign.center,
                 ),
-                onPressed: isValidName ? onContinue : null,
-                child: Text('Next',
-                    style: Theme.of(context).textTheme.bodyLarge!.copyWith(
-                        color: Theme.of(context).colorScheme.onPrimary)),
-              ),
-            ),
+                const SizedBox(height: 30.0),
+                Text(
+                  'This will be the name of your workspace',
+                  style: Theme.of(context).textTheme.bodyMedium,
+                ),
+                const SizedBox(height: 10.0),
 
-            // Terms and conditions
-            Text(
-              'By continuing, you\'re agreeing to our Main Services Agreement, User Terms of Service, and ChanHub Supplemental Terms. Additional disclosures are available in out Privacy Policy and Cookie Policy.',
-              style: Theme.of(context).textTheme.bodySmall!.copyWith(
-                  color:
-                      Theme.of(context).colorScheme.onSurface.withOpacity(0.4)),
-              maxLines: 4,
-              softWrap: true,
+                // Input field
+                CustomizedTextField(
+                  onChanged: onInput,
+                  controller: _nameController,
+                  validator: _nameValidator,
+                  labelText: 'Workspace Name',
+                  hintText: 'Eg. Acme Co.',
+                ),
+
+                // Next button
+                Container(
+                  padding: const EdgeInsets.symmetric(vertical: 15.0),
+                  width: double.infinity,
+                  child: ElevatedButton(
+                    style: ButtonStyle(
+                      backgroundColor: WidgetStatePropertyAll(isValidName
+                          ? Theme.of(context).colorScheme.primary
+                          : Theme.of(context)
+                              .colorScheme
+                              .primary
+                              .withOpacity(0.3)),
+                    ),
+                    onPressed: isValidName ? onContinue : null,
+                    child: const Text(
+                      'Next',
+                    ),
+                  ),
+                ),
+
+                // Terms and conditions
+                Text(
+                  'By continuing, you\'re agreeing to our Main Services Agreement, User Terms of Service, and ChanHub Supplemental Terms. Additional disclosures are available in out Privacy Policy and Cookie Policy.',
+                  style: Theme.of(context).textTheme.bodySmall!.copyWith(
+                      color: Theme.of(context)
+                          .colorScheme
+                          .onSurface
+                          .withOpacity(0.4)),
+                  maxLines: 4,
+                  softWrap: true,
+                ),
+              ],
             ),
-          ],
+          ),
         ),
       ),
     );
