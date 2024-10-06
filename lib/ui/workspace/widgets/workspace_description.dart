@@ -1,9 +1,8 @@
 import 'package:ct484_project/ui/screens.dart';
 import 'package:flutter/material.dart';
 
-import '../../models/index.dart';
-import '../shared/utils/channelicon.dart';
-import '../shared/utils/string_format.dart';
+import '../../../models/index.dart';
+import '../../shared/utils/index.dart';
 
 class WorkspaceDescription extends StatelessWidget {
   const WorkspaceDescription(

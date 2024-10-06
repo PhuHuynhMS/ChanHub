@@ -3,7 +3,7 @@ import 'package:flutter/material.dart';
 import './ui/screens.dart';
 import './models/index.dart';
 import './themes/chanhub_theme.dart';
-import './ui/shared/transition/transitions.dart';
+import './ui/shared/transitions/index.dart';
 
 void main() {
   runApp(const ChanHub());
@@ -21,7 +21,7 @@ class ChanHub extends StatelessWidget {
       home: const FirstScreen(),
       onGenerateRoute: (settings) {
         // Onboarding
-        if (settings.name == OnboardingView.routeName) {
+        if (settings.name == OnboardingScreen.routeName) {
           return MaterialPageRoute(
             builder: (context) => const FirstScreen(),
           );
@@ -43,12 +43,6 @@ class ChanHub extends StatelessWidget {
         }
 
         // Workspace
-        if (settings.name == WorkspaceGetStarted.routeName) {
-          return MaterialPageRoute(
-            builder: (context) => const WorkspaceGetStarted(),
-          );
-        }
-
         if (settings.name == WorkspaceScreen.routeName) {
           final List<Workspace> workspaces = WorkspacesManager().getAll();
           final Workspace? selectedWorkspace =

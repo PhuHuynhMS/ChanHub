@@ -3,9 +3,8 @@ import 'dart:io';
 import 'package:flutter/material.dart';
 import 'package:image_picker/image_picker.dart';
 
-import '../../shared/utils/photogallery.dart';
-import '../../shared/utils/dialog.dart';
-import './task_input.dart';
+import '../utils/index.dart';
+import './index.dart';
 
 class MessageInput extends StatefulWidget {
   const MessageInput({
@@ -60,7 +59,7 @@ class _MessageInputState extends State<MessageInput> {
     setState(() {});
   }
 
-  void onShowMediaPreview(int index) {
+  void onShowImagePreview(int index) {
     showPhotoViewGallery(
       context,
       mediaFiles.map((file) => FileImage(file)).toList(),
@@ -187,10 +186,10 @@ class _MessageInputState extends State<MessageInput> {
             const Divider(
               height: 0.0,
             ),
-            MediaPreview(
+            ImagePreview(
               mediaFiles: mediaFiles,
               onRemoveMedia: onRemoveMedia,
-              onShowMediaPreview: onShowMediaPreview,
+              onShowImagePreview: onShowImagePreview,
             ),
           ],
 
@@ -301,17 +300,17 @@ class ActionButton extends StatelessWidget {
   }
 }
 
-class MediaPreview extends StatelessWidget {
-  const MediaPreview({
+class ImagePreview extends StatelessWidget {
+  const ImagePreview({
     super.key,
     required this.mediaFiles,
     required this.onRemoveMedia,
-    required this.onShowMediaPreview,
+    required this.onShowImagePreview,
   });
 
   final List<File> mediaFiles;
   final void Function(int) onRemoveMedia;
-  final void Function(int) onShowMediaPreview;
+  final void Function(int) onShowImagePreview;
 
   @override
   Widget build(BuildContext context) {
@@ -322,10 +321,10 @@ class MediaPreview extends StatelessWidget {
         scrollDirection: Axis.horizontal,
         itemCount: mediaFiles.length,
         itemBuilder: (context, index) {
-          return MediaPreviewItem(
+          return ImagePreviewItem(
             mediaFile: mediaFiles[index],
             onRemoveMedia: () => onRemoveMedia(index),
-            onShowGalleryPreview: () => onShowMediaPreview(index),
+            onShowGalleryPreview: () => onShowImagePreview(index),
           );
         },
       ),
@@ -333,8 +332,8 @@ class MediaPreview extends StatelessWidget {
   }
 }
 
-class MediaPreviewItem extends StatelessWidget {
-  const MediaPreviewItem({
+class ImagePreviewItem extends StatelessWidget {
+  const ImagePreviewItem({
     super.key,
     required this.mediaFile,
     required this.onRemoveMedia,

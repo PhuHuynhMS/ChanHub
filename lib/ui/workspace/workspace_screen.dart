@@ -1,11 +1,8 @@
 import 'package:flutter/material.dart';
 
-import '../../models/user.dart';
-import '../../models/workspace.dart';
-import '../shared/widget/workspace_drawer.dart';
-import '../profile/profile_screen.dart';
-import './workspace_get_started.dart';
-import './workspace_description.dart';
+import '../../models/index.dart';
+import '../screens.dart';
+import './widgets/index.dart';
 
 class WorkspaceScreen extends StatelessWidget {
   static const String routeName = '/workspace';

@@ -1,8 +1,8 @@
 import 'package:flutter/material.dart';
 import 'package:dropdown_search/dropdown_search.dart';
 
-import '../../../models/user.dart';
-import './user_avatar.dart';
+import '../../../models/index.dart';
+import './index.dart';
 
 class InviteFriendsBar extends StatefulWidget {
   const InviteFriendsBar({super.key});

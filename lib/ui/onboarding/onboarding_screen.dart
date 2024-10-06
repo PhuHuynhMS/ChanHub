@@ -2,20 +2,19 @@ import 'package:flutter/material.dart';
 import 'package:flutter_svg/flutter_svg.dart';
 import 'package:smooth_page_indicator/smooth_page_indicator.dart';
 
-import '../authentication/get_started_screen.dart';
-import './onboarding_items.dart';
-import './onboarding_info.dart';
+import '../screens.dart';
+import './widgets/index.dart';
 
-class OnboardingView extends StatefulWidget {
+class OnboardingScreen extends StatefulWidget {
   static const String routeName = "/onboarding";
 
-  const OnboardingView({super.key});
+  const OnboardingScreen({super.key});
 
   @override
-  State<OnboardingView> createState() => _OnboardingViewState();
+  State<OnboardingScreen> createState() => _OnboardingScreenState();
 }
 
-class _OnboardingViewState extends State<OnboardingView> {
+class _OnboardingScreenState extends State<OnboardingScreen> {
   final List<OnboardingInfo> pages = OnboardingItems().items;
   final PageController pageController = PageController();
 

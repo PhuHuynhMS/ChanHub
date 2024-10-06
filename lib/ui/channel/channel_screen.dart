@@ -2,14 +2,11 @@ import 'dart:io';
 
 import 'package:flutter/material.dart';
 
-import '../../models/channel.dart';
-import '../../models/thread.dart';
-import '../thread/threads_manager.dart';
-import '../shared/widget/message_input.dart';
-import '../shared/utils/channelicon.dart';
-import './channel_description.dart';
-import './channel_drawer.dart';
-import './thread_detail.dart';
+import '../../models/index.dart';
+import '../shared/widgets/index.dart';
+import '../shared/utils/index.dart';
+import '../screens.dart';
+import './widgets/index.dart';
 
 class ChannelScreen extends StatelessWidget {
   static const String routeName = '/channel';

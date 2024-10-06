@@ -1,8 +1,7 @@
 import 'dart:async';
-
 import 'package:flutter/material.dart';
 
-import './onboarding_view.dart';
+import '../screens.dart';
 
 class FirstScreen extends StatefulWidget {
   const FirstScreen({super.key});
@@ -17,7 +16,7 @@ class _FirstScreenState extends State<FirstScreen> {
     super.initState();
     Timer(const Duration(seconds: 2), () {
       Navigator.of(context).pushReplacement(
-        MaterialPageRoute(builder: (context) => const OnboardingView()),
+        MaterialPageRoute(builder: (context) => const OnboardingScreen()),
       );
     });
   }

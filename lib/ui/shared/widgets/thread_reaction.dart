@@ -2,11 +2,9 @@ import 'package:flutter/material.dart';
 
 import '../../../common/constants.dart';
 import '../../../common/enums.dart';
-import '../../../models/reaction.dart';
-import '../../../models/user.dart';
-import '../widget/user_avatar.dart';
-import '../utils/bottomsheetactions.dart';
-import '../utils/reaction.dart';
+import '../../../models/index.dart';
+import '../utils/index.dart';
+import './index.dart';
 
 class ThreadReaction extends StatefulWidget {
   const ThreadReaction(

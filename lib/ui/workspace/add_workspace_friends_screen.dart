@@ -1,6 +1,6 @@
 import 'package:flutter/material.dart';
 
-import '../shared/widget/invite_friends_bar.dart';
+import '../shared/widgets/index.dart';
 
 class AddWorkspaceFriendsScreen extends StatelessWidget {
   static const String routeName = '/add-workspace-friends';

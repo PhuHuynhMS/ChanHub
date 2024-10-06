@@ -1,9 +1,8 @@
 import 'package:flutter/material.dart';
 
-import './create_workspace_screen.dart';
+import '../../screens.dart';
 
 class WorkspaceGetStarted extends StatelessWidget {
-  static const String routeName = '/workspace-get-started';
   const WorkspaceGetStarted({super.key});
 
   void createWorkspace(BuildContext context) {

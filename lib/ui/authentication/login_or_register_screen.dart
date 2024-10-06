@@ -1,8 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_svg/flutter_svg.dart';
 
-import './login_screen.dart';
-import './register_screen.dart';
+import './widgets/index.dart';
 
 class LoginOrRegisterScreen extends StatefulWidget {
   static const String routeName = '/login-or-register';
@@ -93,7 +92,7 @@ class _LoginOrRegisterScreenState extends State<LoginOrRegisterScreen> {
               left: _isLogin ? 0 : -MediaQuery.of(context).size.width,
               bottom: 0,
               top: 0,
-              child: LoginScreen(toggleLoginRegister: _toggleLoginRegister),
+              child: LoginForm(toggleLoginRegister: _toggleLoginRegister),
             ),
 
             AnimatedPositioned(
@@ -102,7 +101,7 @@ class _LoginOrRegisterScreenState extends State<LoginOrRegisterScreen> {
               left: _isLogin ? MediaQuery.of(context).size.width : 0,
               bottom: 0,
               top: 0,
-              child: RegisterScreen(toggleLoginRegister: _toggleLoginRegister),
+              child: RegisterForm(toggleLoginRegister: _toggleLoginRegister),
             ),
           ],
         ),

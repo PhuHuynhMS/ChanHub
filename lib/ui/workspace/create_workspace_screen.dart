@@ -1,7 +1,7 @@
 import 'package:flutter/material.dart';
 
-import './add_workspace_friends_screen.dart';
-import '../shared/widget/customized_text_field.dart';
+import '../shared/widgets/index.dart';
+import '../screens.dart';
 
 class CreateWorkspaceScreen extends StatefulWidget {
   static const String routeName = '/workspace_creation_screen';

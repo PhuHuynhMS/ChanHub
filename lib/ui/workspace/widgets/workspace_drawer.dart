@@ -1,9 +1,8 @@
 import 'package:flutter/material.dart';
 
-import '../../../models/workspace.dart';
-import '../../workspace/workspace_screen.dart';
-import '../../workspace/create_workspace_screen.dart';
-import '../widget/workspace_tile.dart';
+import '../../../models/index.dart';
+import '../../screens.dart';
+import './index.dart';
 
 class WorkSpaceDrawer extends StatelessWidget {
   const WorkSpaceDrawer(

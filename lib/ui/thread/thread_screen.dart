@@ -2,11 +2,9 @@ import 'dart:io';
 
 import 'package:flutter/material.dart';
 
-import '../../models/thread.dart';
-import '../../models/comment.dart';
-import '../shared/widget/message_input.dart';
-import './comment_detail.dart';
-import './thread_description.dart';
+import '../../models/index.dart';
+import '../shared/widgets/index.dart';
+import './widgets/index.dart';
 
 class ThreadScreen extends StatelessWidget {
   static const String routeName = '/thread';

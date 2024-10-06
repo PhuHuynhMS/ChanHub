@@ -1,12 +1,10 @@
 import 'package:flutter/material.dart';
 
-import '../../common/enums.dart';
-import '../../models/thread.dart';
-import '../../models/user.dart';
-import '../../models/reaction.dart';
-import '../thread/thread_screen.dart';
-import '../shared/utils/bottomsheetactions.dart';
-import '../shared/widget/thread_card.dart';
+import '../../../common/enums.dart';
+import '../../../models/index.dart';
+import '../../shared/utils/index.dart';
+import '../../shared/widgets/index.dart';
+import '../../screens.dart';
 
 class ThreadDetail extends StatelessWidget {
   ThreadDetail(

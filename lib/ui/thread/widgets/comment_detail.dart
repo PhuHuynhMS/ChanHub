@@ -1,19 +1,17 @@
 import 'package:flutter/material.dart';
 
-import '../../common/enums.dart';
-import '../../models/index.dart';
-import '../../models/reaction.dart';
-import '../shared/widget/thread_card.dart';
+import '../../../common/enums.dart';
+import '../../../models/index.dart';
+import '../../shared/widgets/index.dart';
 
-class ThreadDescription extends StatelessWidget {
-  ThreadDescription(
-    this.thread, {
+class CommentDetail extends StatelessWidget {
+  CommentDetail(
+    this.comment, {
     super.key,
   });
 
-  final Thread thread;
-
-  // TODO: User who is currently logged in
+  final Comment comment;
+// TODO: User who is currently logged in
   final User user = User(
     id: '1',
     fullName: 'John Doe',
@@ -27,12 +25,12 @@ class ThreadDescription extends StatelessWidget {
   }
 
   void onReactionPressed(ReactionType type) {
-    if (hasReaction(thread.reactions[type]!)) {
+    if (hasReaction(comment.reactions[type]!)) {
       // Remove reaction
-      thread.reactions[type]!
+      comment.reactions[type]!
           .removeWhere((reaction) => reaction.creatorId == user.id);
     } else {
-      thread.reactions[type]!.add(
+      comment.reactions[type]!.add(
         // TODO: Create a new reaction
         Reaction(
           creatorId: user.id,
@@ -47,17 +45,13 @@ class ThreadDescription extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    return Container(
-      color: Theme.of(context).colorScheme.primary.withOpacity(0.15),
-      child: ThreadCard(
-        creator: thread.creator,
-        createdAt: thread.createdAt,
-        content: thread.content,
-        mediaUrls: thread.mediaUrls,
-        reactions: thread.reactions,
-        tasks: thread.tasks,
-        onReactionPressed: onReactionPressed,
-      ),
+    return ThreadCard(
+      creator: comment.creator,
+      createdAt: comment.createdAt,
+      content: comment.content,
+      mediaUrls: comment.mediaUrls,
+      reactions: comment.reactions,
+      onReactionPressed: onReactionPressed,
     );
   }
 }

@@ -1,7 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_svg/flutter_svg.dart';
 
-import './login_or_register_screen.dart';
+import '../screens.dart';
 
 class GetStartedScreen extends StatelessWidget {
   static const String routeName = '/get-started';

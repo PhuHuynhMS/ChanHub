@@ -1,6 +1,6 @@
 import 'package:flutter/material.dart';
 
-import '../../shared/utils/photogallery.dart';
+import '../utils/index.dart';
 
 class MediaPreview extends StatelessWidget {
   const MediaPreview(

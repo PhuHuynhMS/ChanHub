@@ -1,19 +1,18 @@
 import 'package:flutter/material.dart';
 
-import '../../common/enums.dart';
-import '../../models/user.dart';
-import '../../models/reaction.dart';
-import '../../models/comment.dart';
-import '../shared/widget/thread_card.dart';
+import '../../../common/enums.dart';
+import '../../../models/index.dart';
+import '../../shared/widgets/index.dart';
 
-class CommentDetail extends StatelessWidget {
-  CommentDetail(
-    this.comment, {
+class ThreadDescription extends StatelessWidget {
+  ThreadDescription(
+    this.thread, {
     super.key,
   });
 
-  final Comment comment;
-// TODO: User who is currently logged in
+  final Thread thread;
+
+  // TODO: User who is currently logged in
   final User user = User(
     id: '1',
     fullName: 'John Doe',
@@ -27,12 +26,12 @@ class CommentDetail extends StatelessWidget {
   }
 
   void onReactionPressed(ReactionType type) {
-    if (hasReaction(comment.reactions[type]!)) {
+    if (hasReaction(thread.reactions[type]!)) {
       // Remove reaction
-      comment.reactions[type]!
+      thread.reactions[type]!
           .removeWhere((reaction) => reaction.creatorId == user.id);
     } else {
-      comment.reactions[type]!.add(
+      thread.reactions[type]!.add(
         // TODO: Create a new reaction
         Reaction(
           creatorId: user.id,
@@ -47,13 +46,17 @@ class CommentDetail extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    return ThreadCard(
-      creator: comment.creator,
-      createdAt: comment.createdAt,
-      content: comment.content,
-      mediaUrls: comment.mediaUrls,
-      reactions: comment.reactions,
-      onReactionPressed: onReactionPressed,
+    return Container(
+      color: Theme.of(context).colorScheme.primary.withOpacity(0.15),
+      child: ThreadCard(
+        creator: thread.creator,
+        createdAt: thread.createdAt,
+        content: thread.content,
+        mediaUrls: thread.mediaUrls,
+        reactions: thread.reactions,
+        tasks: thread.tasks,
+        onReactionPressed: onReactionPressed,
+      ),
     );
   }
 }

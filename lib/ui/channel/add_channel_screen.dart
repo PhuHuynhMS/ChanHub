@@ -1,6 +1,6 @@
 import 'package:flutter/material.dart';
 
-import '../shared/widget/customized_text_field.dart';
+import '../shared/widgets/index.dart';
 
 class AddChannelScreen extends StatefulWidget {
   static const String routeName = '/add-channel';

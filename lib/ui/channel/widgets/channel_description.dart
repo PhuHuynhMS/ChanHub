@@ -1,7 +1,7 @@
 import 'package:flutter/material.dart';
 
-import '../../models/channel.dart';
-import '../shared/utils/usertag.dart';
+import '../../../models/index.dart';
+import '../../shared/utils/index.dart';
 
 class ChannelDescription extends StatelessWidget {
   const ChannelDescription(

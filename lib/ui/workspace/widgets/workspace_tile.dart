@@ -1,8 +1,7 @@
 import 'package:flutter/material.dart';
 
-import '../../../models/workspace.dart';
-import '../utils/string_format.dart';
-import '../utils/bottomsheetactions.dart';
+import '../../../models/index.dart';
+import '../../shared/utils/index.dart';
 
 class WorkspaceTile extends StatelessWidget {
   const WorkspaceTile(

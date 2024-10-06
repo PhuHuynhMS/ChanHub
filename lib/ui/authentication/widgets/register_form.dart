@@ -1,12 +1,12 @@
 import 'package:flutter/material.dart';
 
-import '../shared/widget/block_text_field.dart';
-import '../workspace/workspace_screen.dart';
+import '../../screens.dart';
+import '../../shared/widgets/index.dart';
 
-class RegisterScreen extends StatelessWidget {
+class RegisterForm extends StatelessWidget {
   static const String routeName = '/register';
 
-  const RegisterScreen({
+  const RegisterForm({
     super.key,
     this.toggleLoginRegister,
   });

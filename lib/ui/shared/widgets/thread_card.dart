@@ -2,18 +2,9 @@ import 'package:flutter/material.dart';
 
 import '../../../common/enums.dart';
 import '../../../common/constants.dart';
-import '../../../models/comment.dart';
-import '../../../models/reaction.dart';
-import '../../../models/task.dart';
-import '../../../models/user.dart';
-import '../utils/threadcomment.dart';
-import '../utils/task.dart';
-import '../utils/datetime.dart';
-import '../utils/dialog.dart';
-import './media_preview.dart';
-import './thread_reaction.dart';
-import './progress_bar.dart';
-import './user_avatar.dart';
+import '../../../models/index.dart';
+import '../utils/index.dart';
+import './index.dart';
 
 class ThreadCard extends StatelessWidget {
   const ThreadCard({

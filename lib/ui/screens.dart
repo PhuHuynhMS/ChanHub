@@ -1,6 +1,6 @@
 // Onboarding
 export './onboarding/first_screen.dart';
-export './onboarding/onboarding_view.dart';
+export 'onboarding/onboarding_screen.dart';
 
 // Authentication
 export './authentication/get_started_screen.dart';
@@ -26,4 +26,3 @@ export './workspace/workspace_screen.dart';
 export './workspace/create_workspace_screen.dart';
 export './workspace/add_workspace_friends_screen.dart';
 export './workspace/workspaces_manager.dart';
-export './workspace/workspace_get_started.dart';
