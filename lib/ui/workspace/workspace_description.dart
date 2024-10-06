@@ -1,9 +1,9 @@
+import 'package:ct484_project/ui/screens.dart';
 import 'package:flutter/material.dart';
 
 import '../../models/index.dart';
 import '../shared/utils/channelicon.dart';
 import '../shared/utils/string_format.dart';
-import '../channel/channel_screen.dart';
 
 class WorkspaceDescription extends StatelessWidget {
   const WorkspaceDescription(
@@ -15,16 +15,18 @@ class WorkspaceDescription extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    return Column(
-      children: [
-        WorkspaceHeader(workspace),
-        Divider(
-          thickness: 1.0,
-          height: 0.0,
-          color: Theme.of(context).colorScheme.primary.withOpacity(0.3),
-        ),
-        WorkSpaceContent(workspace),
-      ],
+    return SingleChildScrollView(
+      child: Column(
+        children: [
+          WorkspaceHeader(workspace),
+          Divider(
+            thickness: 1.0,
+            height: 0.0,
+            color: Theme.of(context).colorScheme.primary.withOpacity(0.3),
+          ),
+          WorkSpaceContent(workspace),
+        ],
+      ),
     );
   }
 }
@@ -75,19 +77,25 @@ class WorkspaceHeader extends StatelessWidget {
                 children: [
                   IconButton(
                     iconSize: 25.0,
-                    onPressed: () {},
+                    onPressed: () {
+                      //TODO: Go to manage account page
+                    },
                     icon: const Icon(Icons.manage_accounts),
                     color: Theme.of(context).colorScheme.primary,
                   ),
                   IconButton(
                     iconSize: 25.0,
                     color: Theme.of(context).colorScheme.primary,
-                    onPressed: () {},
+                    onPressed: () {
+                      //TODO: Add workspace friends
+                    },
                     icon: const Icon(Icons.person_add_alt),
                   ),
                   IconButton(
                     iconSize: 25.0,
-                    onPressed: () {},
+                    onPressed: () {
+                      //TODO: Exit app
+                    },
                     icon: const Icon(Icons.exit_to_app),
                     color: Theme.of(context).colorScheme.error,
                   ),
@@ -127,7 +135,8 @@ class WorkSpaceContent extends StatelessWidget {
 
         // Add Channel
         ListTile(
-          onTap: () => {},
+          onTap: () =>
+              {Navigator.pushNamed(context, AddChannelScreen.routeName)},
           leading: const Icon(Icons.add),
           title: Text(
             'Add channel',

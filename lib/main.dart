@@ -43,6 +43,12 @@ class ChanHub extends StatelessWidget {
         }
 
         // Workspace
+        if (settings.name == WorkspaceGetStarted.routeName) {
+          return MaterialPageRoute(
+            builder: (context) => const WorkspaceGetStarted(),
+          );
+        }
+
         if (settings.name == WorkspaceScreen.routeName) {
           final List<Workspace> workspaces = WorkspacesManager().getAll();
           final Workspace? selectedWorkspace =
@@ -64,6 +70,13 @@ class ChanHub extends StatelessWidget {
           );
         }
 
+        // Invite friends at create workspace
+        if (settings.name == AddWorkspaceFriendsScreen.routeName) {
+          return MaterialPageRoute(
+            builder: (context) => const AddWorkspaceFriendsScreen(),
+          );
+        }
+
         if (settings.name == ManagementScreen.routeName) {
           return MaterialPageRoute(
               builder: (context) => const ManagementScreen());
@@ -75,6 +88,13 @@ class ChanHub extends StatelessWidget {
 
           return CustomSlideTransition(
             page: ChannelScreen(channel),
+          );
+        }
+
+        // Add channel
+        if (settings.name == AddChannelScreen.routeName) {
+          return MaterialPageRoute(
+            builder: (context) => const AddChannelScreen(),
           );
         }
 

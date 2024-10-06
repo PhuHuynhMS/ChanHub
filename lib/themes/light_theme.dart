@@ -89,6 +89,22 @@ final ThemeData lightTheme = ThemeData(
     backgroundColor: ChanHubColors.primary,
     centerTitle: true,
   ),
+  drawerTheme: const DrawerThemeData(
+    backgroundColor: ChanHubColors.surface,
+  ),
+  listTileTheme: ListTileThemeData(
+    titleTextStyle: lightTextTheme.bodyMedium,
+    selectedColor: ChanHubColors.tertiary,
+    iconColor: ChanHubColors.primary,
+    textColor: ChanHubColors.primary,
+    contentPadding: const EdgeInsets.symmetric(horizontal: 16.0, vertical: 0.0),
+    dense: true,
+  ),
+  dividerTheme: DividerThemeData(
+    color: lightColorScheme.primary.withOpacity(0.3),
+    thickness: 1.0,
+    space: 0.0,
+  ),
   floatingActionButtonTheme: const FloatingActionButtonThemeData(
     foregroundColor: ChanHubColors.onPrimary,
     backgroundColor: ChanHubColors.primary,
@@ -109,20 +125,11 @@ final ThemeData lightTheme = ThemeData(
       },
     ),
   ),
-  drawerTheme: const DrawerThemeData(
-    backgroundColor: ChanHubColors.surface,
-  ),
-  listTileTheme: ListTileThemeData(
-    titleTextStyle: lightTextTheme.bodyMedium,
-    selectedColor: ChanHubColors.tertiary,
-    iconColor: ChanHubColors.primary,
-    textColor: ChanHubColors.primary,
-    contentPadding: const EdgeInsets.symmetric(horizontal: 16.0, vertical: 0.0),
-    dense: true,
-  ),
-  dividerTheme: DividerThemeData(
-    color: lightColorScheme.primary.withOpacity(0.3),
-    thickness: 1.0,
-    space: 0.0,
+  // dividerColor: ChanHubColors.onSurface.withOpacity(0.3));
+  elevatedButtonTheme: const ElevatedButtonThemeData(
+    style: ButtonStyle(
+      backgroundColor: WidgetStatePropertyAll(ChanHubColors.primary),
+      foregroundColor: WidgetStatePropertyAll(ChanHubColors.onPrimary),
+    ),
   ),
 );
