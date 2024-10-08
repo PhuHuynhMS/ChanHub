@@ -271,6 +271,24 @@ final ThemeData lightTheme = ThemeData(
       side: WidgetStatePropertyAll(BorderSide.none),
     ),
   ),
+  chipTheme: ChipThemeData(
+    backgroundColor: lightColorScheme.primary.withOpacity(0.1),
+    disabledColor: lightColorScheme.primary.withOpacity(0.3),
+    selectedColor: lightColorScheme.tertiary,
+    secondarySelectedColor: lightColorScheme.tertiary.withOpacity(0.3),
+    labelPadding: const EdgeInsets.symmetric(horizontal: 5.0),
+    padding: const EdgeInsets.all(5.0),
+    shape: RoundedRectangleBorder(
+      borderRadius: BorderRadius.circular(20.0),
+    ),
+    side: BorderSide.none,
+    labelStyle: lightTextTheme.bodySmall,
+    secondaryLabelStyle: lightTextTheme.bodySmall,
+    brightness: lightColorScheme.brightness,
+    deleteIconColor: lightColorScheme.error,
+    deleteIconBoxConstraints:
+        const BoxConstraints.expand(width: 20.0, height: 20.0),
+  ),
 
   // InputDecorationTheme
   inputDecorationTheme: InputDecorationTheme(

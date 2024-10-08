@@ -2,9 +2,9 @@ import 'package:flutter/material.dart';
 import 'package:dropdown_search/dropdown_search.dart';
 
 import '../../../models/index.dart';
+import '../../shared/utils/index.dart';
 import './index.dart';
 
-// FIXME: This is a temporary solution to the issue of the User model not being available
 class InviteFriendsBar extends StatefulWidget {
   const InviteFriendsBar({super.key});
 
@@ -16,136 +16,108 @@ class _FriendSearchBarState extends State<InviteFriendsBar> {
   final List<User> friends = [
     User(
       id: '1',
-      fullName: 'John Doe',
-      userName: 'johndoe',
-      email: 'johndoe@me.com',
-      avatarUrl: 'https://picsum.photos/200',
+      fullName: 'John Smith',
+      userName: 'john_smith',
+      email: 'johnsmith@gmail.com',
+      avatarUrl: 'https://picsum.photos/400/300',
     ),
     User(
       id: '2',
-      fullName: 'John Doe',
-      userName: 'johndoe',
-      email: 'johndoe@me.com',
-      avatarUrl: 'https://picsum.photos/200',
+      fullName: 'Emily Brown',
+      userName: 'emily_brown',
+      email: 'emily@gmail.com',
+      avatarUrl: 'https://picsum.photos/350/300',
     ),
     User(
       id: '3',
-      fullName: 'John Doe',
-      userName: 'johndoe',
-      email: 'johndoe@me.com',
-      avatarUrl: 'https://picsum.photos/200',
+      fullName: 'Michael Johnson',
+      userName: 'michael_j',
+      email: 'michael@gmail.com',
+      avatarUrl: 'https://picsum.photos/420/320',
     ),
     User(
       id: '4',
-      fullName: 'John Doe',
-      userName: 'johndoe',
-      email: 'johndoe@me.com',
-      avatarUrl: 'https://picsum.photos/200',
+      fullName: 'Sophia White',
+      userName: 'sophia_w',
+      email: 'sophia@gmail.com',
+      avatarUrl: 'https://picsum.photos/400/400',
     ),
     User(
       id: '5',
-      fullName: 'John Doe',
-      userName: 'mrTeo',
-      email: 'johndoe@me.com',
-      avatarUrl: 'https://picsum.photos/200',
+      fullName: 'David Wilson',
+      userName: 'david_w',
+      email: 'david@gmail.com',
+      avatarUrl: 'https://picsum.photos/450/300',
     ),
     User(
       id: '6',
-      fullName: 'John Doe',
-      userName: 'mrTeo',
-      email: 'johndoe@me.com',
-      avatarUrl: 'https://picsum.photos/200',
+      fullName: 'Olivia Lee',
+      userName: 'olivia_lee',
+      email: 'olivia@gmail.com',
+      avatarUrl: 'https://picsum.photos/380/330',
     ),
     User(
       id: '7',
-      fullName: 'John Doe',
-      userName: 'mrTeo',
-      email: 'johndoe@me.com',
-      avatarUrl: 'https://picsum.photos/200',
+      fullName: 'Chris Martin',
+      userName: 'chris_m',
+      email: 'chris@gmail.com',
+      avatarUrl: 'https://picsum.photos/400/350',
     ),
     User(
       id: '8',
-      fullName: 'John Doe',
-      userName: 'mrTeo',
-      email: 'johndoe@me.com',
-      avatarUrl: 'https://picsum.photos/200',
+      fullName: 'Isabella Harris',
+      userName: 'isabella_h',
+      email: 'isabella@gmail.com',
+      avatarUrl: 'https://picsum.photos/370/340',
     ),
     User(
       id: '9',
-      fullName: 'John Doe',
-      userName: 'mrTeo',
-      email: 'johndoe@me.com',
-      avatarUrl: 'https://picsum.photos/200',
+      fullName: 'James Clark',
+      userName: 'james_c',
+      email: 'james@gmail.com',
+      avatarUrl: 'https://picsum.photos/430/300',
     ),
     User(
       id: '10',
-      fullName: 'John Doe',
-      userName: 'mrTeo',
-      email: 'johndoe@me.com',
-      avatarUrl: 'https://picsum.photos/200',
+      fullName: 'Mia Anderson',
+      userName: 'mia_a',
+      email: 'mia@gmail.com',
+      avatarUrl: 'https://picsum.photos/400/310',
     ),
     User(
       id: '11',
-      fullName: 'John Doe',
-      userName: 'mrTeo',
-      email: 'johndoe@me.com',
-      avatarUrl: 'https://picsum.photos/200',
+      fullName: 'Ethan Walker',
+      userName: 'ethan_w',
+      email: 'ethan@gmail.com',
+      avatarUrl: 'https://picsum.photos/420/380',
     ),
     User(
       id: '12',
-      fullName: 'John Doe',
-      userName: 'mrTeo',
-      email: 'johndoe@me.com',
-      avatarUrl: 'https://picsum.photos/200',
+      fullName: 'Ava Taylor',
+      userName: 'ava_t',
+      email: 'ava@gmail.com',
+      avatarUrl: 'https://picsum.photos/360/390',
     ),
     User(
       id: '13',
-      fullName: 'John Doe',
-      userName: 'mrTeo',
-      email: 'johndoe@me.com',
-      avatarUrl: 'https://picsum.photos/200',
+      fullName: 'Liam Thompson',
+      userName: 'liam_t',
+      email: 'liam@gmail.com',
+      avatarUrl: 'https://picsum.photos/410/310',
     ),
     User(
       id: '14',
-      fullName: 'John Doe',
-      userName: 'mrTeo',
-      email: 'johndoe@me.com',
-      avatarUrl: 'https://picsum.photos/200',
+      fullName: 'Charlotte Miller',
+      userName: 'charlotte_m',
+      email: 'charlotte@gmail.com',
+      avatarUrl: 'https://picsum.photos/380/360',
     ),
     User(
       id: '15',
-      fullName: 'John Doe',
-      userName: 'mrTeo',
-      email: 'johndoe@me.com',
-      avatarUrl: 'https://picsum.photos/200',
-    ),
-    User(
-      id: '5',
-      fullName: 'John Doe',
-      userName: 'mrTeo',
-      email: 'johndoe@me.com',
-      avatarUrl: 'https://picsum.photos/200',
-    ),
-    User(
-      id: '5',
-      fullName: 'John Doe',
-      userName: 'mrTeo',
-      email: 'johndoe@me.com',
-      avatarUrl: 'https://picsum.photos/200',
-    ),
-    User(
-      id: '5',
-      fullName: 'John Doe',
-      userName: 'mrTeo',
-      email: 'johndoe@me.com',
-      avatarUrl: 'https://picsum.photos/200',
-    ),
-    User(
-      id: '5',
-      fullName: 'John Doe',
-      userName: 'mrTeo',
-      email: 'johndoe@me.com',
-      avatarUrl: 'https://picsum.photos/200',
+      fullName: 'Lucas Moore',
+      userName: 'lucas_m',
+      email: 'lucas@gmail.com',
+      avatarUrl: 'https://picsum.photos/400/320',
     ),
   ];
 
@@ -166,33 +138,23 @@ class _FriendSearchBarState extends State<InviteFriendsBar> {
   Widget build(BuildContext context) {
     return SingleChildScrollView(
       child: DropdownSearch<User>.multiSelection(
-        dropdownBuilder: (context, selectedItems) {
-          if (selectedItems.isEmpty) {
-            return const Text("Invite your collaborators");
-          }
-          return Wrap(
-            children: selectedItems.map((user) {
-              return ColabChip(
-                  username: user.userName,
-                  onDeleted: () => setState(() => selectedItems.remove(user)));
-            }).toList(),
-          );
-        },
+        dropdownBuilder: (context, selectedItems) => Wrap(
+          children: selectedItems.map((user) {
+            return ColabChip(
+                username: user.userName,
+                onDeleted: () => setState(() => selectedItems.remove(user)));
+          }).toList(),
+        ),
         compareFn: (item1, item2) => item1.id == item2.id,
-        items: (filter, loadProps) {
-          return _filterFriends(filter);
-        },
+        items: (filter, loadProps) => _filterFriends(filter),
         popupProps: PopupPropsMultiSelection.dialog(
           disableFilter: true,
           showSearchBox: true,
           searchFieldProps: TextFieldProps(
-            padding: const EdgeInsets.only(bottom: 5.0),
-            decoration: InputDecoration(
+            decoration: underlineInputDecoration(
+              context,
+              'Search for members',
               prefixIcon: const Icon(Icons.search),
-              hintText: "Search for your friend's username",
-              enabledBorder: OutlineInputBorder(
-                borderRadius: BorderRadius.circular(10.0),
-              ),
             ),
             onChanged: (value) {
               setState(() {
@@ -200,24 +162,23 @@ class _FriendSearchBarState extends State<InviteFriendsBar> {
               });
             },
           ),
-          showSelectedItems: false,
           dialogProps: const DialogProps(
-              shape: RoundedRectangleBorder(
-                borderRadius: BorderRadius.all(Radius.circular(20.0)),
-              ),
-              alignment: Alignment.center,
-              contentPadding: EdgeInsets.all(20.0)),
+            alignment: Alignment.center,
+            contentPadding: EdgeInsets.symmetric(
+              horizontal: 20.0,
+              vertical: 10.0,
+            ),
+            insetPadding: EdgeInsets.all(20.0),
+          ),
           itemBuilder: userModelPopupItem,
         ),
         decoratorProps: DropDownDecoratorProps(
-            decoration: InputDecoration(
-                prefixIcon: const Icon(Icons.people),
-                enabledBorder: OutlineInputBorder(
-                  borderSide:
-                      BorderSide(color: Colors.transparent.withOpacity(0.3)),
-                  borderRadius: BorderRadius.circular(12),
-                ),
-                contentPadding: const EdgeInsets.all(8.0))),
+          decoration: outlinedInputDecoration(
+            context,
+            'Invite your collaborators',
+            prefixIcon: const Icon(Icons.person_add),
+          ),
+        ),
       ),
     );
   }
@@ -225,17 +186,11 @@ class _FriendSearchBarState extends State<InviteFriendsBar> {
 
 Widget userModelPopupItem(
     BuildContext context, User user, bool isSelected, bool isDisabled) {
-  return Padding(
-    padding: const EdgeInsets.only(bottom: 10.0, right: 0.0, left: 0.0),
-    child: ListTile(
-      contentPadding: const EdgeInsets.all(0.0),
-      title: Text(
-        user.userName,
-        style: Theme.of(context).textTheme.bodyMedium,
-      ),
-      leading: UserAvatar(user),
-      trailing: isSelected ? const Icon(Icons.check) : null,
-    ),
+  return ListTile(
+    contentPadding: const EdgeInsets.only(bottom: 10.0),
+    title: Text(user.userName),
+    leading: UserAvatar(user),
+    trailing: isSelected ? const Icon(Icons.check) : null,
   );
 }
 
@@ -247,24 +202,11 @@ class ColabChip extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    return Padding(
-      padding: const EdgeInsets.all(3.0),
-      child: Chip(
-          side: const BorderSide(
-            color: Colors.transparent,
-          ),
-          deleteIconBoxConstraints:
-              const BoxConstraints.expand(width: 20.0, height: 20.0),
-          deleteIcon: const Icon(
-            Icons.close,
-          ),
-          padding: const EdgeInsets.only(left: 5.0),
-          labelPadding: const EdgeInsets.only(right: 5.0),
-          deleteIconColor: Theme.of(context).colorScheme.error,
-          onDeleted: onDeleted,
-          backgroundColor:
-              Theme.of(context).colorScheme.tertiary.withOpacity(0.4),
-          label: Text(username, style: Theme.of(context).textTheme.bodyMedium)),
+    return Wrap(
+      children: <Widget>[
+        Chip(onDeleted: onDeleted, label: Text(username)),
+        const SizedBox(width: 5.0),
+      ],
     );
   }
 }

@@ -4,7 +4,7 @@ import '../shared/widgets/index.dart';
 import '../screens.dart';
 
 class CreateWorkspaceScreen extends StatefulWidget {
-  static const String routeName = '/workspace_creation_screen';
+  static const String routeName = '/workspace/create';
 
   const CreateWorkspaceScreen({super.key});
 
@@ -30,7 +30,7 @@ class _CreateWorkspaceScreenState extends State<CreateWorkspaceScreen> {
   void _onContinue() {
     if (_isValidName) {
       // TODO: Navigate to next screen
-      Navigator.of(context).pushNamed(AddWorkspaceFriendsScreen.routeName);
+      Navigator.of(context).pushNamed(AddWorkspaceMembersScreen.routeName);
     }
   }
 

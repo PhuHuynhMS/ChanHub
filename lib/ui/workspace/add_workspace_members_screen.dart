@@ -2,10 +2,10 @@ import 'package:flutter/material.dart';
 
 import '../shared/widgets/index.dart';
 
-class AddWorkspaceFriendsScreen extends StatelessWidget {
-  static const String routeName = '/add-workspace-friends';
+class AddWorkspaceMembersScreen extends StatelessWidget {
+  static const String routeName = '/workspace/members/add';
 
-  const AddWorkspaceFriendsScreen({super.key});
+  const AddWorkspaceMembersScreen({super.key});
 
   @override
   Widget build(BuildContext context) {

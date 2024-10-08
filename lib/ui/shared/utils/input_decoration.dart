@@ -2,8 +2,9 @@ import 'package:flutter/material.dart';
 
 InputDecoration underlineInputDecoration(
   BuildContext context,
-  String hintText,
-) {
+  String hintText, {
+  Widget? prefixIcon,
+}) {
   return InputDecoration(
     enabledBorder: UnderlineInputBorder(
       borderSide: BorderSide(
@@ -31,6 +32,7 @@ InputDecoration underlineInputDecoration(
     ),
     hintText: hintText,
     hintStyle: Theme.of(context).textTheme.labelMedium,
+    prefixIcon: prefixIcon,
   );
 }
 
@@ -43,5 +45,24 @@ InputDecoration borderlessInputDecoration(
     hintStyle: Theme.of(context).textTheme.labelMedium,
     border: InputBorder.none,
     contentPadding: const EdgeInsets.all(10.0),
+  );
+}
+
+InputDecoration outlinedInputDecoration(
+  BuildContext context,
+  String hintText, {
+  Widget? prefixIcon,
+}) {
+  return InputDecoration(
+    border: OutlineInputBorder(
+      borderRadius: BorderRadius.circular(5.0),
+      borderSide: BorderSide(
+        color: Theme.of(context).colorScheme.primary.withOpacity(0.2),
+        width: 0.5,
+      ),
+    ),
+    hintText: hintText,
+    hintStyle: Theme.of(context).textTheme.labelMedium,
+    prefixIcon: prefixIcon,
   );
 }
