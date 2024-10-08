@@ -11,10 +11,7 @@ class AddWorkspaceFriendsScreen extends StatelessWidget {
   Widget build(BuildContext context) {
     return Scaffold(
       appBar: AppBar(
-        title: Text(
-          'Add Collaborators',
-          style: Theme.of(context).primaryTextTheme.titleLarge,
-        ),
+        title: const Text('Add Collaborators'),
         actions: [
           TextButton(
             onPressed: () {
@@ -22,7 +19,7 @@ class AddWorkspaceFriendsScreen extends StatelessWidget {
             },
             child: Text(
               'Skip',
-              style: Theme.of(context).primaryTextTheme.titleMedium,
+              style: Theme.of(context).primaryTextTheme.titleSmall,
             ),
           ),
         ],
@@ -30,7 +27,7 @@ class AddWorkspaceFriendsScreen extends StatelessWidget {
       body: Center(
         child: SingleChildScrollView(
           child: Padding(
-            padding: const EdgeInsets.all(12.0),
+            padding: const EdgeInsets.symmetric(horizontal: 20.0),
             child: Column(
                 crossAxisAlignment: CrossAxisAlignment.center,
                 mainAxisAlignment: MainAxisAlignment.center,
@@ -40,17 +37,12 @@ class AddWorkspaceFriendsScreen extends StatelessWidget {
                     style: Theme.of(context).textTheme.headlineSmall,
                     textAlign: TextAlign.center,
                   ),
-                  const SizedBox(
-                    height: 10.0,
-                  ),
-                  Text(
+                  const SizedBox(height: 10.0),
+                  const Text(
                     'Search for and add collaborators to your workspace',
                     textAlign: TextAlign.center,
-                    style: Theme.of(context).textTheme.bodyMedium,
                   ),
-                  const SizedBox(
-                    height: 20.0,
-                  ),
+                  const SizedBox(height: 20.0),
                   const InviteFriendsBar()
                 ]),
           ),

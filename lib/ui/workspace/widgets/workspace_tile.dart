@@ -15,7 +15,7 @@ class WorkspaceTile extends StatelessWidget {
   final void Function() onTap;
   final bool isSelectedWorkspace;
 
-  void showWorkspaceActions(BuildContext context) {
+  void _showWorkspaceActions(BuildContext context) {
     showModalBottomSheetActions(
       context: context,
       header: WorkspaceActionsHeader(workspace),
@@ -74,7 +74,7 @@ class WorkspaceTile extends StatelessWidget {
 
               // More Options
               IconButton(
-                onPressed: () => showWorkspaceActions(context),
+                onPressed: () => _showWorkspaceActions(context),
                 icon: const Icon(Icons.more_vert),
               )
             ],
@@ -96,7 +96,6 @@ class WorkspaceActionsHeader extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return Row(
-      // mainAxisAlignment: MainAxisAlignment.center,
       children: [
         // Workspace Image
         Padding(
@@ -130,13 +129,20 @@ class WorkspaceActions extends StatelessWidget {
 
   final Workspace workspace;
 
+  void _onInvite() {
+    print('Invite');
+  }
+
+  void _onLeave() {
+    print('Leave');
+  }
+
   @override
   Widget build(BuildContext context) {
     return Wrap(
       children: [
         ListTile(
-          onTap: () {},
-          minTileHeight: 50.0,
+          onTap: _onInvite,
           leading: const Icon(Icons.person_add_alt),
           title: Text(
             'Invite',
@@ -144,8 +150,7 @@ class WorkspaceActions extends StatelessWidget {
           ),
         ),
         ListTile(
-          onTap: () {},
-          minTileHeight: 50.0,
+          onTap: _onInvite,
           leading: Icon(
             Icons.exit_to_app,
             color: Theme.of(context).colorScheme.error,

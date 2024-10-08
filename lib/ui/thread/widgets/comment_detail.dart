@@ -20,12 +20,12 @@ class CommentDetail extends StatelessWidget {
     email: 'john@gmail.com',
   );
 
-  bool hasReaction(List<Reaction> listReaction) {
+  bool _hasReaction(List<Reaction> listReaction) {
     return listReaction.any((reaction) => reaction.creatorId == user.id);
   }
 
-  void onReactionPressed(ReactionType type) {
-    if (hasReaction(comment.reactions[type]!)) {
+  void _onReactionPressed(ReactionType type) {
+    if (_hasReaction(comment.reactions[type]!)) {
       // Remove reaction
       comment.reactions[type]!
           .removeWhere((reaction) => reaction.creatorId == user.id);
@@ -51,7 +51,7 @@ class CommentDetail extends StatelessWidget {
       content: comment.content,
       mediaUrls: comment.mediaUrls,
       reactions: comment.reactions,
-      onReactionPressed: onReactionPressed,
+      onReactionPressed: _onReactionPressed,
     );
   }
 }

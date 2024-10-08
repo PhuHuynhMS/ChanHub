@@ -11,6 +11,7 @@ class CustomizedTextField extends StatelessWidget {
       this.hintText,
       this.readOnly = false,
       super.key});
+
   final void Function(String)? onChanged;
   final TextEditingController? controller;
   final String? Function(String?)? validator;
@@ -19,6 +20,7 @@ class CustomizedTextField extends StatelessWidget {
   final String? labelText;
   final String? hintText;
   final bool readOnly;
+
   @override
   Widget build(BuildContext context) {
     return TextFormField(
@@ -29,10 +31,8 @@ class CustomizedTextField extends StatelessWidget {
       onChanged: onChanged,
       decoration: InputDecoration(
         border: const OutlineInputBorder(),
-        label:
-            Text('$labelText', style: Theme.of(context).textTheme.titleMedium),
+        label: Text('$labelText'),
         hintText: hintText,
-        hintStyle: Theme.of(context).textTheme.labelMedium,
       ),
       style: Theme.of(context).textTheme.bodyMedium,
       readOnly: readOnly,

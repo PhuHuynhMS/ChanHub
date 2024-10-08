@@ -14,6 +14,7 @@ class _FirstScreenState extends State<FirstScreen> {
   @override
   void initState() {
     super.initState();
+    // TODO: Initialize the app
     Timer(const Duration(seconds: 2), () {
       Navigator.of(context).pushReplacement(
         MaterialPageRoute(builder: (context) => const OnboardingScreen()),
@@ -24,26 +25,30 @@ class _FirstScreenState extends State<FirstScreen> {
   @override
   Widget build(BuildContext context) {
     return Container(
-      color: Theme.of(context).colorScheme.onPrimary,
+      color: Theme.of(context).colorScheme.surface,
       child: Center(
-        child: ShaderMask(
-          shaderCallback: (bounds) {
-            return LinearGradient(
-              begin: Alignment.topCenter,
-              end: Alignment.bottomCenter,
-              colors: [
-                Theme.of(context).colorScheme.primary,
-                Theme.of(context).colorScheme.tertiary,
-              ],
-            ).createShader(bounds);
-          },
-          child: Text(
-            "ChanHub",
-            style: Theme.of(context).textTheme.headlineLarge!.copyWith(
-                  color: Colors.white,
-                ),
-          ),
-        ),
+        child: _buildLogo(),
+      ),
+    );
+  }
+
+  Widget _buildLogo() {
+    return ShaderMask(
+      shaderCallback: (bounds) {
+        return LinearGradient(
+          begin: Alignment.topCenter,
+          end: Alignment.bottomCenter,
+          colors: [
+            Theme.of(context).colorScheme.primary,
+            Theme.of(context).colorScheme.tertiary,
+          ],
+        ).createShader(bounds);
+      },
+      child: Text(
+        "ChanHub",
+        style: Theme.of(context).textTheme.headlineLarge!.copyWith(
+              color: Colors.white,
+            ),
       ),
     );
   }

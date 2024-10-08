@@ -1,6 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_svg/flutter_svg.dart';
 
+import '../shared/utils/index.dart';
 import '../screens.dart';
 
 class GetStartedScreen extends StatelessWidget {
@@ -8,12 +9,12 @@ class GetStartedScreen extends StatelessWidget {
 
   const GetStartedScreen({super.key});
 
-  void navigateToRegister(BuildContext context) {
+  void _navigateToRegister(BuildContext context) {
     Navigator.of(context)
         .pushNamed(LoginOrRegisterScreen.routeName, arguments: false);
   }
 
-  void navigateToLogin(BuildContext context) {
+  void _navigateToLogin(BuildContext context) {
     Navigator.of(context)
         .pushNamed(LoginOrRegisterScreen.routeName, arguments: true);
   }
@@ -23,12 +24,15 @@ class GetStartedScreen extends StatelessWidget {
     return SafeArea(
       child: Stack(
         children: <Widget>[
+          // Decorative background image
           Positioned.fill(
             child: SvgPicture.asset(
               'assets/svg/get_started.svg',
               fit: BoxFit.cover,
             ),
           ),
+
+          // Content
           Center(
             child: SingleChildScrollView(
               child: Column(
@@ -49,11 +53,8 @@ class GetStartedScreen extends StatelessWidget {
                     width: double.infinity,
                     padding: const EdgeInsets.symmetric(horizontal: 20),
                     child: ElevatedButton(
-                      style: ElevatedButton.styleFrom(
-                        backgroundColor: Theme.of(context).colorScheme.primary,
-                      ),
-                      child: const Text('Login'),
-                      onPressed: () => navigateToLogin(context),
+                      child: const Text('Get Started'),
+                      onPressed: () => _navigateToRegister(context),
                     ),
                   ),
                   const SizedBox(height: 10),
@@ -63,8 +64,9 @@ class GetStartedScreen extends StatelessWidget {
                     width: double.infinity,
                     padding: const EdgeInsets.symmetric(horizontal: 20),
                     child: ElevatedButton(
-                      child: const Text('Register'),
-                      onPressed: () => navigateToRegister(context),
+                      style: getContrastElevatedButtonStyle(context),
+                      child: const Text('Login'),
+                      onPressed: () => _navigateToLogin(context),
                     ),
                   ),
                 ],

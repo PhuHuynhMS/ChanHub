@@ -2,6 +2,7 @@ import 'package:flutter/material.dart';
 
 import '../../screens.dart';
 import '../../shared/widgets/index.dart';
+import './index.dart';
 
 class LoginForm extends StatelessWidget {
   static const String routeName = '/login';
@@ -13,7 +14,7 @@ class LoginForm extends StatelessWidget {
 
   final void Function()? toggleLoginRegister;
 
-  void navigateToWorkspace(BuildContext context) {
+  void _navigateToWorkspace(BuildContext context) {
     Navigator.of(context).pushNamed(WorkspaceScreen.routeName);
   }
 
@@ -27,50 +28,30 @@ class LoginForm extends StatelessWidget {
           shrinkWrap: true,
           children: <Widget>[
             // Background image
-            Text(
-              'Login now',
-              style: TextStyle(
-                fontSize: 30.0,
-                fontWeight: FontWeight.bold,
-                color: Theme.of(context).colorScheme.primary,
-                shadows: <Shadow>[
-                  Shadow(
-                    color: Theme.of(context).colorScheme.onPrimary,
-                    blurRadius: 4.0,
-                    offset: const Offset(1.0, 1.0),
-                  ),
-                ],
-              ),
-            ),
+            const ShadowedTitle('Login'),
             const Text('Enter your email and password to login'),
             const SizedBox(height: 20),
 
             // Email field
-            BlockTextField(
+            const BlockTextField(
               labelText: 'Email',
-              prefixIcon: Icon(Icons.email,
-                  color: Theme.of(context).colorScheme.primary),
+              prefixIcon: Icon(Icons.email),
             ),
             const SizedBox(height: 10),
 
             // Password field
-            BlockTextField(
+            const BlockTextField(
               labelText: 'Password',
-              prefixIcon: Icon(Icons.lock,
-                  color: Theme.of(context).colorScheme.primary),
+              prefixIcon: Icon(Icons.lock),
             ),
-
             const SizedBox(height: 10),
 
             // Login button
             SizedBox(
               width: double.infinity,
               child: ElevatedButton(
-                style: ElevatedButton.styleFrom(
-                  backgroundColor: Theme.of(context).colorScheme.primary,
-                ),
                 child: const Text('Login'),
-                onPressed: () => navigateToWorkspace(context),
+                onPressed: () => _navigateToWorkspace(context),
               ),
             ),
 
@@ -81,13 +62,7 @@ class LoginForm extends StatelessWidget {
                 const Text('Don\'t have an account?'),
                 TextButton(
                   onPressed: toggleLoginRegister,
-                  child: Text(
-                    'Sign up',
-                    style: Theme.of(context)
-                        .textTheme
-                        .labelMedium!
-                        .copyWith(color: Theme.of(context).colorScheme.primary),
-                  ),
+                  child: const Text('Sign up'),
                 ),
               ],
             ),

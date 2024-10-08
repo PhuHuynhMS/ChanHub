@@ -21,12 +21,12 @@ class ThreadDescription extends StatelessWidget {
     email: 'john@gmail.com',
   );
 
-  bool hasReaction(List<Reaction> listReaction) {
+  bool _hasReaction(List<Reaction> listReaction) {
     return listReaction.any((reaction) => reaction.creatorId == user.id);
   }
 
-  void onReactionPressed(ReactionType type) {
-    if (hasReaction(thread.reactions[type]!)) {
+  void _onReactionPressed(ReactionType type) {
+    if (_hasReaction(thread.reactions[type]!)) {
       // Remove reaction
       thread.reactions[type]!
           .removeWhere((reaction) => reaction.creatorId == user.id);
@@ -47,7 +47,7 @@ class ThreadDescription extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return Container(
-      color: Theme.of(context).colorScheme.primary.withOpacity(0.15),
+      color: Theme.of(context).colorScheme.primary.withOpacity(0.1),
       child: ThreadCard(
         creator: thread.creator,
         createdAt: thread.createdAt,
@@ -55,7 +55,7 @@ class ThreadDescription extends StatelessWidget {
         mediaUrls: thread.mediaUrls,
         reactions: thread.reactions,
         tasks: thread.tasks,
-        onReactionPressed: onReactionPressed,
+        onReactionPressed: _onReactionPressed,
       ),
     );
   }

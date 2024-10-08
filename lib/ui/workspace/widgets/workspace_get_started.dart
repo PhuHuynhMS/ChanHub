@@ -5,7 +5,7 @@ import '../../screens.dart';
 class WorkspaceGetStarted extends StatelessWidget {
   const WorkspaceGetStarted({super.key});
 
-  void createWorkspace(BuildContext context) {
+  void _createWorkspace(BuildContext context) {
     Navigator.of(context).pushNamed(CreateWorkspaceScreen.routeName);
   }
 
@@ -23,25 +23,18 @@ class WorkspaceGetStarted extends StatelessWidget {
               style: Theme.of(context).textTheme.titleLarge,
             ),
             Image.asset('assets/images/get_started_bg.jpg'),
-            Text(
+            const Text(
               'We provides a new way to communicate with everyone you work with. It\'s faster and better organized than email - and it\'s free to try.',
-              style: Theme.of(context).textTheme.bodyMedium,
               textAlign: TextAlign.justify,
             ),
-            const SizedBox(height: 10.0),
 
             // Create workspace action
             Container(
               padding: const EdgeInsets.symmetric(vertical: 15.0),
               width: double.infinity,
               child: ElevatedButton(
-                style: ElevatedButton.styleFrom(
-                  backgroundColor: Theme.of(context).colorScheme.primary,
-                ),
-                onPressed: () => createWorkspace(context),
-                child: const Text(
-                  'Create workspace',
-                ),
+                onPressed: () => _createWorkspace(context),
+                child: const Text('Create workspace'),
               ),
             ),
           ],

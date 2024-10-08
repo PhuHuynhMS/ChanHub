@@ -188,7 +188,7 @@ class _MessageInputState extends State<MessageInput> {
           // Tasks
           if (tasks.isNotEmpty) ...[
             const Divider(),
-            TaskPreview(
+            MessageTaskPreview(
               tasks: tasks,
               onRemoveTask: onRemoveTask,
             ),
@@ -375,8 +375,8 @@ class ImagePreviewItem extends StatelessWidget {
   }
 }
 
-class TaskPreview extends StatelessWidget {
-  const TaskPreview({
+class MessageTaskPreview extends StatelessWidget {
+  const MessageTaskPreview({
     super.key,
     required this.tasks,
     required this.onRemoveTask,
@@ -401,7 +401,7 @@ class TaskPreview extends StatelessWidget {
           itemCount: tasks.length,
           itemBuilder: (context, index) {
             final Map<String, dynamic> task = tasks[index];
-            return TaskPreviewItem(
+            return MessageTaskPreviewItem(
               task: task,
               onRemoveTask: () => onRemoveTask(index),
             );
@@ -412,8 +412,8 @@ class TaskPreview extends StatelessWidget {
   }
 }
 
-class TaskPreviewItem extends StatelessWidget {
-  const TaskPreviewItem({
+class MessageTaskPreviewItem extends StatelessWidget {
+  const MessageTaskPreviewItem({
     super.key,
     required this.task,
     required this.onRemoveTask,

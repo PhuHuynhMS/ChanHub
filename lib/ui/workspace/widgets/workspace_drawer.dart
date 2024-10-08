@@ -14,22 +14,22 @@ class WorkSpaceDrawer extends StatelessWidget {
   final List<Workspace> workspaces;
   final Workspace? selectedWorkspace;
 
-  void changeWorkspace(BuildContext context, Workspace workspace) {
+  void _changeWorkspace(BuildContext context, Workspace workspace) {
     Navigator.of(context).pushReplacementNamed(
       WorkspaceScreen.routeName,
       arguments: workspace,
     );
   }
 
-  void createWorkspace(BuildContext context) {
+  void _createWorkspace(BuildContext context) {
     Navigator.of(context).pushNamed(CreateWorkspaceScreen.routeName);
   }
 
-  void goToHelp(BuildContext context) {
+  void _goToHelp(BuildContext context) {
     print('Help');
   }
 
-  bool isSelectedWorkspace(Workspace workspace) {
+  bool _isSelectedWorkspace(Workspace workspace) {
     return selectedWorkspace != null && selectedWorkspace!.id == workspace.id;
   }
 
@@ -55,8 +55,8 @@ class WorkSpaceDrawer extends StatelessWidget {
               itemCount: workspaces.length,
               itemBuilder: (context, index) => WorkspaceTile(
                 workspaces[index],
-                isSelectedWorkspace: isSelectedWorkspace(workspaces[index]),
-                onTap: () => changeWorkspace(context, workspaces[index]),
+                isSelectedWorkspace: _isSelectedWorkspace(workspaces[index]),
+                onTap: () => _changeWorkspace(context, workspaces[index]),
               ),
             ),
           ),
@@ -64,14 +64,16 @@ class WorkSpaceDrawer extends StatelessWidget {
 
           // Workspace Actions
           ListTile(
-            onTap: () => createWorkspace(context),
+            onTap: () => _createWorkspace(context),
             leading: const Icon(Icons.add),
             title: const Text('Add workspace'),
+            textColor: Theme.of(context).colorScheme.primary,
           ),
           ListTile(
-            onTap: () => goToHelp(context),
+            onTap: () => _goToHelp(context),
             leading: const Icon(Icons.help),
             title: const Text('Help'),
+            textColor: Theme.of(context).colorScheme.primary,
           ),
         ],
       ),

@@ -41,6 +41,11 @@ class _OnboardingScreenState extends State<OnboardingScreen> {
     );
   }
 
+  void navigateToGetStarted() {
+    // TODO: Save the onboarding status
+    Navigator.of(context).pushReplacementNamed(GetStartedScreen.routeName);
+  }
+
   @override
   Widget build(BuildContext context) {
     return Scaffold(
@@ -63,18 +68,10 @@ class _OnboardingScreenState extends State<OnboardingScreen> {
 
   Widget getStarted() {
     return Container(
-      decoration: BoxDecoration(
-        borderRadius: BorderRadius.circular(25),
-        color: Theme.of(context).colorScheme.primary,
-      ),
-      width: MediaQuery.of(context).size.width * 0.9,
+      width: double.infinity,
+      padding: const EdgeInsets.symmetric(horizontal: 20),
       child: ElevatedButton(
-        onPressed: () {
-          // TODO: Save the onboarding state
-          Navigator.of(context).pushReplacementNamed(
-            GetStartedScreen.routeName,
-          );
-        },
+        onPressed: navigateToGetStarted,
         child: const Text("Get Started"),
       ),
     );
@@ -87,19 +84,18 @@ class _OnboardingScreenState extends State<OnboardingScreen> {
         // Skip Button
         TextButton(
           onPressed: onSkip,
-          child: Text(
-            "Skip",
-            style: Theme.of(context).textTheme.titleMedium,
-          ),
+          child: const Text("Skip"),
         ),
 
         // Indicator
         SmoothPageIndicator(
           controller: pageController,
           count: pages.length,
-          onDotClicked: (index) => pageController.animateToPage(index,
-              duration: const Duration(milliseconds: 600),
-              curve: Curves.easeIn),
+          onDotClicked: (index) => pageController.animateToPage(
+            index,
+            duration: const Duration(milliseconds: 600),
+            curve: Curves.easeInOut,
+          ),
           effect: WormEffect(
             dotHeight: 10,
             dotWidth: 10,
@@ -110,10 +106,7 @@ class _OnboardingScreenState extends State<OnboardingScreen> {
         // Next Button
         TextButton(
           onPressed: onNext,
-          child: Text(
-            "Next",
-            style: Theme.of(context).textTheme.titleMedium,
-          ),
+          child: const Text("Next"),
         ),
       ],
     );

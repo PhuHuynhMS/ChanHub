@@ -18,13 +18,7 @@ class LoginOrRegisterScreen extends StatefulWidget {
 }
 
 class _LoginOrRegisterScreenState extends State<LoginOrRegisterScreen> {
-  late bool _isLogin;
-
-  @override
-  void initState() {
-    _isLogin = widget.isLogin;
-    super.initState();
-  }
+  late bool _isLogin = widget.isLogin;
 
   void _toggleLoginRegister() {
     setState(() {
@@ -85,7 +79,7 @@ class _LoginOrRegisterScreenState extends State<LoginOrRegisterScreen> {
               ),
             ),
 
-            // Main content TODO:
+            // Main content
             AnimatedPositioned(
               duration: const Duration(milliseconds: 500),
               curve: Curves.fastLinearToSlowEaseIn,

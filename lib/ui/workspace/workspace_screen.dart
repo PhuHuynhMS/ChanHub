@@ -1,7 +1,6 @@
 import 'package:flutter/material.dart';
 
 import '../../models/index.dart';
-import '../screens.dart';
 import './widgets/index.dart';
 
 class WorkspaceScreen extends StatelessWidget {
@@ -30,13 +29,13 @@ class WorkspaceScreen extends StatelessWidget {
     return SafeArea(
       child: Scaffold(
         appBar: AppBar(
-          centerTitle: false,
           title: const Text('ChanHub'),
-          actions: [
+          actions: <Widget>[
             ProfileButton(user: user),
+            const SizedBox(width: 10.0),
           ],
         ),
-        body: buildWorkspaceBody(selectedWorkspace, context, workspaces),
+        body: _buildWorkspaceBody(selectedWorkspace, context, workspaces),
         drawer: WorkSpaceDrawer(
           workspaces,
           selectedWorkspace: selectedWorkspace,
@@ -45,7 +44,7 @@ class WorkspaceScreen extends StatelessWidget {
     );
   }
 
-  Widget buildWorkspaceBody(
+  Widget _buildWorkspaceBody(
     Workspace? selectedWorkspace,
     BuildContext context,
     List<Workspace> workspaces,
@@ -55,34 +54,5 @@ class WorkspaceScreen extends StatelessWidget {
     } else {
       return const WorkspaceGetStarted();
     }
-  }
-}
-
-class ProfileButton extends StatelessWidget {
-  const ProfileButton({
-    super.key,
-    required this.user,
-  });
-
-  final User user;
-
-  void goToProfilePage(BuildContext context) {
-    Navigator.of(context).pushNamed(
-      ProfileScreen.routeName,
-      arguments: user,
-    );
-  }
-
-  @override
-  Widget build(BuildContext context) {
-    return GestureDetector(
-      onTap: () => goToProfilePage(context),
-      child: Padding(
-        padding: const EdgeInsets.only(right: 10.0),
-        child: CircleAvatar(
-          backgroundImage: NetworkImage(user.avatarUrl),
-        ),
-      ),
-    );
   }
 }

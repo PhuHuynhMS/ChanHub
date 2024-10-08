@@ -3,11 +3,11 @@ import 'package:flutter/material.dart';
 class ChannelDrawer extends StatelessWidget {
   const ChannelDrawer({super.key});
 
-  void onEditChannelDescription() {
+  void _onEditChannelDescription() {
     print('Edit channel');
   }
 
-  void onAddChannelMember() {
+  void _onAddChannelMember() {
     print('Add channel member');
   }
 
@@ -41,7 +41,7 @@ class ChannelDrawer extends StatelessWidget {
                 ListTile(
                   leading: const Icon(Icons.edit),
                   title: const Text('Edit channel'),
-                  onTap: onEditChannelDescription,
+                  onTap: _onEditChannelDescription,
                 ),
                 ListTile(
                   leading: const Icon(Icons.people),
@@ -53,7 +53,7 @@ class ChannelDrawer extends StatelessWidget {
                 ListTile(
                   leading: const Icon(Icons.person_add),
                   title: const Text('Add member'),
-                  onTap: onAddChannelMember,
+                  onTap: _onAddChannelMember,
                 ),
               ],
             ),

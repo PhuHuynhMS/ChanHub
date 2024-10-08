@@ -2,6 +2,7 @@ import 'package:flutter/material.dart';
 
 import '../../screens.dart';
 import '../../shared/widgets/index.dart';
+import './index.dart';
 
 class RegisterForm extends StatelessWidget {
   static const String routeName = '/register';
@@ -13,7 +14,7 @@ class RegisterForm extends StatelessWidget {
 
   final void Function()? toggleLoginRegister;
 
-  void navigateToWorkspace(BuildContext context) {
+  void _navigateToWorkspace(BuildContext context) {
     Navigator.of(context).pushNamed(WorkspaceScreen.routeName);
   }
 
@@ -27,61 +28,42 @@ class RegisterForm extends StatelessWidget {
           shrinkWrap: true,
           children: <Widget>[
             // Background image
-            Text(
-              'Register now',
-              style: TextStyle(
-                fontSize: 30.0,
-                fontWeight: FontWeight.bold,
-                color: Theme.of(context).colorScheme.primary,
-                shadows: <Shadow>[
-                  Shadow(
-                    color: Theme.of(context).colorScheme.onPrimary,
-                    blurRadius: 4.0,
-                    offset: const Offset(1.0, 1.0),
-                  ),
-                ],
-              ),
-            ),
+            const ShadowedTitle('Register'),
             const Text('Let\'s get you started'),
             const SizedBox(height: 20),
 
             // Email field
-            BlockTextField(
+            const BlockTextField(
               labelText: 'Email',
-              prefixIcon: Icon(Icons.email,
-                  color: Theme.of(context).colorScheme.primary),
+              prefixIcon: Icon(Icons.email),
             ),
             const SizedBox(height: 10),
 
             // Username field
-            BlockTextField(
+            const BlockTextField(
               labelText: 'Username',
-              prefixIcon: Icon(Icons.person_pin,
-                  color: Theme.of(context).colorScheme.primary),
+              prefixIcon: Icon(Icons.person_pin),
             ),
             const SizedBox(height: 10),
 
             // Full name field
-            BlockTextField(
+            const BlockTextField(
               labelText: 'Full Name',
-              prefixIcon: Icon(Icons.person,
-                  color: Theme.of(context).colorScheme.primary),
+              prefixIcon: Icon(Icons.person),
             ),
             const SizedBox(height: 10),
 
             // Password field
-            BlockTextField(
+            const BlockTextField(
               labelText: 'Password',
-              prefixIcon: Icon(Icons.lock,
-                  color: Theme.of(context).colorScheme.primary),
+              prefixIcon: Icon(Icons.lock),
             ),
             const SizedBox(height: 10),
 
             // Confirm password field
-            BlockTextField(
+            const BlockTextField(
               labelText: 'Confirm Password',
-              prefixIcon: Icon(Icons.lock,
-                  color: Theme.of(context).colorScheme.primary),
+              prefixIcon: Icon(Icons.lock),
             ),
             const SizedBox(height: 10),
 
@@ -89,11 +71,8 @@ class RegisterForm extends StatelessWidget {
             SizedBox(
               width: double.infinity,
               child: ElevatedButton(
-                style: ElevatedButton.styleFrom(
-                  backgroundColor: Theme.of(context).colorScheme.primary,
-                ),
                 child: const Text('Register'),
-                onPressed: () => navigateToWorkspace(context),
+                onPressed: () => _navigateToWorkspace(context),
               ),
             ),
 
@@ -104,13 +83,7 @@ class RegisterForm extends StatelessWidget {
                 const Text('You have an account?'),
                 TextButton(
                   onPressed: toggleLoginRegister,
-                  child: Text(
-                    'Login',
-                    style: Theme.of(context)
-                        .textTheme
-                        .labelMedium!
-                        .copyWith(color: Theme.of(context).colorScheme.primary),
-                  ),
+                  child: const Text('Login'),
                 ),
               ],
             ),

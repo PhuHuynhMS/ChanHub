@@ -3,8 +3,8 @@ import 'package:flutter/material.dart';
 import '../../../common/constants.dart';
 import '../../../common/enums.dart';
 import '../../../models/index.dart';
-import './index.dart';
 import '../utils/index.dart';
+import './index.dart';
 
 class ThreadReaction extends StatefulWidget {
   const ThreadReaction(
@@ -36,28 +36,28 @@ class _ThreadReactionState extends State<ThreadReaction> {
   void initState() {
     super.initState();
     for (ReactionType type in reactionType.values) {
-      hasReactionMap[type] = hasReaction(widget.reactions[type]!);
+      hasReactionMap[type] = _hasReaction(widget.reactions[type]!);
     }
   }
 
-  bool hasReaction(List<Reaction> listReaction) {
+  bool _hasReaction(List<Reaction> listReaction) {
     return listReaction.any((reaction) => reaction.creatorId == user.id);
   }
 
-  void onOtherReactionPressed(context) {
+  void _onOtherReactionPressed() {
     showModalBottomSheetActions(
       context: context,
       title: 'Thread Reactions',
       body: ListOtherReaction(
-        onReactionPressed: onReactionPressed,
+        onReactionPressed: _onReactionPressed,
         hasReactionMap: hasReactionMap,
       ),
     );
   }
 
-  void onReactionPressed(ReactionType type) {
+  void _onReactionPressed(ReactionType type) {
     widget.onReactionPressed(type);
-    hasReactionMap[type] = hasReaction(widget.reactions[type]!);
+    hasReactionMap[type] = _hasReaction(widget.reactions[type]!);
 
     setState(() {});
   }
@@ -76,15 +76,15 @@ class _ThreadReactionState extends State<ThreadReaction> {
               ReactionButton(
                 type: type,
                 reactions: widget.reactions[type]!,
-                onPressed: () => onReactionPressed(type),
-                hasReaction: hasReaction(widget.reactions[type]!),
+                onPressed: () => _onReactionPressed(type),
+                hasReaction: _hasReaction(widget.reactions[type]!),
               ),
               const SizedBox(width: 5.0),
             ],
 
           // Other reactions
           TextButton(
-            onPressed: () => onOtherReactionPressed(context),
+            onPressed: _onOtherReactionPressed,
             child: const Icon(Icons.add_reaction),
           ),
         ],
@@ -108,7 +108,7 @@ class ListOtherReaction extends StatefulWidget {
 }
 
 class _ListOtherReactionState extends State<ListOtherReaction> {
-  void onReactionPressed(ReactionType type) {
+  void _onReactionPressed(ReactionType type) {
     widget.onReactionPressed(type);
     setState(() {});
   }
@@ -126,18 +126,11 @@ class _ListOtherReactionState extends State<ListOtherReaction> {
                 backgroundColor:
                     Theme.of(context).colorScheme.primary.withOpacity(0.1),
                 side: widget.hasReactionMap[type] ?? false
-                    ? BorderSide(
-                        color: Theme.of(context)
-                            .colorScheme
-                            .primary
-                            .withOpacity(0.6))
+                    ? BorderSide(color: Theme.of(context).colorScheme.primary)
                     : BorderSide.none,
               ),
-              onPressed: () => onReactionPressed(type),
-              icon: Text(
-                getReactionEmoji(type),
-                style: Theme.of(context).textTheme.bodyMedium,
-              ),
+              onPressed: () => _onReactionPressed(type),
+              icon: Text(getReactionEmoji(type)),
             ),
         ],
       ),
@@ -177,11 +170,9 @@ class ReactionButton extends StatelessWidget {
       onLongPress: () => showListReaction(context),
       style: TextButton.styleFrom(
         side: hasReaction
-            ? BorderSide(
-                color: Theme.of(context).colorScheme.primary.withOpacity(0.6))
+            ? BorderSide(color: Theme.of(context).colorScheme.primary)
             : BorderSide.none,
-        backgroundColor:
-            Theme.of(context).colorScheme.tertiary.withOpacity(0.3),
+        backgroundColor: Theme.of(context).colorScheme.primary.withOpacity(0.1),
       ),
       child: Text(
         '${getReactionEmoji(type)} ${reactions.length}',

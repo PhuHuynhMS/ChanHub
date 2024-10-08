@@ -49,12 +49,12 @@ class _TaskInputState extends State<TaskInput> {
     ),
   ];
 
-  void onSelectAssignee(User? value) {
+  void _onSelectAssignee(User? value) {
     taskData['assignee'] = value;
     setState(() {});
   }
 
-  void onShowDateTimePicker() async {
+  void _onShowDateTimePicker() async {
     final DateTime? deadline = await showDateTimePicker(context);
 
     if (deadline != null) {
@@ -66,13 +66,6 @@ class _TaskInputState extends State<TaskInput> {
   @override
   Widget build(BuildContext context) {
     return Dialog(
-      shape: RoundedRectangleBorder(
-        borderRadius: BorderRadius.circular(20.0),
-      ),
-      insetPadding: const EdgeInsets.symmetric(
-        horizontal: 20.0,
-        vertical: 20.0,
-      ),
       child: Padding(
         padding: const EdgeInsets.only(
           left: 20.0,
@@ -119,7 +112,7 @@ class _TaskInputState extends State<TaskInput> {
                       hint: 'Assignee',
                       selectedValue: taskData['assignee'],
                       items: assignees,
-                      onChanged: onSelectAssignee,
+                      onChanged: _onSelectAssignee,
                     ),
 
                     // Deadline
@@ -130,7 +123,7 @@ class _TaskInputState extends State<TaskInput> {
                           borderRadius: BorderRadius.zero,
                         ),
                       ),
-                      onPressed: onShowDateTimePicker,
+                      onPressed: _onShowDateTimePicker,
                       child: Row(
                         children: <Widget>[
                           Icon(

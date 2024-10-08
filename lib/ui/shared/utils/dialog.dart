@@ -11,10 +11,6 @@ Future<bool> showConfirmDialog({
     context: context,
     builder: (context) {
       return Dialog(
-        shape: RoundedRectangleBorder(
-          borderRadius: BorderRadius.circular(20.0),
-        ),
-        insetPadding: const EdgeInsets.symmetric(horizontal: 20.0),
         child: Padding(
           padding: const EdgeInsets.only(
             left: 20.0,
@@ -69,7 +65,7 @@ Future<bool> showConfirmDialog({
   );
 }
 
-Future<bool> showInfoDialog({
+void showInfoDialog({
   required BuildContext context,
   String title = 'Information',
   List<Widget> children = const <Widget>[],
@@ -81,17 +77,10 @@ Future<bool> showInfoDialog({
       (content != null && children.isEmpty) ||
           (content == null && children.isNotEmpty),
       'Either content or children must be provided');
-  return await showDialog(
+  showDialog(
     context: context,
     builder: (context) {
       return Dialog(
-        shape: RoundedRectangleBorder(
-          borderRadius: BorderRadius.circular(20.0),
-        ),
-        insetPadding: const EdgeInsets.symmetric(
-          horizontal: 20.0,
-          vertical: 20.0,
-        ),
         child: Padding(
           padding: const EdgeInsets.only(
             left: 20.0,
@@ -134,7 +123,7 @@ Future<bool> showInfoDialog({
                   ),
                   if (confirmText != null)
                     TextButton(
-                      onPressed: () => Navigator.of(context).pop(true),
+                      onPressed: () => Navigator.of(context).pop(),
                       child: Text(
                         confirmText,
                         style: Theme.of(context).textTheme.titleMedium,
@@ -164,13 +153,6 @@ Future<bool> showInputDialog({
     context: context,
     builder: (context) {
       return Dialog(
-        shape: RoundedRectangleBorder(
-          borderRadius: BorderRadius.circular(20.0),
-        ),
-        insetPadding: const EdgeInsets.symmetric(
-          horizontal: 20.0,
-          vertical: 20.0,
-        ),
         child: Padding(
           padding: const EdgeInsets.only(
             left: 20.0,

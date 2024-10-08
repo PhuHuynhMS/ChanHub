@@ -4,8 +4,10 @@ import 'package:dropdown_search/dropdown_search.dart';
 import '../../../models/index.dart';
 import './index.dart';
 
+// FIXME: This is a temporary solution to the issue of the User model not being available
 class InviteFriendsBar extends StatefulWidget {
   const InviteFriendsBar({super.key});
+
   @override
   State<InviteFriendsBar> createState() => _FriendSearchBarState();
 }
@@ -172,8 +174,7 @@ class _FriendSearchBarState extends State<InviteFriendsBar> {
             children: selectedItems.map((user) {
               return ColabChip(
                   username: user.userName,
-                  onDeleted: () => setState(() => selectedItems
-                      .remove(user))); // Hiển thị tên người dùng đã chọn
+                  onDeleted: () => setState(() => selectedItems.remove(user)));
             }).toList(),
           );
         },
@@ -190,7 +191,7 @@ class _FriendSearchBarState extends State<InviteFriendsBar> {
               prefixIcon: const Icon(Icons.search),
               hintText: "Search for your friend's username",
               enabledBorder: OutlineInputBorder(
-                borderRadius: BorderRadius.circular(12),
+                borderRadius: BorderRadius.circular(10.0),
               ),
             ),
             onChanged: (value) {
@@ -201,7 +202,10 @@ class _FriendSearchBarState extends State<InviteFriendsBar> {
           ),
           showSelectedItems: false,
           dialogProps: const DialogProps(
-              alignment: Alignment.topCenter,
+              shape: RoundedRectangleBorder(
+                borderRadius: BorderRadius.all(Radius.circular(20.0)),
+              ),
+              alignment: Alignment.center,
               contentPadding: EdgeInsets.all(20.0)),
           itemBuilder: userModelPopupItem,
         ),

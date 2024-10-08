@@ -32,10 +32,7 @@ class UnderlineDropdownButton<T> extends StatelessWidget {
           items: items.map((value) {
             return DropdownMenuItem<T>(
               value: value,
-              child: Text(
-                value.toString(),
-                style: Theme.of(context).textTheme.bodyMedium,
-              ),
+              child: Text(value.toString()),
             );
           }).toList(),
           onChanged: onChanged,

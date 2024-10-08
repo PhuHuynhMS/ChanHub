@@ -14,12 +14,8 @@ class ChannelDescription extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return Card(
-      elevation: 5.0,
-      shape: RoundedRectangleBorder(
-        borderRadius: BorderRadius.circular(20.0),
-      ),
       child: Padding(
-        padding: const EdgeInsets.all(10.0),
+        padding: const EdgeInsets.all(20.0),
         child: Column(
           mainAxisAlignment: MainAxisAlignment.start,
           crossAxisAlignment: CrossAxisAlignment.start,
@@ -52,88 +48,9 @@ class ChannelDescription extends StatelessWidget {
               channel.description,
               style: Theme.of(context).textTheme.bodySmall,
             ),
-            const SizedBox(height: 10.0),
-
-            // Channel actions
-            BlockButton(
-              icon: Icons.person_add,
-              text: 'Add members',
-              onPressed: () {
-                print('Add members');
-              },
-            ),
-            BlockButton(
-              icon: Icons.edit,
-              text: 'Edit channel',
-              onPressed: () {
-                print('Edit channel');
-              },
-            ),
           ],
         ),
       ),
-    );
-  }
-}
-
-// TODO: Update the BlockButton widget
-class BlockButton extends StatelessWidget {
-  const BlockButton({
-    super.key,
-    required this.icon,
-    required this.text,
-    this.onPressed,
-  });
-
-  final IconData icon;
-  final String text;
-  final void Function()? onPressed;
-
-  @override
-  Widget build(BuildContext context) {
-    return Column(
-      children: [
-        // Decorative divider
-        Divider(
-          color: Theme.of(context).colorScheme.primary,
-          thickness: 1.0,
-          height: 0,
-          indent: 80.0,
-          endIndent: 0.0,
-        ),
-
-        // Button
-        TextButton(
-          style: ButtonStyle(
-            shape: WidgetStateProperty.all(
-              RoundedRectangleBorder(borderRadius: BorderRadius.circular(0.0)),
-            ),
-            padding: WidgetStateProperty.all(
-              const EdgeInsets.symmetric(horizontal: 10.0, vertical: 5.0),
-            ),
-          ),
-          onPressed: onPressed,
-          child: SizedBox(
-            height: 40.0,
-            child: Row(
-              mainAxisAlignment: MainAxisAlignment.start,
-              children: [
-                Padding(
-                  padding: const EdgeInsets.only(left: 10.0, right: 40.0),
-                  child: Icon(
-                    icon,
-                    size: Theme.of(context).textTheme.bodyLarge?.fontSize,
-                  ),
-                ),
-                Text(
-                  text,
-                  style: Theme.of(context).textTheme.titleMedium,
-                ),
-              ],
-            ),
-          ),
-        ),
-      ],
     );
   }
 }
