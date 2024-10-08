@@ -18,25 +18,53 @@ class WorkSpaceContent extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    return ExpansionTile(
-      initiallyExpanded: true,
-      title: Text(
-        'Channels',
-        style: Theme.of(context).textTheme.titleMedium,
-      ),
-      children: [
-        // Channels
-        ...(workspace.channels.map((channel) => ChannelTile(channel)).toList()),
-
-        // Add Channel
-        ListTile(
-          onTap: () => _addChannel(context),
-          leading: const Icon(Icons.add),
+    return Column(
+      children: <Widget>[
+        // Online Members
+        ExpansionTile(
+          initiallyExpanded: true,
           title: Text(
-            'Add channel',
-            style: Theme.of(context).textTheme.titleSmall,
+            'Online Members',
+            style: Theme.of(context).textTheme.titleMedium,
           ),
-        )
+          children: <Widget>[
+            // Members
+            SingleChildScrollView(
+              scrollDirection: Axis.horizontal,
+              child: Row(children: <Widget>[
+                ...workspace.members.map((member) {
+                  return OnlineMemberTile(member: member);
+                }),
+              ]),
+            ),
+          ],
+        ),
+
+        const Divider(),
+        // Channels
+        ExpansionTile(
+          initiallyExpanded: true,
+          title: Text(
+            'Channels',
+            style: Theme.of(context).textTheme.titleMedium,
+          ),
+          children: [
+            // Channels
+            ...(workspace.channels
+                .map((channel) => ChannelTile(channel))
+                .toList()),
+
+            // Add Channel
+            ListTile(
+              onTap: () => _addChannel(context),
+              leading: const Icon(Icons.add),
+              title: Text(
+                'Add channel',
+                style: Theme.of(context).textTheme.titleSmall,
+              ),
+            )
+          ],
+        ),
       ],
     );
   }

@@ -1,6 +1,7 @@
 import 'package:flutter/material.dart';
 
 import '../../../models/index.dart';
+import '../../screens.dart';
 
 class WorkspaceHeader extends StatelessWidget {
   const WorkspaceHeader(
@@ -9,6 +10,18 @@ class WorkspaceHeader extends StatelessWidget {
   });
 
   final Workspace workspace;
+
+  void _navigateToManageMembers(BuildContext context) {
+    Navigator.of(context).pushNamed(WorkspaceMembersScreen.routeName);
+  }
+
+  void _navigateToAddWorkspacesMembers(BuildContext context) {
+    Navigator.of(context).pushNamed(AddWorkspaceMembersScreen.routeName);
+  }
+
+  void _leaveWorkspace() {
+    //TODO: Leave workspace
+  }
 
   @override
   Widget build(BuildContext context) {
@@ -45,25 +58,19 @@ class WorkspaceHeader extends StatelessWidget {
                 children: [
                   IconButton(
                     iconSize: 25.0,
-                    onPressed: () {
-                      //TODO: Go to manage account page
-                    },
+                    onPressed: () => _navigateToManageMembers(context),
                     icon: const Icon(Icons.manage_accounts),
                     color: Theme.of(context).colorScheme.primary,
                   ),
                   IconButton(
                     iconSize: 25.0,
                     color: Theme.of(context).colorScheme.primary,
-                    onPressed: () {
-                      //TODO: Add workspace friends
-                    },
-                    icon: const Icon(Icons.person_add_alt),
+                    onPressed: () => _navigateToAddWorkspacesMembers(context),
+                    icon: const Icon(Icons.person_add),
                   ),
                   IconButton(
                     iconSize: 25.0,
-                    onPressed: () {
-                      //TODO: Exit app
-                    },
+                    onPressed: _leaveWorkspace,
                     icon: const Icon(Icons.exit_to_app),
                     color: Theme.of(context).colorScheme.error,
                   ),

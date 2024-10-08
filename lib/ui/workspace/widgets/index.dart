@@ -6,3 +6,5 @@ export './workspace_tile.dart';
 export './workspace_header.dart';
 export './workspace_content.dart';
 export './channel_tile.dart';
+export './list_workspace_members.dart';
+export './online_member_tile.dart';
