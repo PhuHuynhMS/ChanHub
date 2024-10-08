@@ -11,10 +11,6 @@ Future<bool> showConfirmDialog({
     context: context,
     builder: (context) {
       return Dialog(
-        shape: RoundedRectangleBorder(
-          borderRadius: BorderRadius.circular(20.0),
-        ),
-        insetPadding: const EdgeInsets.symmetric(horizontal: 20.0),
         child: Padding(
           padding: const EdgeInsets.only(
             left: 20.0,
@@ -29,13 +25,9 @@ Future<bool> showConfirmDialog({
               // Title
               Text(
                 title,
-                style: Theme.of(context).textTheme.titleLarge!.copyWith(
-                      color: Theme.of(context).colorScheme.primary,
-                    ),
+                style: Theme.of(context).textTheme.titleLarge,
               ),
-              Divider(
-                color: Theme.of(context).colorScheme.primary.withOpacity(0.2),
-              ),
+              const Divider(height: 20.0),
               const SizedBox(height: 10.0),
 
               // Content
@@ -53,18 +45,14 @@ Future<bool> showConfirmDialog({
                     onPressed: () => Navigator.of(context).pop(false),
                     child: Text(
                       cancelText,
-                      style: Theme.of(context).textTheme.labelMedium!.copyWith(
-                            color: Theme.of(context).colorScheme.error,
-                          ),
+                      style: Theme.of(context).textTheme.titleMedium,
                     ),
                   ),
                   TextButton(
                     onPressed: () => Navigator.of(context).pop(true),
                     child: Text(
                       confirmText,
-                      style: Theme.of(context).textTheme.labelMedium!.copyWith(
-                            color: Theme.of(context).colorScheme.primary,
-                          ),
+                      style: Theme.of(context).textTheme.titleMedium,
                     ),
                   ),
                 ],
@@ -77,7 +65,7 @@ Future<bool> showConfirmDialog({
   );
 }
 
-Future<bool> showInfoDialog({
+void showInfoDialog({
   required BuildContext context,
   String title = 'Information',
   List<Widget> children = const <Widget>[],
@@ -89,17 +77,10 @@ Future<bool> showInfoDialog({
       (content != null && children.isEmpty) ||
           (content == null && children.isNotEmpty),
       'Either content or children must be provided');
-  return await showDialog(
+  showDialog(
     context: context,
     builder: (context) {
       return Dialog(
-        shape: RoundedRectangleBorder(
-          borderRadius: BorderRadius.circular(20.0),
-        ),
-        insetPadding: const EdgeInsets.symmetric(
-          horizontal: 20.0,
-          vertical: 20.0,
-        ),
         child: Padding(
           padding: const EdgeInsets.only(
             left: 20.0,
@@ -114,13 +95,9 @@ Future<bool> showInfoDialog({
               // Title
               Text(
                 title,
-                style: Theme.of(context).textTheme.titleLarge!.copyWith(
-                      color: Theme.of(context).colorScheme.primary,
-                    ),
+                style: Theme.of(context).textTheme.titleLarge,
               ),
-              Divider(
-                color: Theme.of(context).colorScheme.primary.withOpacity(0.2),
-              ),
+              const Divider(height: 20.0),
               const SizedBox(height: 10.0),
 
               // Content
@@ -141,19 +118,15 @@ Future<bool> showInfoDialog({
                     onPressed: () => Navigator.of(context).pop(),
                     child: Text(
                       cancelText,
-                      style: Theme.of(context).textTheme.bodyMedium!.copyWith(
-                            color: Theme.of(context).colorScheme.error,
-                          ),
+                      style: Theme.of(context).textTheme.titleMedium,
                     ),
                   ),
                   if (confirmText != null)
                     TextButton(
-                      onPressed: () => Navigator.of(context).pop(true),
+                      onPressed: () => Navigator.of(context).pop(),
                       child: Text(
                         confirmText,
-                        style: Theme.of(context).textTheme.bodyMedium!.copyWith(
-                              color: Theme.of(context).colorScheme.primary,
-                            ),
+                        style: Theme.of(context).textTheme.titleMedium,
                       ),
                     ),
                 ],
@@ -180,13 +153,6 @@ Future<bool> showInputDialog({
     context: context,
     builder: (context) {
       return Dialog(
-        shape: RoundedRectangleBorder(
-          borderRadius: BorderRadius.circular(20.0),
-        ),
-        insetPadding: const EdgeInsets.symmetric(
-          horizontal: 20.0,
-          vertical: 20.0,
-        ),
         child: Padding(
           padding: const EdgeInsets.only(
             left: 20.0,
@@ -201,13 +167,9 @@ Future<bool> showInputDialog({
               // Title
               Text(
                 title,
-                style: Theme.of(context).textTheme.titleLarge!.copyWith(
-                      color: Theme.of(context).colorScheme.primary,
-                    ),
+                style: Theme.of(context).textTheme.titleLarge,
               ),
-              Divider(
-                color: Theme.of(context).colorScheme.primary.withOpacity(0.2),
-              ),
+              const Divider(height: 20.0),
               const SizedBox(height: 10.0),
 
               // Content
@@ -224,5 +186,40 @@ Future<bool> showInputDialog({
         ),
       );
     },
+  );
+}
+
+Future<DateTime?> showDateTimePicker(BuildContext context) async {
+  DateTime? pickedDate = await showDatePicker(
+    context: context,
+    initialDate: DateTime.now(),
+    firstDate: DateTime(2000),
+    lastDate: DateTime(2101),
+  );
+
+  if (pickedDate == null) {
+    return null;
+  }
+
+  // Check if the widget is still mounted
+  if (!context.mounted) {
+    return null;
+  }
+
+  final TimeOfDay? pickedTime = await showTimePicker(
+    context: context,
+    initialTime: TimeOfDay.now(),
+  );
+
+  if (pickedTime == null) {
+    return null;
+  }
+
+  return DateTime(
+    pickedDate.year,
+    pickedDate.month,
+    pickedDate.day,
+    pickedTime.hour,
+    pickedTime.minute,
   );
 }

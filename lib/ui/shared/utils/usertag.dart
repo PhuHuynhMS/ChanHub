@@ -3,10 +3,14 @@ import 'package:flutter/gestures.dart';
 
 import '../../../models/user.dart';
 
-TextSpan createUserTag({required User user, required TextStyle style}) {
+TextSpan createUserTag({required User user, TextStyle? style}) {
   return TextSpan(
     text: '@${user.userName}',
-    style: style,
+    style: style ??
+        const TextStyle(
+          color: Colors.blue,
+          fontWeight: FontWeight.bold,
+        ),
     recognizer: TapGestureRecognizer()
       ..onTap = () {
         // TODO: Navigate to user profile screen

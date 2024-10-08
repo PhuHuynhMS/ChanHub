@@ -29,7 +29,7 @@ TaskStatus getTaskStatus(DateTime? deadline, DateTime? completedAt) {
 Color getTaskStatusColor(TaskStatus status, BuildContext context) {
   switch (status) {
     case TaskStatus.inProgress:
-      return Theme.of(context).colorScheme.onSurface;
+      return Theme.of(context).colorScheme.secondary;
     case TaskStatus.completed:
       return Theme.of(context).colorScheme.primary;
     case TaskStatus.overdue:

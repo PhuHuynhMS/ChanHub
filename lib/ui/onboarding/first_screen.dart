@@ -1,8 +1,7 @@
 import 'dart:async';
-
 import 'package:flutter/material.dart';
 
-import './onboarding_view.dart';
+import '../screens.dart';
 
 class FirstScreen extends StatefulWidget {
   const FirstScreen({super.key});
@@ -15,9 +14,10 @@ class _FirstScreenState extends State<FirstScreen> {
   @override
   void initState() {
     super.initState();
+    // TODO: Initialize the app
     Timer(const Duration(seconds: 2), () {
       Navigator.of(context).pushReplacement(
-        MaterialPageRoute(builder: (context) => const OnboardingView()),
+        MaterialPageRoute(builder: (context) => const OnboardingScreen()),
       );
     });
   }
@@ -25,28 +25,30 @@ class _FirstScreenState extends State<FirstScreen> {
   @override
   Widget build(BuildContext context) {
     return Container(
-      color: Theme.of(context).colorScheme.onPrimary,
+      color: Theme.of(context).colorScheme.surface,
       child: Center(
-        child: ShaderMask(
-          shaderCallback: (bounds) {
-            return LinearGradient(
-              begin: Alignment.topCenter,
-              end: Alignment.bottomCenter,
-              colors: [
-                Theme.of(context).colorScheme.primary,
-                Theme.of(context).colorScheme.tertiary,
-              ],
-            ).createShader(bounds);
-          },
-          child: Text(
-            "ChanHub",
-            style: Theme.of(context).textTheme.titleLarge!.copyWith(
-                  color: Theme.of(context).colorScheme.onPrimary,
-                  fontSize: 40.0,
-                  fontWeight: FontWeight.bold,
-                ),
-          ),
-        ),
+        child: _buildLogo(),
+      ),
+    );
+  }
+
+  Widget _buildLogo() {
+    return ShaderMask(
+      shaderCallback: (bounds) {
+        return LinearGradient(
+          begin: Alignment.topCenter,
+          end: Alignment.bottomCenter,
+          colors: [
+            Theme.of(context).colorScheme.primary,
+            Theme.of(context).colorScheme.tertiary,
+          ],
+        ).createShader(bounds);
+      },
+      child: Text(
+        "ChanHub",
+        style: Theme.of(context).textTheme.headlineLarge!.copyWith(
+              color: Colors.white,
+            ),
       ),
     );
   }
