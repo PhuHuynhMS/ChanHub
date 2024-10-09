@@ -2,6 +2,7 @@ import 'package:flutter/material.dart';
 
 import '../../../models/index.dart';
 import '../../screens.dart';
+import '../../shared/widgets/invite_friends_bar.dart';
 
 class WorkspaceHeader extends StatelessWidget {
   const WorkspaceHeader(
@@ -16,7 +17,11 @@ class WorkspaceHeader extends StatelessWidget {
   }
 
   void _navigateToAddWorkspacesMembers(BuildContext context) {
-    Navigator.of(context).pushNamed(AddWorkspaceMembersScreen.routeName);
+    showDialog(
+        context: context,
+        builder: (context) {
+          return const InviteFriendsBar(isPopup: true);
+        });
   }
 
   void _leaveWorkspace() {
