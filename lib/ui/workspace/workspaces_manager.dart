@@ -10,6 +10,7 @@ class WorkspacesManager {
       createdBy: User(
         id: '1',
         fullName: 'John Doe',
+        jobTitle: "Software Developer",
         userName: 'johndoe',
         avatarUrl: 'https://picsum.photos/400/300',
         email: 'john@gmail.com',
@@ -30,6 +31,7 @@ class WorkspacesManager {
           creator: User(
             id: '1',
             fullName: 'John Doe',
+            jobTitle: "Software Developer",
             userName: 'johndoe',
             avatarUrl: 'https://picsum.photos/300/300',
             email: 'john@gmail.com',
@@ -47,6 +49,7 @@ class WorkspacesManager {
           creator: User(
             id: '1',
             fullName: 'John Doe',
+            jobTitle: "Software Developer",
             userName: 'johndoe',
             avatarUrl: 'https://picsum.photos/300/300',
             email: 'john@gmail.com',
@@ -64,6 +67,7 @@ class WorkspacesManager {
           creator: User(
             id: '1',
             fullName: 'John Doe',
+            jobTitle: "Software Developer",
             userName: 'johndoe',
             avatarUrl: 'https://picsum.photos/300/300',
             email: 'john@gmail.com',
@@ -74,6 +78,7 @@ class WorkspacesManager {
         User(
           id: '1',
           fullName: 'John Smith',
+          jobTitle: "Software Developer",
           userName: 'john_smith',
           email: 'johnsmith@gmail.com',
           avatarUrl: 'https://picsum.photos/400/300',
@@ -81,6 +86,7 @@ class WorkspacesManager {
         User(
           id: '2',
           fullName: 'Emily Brown',
+          jobTitle: "Software Developer",
           userName: 'emily_brown',
           email: 'emily@gmail.com',
           avatarUrl: 'https://picsum.photos/350/300',
@@ -88,6 +94,7 @@ class WorkspacesManager {
         User(
           id: '3',
           fullName: 'Michael Johnson',
+          jobTitle: "Software Developer",
           userName: 'michael_j',
           email: 'michael@gmail.com',
           avatarUrl: 'https://picsum.photos/420/320',
@@ -95,6 +102,7 @@ class WorkspacesManager {
         User(
           id: '4',
           fullName: 'Sophia White',
+          jobTitle: "Software Developer",
           userName: 'sophia_w',
           email: 'sophia@gmail.com',
           avatarUrl: 'https://picsum.photos/400/400',
@@ -102,6 +110,7 @@ class WorkspacesManager {
         User(
           id: '5',
           fullName: 'David Wilson',
+          jobTitle: "Software Developer",
           userName: 'david_w',
           email: 'david@gmail.com',
           avatarUrl: 'https://picsum.photos/450/300',
@@ -109,6 +118,7 @@ class WorkspacesManager {
         User(
           id: '6',
           fullName: 'Olivia Lee',
+          jobTitle: "Software Developer",
           userName: 'olivia_lee',
           email: 'olivia@gmail.com',
           avatarUrl: 'https://picsum.photos/380/330',
@@ -116,6 +126,7 @@ class WorkspacesManager {
         User(
           id: '7',
           fullName: 'Chris Martin',
+          jobTitle: "Software Developer",
           userName: 'chris_m',
           email: 'chris@gmail.com',
           avatarUrl: 'https://picsum.photos/400/350',
@@ -123,6 +134,7 @@ class WorkspacesManager {
         User(
           id: '8',
           fullName: 'Isabella Harris',
+          jobTitle: "Software Developer",
           userName: 'isabella_h',
           email: 'isabella@gmail.com',
           avatarUrl: 'https://picsum.photos/370/340',
@@ -130,6 +142,7 @@ class WorkspacesManager {
         User(
           id: '9',
           fullName: 'James Clark',
+          jobTitle: "Software Developer",
           userName: 'james_c',
           email: 'james@gmail.com',
           avatarUrl: 'https://picsum.photos/430/300',
@@ -137,6 +150,7 @@ class WorkspacesManager {
         User(
           id: '10',
           fullName: 'Mia Anderson',
+          jobTitle: "Software Developer",
           userName: 'mia_a',
           email: 'mia@gmail.com',
           avatarUrl: 'https://picsum.photos/400/310',
@@ -144,6 +158,7 @@ class WorkspacesManager {
         User(
           id: '11',
           fullName: 'Ethan Walker',
+          jobTitle: "Software Developer",
           userName: 'ethan_w',
           email: 'ethan@gmail.com',
           avatarUrl: 'https://picsum.photos/420/380',
@@ -151,6 +166,7 @@ class WorkspacesManager {
         User(
           id: '12',
           fullName: 'Ava Taylor',
+          jobTitle: "Software Developer",
           userName: 'ava_t',
           email: 'ava@gmail.com',
           avatarUrl: 'https://picsum.photos/360/390',
@@ -158,6 +174,7 @@ class WorkspacesManager {
         User(
           id: '13',
           fullName: 'Liam Thompson',
+          jobTitle: "Software Developer",
           userName: 'liam_t',
           email: 'liam@gmail.com',
           avatarUrl: 'https://picsum.photos/410/310',
@@ -165,6 +182,7 @@ class WorkspacesManager {
         User(
           id: '14',
           fullName: 'Charlotte Miller',
+          jobTitle: "Software Developer",
           userName: 'charlotte_m',
           email: 'charlotte@gmail.com',
           avatarUrl: 'https://picsum.photos/380/360',
@@ -172,6 +190,7 @@ class WorkspacesManager {
         User(
           id: '15',
           fullName: 'Lucas Moore',
+          jobTitle: "Software Developer",
           userName: 'lucas_m',
           email: 'lucas@gmail.com',
           avatarUrl: 'https://picsum.photos/400/320',
@@ -183,6 +202,7 @@ class WorkspacesManager {
       createdBy: User(
         id: '1',
         fullName: 'John Doe',
+        jobTitle: "Software Developer",
         userName: 'johndoe',
         avatarUrl: 'https://picsum.photos/500/300',
         email: 'john@gmail.com',
@@ -198,6 +218,7 @@ class WorkspacesManager {
       createdBy: User(
         id: '1',
         fullName: 'John Doe',
+        jobTitle: "Software Developer",
         userName: 'johndoe',
         avatarUrl: 'https://picsum.photos/200/300',
         email: 'john@gmail.com',

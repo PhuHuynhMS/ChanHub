@@ -18,6 +18,7 @@ class _FriendSearchBarState extends State<InviteFriendsBar> {
     User(
       id: '1',
       fullName: 'John Doe',
+      jobTitle: 'Flutter Developer',
       userName: 'johndoe',
       email: 'johndoe@me.com',
       avatarUrl: 'https://picsum.photos/200',
@@ -25,6 +26,7 @@ class _FriendSearchBarState extends State<InviteFriendsBar> {
     User(
       id: '2',
       fullName: 'John Doe',
+      jobTitle: 'Flutter Developer',
       userName: 'johndoe',
       email: 'johndoe@me.com',
       avatarUrl: 'https://picsum.photos/200',
@@ -32,6 +34,7 @@ class _FriendSearchBarState extends State<InviteFriendsBar> {
     User(
       id: '3',
       fullName: 'John Doe',
+      jobTitle: 'Javascript Developer',
       userName: 'johndoe',
       email: 'johndoe@me.com',
       avatarUrl: 'https://picsum.photos/200',
@@ -39,6 +42,7 @@ class _FriendSearchBarState extends State<InviteFriendsBar> {
     User(
       id: '4',
       fullName: 'John Doe',
+      jobTitle: 'PHP Developer',
       userName: 'johndoe',
       email: 'johndoe@me.com',
       avatarUrl: 'https://picsum.photos/200',
@@ -46,6 +50,7 @@ class _FriendSearchBarState extends State<InviteFriendsBar> {
     User(
       id: '5',
       fullName: 'John Doe',
+      jobTitle: 'Web Developer',
       userName: 'mrTeo',
       email: 'johndoe@me.com',
       avatarUrl: 'https://picsum.photos/200',
@@ -53,6 +58,7 @@ class _FriendSearchBarState extends State<InviteFriendsBar> {
     User(
       id: '6',
       fullName: 'John Doe',
+      jobTitle: 'Flutter Developer',
       userName: 'mrTeo',
       email: 'johndoe@me.com',
       avatarUrl: 'https://picsum.photos/200',
@@ -60,62 +66,7 @@ class _FriendSearchBarState extends State<InviteFriendsBar> {
     User(
       id: '7',
       fullName: 'John Doe',
-      userName: 'mrTeo',
-      email: 'johndoe@me.com',
-      avatarUrl: 'https://picsum.photos/200',
-    ),
-    User(
-      id: '8',
-      fullName: 'John Doe',
-      userName: 'mrTeo',
-      email: 'johndoe@me.com',
-      avatarUrl: 'https://picsum.photos/200',
-    ),
-    User(
-      id: '9',
-      fullName: 'John Doe',
-      userName: 'mrTeo',
-      email: 'johndoe@me.com',
-      avatarUrl: 'https://picsum.photos/200',
-    ),
-    User(
-      id: '10',
-      fullName: 'John Doe',
-      userName: 'mrTeo',
-      email: 'johndoe@me.com',
-      avatarUrl: 'https://picsum.photos/200',
-    ),
-    User(
-      id: '11',
-      fullName: 'John Doe',
-      userName: 'mrTeo',
-      email: 'johndoe@me.com',
-      avatarUrl: 'https://picsum.photos/200',
-    ),
-    User(
-      id: '12',
-      fullName: 'John Doe',
-      userName: 'mrTeo',
-      email: 'johndoe@me.com',
-      avatarUrl: 'https://picsum.photos/200',
-    ),
-    User(
-      id: '13',
-      fullName: 'John Doe',
-      userName: 'mrTeo',
-      email: 'johndoe@me.com',
-      avatarUrl: 'https://picsum.photos/200',
-    ),
-    User(
-      id: '14',
-      fullName: 'John Doe',
-      userName: 'mrTeo',
-      email: 'johndoe@me.com',
-      avatarUrl: 'https://picsum.photos/200',
-    ),
-    User(
-      id: '15',
-      fullName: 'John Doe',
+      jobTitle: 'Flutter Developer',
       userName: 'mrTeo',
       email: 'johndoe@me.com',
       avatarUrl: 'https://picsum.photos/200',

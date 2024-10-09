@@ -8,6 +8,9 @@ class BlockTextField extends StatefulWidget {
     this.labelText,
     this.textStyle,
     this.prefixIcon,
+    this.suffixIcon,
+    this.initialValue,
+    this.enabled = true,
   });
 
   final EdgeInsets margin;
@@ -15,6 +18,9 @@ class BlockTextField extends StatefulWidget {
   final String? labelText;
   final TextStyle? textStyle;
   final Widget? prefixIcon;
+  final Widget? suffixIcon;
+  final String? initialValue;
+  final bool enabled;
 
   @override
   State<BlockTextField> createState() => _BlockTextFieldState();
@@ -53,11 +59,13 @@ class _BlockTextFieldState extends State<BlockTextField> {
         boxShadow: _isFocused
             ? <BoxShadow>[
                 BoxShadow(
-                  color:
-                      Theme.of(context).colorScheme.onSurface.withOpacity(0.2),
+                  color: Theme.of(context)
+                      .colorScheme
+                      .onSurface
+                      .withOpacity(0.2), // Màu bóng
                   spreadRadius: 0.8,
                   blurRadius: 4,
-                  offset: const Offset(4.0, 4.0),
+                  offset: const Offset(4.0, 4.0), // Vị trí bóng
                 ),
               ]
             : [
@@ -71,6 +79,8 @@ class _BlockTextFieldState extends State<BlockTextField> {
               ],
       ),
       child: TextFormField(
+        initialValue: widget.initialValue,
+        enabled: widget.enabled,
         focusNode: _focusNode,
         decoration: InputDecoration(
           filled: true,
@@ -81,9 +91,14 @@ class _BlockTextFieldState extends State<BlockTextField> {
             borderSide: BorderSide.none,
           ),
           labelText: widget.labelText ?? '',
-          labelStyle: Theme.of(context).textTheme.labelMedium,
-          floatingLabelStyle: Theme.of(context).textTheme.titleMedium,
+          labelStyle: Theme.of(context).textTheme.bodyMedium!.copyWith(
+                color: Theme.of(context).colorScheme.onSurface.withOpacity(0.5),
+              ),
+          floatingLabelStyle: Theme.of(context).textTheme.titleMedium!.copyWith(
+                color: Theme.of(context).colorScheme.primary.withOpacity(1.0),
+              ),
           prefixIcon: widget.prefixIcon,
+          suffixIcon: widget.suffixIcon,
         ),
         style: widget.textStyle ?? Theme.of(context).textTheme.bodyMedium,
       ),

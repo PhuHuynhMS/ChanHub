@@ -15,6 +15,7 @@ class CommentDetail extends StatelessWidget {
   final User user = User(
     id: '1',
     fullName: 'John Doe',
+    jobTitle: 'Software Engineer',
     userName: 'johndoe',
     avatarUrl: 'https://picsum.photos/300/300',
     email: 'john@gmail.com',

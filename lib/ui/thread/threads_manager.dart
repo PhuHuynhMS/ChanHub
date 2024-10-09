@@ -22,6 +22,7 @@ class ThreadsManager {
             creator: User(
                 id: '1',
                 fullName: 'John Doe',
+                jobTitle: "Flutter Developer",
                 userName: 'johndoe',
                 avatarUrl: 'https://picsum.photos/300/300',
                 email: ''),
@@ -34,6 +35,7 @@ class ThreadsManager {
             creator: User(
               id: '2',
               fullName: 'Anwir Keith',
+              jobTitle: "Flutter Developer",
               userName: 'anwirkeith',
               avatarUrl: 'https://picsum.photos/400/300',
               email: 'anwir@gmail.com',
@@ -49,6 +51,7 @@ class ThreadsManager {
             creator: User(
               id: '3',
               fullName: 'Jane Doe',
+              jobTitle: "Flutter Developer",
               userName: 'janedoe',
               avatarUrl: 'https://picsum.photos/300/400',
               email: 'jane@gmail.com',
@@ -62,6 +65,7 @@ class ThreadsManager {
             creator: User(
               id: '4',
               fullName: 'Anwir Keith',
+              jobTitle: "Flutter Developer",
               userName: 'anwirkeith',
               avatarUrl: 'https://picsum.photos/400/300',
               email: 'anwir@gmail.com',
@@ -75,6 +79,7 @@ class ThreadsManager {
             creator: User(
               id: '5',
               fullName: 'Yuya Keith',
+              jobTitle: "Flutter Developer",
               userName: 'yuyakeith',
               avatarUrl: 'https://picsum.photos/400/600',
               email: 'yuya@gmail.com',
@@ -88,6 +93,7 @@ class ThreadsManager {
             creator: User(
               id: '6',
               fullName: 'Sherry',
+              jobTitle: "Flutter Developer",
               userName: 'sherry',
               avatarUrl: 'https://picsum.photos/400/800',
               email: 'sherry@gmail.com',
@@ -102,6 +108,7 @@ class ThreadsManager {
       creator: User(
         id: '1',
         fullName: 'John Doe',
+        jobTitle: "Flutter Developer",
         userName: 'johndoe',
         avatarUrl: 'https://picsum.photos/300/300',
         email: 'john@gmail.com',
@@ -118,6 +125,7 @@ class ThreadsManager {
           creator: User(
             id: '1',
             fullName: 'John Doe',
+            jobTitle: "Flutter Developer",
             userName: 'johndoe',
             avatarUrl: 'https://picsum.photos/300/300',
             email: 'john@gmail.com',
@@ -132,6 +140,7 @@ class ThreadsManager {
                 creator: User(
                     id: '1',
                     fullName: 'John Doe',
+                    jobTitle: "Flutter Developer",
                     userName: 'johndoe',
                     avatarUrl: 'https://picsum.photos/300/300',
                     email: ''),
@@ -144,6 +153,7 @@ class ThreadsManager {
                 creator: User(
                   id: '2',
                   fullName: 'Anwir Keith',
+                  jobTitle: "Flutter Developer",
                   userName: 'anwirkeith',
                   avatarUrl: 'https://picsum.photos/400/300',
                   email: 'anwir@gmail.com',
@@ -159,6 +169,7 @@ class ThreadsManager {
                 creator: User(
                   id: '3',
                   fullName: 'Jane Doe',
+                  jobTitle: "Flutter Developer",
                   userName: 'janedoe',
                   avatarUrl: 'https://picsum.photos/300/400',
                   email: 'jane@gmail.com',
@@ -172,6 +183,7 @@ class ThreadsManager {
                 creator: User(
                   id: '4',
                   fullName: 'Anwir Keith',
+                  jobTitle: "Flutter Developer",
                   userName: 'anwirkeith',
                   avatarUrl: 'https://picsum.photos/400/300',
                   email: 'anwir@gmail.com',
@@ -185,6 +197,7 @@ class ThreadsManager {
                 creator: User(
                   id: '5',
                   fullName: 'Yuya Keith',
+                  jobTitle: "Flutter Developer",
                   userName: 'yuyakeith',
                   avatarUrl: 'https://picsum.photos/400/600',
                   email: 'yuya@gmail.com',
@@ -206,6 +219,7 @@ class ThreadsManager {
           creator: User(
             id: '2',
             fullName: 'Anwir Keith',
+            jobTitle: "Flutter Developer",
             userName: 'anwirkeith',
             avatarUrl: 'https://picsum.photos/400/300',
             email: 'anwir@gmail.com',
@@ -220,6 +234,7 @@ class ThreadsManager {
                 creator: User(
                     id: '1',
                     fullName: 'John Doe',
+                    jobTitle: "Flutter Developer",
                     userName: 'johndoe',
                     avatarUrl: 'https://picsum.photos/300/300',
                     email: ''),
@@ -232,6 +247,7 @@ class ThreadsManager {
                 creator: User(
                   id: '2',
                   fullName: 'Anwir Keith',
+                  jobTitle: "Flutter Developer",
                   userName: 'anwirkeith',
                   avatarUrl: 'https://picsum.photos/400/300',
                   email: 'anwir@gmail.com',
@@ -247,6 +263,7 @@ class ThreadsManager {
                 creator: User(
                   id: '3',
                   fullName: 'Jane Doe',
+                  jobTitle: "Flutter Developer",
                   userName: 'janedoe',
                   avatarUrl: 'https://picsum.photos/300/400',
                   email: 'jane@gmail.com',
@@ -260,6 +277,7 @@ class ThreadsManager {
                 creator: User(
                   id: '4',
                   fullName: 'Anwir Keith',
+                  jobTitle: "Flutter Developer",
                   userName: 'anwirkeith',
                   avatarUrl: 'https://picsum.photos/400/300',
                   email: 'anwir@gmail.com',
@@ -273,6 +291,7 @@ class ThreadsManager {
                 creator: User(
                   id: '5',
                   fullName: 'Yuya Keith',
+                  jobTitle: "Flutter Developer",
                   userName: 'yuyakeith',
                   avatarUrl: 'https://picsum.photos/400/600',
                   email: 'yuya@gmail.com',
@@ -307,6 +326,7 @@ class ThreadsManager {
             creator: User(
                 id: '1',
                 fullName: 'John Doe',
+                jobTitle: "Flutter Developer",
                 userName: 'johndoe',
                 avatarUrl: 'https://picsum.photos/300/300',
                 email: 'john@gmail.com'),
@@ -321,6 +341,7 @@ class ThreadsManager {
             creator: User(
               id: '3',
               fullName: 'Jane Doe',
+              jobTitle: "Flutter Developer",
               userName: 'janedoe',
               avatarUrl: 'https://picsum.photos/300/400',
               email: 'jane@gmail.com',
@@ -335,6 +356,7 @@ class ThreadsManager {
       creator: User(
           id: '2',
           fullName: 'Anwir Keith',
+          jobTitle: "Flutter Developer",
           userName: 'anwirkeith',
           avatarUrl: 'https://picsum.photos/400/300',
           email: 'anwir@gmail.com'),
@@ -352,6 +374,7 @@ class ThreadsManager {
           creator: User(
             id: '1',
             fullName: 'John Doe',
+            jobTitle: "Flutter Developer",
             userName: 'johndoe',
             avatarUrl: 'https://picsum.photos/300/300',
             email: 'john@gmail.com',
@@ -378,6 +401,7 @@ class ThreadsManager {
           creator: User(
             id: '2',
             fullName: 'Anwir Keith',
+            jobTitle: "Flutter Developer",
             userName: 'anwirkeith',
             avatarUrl: 'https://picsum.photos/400/300',
             email: 'anwir@gmail.com',
@@ -395,6 +419,7 @@ class ThreadsManager {
                 creator: User(
                   id: '1',
                   fullName: 'John Doe',
+                  jobTitle: "Flutter Developer",
                   userName: 'johndoe',
                   avatarUrl: 'https://picsum.photos/300/300',
                   email: 'john@gmail.com',
@@ -408,6 +433,7 @@ class ThreadsManager {
                 creator: User(
                     id: '2',
                     fullName: 'Anwir Keith',
+                    jobTitle: "Flutter Developer",
                     userName: 'anwirkeith',
                     avatarUrl: 'https://picsum.photos/400/300',
                     email: 'anwir@gmail.com'),
@@ -439,6 +465,7 @@ class ThreadsManager {
             creator: User(
                 id: '1',
                 fullName: 'John Doe',
+                jobTitle: "Flutter Developer",
                 userName: 'johndoe',
                 avatarUrl: 'https://picsum.photos/300/300',
                 email: ''),
@@ -451,6 +478,7 @@ class ThreadsManager {
             creator: User(
               id: '2',
               fullName: 'Anwir Keith',
+              jobTitle: "Flutter Developer",
               userName: 'anwirkeith',
               avatarUrl: 'https://picsum.photos/400/300',
               email: 'anwir@gmail.com',
@@ -466,6 +494,7 @@ class ThreadsManager {
             creator: User(
               id: '3',
               fullName: 'Jane Doe',
+              jobTitle: "Flutter Developer",
               userName: 'janedoe',
               avatarUrl: 'https://picsum.photos/300/400',
               email: 'jane@gmail.com',
@@ -479,6 +508,7 @@ class ThreadsManager {
             creator: User(
               id: '4',
               fullName: 'Anwir Keith',
+              jobTitle: "Flutter Developer",
               userName: 'anwirkeith',
               avatarUrl: 'https://picsum.photos/400/300',
               email: 'anwir@gmail.com',
@@ -492,6 +522,7 @@ class ThreadsManager {
             creator: User(
               id: '5',
               fullName: 'Yuya Keith',
+              jobTitle: "Flutter Developer",
               userName: 'yuyakeith',
               avatarUrl: 'https://picsum.photos/400/600',
               email: 'yuya@gmail.com',
@@ -505,6 +536,7 @@ class ThreadsManager {
             creator: User(
               id: '6',
               fullName: 'Sherry',
+              jobTitle: "Flutter Developer",
               userName: 'sherry',
               avatarUrl: 'https://picsum.photos/400/800',
               email: 'sherry@gmail.com',
@@ -519,6 +551,7 @@ class ThreadsManager {
       creator: User(
         id: '2',
         fullName: 'Yuya Keith',
+        jobTitle: "Flutter Developer",
         userName: 'yuyakeith',
         avatarUrl: 'https://picsum.photos/600/600',
         email: 'yuya@gmail.com',
@@ -545,6 +578,7 @@ class ThreadsManager {
             creator: User(
                 id: '1',
                 fullName: 'John Doe',
+                jobTitle: "Flutter Developer",
                 userName: 'johndoe',
                 avatarUrl: 'https://picsum.photos/300/300',
                 email: ''),
@@ -557,6 +591,7 @@ class ThreadsManager {
             creator: User(
               id: '2',
               fullName: 'Anwir Keith',
+              jobTitle: "Flutter Developer",
               userName: 'anwirkeith',
               avatarUrl: 'https://picsum.photos/400/300',
               email: 'anwir@gmail.com',
@@ -572,6 +607,7 @@ class ThreadsManager {
             creator: User(
               id: '3',
               fullName: 'Jane Doe',
+              jobTitle: "Flutter Developer",
               userName: 'janedoe',
               avatarUrl: 'https://picsum.photos/300/400',
               email: 'jane@gmail.com',
@@ -585,6 +621,7 @@ class ThreadsManager {
             creator: User(
               id: '4',
               fullName: 'Anwir Keith',
+              jobTitle: "Flutter Developer",
               userName: 'anwirkeith',
               avatarUrl: 'https://picsum.photos/400/300',
               email: 'anwir@gmail.com',
@@ -598,6 +635,7 @@ class ThreadsManager {
             creator: User(
               id: '5',
               fullName: 'Yuya Keith',
+              jobTitle: "Flutter Developer",
               userName: 'yuyakeith',
               avatarUrl: 'https://picsum.photos/400/600',
               email: 'yuya@gmail.com',
@@ -611,6 +649,7 @@ class ThreadsManager {
             creator: User(
               id: '6',
               fullName: 'Sherry',
+              jobTitle: "Flutter Developer",
               userName: 'sherry',
               avatarUrl: 'https://picsum.photos/400/800',
               email: 'sherry@gmail.com',
@@ -625,6 +664,7 @@ class ThreadsManager {
       creator: User(
         id: '2',
         fullName: 'Yuya Keith',
+        jobTitle: "Flutter Developer",
         userName: 'yuyakeith',
         avatarUrl: 'https://picsum.photos/600/600',
         email: 'yuya@gmail.com',
@@ -639,6 +679,7 @@ class ThreadsManager {
           assignee: User(
             id: '1',
             fullName: 'John Doe',
+            jobTitle: "Flutter Developer",
             userName: 'johndoe',
             avatarUrl: 'https://picsum.photos/300/300',
             email: 'john@gmail.com',
@@ -653,6 +694,7 @@ class ThreadsManager {
           assignee: User(
             id: '1',
             fullName: 'John Doe',
+            jobTitle: "Flutter Developer",
             userName: 'johndoe',
             avatarUrl: 'https://picsum.photos/300/300',
             email: 'john@gmail.com',
@@ -667,6 +709,7 @@ class ThreadsManager {
           assignee: User(
             id: '1',
             fullName: 'John Doe',
+            jobTitle: "Flutter Developer",
             userName: 'johndoe',
             avatarUrl: 'https://picsum.photos/300/300',
             email: 'john@gmail.com',
@@ -681,6 +724,7 @@ class ThreadsManager {
           assignee: User(
             id: '1',
             fullName: 'John Doe',
+            jobTitle: "Flutter Developer",
             userName: 'johndoe',
             avatarUrl: 'https://picsum.photos/300/300',
             email: 'john@gmail.com',

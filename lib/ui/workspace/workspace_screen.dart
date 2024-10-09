@@ -19,6 +19,7 @@ class WorkspaceScreen extends StatelessWidget {
   final User user = User(
     id: '1',
     fullName: 'John Doe',
+    jobTitle: 'Software Developer',
     userName: 'johndoe',
     email: 'john@gmail.com',
     avatarUrl: 'https://picsum.photos/300/300',
