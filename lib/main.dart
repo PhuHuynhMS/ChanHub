@@ -115,15 +115,15 @@ class ChanHub extends StatelessWidget {
 
         // Profile
         if (settings.name == ProfileScreen.routeName) {
-          return MaterialPageRoute(
-            builder: (context) => const ProfileScreen(),
+          return CustomSlideTransition(
+            page: const ProfileScreen(),
           );
         }
 
         //Change password
         if (settings.name == ChangePasswordScreen.routeName) {
-          return MaterialPageRoute(
-            builder: (context) => const ChangePasswordScreen(),
+          return CustomSlideTransition(
+            page: const ChangePasswordScreen(),
           );
         }
 
