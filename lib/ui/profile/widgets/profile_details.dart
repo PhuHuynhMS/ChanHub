@@ -11,6 +11,11 @@ class ProfileDetails extends StatelessWidget {
 
   final User user;
   final bool enabled;
+
+  void _navigateToChangePasswordScreen(BuildContext context) {
+    Navigator.pushNamed(context, '/profile/change-password');
+  }
+
   @override
   Widget build(BuildContext context) {
     final enabled = context
@@ -112,7 +117,7 @@ class ProfileDetails extends StatelessWidget {
         //Change password
         TextButton(
           onPressed: () {
-            //TODO: Navigte to change password screen
+            _navigateToChangePasswordScreen(context);
           },
           child: const Text(
             'Change Password',

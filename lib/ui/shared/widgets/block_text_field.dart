@@ -97,6 +97,9 @@ class _BlockTextFieldState extends State<BlockTextField> {
           floatingLabelStyle: Theme.of(context).textTheme.titleMedium!.copyWith(
                 color: Theme.of(context).colorScheme.primary.withOpacity(1.0),
               ),
+          hintStyle: Theme.of(context).textTheme.bodyMedium!.copyWith(
+                color: Theme.of(context).colorScheme.onSurface.withOpacity(0.5),
+              ),
           prefixIcon: widget.prefixIcon,
           suffixIcon: widget.suffixIcon,
         ),

@@ -16,6 +16,7 @@ export './management/management_screen.dart';
 
 // Profile
 export './profile/profile_screen.dart';
+export './profile/change_password_screen.dart';
 
 // Thread
 export './thread/thread_screen.dart';
