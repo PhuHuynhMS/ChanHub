@@ -48,6 +48,27 @@ class _BlockTextFieldState extends State<BlockTextField> {
 
   @override
   Widget build(BuildContext context) {
+    // Box shadow styles
+    final List<BoxShadow> focusedActiveShadow = <BoxShadow>[
+      BoxShadow(
+        color: Theme.of(context).colorScheme.onSurface.withOpacity(0.2),
+        spreadRadius: 0.8,
+        blurRadius: 4,
+        offset: const Offset(4.0, 4.0),
+      ),
+    ];
+
+    final List<BoxShadow> focusedInactiveShadow = <BoxShadow>[
+      BoxShadow(
+        color: Theme.of(context).colorScheme.onSurface.withOpacity(0.1),
+        spreadRadius: 0.5,
+        blurRadius: 0.1,
+        offset: const Offset(0.5, 0.5),
+      ),
+    ];
+
+    final List<BoxShadow> inactiveShadow = <BoxShadow>[];
+
     return AnimatedContainer(
       margin: widget.margin,
       duration: const Duration(milliseconds: 200),
@@ -56,27 +77,11 @@ class _BlockTextFieldState extends State<BlockTextField> {
       decoration: BoxDecoration(
         color: widget.backgroundColor ?? Theme.of(context).colorScheme.surface,
         borderRadius: BorderRadius.circular(0.0),
-        boxShadow: _isFocused
-            ? <BoxShadow>[
-                BoxShadow(
-                  color: Theme.of(context)
-                      .colorScheme
-                      .onSurface
-                      .withOpacity(0.2), // Màu bóng
-                  spreadRadius: 0.8,
-                  blurRadius: 4,
-                  offset: const Offset(4.0, 4.0), // Vị trí bóng
-                ),
-              ]
-            : [
-                BoxShadow(
-                  color:
-                      Theme.of(context).colorScheme.onSurface.withOpacity(0.1),
-                  spreadRadius: 0.5,
-                  blurRadius: 0.1,
-                  offset: const Offset(0.5, 0.5),
-                ),
-              ],
+        boxShadow: !widget.enabled
+            ? inactiveShadow
+            : _isFocused
+                ? focusedActiveShadow
+                : focusedInactiveShadow,
       ),
       child: TextFormField(
         initialValue: widget.initialValue,
@@ -86,10 +91,7 @@ class _BlockTextFieldState extends State<BlockTextField> {
           filled: true,
           fillColor:
               widget.backgroundColor ?? Theme.of(context).colorScheme.surface,
-          border: UnderlineInputBorder(
-            borderRadius: BorderRadius.circular(0.0),
-            borderSide: BorderSide.none,
-          ),
+          border: InputBorder.none,
           labelText: widget.labelText ?? '',
           labelStyle: Theme.of(context).textTheme.bodyMedium!.copyWith(
                 color: Theme.of(context).colorScheme.onSurface.withOpacity(0.5),

@@ -120,6 +120,12 @@ class ChanHub extends StatelessWidget {
           );
         }
 
+        if (settings.name == InvitationScreen.routeName) {
+          return MaterialPageRoute(
+            builder: (context) => const InvitationScreen(),
+          );
+        }
+
         //Change password
         if (settings.name == ChangePasswordScreen.routeName) {
           return CustomSlideTransition(

@@ -1,92 +1,47 @@
 import 'package:flutter/material.dart';
-import 'package:provider/provider.dart';
 
+import '../screens.dart';
 import './widgets/index.dart';
-import './profile_screen_manager.dart';
-import '../../models/index.dart';
 
-class ProfileScreen extends StatefulWidget {
+class ProfileScreen extends StatelessWidget {
   static const String routeName = '/profile';
 
   const ProfileScreen({super.key});
 
-//User who is currently logged in
-  static User temporaryUser = User(
-    id: '1',
-    fullName: 'John Doe',
-    jobTitle: 'Software Engineer',
-    userName: 'johndoe',
-    email: 'johndoe@me.com',
-    password: '123456',
-    avatarUrl: 'https://avatars.githubusercontent.com/u/1?v=4',
-  );
-
-  @override
-  State<ProfileScreen> createState() => _ProfileScreenState();
-}
-
-class _ProfileScreenState extends State<ProfileScreen> {
-  @override
-  void initState() {
-    super.initState();
-  }
-
-  @override
-  void dispose() {
-    super.dispose();
+  void _viewInvitation(BuildContext context) {
+    Navigator.of(context).pushNamed(InvitationScreen.routeName);
   }
 
   @override
   Widget build(BuildContext context) {
+    bool isMyProfile = true;
+
     return Scaffold(
       appBar: AppBar(
         title: const Text('Profile'),
         actions: [
           IconButton(
-            padding: const EdgeInsets.all(10.0),
+            padding: const EdgeInsets.only(right: 10.0),
             icon: const Icon(Icons.email),
-            onPressed: () {
-              Navigator.of(context).pushNamed('/invitation');
-            },
+            onPressed: () => _viewInvitation(context),
           )
         ],
       ),
-      body: ChangeNotifierProvider<ProfileScreenManager>(
-          create: (context) => ProfileScreenManager(),
-          child: ProfileInfo(user: ProfileScreen.temporaryUser)),
-    );
-  }
-}
-
-class ProfileInfo extends StatelessWidget {
-  const ProfileInfo({required this.user, super.key});
-  final User user;
-  @override
-  Widget build(BuildContext context) {
-    return Padding(
-      padding: const EdgeInsets.only(left: 30.0, right: 30.0, top: 20.0),
-      child: LayoutBuilder(builder: (context, constraints) {
-        return SingleChildScrollView(
-          child: ConstrainedBox(
-            constraints: BoxConstraints(
-              minHeight: constraints.maxHeight,
-            ),
-            child: IntrinsicHeight(
-              child: Column(
-                children: [
-                  ProfileHeader(user: user),
-                  const SizedBox(
-                    height: 10.0,
-                  ),
-                  ProfileDetails(user: user),
-                  const Spacer(),
-                  ActionButtons(user: user)
-                ],
-              ),
+      body: Center(
+        child: SingleChildScrollView(
+          child: Padding(
+            padding: const EdgeInsets.all(20.0),
+            child: Column(
+              mainAxisAlignment: MainAxisAlignment.center,
+              children: [
+                ProfileHeader(isMyProfile: isMyProfile),
+                const SizedBox(height: 20.0),
+                ProfileDetails(isMyProfile: isMyProfile),
+              ],
             ),
           ),
-        );
-      }),
+        ),
+      ),
     );
   }
 }
