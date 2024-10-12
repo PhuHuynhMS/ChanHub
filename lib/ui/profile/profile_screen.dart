@@ -46,7 +46,7 @@ class _ProfileScreenState extends State<ProfileScreen> {
             padding: const EdgeInsets.all(10.0),
             icon: const Icon(Icons.email),
             onPressed: () {
-              //TODO: Go to invitation screen
+              Navigator.of(context).pushNamed('/invitation');
             },
           )
         ],
@@ -65,14 +65,28 @@ class ProfileInfo extends StatelessWidget {
   Widget build(BuildContext context) {
     return Padding(
       padding: const EdgeInsets.only(left: 30.0, right: 30.0, top: 20.0),
-      child: Column(
-        mainAxisAlignment: MainAxisAlignment.start,
-        children: [
-          Expanded(child: ProfileHeader(user: user)),
-          Expanded(child: ProfileDetails(user: user)),
-          ActionButtons(user: user)
-        ],
-      ),
+      child: LayoutBuilder(builder: (context, constraints) {
+        return SingleChildScrollView(
+          child: ConstrainedBox(
+            constraints: BoxConstraints(
+              minHeight: constraints.maxHeight,
+            ),
+            child: IntrinsicHeight(
+              child: Column(
+                children: [
+                  ProfileHeader(user: user),
+                  const SizedBox(
+                    height: 10.0,
+                  ),
+                  ProfileDetails(user: user),
+                  const Spacer(),
+                  ActionButtons(user: user)
+                ],
+              ),
+            ),
+          ),
+        );
+      }),
     );
   }
 }
