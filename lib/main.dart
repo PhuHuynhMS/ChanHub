@@ -127,6 +127,13 @@ class ChanHub extends StatelessWidget {
           );
         }
 
+        //Invitation
+        if (settings.name == InvitationScreen.routeName) {
+          return MaterialPageRoute(
+            builder: (context) => const InvitationScreen(),
+          );
+        }
+
         // Default route
         return MaterialPageRoute(
           builder: (context) => const Scaffold(),

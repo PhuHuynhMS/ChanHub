@@ -28,3 +28,6 @@ export './workspace/create_workspace_screen.dart';
 export './workspace/add_workspace_members_screen.dart';
 export './workspace/workspace_members_screen.dart';
 export './workspace/workspaces_manager.dart';
+
+//Invitation
+export './invitation/invitation_screen.dart';

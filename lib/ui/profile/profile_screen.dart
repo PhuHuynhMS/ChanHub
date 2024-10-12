@@ -46,7 +46,7 @@ class _ProfileScreenState extends State<ProfileScreen> {
             padding: const EdgeInsets.all(10.0),
             icon: const Icon(Icons.email),
             onPressed: () {
-              //TODO: Go to invitation screen
+              Navigator.of(context).pushNamed('/invitation');
             },
           )
         ],
