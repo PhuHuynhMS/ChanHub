@@ -5,6 +5,8 @@ import './widgets/index.dart';
 import './profile_screen_manager.dart';
 import '../../models/index.dart';
 
+import '../invitation/invitations_manager.dart';
+
 class ProfileScreen extends StatefulWidget {
   static const String routeName = '/profile';
 
@@ -44,7 +46,10 @@ class _ProfileScreenState extends State<ProfileScreen> {
         actions: [
           IconButton(
             padding: const EdgeInsets.all(10.0),
-            icon: const Icon(Icons.email),
+            icon: Badge.count(
+              count: InvitationsManager().count(),
+              child: const Icon(Icons.mail),
+            ),
             onPressed: () {
               Navigator.of(context).pushNamed('/invitation');
             },
