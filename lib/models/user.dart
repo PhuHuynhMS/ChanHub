@@ -1,6 +1,7 @@
 class User {
   final String id;
   final String fullName;
+  final String jobTitle;
   final String userName;
   final String email;
   String? password;
@@ -9,6 +10,7 @@ class User {
   User({
     required this.id,
     required this.fullName,
+    required this.jobTitle,
     required this.userName,
     required this.email,
     required this.avatarUrl,
@@ -18,6 +20,7 @@ class User {
   User copyWith({
     String? id,
     String? fullName,
+    String? jobTitle,
     String? userName,
     String? email,
     String? password,
@@ -26,6 +29,7 @@ class User {
     return User(
       id: id ?? this.id,
       fullName: fullName ?? this.fullName,
+      jobTitle: jobTitle ?? this.jobTitle,
       userName: userName ?? this.userName,
       email: email ?? this.email,
       password: password ?? this.password,

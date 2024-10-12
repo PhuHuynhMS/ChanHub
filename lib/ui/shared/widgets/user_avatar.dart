@@ -7,10 +7,12 @@ class UserAvatar extends StatelessWidget {
     this.user, {
     super.key,
     this.size = 40.0,
+    this.borderRadius = 10.0,
   });
 
   final User user;
   final double size;
+  final double borderRadius;
 
   @override
   Widget build(BuildContext context) {
@@ -18,7 +20,7 @@ class UserAvatar extends StatelessWidget {
       height: size,
       width: size,
       child: ClipRRect(
-        borderRadius: BorderRadius.circular(10.0),
+        borderRadius: BorderRadius.circular(borderRadius),
         child: Image.network(
           user.avatarUrl,
           fit: BoxFit.cover,

@@ -74,7 +74,7 @@ class ChanHub extends StatelessWidget {
         // Workspace members
         if (settings.name == WorkspaceMembersScreen.routeName) {
           return MaterialPageRoute(
-            builder: (context) => WorkspaceMembersScreen(),
+            builder: (context) => const WorkspaceMembersScreen(),
           );
         }
 
@@ -115,8 +115,21 @@ class ChanHub extends StatelessWidget {
 
         // Profile
         if (settings.name == ProfileScreen.routeName) {
+          return CustomSlideTransition(
+            page: const ProfileScreen(),
+          );
+        }
+
+        if (settings.name == InvitationScreen.routeName) {
           return MaterialPageRoute(
-            builder: (context) => const ProfileScreen(),
+            builder: (context) => const InvitationScreen(),
+          );
+        }
+
+        //Change password
+        if (settings.name == ChangePasswordScreen.routeName) {
+          return CustomSlideTransition(
+            page: const ChangePasswordScreen(),
           );
         }
 
