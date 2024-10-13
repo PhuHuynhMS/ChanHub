@@ -23,14 +23,18 @@ class ChanHub extends StatelessWidget {
         // Onboarding
         if (settings.name == OnboardingScreen.routeName) {
           return MaterialPageRoute(
-            builder: (context) => const FirstScreen(),
+            builder: (context) => const SafeArea(
+              child: OnboardingScreen(),
+            ),
           );
         }
 
         // Authenticated routes
         if (settings.name == GetStartedScreen.routeName) {
           return MaterialPageRoute(
-            builder: (context) => const GetStartedScreen(),
+            builder: (context) => const SafeArea(
+              child: GetStartedScreen(),
+            ),
           );
         }
 
@@ -38,7 +42,9 @@ class ChanHub extends StatelessWidget {
           final bool isLogin = settings.arguments as bool;
 
           return MaterialPageRoute(
-            builder: (context) => LoginOrRegisterScreen(isLogin: isLogin),
+            builder: (context) => SafeArea(
+              child: LoginOrRegisterScreen(isLogin: isLogin),
+            ),
           );
         }
 
@@ -50,9 +56,11 @@ class ChanHub extends StatelessWidget {
                   WorkspacesManager().getDefaultWorkspace();
 
           return CustomSlideTransition(
-            page: WorkspaceScreen(
-              workspaces,
-              selectedWorkspace: selectedWorkspace,
+            page: SafeArea(
+              child: WorkspaceScreen(
+                workspaces,
+                selectedWorkspace: selectedWorkspace,
+              ),
             ),
           );
         }
@@ -60,27 +68,28 @@ class ChanHub extends StatelessWidget {
         // Create Workspace
         if (settings.name == CreateWorkspaceScreen.routeName) {
           return MaterialPageRoute(
-            builder: (context) => const CreateWorkspaceScreen(),
+            builder: (context) => const SafeArea(
+              child: CreateWorkspaceScreen(),
+            ),
           );
         }
 
         // Invite friends at create workspace
         if (settings.name == AddWorkspaceMembersScreen.routeName) {
           return MaterialPageRoute(
-            builder: (context) => const AddWorkspaceMembersScreen(),
+            builder: (context) => const SafeArea(
+              child: AddWorkspaceMembersScreen(),
+            ),
           );
         }
 
         // Workspace members
         if (settings.name == WorkspaceMembersScreen.routeName) {
           return MaterialPageRoute(
-            builder: (context) => const WorkspaceMembersScreen(),
+            builder: (context) => const SafeArea(
+              child: WorkspaceMembersScreen(),
+            ),
           );
-        }
-
-        if (settings.name == ManagementScreen.routeName) {
-          return MaterialPageRoute(
-              builder: (context) => const ManagementScreen());
         }
 
         // Channel
@@ -88,14 +97,18 @@ class ChanHub extends StatelessWidget {
           final Channel channel = ChannelsManager().getById('1')!;
 
           return CustomSlideTransition(
-            page: ChannelScreen(channel),
+            page: SafeArea(
+              child: ChannelScreen(channel),
+            ),
           );
         }
 
         // Add channel
         if (settings.name == AddChannelScreen.routeName) {
           return MaterialPageRoute(
-            builder: (context) => const AddChannelScreen(),
+            builder: (context) => const SafeArea(
+              child: AddChannelScreen(),
+            ),
           );
         }
 
@@ -106,9 +119,10 @@ class ChanHub extends StatelessWidget {
           final Channel channel = ChannelsManager().getById('1')!;
 
           return MaterialPageRoute(
-            builder: (context) => ThreadScreen(
-              thread,
-              channelName: channel.name,
+            builder: (context) => SafeArea(
+              child: SafeArea(
+                child: ThreadScreen(thread, channelName: channel.name),
+              ),
             ),
           );
         }
@@ -116,27 +130,24 @@ class ChanHub extends StatelessWidget {
         // Profile
         if (settings.name == ProfileScreen.routeName) {
           return CustomSlideTransition(
-            page: const ProfileScreen(),
+            page: const SafeArea(child: ProfileScreen()),
           );
         }
 
         if (settings.name == InvitationScreen.routeName) {
           return MaterialPageRoute(
-            builder: (context) => const InvitationScreen(),
+            builder: (context) => const SafeArea(
+              child: InvitationScreen(),
+            ),
           );
         }
 
         //Change password
         if (settings.name == ChangePasswordScreen.routeName) {
           return CustomSlideTransition(
-            page: const ChangePasswordScreen(),
-          );
-        }
-
-        //Invitation
-        if (settings.name == InvitationScreen.routeName) {
-          return MaterialPageRoute(
-            builder: (context) => const InvitationScreen(),
+            page: const SafeArea(
+              child: ChangePasswordScreen(),
+            ),
           );
         }
 

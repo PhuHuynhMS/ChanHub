@@ -6,32 +6,21 @@ import '../../../models/index.dart';
 import '../utils/index.dart';
 import './index.dart';
 
-class TaskPreview extends StatefulWidget {
-  const TaskPreview(this.tasks, {super.key});
+class TaskPreview extends StatelessWidget {
+  TaskPreview(this.threadTasks, {super.key});
 
-  final List<Task> tasks;
+  final List<Task> threadTasks;
+  late final ValueNotifier<List<Task>> tasks = ValueNotifier(threadTasks);
 
-  @override
-  State<TaskPreview> createState() => _TaskPreviewState();
-}
-
-class _TaskPreviewState extends State<TaskPreview> {
-  late ValueNotifier<List<Task>> tasks;
-
-  @override
-  void initState() {
-    tasks = ValueNotifier(widget.tasks);
-    super.initState();
-  }
-
-  void onChecked(bool value, Task task) {
+  void _onChecked(bool value, Task task) {
+    List<Task> newTasks = List<Task>.from(tasks.value);
     int index = tasks.value.indexWhere((element) => element.id == task.id);
-    tasks.value[index] = task.copyWith(
+    newTasks[index] = task.copyWith(
         isCompleted: value, completedAt: value ? DateTime.now() : null);
-    tasks.notifyListeners();
+    tasks.value = newTasks;
   }
 
-  Widget buildExpansionCheckboxTile(BuildContext context, Task task) {
+  Widget _buildExpansionCheckboxTile(BuildContext context, Task task) {
     TaskStatus status = getTaskStatus(task.deadline, task.completedAt);
     return ExpansionTile(
       shape: const Border(),
@@ -42,7 +31,7 @@ class _TaskPreviewState extends State<TaskPreview> {
         children: [
           Checkbox(
             value: task.isCompleted ?? false,
-            onChanged: (bool? value) => onChecked(value!, task),
+            onChanged: (bool? value) => _onChecked(value!, task),
           ),
           Column(
             crossAxisAlignment: CrossAxisAlignment.start,
@@ -103,7 +92,7 @@ class _TaskPreviewState extends State<TaskPreview> {
             valueListenable: tasks,
             builder: (context, value, __) {
               Task task = value[index];
-              return buildExpansionCheckboxTile(context, task);
+              return _buildExpansionCheckboxTile(context, task);
             },
           ),
       ],
@@ -170,7 +159,7 @@ class _TaskPreviewState extends State<TaskPreview> {
                       ),
                       value: task.isCompleted ?? false,
                       onChanged: (bool? value) {
-                        onChecked(value!, task);
+                        _onChecked(value!, task);
                       },
                     );
                   },
