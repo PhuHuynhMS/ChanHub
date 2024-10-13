@@ -31,3 +31,4 @@ export './workspace/workspaces_manager.dart';
 
 //Invitation
 export './invitation/invitation_screen.dart';
+export './invitation/invitations_manager.dart';

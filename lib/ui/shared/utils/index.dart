@@ -6,5 +6,6 @@ export './dialog.dart';
 export './input_decoration.dart';
 export './photo_gallery.dart';
 export './string_format.dart';
+export './snack_bar.dart';
 export './task.dart';
 export './usertag.dart';

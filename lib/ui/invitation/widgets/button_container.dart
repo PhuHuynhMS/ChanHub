@@ -1,59 +1,38 @@
 import 'package:flutter/material.dart';
-import '../../../models/index.dart';
 
-class ButtonContainer extends StatefulWidget {
-  const ButtonContainer(
-      {super.key,
-      required this.invitation,
-      required this.onIgnoreInvite,
-      required this.onAcceptInvite});
+import '../../../models/index.dart';
+import '../../shared/utils/index.dart';
+
+class ButtonContainer extends StatelessWidget {
+  const ButtonContainer({
+    super.key,
+    required this.invitation,
+    required this.onIgnoreInvite,
+    required this.onAcceptInvite,
+  });
 
   final Invitation invitation;
   final void Function() onIgnoreInvite;
   final void Function() onAcceptInvite;
 
-  @override
-  State<ButtonContainer> createState() => _ButtonContainerState();
-}
-
-class _ButtonContainerState extends State<ButtonContainer> {
-  void _handleAcceptInvite() {
-    widget.onAcceptInvite();
-    // them await khi da them xu ly logic trong onAcceptInvite
-    ScaffoldMessenger.of(context).showSnackBar(
-      const SnackBar(
-        content: Text('Workpace has been added!'),
-        duration: Duration(seconds: 2),
-      ),
+  void _handleAcceptInvite(BuildContext context) {
+    onAcceptInvite();
+    showSuccessSnackBar(
+      context: context,
+      message: 'Invitation accepted successfully',
     );
   }
 
-  void _handleIgnoreInvite() {
-    showDialog(
-        context: context,
-        builder: (BuildContext context) {
-          return AlertDialog(
-            title: const Text('Ignore Invitation'),
-            content:
-                const Text('Are you sure you want to ignore this invitation?'),
-            actions: [
-              TextButton(
-                child: const Text('Cancel'),
-                onPressed: () {
-                  Navigator.of(context).pop(); // Đóng hộp thoại
-                },
-              ),
-              TextButton(
-                child: const Text('Ignore'),
-                onPressed: () async {
-                  Navigator.of(context).pop(); // Đóng hộp thoại
-                  widget
-                      .onIgnoreInvite(); // them await khi da them xu ly logic trong onIgnoreInvite
-                },
-              ),
-            ],
-          );
-        });
+  void _handleIgnoreInvite(BuildContext context) async {
+    bool isAccepted = await showConfirmDialog(
+      context: context,
+      title: 'Ignore Invitation',
+      content: 'Are you sure you want to ignore this invitation?',
+    );
+
+    if (isAccepted) {
+      onIgnoreInvite();
+    }
   }
 
   @override
@@ -62,18 +41,17 @@ class _ButtonContainerState extends State<ButtonContainer> {
       mainAxisAlignment: MainAxisAlignment.start,
       children: [
         ElevatedButton(
-          onPressed: () {
-            _handleAcceptInvite();
-          },
+          onPressed: () => _handleAcceptInvite(context),
           child: const Text('Accept'),
         ),
         const SizedBox(width: 10.0),
         ElevatedButton(
-          onPressed: _handleIgnoreInvite,
-          style: ButtonStyle(
-              fixedSize: const WidgetStatePropertyAll(Size.fromWidth(100.0)),
-              backgroundColor:
-                  WidgetStatePropertyAll(Theme.of(context).colorScheme.error)),
+          style: ElevatedButton.styleFrom(
+            backgroundColor: Theme.of(context).colorScheme.surface,
+            foregroundColor: Theme.of(context).colorScheme.error,
+            elevation: 1.0,
+          ),
+          onPressed: () => _handleIgnoreInvite(context),
           child: const Text('Ignore'),
         ),
       ],
