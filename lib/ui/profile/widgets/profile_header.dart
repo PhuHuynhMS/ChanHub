@@ -1,58 +1,55 @@
 import 'package:flutter/material.dart';
-import 'package:provider/provider.dart';
-
-import '../profile_screen_manager.dart';
 
 import '../../../models/index.dart';
 import '../../shared/widgets/index.dart';
 
 class ProfileHeader extends StatelessWidget {
-  const ProfileHeader({required this.user, super.key});
-  final User user;
+  const ProfileHeader({
+    super.key,
+    this.isMyProfile = false,
+  });
+
+  final bool isMyProfile;
+
   @override
   Widget build(BuildContext context) {
+    final User user = User(
+      id: '1',
+      fullName: 'John Doe',
+      jobTitle: 'Software Engineer',
+      userName: 'johndoe',
+      email: 'john@gmail.com',
+      avatarUrl: 'https://picsum.photos/420/380',
+    );
+
     return Column(
       children: [
-        UserAvatar(
-          user,
-          size: 140,
-          borderRadius: 70,
-        ),
-        const SizedBox(
-          height: 10,
-        ),
-        Text(user.jobTitle),
-        Text(
-          user.fullName,
-          style: Theme.of(context).textTheme.titleLarge!.copyWith(
-                color: Theme.of(context).colorScheme.onSurface,
-              ),
-        ),
-        Selector<ProfileScreenManager, bool>(
-            selector: (_, manager) => manager.enabled,
-            builder: (_, enabled, __) {
-              return TextButton(
-                onPressed: () {
-                  if (enabled == false) {
-                    context.read<ProfileScreenManager>().unlockedForm();
-                  }
-                },
-                style: const ButtonStyle(
-                  overlayColor: WidgetStatePropertyAll(Colors.transparent),
-                  padding: WidgetStatePropertyAll(EdgeInsets.zero),
-                ),
-                child: Text(
-                  'Change Profile',
-                  style: TextStyle(
-                    decoration: TextDecoration.underline,
-                    color: Theme.of(context)
-                        .colorScheme
-                        .onSurface
-                        .withOpacity(0.5),
+        Stack(
+          children: [
+            UserAvatar(
+              user,
+              size: 140,
+              borderRadius: 70,
+            ),
+            if (isMyProfile) ...[
+              // Edit button
+              Positioned(
+                right: -5,
+                bottom: -5,
+                child: IconButton(
+                  style: IconButton.styleFrom(
+                    backgroundColor: Theme.of(context).colorScheme.surface,
                   ),
+                  icon: const Icon(Icons.edit),
+                  onPressed: () {},
                 ),
-              );
-            }),
+              ),
+            ],
+          ],
+        ),
+        const SizedBox(height: 10),
+        Text(user.fullName, style: Theme.of(context).textTheme.titleLarge),
+        Text(user.jobTitle, style: Theme.of(context).textTheme.labelMedium),
       ],
     );
   }

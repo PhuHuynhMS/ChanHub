@@ -14,8 +14,9 @@ class ChangePasswordScreen extends StatelessWidget {
         title: const Text('Change Password'),
       ),
       body: Padding(
-        padding: const EdgeInsets.all(10.0),
+        padding: const EdgeInsets.all(20.0),
         child: Column(
+          mainAxisAlignment: MainAxisAlignment.center,
           children: [
             const BlockTextField(
               labelText: 'Current Password',
