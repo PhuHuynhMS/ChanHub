@@ -27,20 +27,18 @@ class WorkspaceScreen extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    return SafeArea(
-      child: Scaffold(
-        appBar: AppBar(
-          title: const Text('ChanHub'),
-          actions: <Widget>[
-            ProfileButton(user: user),
-            const SizedBox(width: 10.0),
-          ],
-        ),
-        body: _buildWorkspaceBody(selectedWorkspace, context, workspaces),
-        drawer: WorkSpaceDrawer(
-          workspaces,
-          selectedWorkspace: selectedWorkspace,
-        ),
+    return Scaffold(
+      appBar: AppBar(
+        title: const Text('ChanHub'),
+        actions: <Widget>[
+          ProfileButton(user: user),
+          const SizedBox(width: 10.0),
+        ],
+      ),
+      body: _buildWorkspaceBody(selectedWorkspace, context, workspaces),
+      drawer: WorkSpaceDrawer(
+        workspaces,
+        selectedWorkspace: selectedWorkspace,
       ),
     );
   }

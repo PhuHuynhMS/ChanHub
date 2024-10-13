@@ -1,8 +1,8 @@
 import 'package:flutter/material.dart';
 
 import '../../../models/index.dart';
+import '../../shared/utils/index.dart';
 import '../../screens.dart';
-import '../../shared/widgets/invite_friends_bar.dart';
 
 class WorkspaceHeader extends StatelessWidget {
   const WorkspaceHeader(
@@ -17,15 +17,18 @@ class WorkspaceHeader extends StatelessWidget {
   }
 
   void _navigateToAddWorkspacesMembers(BuildContext context) {
-    showDialog(
-        context: context,
-        builder: (context) {
-          return const InviteFriendsBar(isPopup: true);
-        });
+    Navigator.of(context).pushNamed(AddWorkspaceMembersScreen.routeName);
   }
 
-  void _leaveWorkspace() {
-    //TODO: Leave workspace
+  void _leaveWorkspace(BuildContext context) async {
+    bool isConfirmed = await showConfirmDialog(
+      context: context,
+      content: 'Are you sure you want to leave this workspace?',
+    );
+
+    if (isConfirmed && context.mounted) {
+      Navigator.of(context).pushNamed(WorkspaceScreen.routeName);
+    }
   }
 
   @override
@@ -75,7 +78,7 @@ class WorkspaceHeader extends StatelessWidget {
                   ),
                   IconButton(
                     iconSize: 25.0,
-                    onPressed: _leaveWorkspace,
+                    onPressed: () => _leaveWorkspace(context),
                     icon: const Icon(Icons.exit_to_app),
                     color: Theme.of(context).colorScheme.error,
                   ),

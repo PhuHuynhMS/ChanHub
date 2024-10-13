@@ -33,35 +33,33 @@ class ChannelScreen extends StatelessWidget {
     // TODO: Get all threads of the channel
     final List<Thread> threads = ThreadsManager().getAll();
 
-    return SafeArea(
-      child: Scaffold(
-        appBar: AppBar(
-          title: ChannelAppBarTitle(channel),
-          actions: [
-            Builder(builder: (context) {
-              return IconButton(
-                icon: const Icon(Icons.menu_open),
-                onPressed: () {
-                  Scaffold.of(context).openEndDrawer();
-                },
-              );
-            }),
-          ],
-        ),
-        endDrawer: const ChannelDrawer(),
-        body: ListView.builder(
-          padding: const EdgeInsets.only(bottom: 50.0),
-          reverse: true,
-          itemCount: threads.length + 1,
-          itemBuilder: (context, index) => _buildThreadDetail(threads, index),
-        ),
-        bottomSheet: BottomSheet(
-          onClosing: () {},
-          enableDrag: false,
-          builder: (context) => MessageInput(
-            onAddMedia: () {},
-            onSend: _onSendMessage,
-          ),
+    return Scaffold(
+      appBar: AppBar(
+        title: ChannelAppBarTitle(channel),
+        actions: [
+          Builder(builder: (context) {
+            return IconButton(
+              icon: const Icon(Icons.menu_open),
+              onPressed: () {
+                Scaffold.of(context).openEndDrawer();
+              },
+            );
+          }),
+        ],
+      ),
+      endDrawer: const ChannelDrawer(),
+      body: ListView.builder(
+        padding: const EdgeInsets.only(bottom: 50.0),
+        reverse: true,
+        itemCount: threads.length + 1,
+        itemBuilder: (context, index) => _buildThreadDetail(threads, index),
+      ),
+      bottomSheet: BottomSheet(
+        onClosing: () {},
+        enableDrag: false,
+        builder: (context) => MessageInput(
+          onAddMedia: () {},
+          onSend: _onSendMessage,
         ),
       ),
     );

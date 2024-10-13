@@ -160,8 +160,7 @@ class _WorkspaceMembersScreenState extends State<WorkspaceMembersScreen> {
 
   @override
   Widget build(BuildContext context) {
-    return SafeArea(
-        child: Scaffold(
+    return Scaffold(
       appBar: AppBar(
         title: const Text('Workspace Members'),
       ),
@@ -207,6 +206,6 @@ class _WorkspaceMembersScreenState extends State<WorkspaceMembersScreen> {
           ],
         ),
       )),
-    ));
+    );
   }
 }

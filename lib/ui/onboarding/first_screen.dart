@@ -16,9 +16,7 @@ class _FirstScreenState extends State<FirstScreen> {
     super.initState();
     // TODO: Initialize the app
     Timer(const Duration(seconds: 2), () {
-      Navigator.of(context).pushReplacement(
-        MaterialPageRoute(builder: (context) => const OnboardingScreen()),
-      );
+      Navigator.of(context).pushReplacementNamed(OnboardingScreen.routeName);
     });
   }
 
