@@ -17,7 +17,6 @@ export './management/management_screen.dart';
 // Profile
 export './profile/profile_screen.dart';
 export './profile/change_password_screen.dart';
-export './profile/invitation_screen.dart';
 export './profile/profile_manager.dart';
 
 // Thread
@@ -30,3 +29,7 @@ export './workspace/create_workspace_screen.dart';
 export './workspace/add_workspace_members_screen.dart';
 export './workspace/workspace_members_screen.dart';
 export './workspace/workspaces_manager.dart';
+
+//Invitation
+export './invitation/invitation_screen.dart';
+export './invitation/invitations_manager.dart';

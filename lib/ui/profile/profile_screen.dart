@@ -21,10 +21,13 @@ class ProfileScreen extends StatelessWidget {
         title: const Text('Profile'),
         actions: [
           IconButton(
-            padding: const EdgeInsets.only(right: 10.0),
-            icon: const Icon(Icons.email),
+            icon: Badge.count(
+              count: InvitationsManager().count(),
+              child: const Icon(Icons.mail),
+            ),
             onPressed: () => _viewInvitation(context),
-          )
+          ),
+          const SizedBox(width: 10.0),
         ],
       ),
       body: Center(
