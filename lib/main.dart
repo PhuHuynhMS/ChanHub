@@ -103,6 +103,19 @@ class ChanHub extends StatelessWidget {
           );
         }
 
+        // Edit channel
+        if (settings.name == EditChannelScreen.routeName) {
+          final Channel channel = ChannelsManager().getById('1')!;
+
+          return MaterialPageRoute(
+            builder: (context) => SafeArea(
+              child: EditChannelScreen(
+                channel,
+              ),
+            ),
+          );
+        }
+
         // Add channel
         if (settings.name == AddChannelScreen.routeName) {
           return MaterialPageRoute(

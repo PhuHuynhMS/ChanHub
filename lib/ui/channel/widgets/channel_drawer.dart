@@ -1,6 +1,7 @@
 import 'package:flutter/material.dart';
 
 import '../../shared/utils/index.dart';
+import '../../../ui/screens.dart';
 
 class ChannelDrawer extends StatelessWidget {
   const ChannelDrawer({super.key});
@@ -10,7 +11,7 @@ class ChannelDrawer extends StatelessWidget {
   }
 
   void _onEditChannelDescription(BuildContext context) {
-    print('Edit channel');
+    Navigator.of(context).pushNamed(EditChannelScreen.routeName);
   }
 
   void _onViewMembers(BuildContext context) {

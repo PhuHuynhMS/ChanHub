@@ -252,11 +252,14 @@ class ColabChip extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    return Wrap(
-      children: <Widget>[
-        Chip(onDeleted: onDeleted, label: Text(username)),
-        const SizedBox(width: 5.0),
-      ],
+    return Padding(
+      padding: const EdgeInsets.only(bottom: 5.0, top: 5.0),
+      child: Wrap(
+        children: <Widget>[
+          Chip(onDeleted: onDeleted, label: Text(username)),
+          const SizedBox(width: 5.0),
+        ],
+      ),
     );
   }
 }
