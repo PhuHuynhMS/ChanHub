@@ -3,3 +3,4 @@ export './channel_drawer.dart';
 export './channel_appbar_title.dart';
 export './thread_actions.dart';
 export './thread_detail.dart';
+export './filter_button.dart';
