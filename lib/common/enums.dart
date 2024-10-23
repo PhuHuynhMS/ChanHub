@@ -18,3 +18,10 @@ enum TaskStatus {
   overdue,
   overdueCompleted,
 }
+
+enum SearchThreadFilter {
+  all,
+  unread,
+  myThreads,
+  tagged,
+}
