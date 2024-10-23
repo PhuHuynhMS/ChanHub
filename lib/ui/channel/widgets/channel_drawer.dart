@@ -1,13 +1,13 @@
 import 'package:flutter/material.dart';
 
 import '../../shared/utils/index.dart';
-import '../../../ui/screens.dart';
+import '../../screens.dart';
 
 class ChannelDrawer extends StatelessWidget {
   const ChannelDrawer({super.key});
 
   void _onSearchThread(BuildContext context) {
-    print('Search thread');
+    Navigator.of(context).pushNamed(SearchThreadScreen.routeName);
   }
 
   void _onEditChannelDescription(BuildContext context) {

@@ -24,6 +24,7 @@ export './profile/profile_manager.dart';
 
 // Thread
 export './thread/thread_screen.dart';
+export 'channel/search_thread_screen.dart';
 export './thread/threads_manager.dart';
 
 // Workspace

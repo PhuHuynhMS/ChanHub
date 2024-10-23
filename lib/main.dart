@@ -158,6 +158,15 @@ class ChanHub extends StatelessWidget {
           );
         }
 
+        // Search thread
+        if (settings.name == SearchThreadScreen.routeName) {
+          return MaterialPageRoute(
+            builder: (context) => const SafeArea(
+              child: SearchThreadScreen(),
+            ),
+          );
+        }
+
         // Profile
         if (settings.name == ProfileScreen.routeName) {
           return CustomSlideTransition(
