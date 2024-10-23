@@ -4,8 +4,8 @@ import '../../../models/index.dart';
 import '../../shared/utils/index.dart';
 import '../../screens.dart';
 
-class ListWorkspaceMembers extends StatelessWidget {
-  const ListWorkspaceMembers({
+class ListChannelMembers extends StatelessWidget {
+  const ListChannelMembers({
     super.key,
     required this.filteredMembers,
     required this.onRemoveMember,

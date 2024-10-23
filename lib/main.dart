@@ -125,6 +125,24 @@ class ChanHub extends StatelessWidget {
           );
         }
 
+        // View channel members
+        if (settings.name == ViewChannelMembersScreen.routeName) {
+          return MaterialPageRoute(
+            builder: (context) => const SafeArea(
+              child: ViewChannelMembersScreen(),
+            ),
+          );
+        }
+
+        // Add channel members
+        if (settings.name == AddChannelMembersScreen.routeName) {
+          return MaterialPageRoute(
+            builder: (context) => const SafeArea(
+              child: AddChannelMembersScreen(),
+            ),
+          );
+        }
+
         // Thread
         if (settings.name == ThreadScreen.routeName) {
           final String threadId = settings.arguments as String;

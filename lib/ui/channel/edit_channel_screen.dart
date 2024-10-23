@@ -1,8 +1,9 @@
 import 'package:flutter/material.dart';
+import 'package:flutter_svg/svg.dart';
 
-import '../../common/enums.dart';
 import '../../models/index.dart';
 import '../shared/widgets/index.dart';
+import '../shared/utils/index.dart';
 
 class EditChannelScreen extends StatefulWidget {
   static const String routeName = '/edit_channel';
@@ -16,21 +17,17 @@ class EditChannelScreen extends StatefulWidget {
 }
 
 class _EditChannelScreenState extends State<EditChannelScreen> {
-  bool _isEditing = false;
-
-  void _saveInfo() {
+  void _saveChannelInfo() {
     //TODO: Update the channel
-    _isEditing = false;
     setState(() {});
   }
 
-  void _editProfile() {
-    _isEditing = true;
-    setState(() {});
-  }
-
-  void _cancelEdit() {
-    _isEditing = false;
+  void _deleteChannel() {
+    //TODO: Delete the channel
+    showConfirmDialog(
+        context: context,
+        title: 'Delete Channel',
+        content: 'Are you sure to delete this channel?');
     setState(() {});
   }
 
@@ -38,7 +35,6 @@ class _EditChannelScreenState extends State<EditChannelScreen> {
     return CustomizedTextField(
       labelText: 'Channel Name',
       initialValue: widget.channel.name,
-      readOnly: !_isEditing,
     );
   }
 
@@ -47,52 +43,35 @@ class _EditChannelScreenState extends State<EditChannelScreen> {
       labelText: 'Channel Description',
       initialValue: widget.channel.description,
       maxLines: 5,
-      readOnly: !_isEditing,
     );
   }
 
-  Widget _buildSaveOrEditButton() {
-    if (!_isEditing) {
-      return Column(
-        children: [
-          SizedBox(
-            width: double.infinity,
-            child: ElevatedButton(
-              onPressed: () {
-                _editProfile();
-              },
-              child: const Text('Edit Channel'),
-            ),
+  Widget _buildSaveAndDeleteButtons() {
+    return Column(
+      children: [
+        SizedBox(
+          width: double.infinity,
+          child: ElevatedButton(
+            onPressed: () {
+              _saveChannelInfo();
+            },
+            child: const Text('Save'),
           ),
-        ],
-      );
-    } else {
-      return Column(
-        children: [
-          SizedBox(
-            width: double.infinity,
-            child: ElevatedButton(
-              onPressed: () {
-                _saveInfo();
-              },
-              child: const Text('Save'),
+        ),
+        const SizedBox(height: 10.0),
+        SizedBox(
+          width: double.infinity,
+          child: ElevatedButton(
+            style: ElevatedButton.styleFrom(
+              backgroundColor: Theme.of(context).colorScheme.surface,
+              foregroundColor: Theme.of(context).colorScheme.error,
             ),
+            onPressed: _deleteChannel,
+            child: const Text('Delete Channel'),
           ),
-          const SizedBox(height: 10.0),
-          SizedBox(
-            width: double.infinity,
-            child: ElevatedButton(
-              style: ElevatedButton.styleFrom(
-                backgroundColor: Theme.of(context).colorScheme.surface,
-                foregroundColor: Theme.of(context).colorScheme.error,
-              ),
-              onPressed: _cancelEdit,
-              child: const Text('Cancel'),
-            ),
-          ),
-        ],
-      );
-    }
+        ),
+      ],
+    );
   }
 
   @override
@@ -101,19 +80,27 @@ class _EditChannelScreenState extends State<EditChannelScreen> {
       appBar: AppBar(
         title: const Text('Edit Channel'),
       ),
-      body: Padding(
-        padding: const EdgeInsets.all(10.0),
-        child: Column(
-          mainAxisAlignment: MainAxisAlignment.center,
-          children: <Widget>[
-            _buildChannelNameField(),
-            const SizedBox(height: 15.0),
-            _buildChannelDescriptionField(),
-            const SizedBox(height: 10.0),
-            _buildSaveOrEditButton(),
-          ],
+      body: Stack(children: [
+        Positioned.fill(
+          child: SvgPicture.asset(
+            'assets/svg/edit_channel.svg',
+            fit: BoxFit.cover,
+          ),
         ),
-      ),
+        Padding(
+          padding: const EdgeInsets.symmetric(horizontal: 20.0, vertical: 20.0),
+          child: Column(
+            mainAxisAlignment: MainAxisAlignment.start,
+            children: <Widget>[
+              _buildChannelNameField(),
+              const SizedBox(height: 15.0),
+              _buildChannelDescriptionField(),
+              const SizedBox(height: 10.0),
+              _buildSaveAndDeleteButtons(),
+            ],
+          ),
+        ),
+      ]),
     );
   }
 }
