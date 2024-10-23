@@ -10,6 +10,7 @@ class CustomizedTextField extends StatelessWidget {
       this.labelText,
       this.hintText,
       this.readOnly = false,
+      this.initialValue,
       super.key});
 
   final void Function(String)? onChanged;
@@ -20,10 +21,12 @@ class CustomizedTextField extends StatelessWidget {
   final String? labelText;
   final String? hintText;
   final bool readOnly;
+  final String? initialValue;
 
   @override
   Widget build(BuildContext context) {
     return TextFormField(
+      initialValue: initialValue,
       maxLength: maxLength,
       maxLines: maxLines,
       controller: controller,

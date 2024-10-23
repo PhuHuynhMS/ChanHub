@@ -10,6 +10,9 @@ export './authentication/login_or_register_screen.dart';
 export './channel/channel_screen.dart';
 export './channel/add_channel_screen.dart';
 export './channel/channels_manager.dart';
+export './channel/edit_channel_screen.dart';
+export './channel/add_channel_members_screen.dart';
+export './channel/view_channel_members_screen.dart';
 
 // Management
 export './management/management_screen.dart';

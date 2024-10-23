@@ -11,15 +11,15 @@ class ChannelDrawer extends StatelessWidget {
   }
 
   void _onEditChannelDescription(BuildContext context) {
-    print('Edit channel');
+    Navigator.of(context).pushNamed(EditChannelScreen.routeName);
   }
 
   void _onViewMembers(BuildContext context) {
-    print('View members');
+    Navigator.of(context).pushNamed(ViewChannelMembersScreen.routeName);
   }
 
   void _onAddChannelMember(BuildContext context) {
-    print('Add channel member');
+    Navigator.of(context).pushNamed(AddChannelMembersScreen.routeName);
   }
 
   void _onLeaveChannel(BuildContext context) async {
