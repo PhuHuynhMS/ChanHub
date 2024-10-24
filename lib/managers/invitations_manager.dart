@@ -1,5 +1,5 @@
-import '../../models/index.dart';
-import '../../common/enums.dart';
+import '../models/index.dart';
+import '../common/enums.dart';
 
 class InvitationsManager {
   final List<Invitation> _invitations = [

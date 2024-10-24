@@ -1,5 +1,5 @@
-import '../../common/enums.dart';
-import '../../models/index.dart';
+import '../common/enums.dart';
+import '../models/index.dart';
 
 class ThreadsManager {
   final List<Thread> _threads = [

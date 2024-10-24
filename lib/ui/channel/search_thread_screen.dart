@@ -3,7 +3,7 @@ import 'package:flutter/material.dart';
 import '../../models/index.dart';
 import '../../common/constants.dart';
 import '../../common/enums.dart';
-import '../thread/threads_manager.dart';
+import '../../managers/index.dart';
 import '../shared/utils/index.dart';
 import './widgets/index.dart';
 

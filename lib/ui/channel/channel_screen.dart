@@ -3,8 +3,8 @@ import 'dart:io';
 import 'package:flutter/material.dart';
 
 import '../../models/index.dart';
+import '../../managers/index.dart';
 import '../shared/widgets/index.dart';
-import '../screens.dart';
 import './widgets/index.dart';
 
 class ChannelScreen extends StatelessWidget {
