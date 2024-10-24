@@ -46,6 +46,5 @@ class _AddChannelMemberTileState extends State<AddChannelMemberTile> {
           )),
       onTap: () => widget.onViewProfile(context, widget.member),
     );
-    ;
   }
 }

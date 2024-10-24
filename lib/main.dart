@@ -1,8 +1,9 @@
 import 'package:flutter/material.dart';
 
-import './ui/screens.dart';
 import './models/index.dart';
+import './managers/index.dart';
 import './themes/chanhub_theme.dart';
+import './ui/screens.dart';
 import './ui/shared/transitions/index.dart';
 
 void main() {
@@ -29,7 +30,7 @@ class ChanHub extends StatelessWidget {
           );
         }
 
-        // Authenticated routes
+        // Authentication
         if (settings.name == GetStartedScreen.routeName) {
           return MaterialPageRoute(
             builder: (context) => const SafeArea(
@@ -65,7 +66,6 @@ class ChanHub extends StatelessWidget {
           );
         }
 
-        // Create Workspace
         if (settings.name == CreateWorkspaceScreen.routeName) {
           return MaterialPageRoute(
             builder: (context) => const SafeArea(
@@ -74,7 +74,6 @@ class ChanHub extends StatelessWidget {
           );
         }
 
-        // Invite friends at create workspace
         if (settings.name == AddWorkspaceMembersScreen.routeName) {
           return MaterialPageRoute(
             builder: (context) => const SafeArea(
@@ -83,7 +82,6 @@ class ChanHub extends StatelessWidget {
           );
         }
 
-        // Workspace members
         if (settings.name == WorkspaceMembersScreen.routeName) {
           return MaterialPageRoute(
             builder: (context) => const SafeArea(
@@ -103,7 +101,6 @@ class ChanHub extends StatelessWidget {
           );
         }
 
-        // Edit channel
         if (settings.name == EditChannelScreen.routeName) {
           final Channel channel = ChannelsManager().getById('1')!;
 
@@ -116,7 +113,6 @@ class ChanHub extends StatelessWidget {
           );
         }
 
-        // Add channel
         if (settings.name == AddChannelScreen.routeName) {
           return MaterialPageRoute(
             builder: (context) => const SafeArea(
@@ -125,7 +121,6 @@ class ChanHub extends StatelessWidget {
           );
         }
 
-        // View channel members
         if (settings.name == ViewChannelMembersScreen.routeName) {
           return MaterialPageRoute(
             builder: (context) => const SafeArea(
@@ -134,7 +129,6 @@ class ChanHub extends StatelessWidget {
           );
         }
 
-        // Add channel members
         if (settings.name == AddChannelMembersScreen.routeName) {
           return MaterialPageRoute(
             builder: (context) => const SafeArea(
@@ -143,7 +137,15 @@ class ChanHub extends StatelessWidget {
           );
         }
 
-        // Thread
+        if (settings.name == SearchThreadScreen.routeName) {
+          return MaterialPageRoute(
+            builder: (context) => const SafeArea(
+              child: SearchThreadScreen(),
+            ),
+          );
+        }
+
+        // Thread Detail
         if (settings.name == ThreadScreen.routeName) {
           final String threadId = settings.arguments as String;
           final Thread thread = ThreadsManager().getById(threadId)!;
@@ -154,15 +156,6 @@ class ChanHub extends StatelessWidget {
               child: SafeArea(
                 child: ThreadScreen(thread, channelName: channel.name),
               ),
-            ),
-          );
-        }
-
-        // Search thread
-        if (settings.name == SearchThreadScreen.routeName) {
-          return MaterialPageRoute(
-            builder: (context) => const SafeArea(
-              child: SearchThreadScreen(),
             ),
           );
         }
@@ -182,7 +175,6 @@ class ChanHub extends StatelessWidget {
           );
         }
 
-        //Change password
         if (settings.name == ChangePasswordScreen.routeName) {
           return CustomSlideTransition(
             page: const SafeArea(

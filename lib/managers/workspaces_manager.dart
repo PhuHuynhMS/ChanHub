@@ -1,7 +1,5 @@
-import '../../models/workspace.dart';
-import '../../models/channel.dart';
-import '../../models/user.dart';
-import '../../common/enums.dart';
+import '../models/index.dart';
+import '../common/enums.dart';
 
 class WorkspacesManager {
   List<Workspace> workspaces = [

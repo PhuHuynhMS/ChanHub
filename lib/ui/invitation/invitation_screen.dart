@@ -1,7 +1,7 @@
 import 'package:flutter/material.dart';
 
 import '../../models/index.dart';
-import '../screens.dart';
+import '../../managers/index.dart';
 import './widgets/index.dart';
 
 class InvitationScreen extends StatefulWidget {

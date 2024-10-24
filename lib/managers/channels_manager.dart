@@ -1,5 +1,5 @@
-import '../../common/enums.dart';
-import '../../models/index.dart';
+import '../common/enums.dart';
+import '../models/index.dart';
 
 class ChannelsManager {
   final List<Channel> _channels = <Channel>[
