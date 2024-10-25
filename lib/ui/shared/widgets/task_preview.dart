@@ -58,7 +58,7 @@ class TaskPreview extends StatelessWidget {
             style: Theme.of(context).textTheme.bodySmall,
           ),
           subtitle: Text(
-            'Assignee: ${task.assignee.fullName} \nDeadline: ${formatDeadlineTime(task.deadline)}',
+            'Assignee: ${task.assignee.fullname} \nDeadline: ${formatDeadlineTime(task.deadline)}',
             style: Theme.of(context).textTheme.bodySmall!.copyWith(
                   color: getTaskStatusColor(status, context).withOpacity(0.8),
                 ),
@@ -152,7 +152,7 @@ class TaskPreview extends StatelessWidget {
                           // Short description (assignee, deadline)
                           Text(
                             textAlign: TextAlign.end,
-                            '${task.assignee.fullName} - ${formatDeadlineTime(task.deadline)}',
+                            '${task.assignee.fullname} - ${formatDeadlineTime(task.deadline)}',
                             style: Theme.of(context).textTheme.labelSmall,
                           ),
                         ],

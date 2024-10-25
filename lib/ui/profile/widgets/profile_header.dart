@@ -15,9 +15,9 @@ class ProfileHeader extends StatelessWidget {
   Widget build(BuildContext context) {
     final User user = User(
       id: '1',
-      fullName: 'John Doe',
+      fullname: 'John Doe',
       jobTitle: 'Software Engineer',
-      userName: 'johndoe',
+      username: 'johndoe',
       email: 'john@gmail.com',
       avatarUrl: 'https://picsum.photos/420/380',
     );
@@ -48,8 +48,11 @@ class ProfileHeader extends StatelessWidget {
           ],
         ),
         const SizedBox(height: 10),
-        Text(user.fullName, style: Theme.of(context).textTheme.titleLarge),
-        Text(user.jobTitle, style: Theme.of(context).textTheme.labelMedium),
+        Text(user.fullname, style: Theme.of(context).textTheme.titleLarge),
+        Text(
+          user.jobTitle ?? '',
+          style: Theme.of(context).textTheme.labelMedium,
+        ),
       ],
     );
   }

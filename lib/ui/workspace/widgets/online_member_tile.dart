@@ -22,7 +22,7 @@ class OnlineMemberTile extends StatelessWidget {
             backgroundImage: NetworkImage(member.avatarUrl),
           ),
           Text(
-            truncate(member.fullName, 7),
+            truncate(member.fullname, 7),
             style: Theme.of(context).textTheme.bodyMedium,
             overflow: TextOverflow.ellipsis,
           ),

@@ -42,9 +42,9 @@ class _ProfileDetailsState extends State<ProfileDetails> {
   Widget build(BuildContext context) {
     final User user = User(
       id: '1',
-      fullName: 'John Doe',
+      fullname: 'John Doe',
       jobTitle: 'Software Engineer',
-      userName: 'johndoe',
+      username: 'johndoe',
       email: 'john@gmail.com',
       avatarUrl: 'https://picsum.photos/420/380',
     );
@@ -58,7 +58,7 @@ class _ProfileDetailsState extends State<ProfileDetails> {
         // Full name field
         BlockTextField(
           labelText: 'Full Name',
-          initialValue: user.fullName,
+          initialValue: user.fullname,
           enabled: _isEditing,
           prefixIcon: Icon(Icons.person,
               color: _isEditing ? activeColor : inactiveColor),
@@ -88,7 +88,7 @@ class _ProfileDetailsState extends State<ProfileDetails> {
         // Username field
         BlockTextField(
           labelText: 'Username',
-          initialValue: user.userName,
+          initialValue: user.username,
           enabled: _isEditing,
           prefixIcon: Icon(Icons.person_pin,
               color: _isEditing ? activeColor : inactiveColor),

@@ -40,7 +40,7 @@ class ListChannelMembers extends StatelessWidget {
           leading: CircleAvatar(
             backgroundImage: NetworkImage(member.avatarUrl),
           ),
-          title: Text(member.fullName),
+          title: Text(member.fullname),
           subtitle: Text(
             member.email,
             style: Theme.of(context).textTheme.labelSmall,

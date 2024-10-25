@@ -26,9 +26,9 @@ class _ThreadReactionState extends State<ThreadReaction> {
   // TODO: User who is currently logged in
   final User user = User(
     id: '1',
-    fullName: 'John Doe',
+    fullname: 'John Doe',
     jobTitle: 'Software Engineer',
-    userName: 'johndoe',
+    username: 'johndoe',
     avatarUrl: 'https://picsum.photos/300/300',
     email: 'john@gmail.com',
   );
@@ -203,7 +203,7 @@ class ListReactionBottomSheet extends StatelessWidget {
         itemCount: reactions.length,
         itemBuilder: (context, index) => ListTile(
           leading: UserAvatar(reactions[index].creator, size: 40.0),
-          title: Text(reactions[index].creator.fullName),
+          title: Text(reactions[index].creator.fullname),
         ),
       ),
     );
