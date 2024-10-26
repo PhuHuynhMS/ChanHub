@@ -1,8 +1,9 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_svg/flutter_svg.dart';
 import 'package:smooth_page_indicator/smooth_page_indicator.dart';
+import 'package:provider/provider.dart';
 
-import '../screens.dart';
+import '../../managers/index.dart';
 import './widgets/index.dart';
 
 class OnboardingScreen extends StatefulWidget {
@@ -15,35 +16,34 @@ class OnboardingScreen extends StatefulWidget {
 }
 
 class _OnboardingScreenState extends State<OnboardingScreen> {
-  final List<OnboardingInfo> pages = OnboardingItems().items;
-  final PageController pageController = PageController();
+  final List<OnboardingInfo> _pages = OnboardingItems().items;
+  final PageController _pageController = PageController();
 
-  bool isLastPage = false;
-
-  void onPageChanged(int index) {
-    setState(() => isLastPage = pages.length - 1 == index);
-  }
+  bool _isLastPage = false;
 
   @override
   void dispose() {
-    pageController.dispose();
+    _pageController.dispose();
     super.dispose();
   }
 
-  void onSkip() {
-    pageController.jumpToPage(pages.length - 1);
+  void _onSkip() {
+    _pageController.jumpToPage(_pages.length - 1);
   }
 
-  void onNext() {
-    pageController.nextPage(
+  void _onNext() {
+    _pageController.nextPage(
       duration: const Duration(milliseconds: 600),
       curve: Curves.easeIn,
     );
   }
 
-  void navigateToGetStarted() {
-    // TODO: Save the onboarding status
-    Navigator.of(context).pushReplacementNamed(GetStartedScreen.routeName);
+  void _onPageChanged(int index) {
+    setState(() => _isLastPage = _pages.length - 1 == index);
+  }
+
+  Future<void> _completeOnboarding() async {
+    await context.read<OnboardingManager>().completeOnboarding();
   }
 
   @override
@@ -51,17 +51,17 @@ class _OnboardingScreenState extends State<OnboardingScreen> {
     return Scaffold(
       // Page View
       body: PageView.builder(
-        onPageChanged: onPageChanged,
-        itemCount: pages.length,
-        controller: pageController,
-        itemBuilder: (context, index) => OnboardingPage(pages[index]),
+        onPageChanged: _onPageChanged,
+        itemCount: _pages.length,
+        controller: _pageController,
+        itemBuilder: (context, index) => OnboardingPage(_pages[index]),
       ),
 
       // Page Controller
       bottomSheet: Container(
         color: Theme.of(context).colorScheme.surface,
         padding: const EdgeInsets.symmetric(horizontal: 10, vertical: 10),
-        child: isLastPage ? getStarted() : pageIndicator(),
+        child: _isLastPage ? getStarted() : pageIndicator(),
       ),
     );
   }
@@ -71,7 +71,7 @@ class _OnboardingScreenState extends State<OnboardingScreen> {
       width: double.infinity,
       padding: const EdgeInsets.symmetric(horizontal: 20),
       child: ElevatedButton(
-        onPressed: navigateToGetStarted,
+        onPressed: _completeOnboarding,
         child: const Text("Get Started"),
       ),
     );
@@ -83,15 +83,15 @@ class _OnboardingScreenState extends State<OnboardingScreen> {
       children: [
         // Skip Button
         TextButton(
-          onPressed: onSkip,
+          onPressed: _onSkip,
           child: const Text("Skip"),
         ),
 
         // Indicator
         SmoothPageIndicator(
-          controller: pageController,
-          count: pages.length,
-          onDotClicked: (index) => pageController.animateToPage(
+          controller: _pageController,
+          count: _pages.length,
+          onDotClicked: (index) => _pageController.animateToPage(
             index,
             duration: const Duration(milliseconds: 600),
             curve: Curves.easeInOut,
@@ -105,7 +105,7 @@ class _OnboardingScreenState extends State<OnboardingScreen> {
 
         // Next Button
         TextButton(
-          onPressed: onNext,
+          onPressed: _onNext,
           child: const Text("Next"),
         ),
       ],

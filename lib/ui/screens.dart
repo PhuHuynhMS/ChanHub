@@ -32,3 +32,6 @@ export './workspace/workspace_members_screen.dart';
 
 // Invitation
 export './invitation/invitation_screen.dart';
+
+// Splash
+export './splash_screen.dart';
