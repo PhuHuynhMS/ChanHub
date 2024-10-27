@@ -21,9 +21,9 @@ class _LoginOrRegisterScreenState extends State<LoginOrRegisterScreen> {
   late bool _isLogin = widget.isLogin;
 
   void _toggleLoginRegister() {
-    setState(() {
-      _isLogin = !_isLogin;
-    });
+    _isLogin = !_isLogin;
+    FocusManager.instance.primaryFocus?.unfocus();
+    setState(() {});
   }
 
   @override

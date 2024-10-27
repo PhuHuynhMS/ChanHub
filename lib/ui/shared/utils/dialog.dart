@@ -149,7 +149,7 @@ void showInfoDialog({
   );
 }
 
-Future<bool> showInputDialog({
+void showActionDialog({
   required BuildContext context,
   String title = 'Information',
   List<Widget> children = const <Widget>[],
@@ -185,11 +185,12 @@ Future<bool> showInputDialog({
               // Content
               Flexible(
                 child: SingleChildScrollView(
-                    child: content ??
-                        Column(
-                          crossAxisAlignment: CrossAxisAlignment.start,
-                          children: children,
-                        )),
+                  child: content ??
+                      Column(
+                        crossAxisAlignment: CrossAxisAlignment.start,
+                        children: children,
+                      ),
+                ),
               ),
             ],
           ),

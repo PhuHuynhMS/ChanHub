@@ -13,7 +13,7 @@ class OnboardingService {
     return localStorageService.get(localCompleteOnboardingKey) == null;
   }
 
-  // TODO: For testing purposes (remove in production)
+  // TODO: For testing purposes
   Future<void> resetOnboarding() async {
     final localStorageService = await LocalStorageService.getInstance();
     localStorageService.set(localCompleteOnboardingKey, null);

@@ -1,7 +1,9 @@
+import 'package:flutter/foundation.dart';
+
 import '../common/enums.dart';
 import '../models/index.dart';
 
-class ChannelsManager {
+class ChannelsManager with ChangeNotifier {
   final List<Channel> _channels = <Channel>[
     Channel(
       id: '1',
@@ -14,9 +16,9 @@ class ChannelsManager {
       memberCount: 3,
       creator: User(
         id: '1',
-        fullName: 'John Doe',
+        fullname: 'John Doe',
         jobTitle: "Software Developer",
-        userName: 'johndoe',
+        username: 'johndoe',
         avatarUrl: 'https://picsum.photos/300/300',
         email: 'john@gmail.com',
       ),
@@ -32,9 +34,9 @@ class ChannelsManager {
       memberCount: 10,
       creator: User(
         id: '1',
-        fullName: 'John Doe',
+        fullname: 'John Doe',
         jobTitle: "Software Developer",
-        userName: 'johndoe',
+        username: 'johndoe',
         avatarUrl: 'https://picsum.photos/300/300',
         email: 'john@gmail.com',
       ),
@@ -50,9 +52,9 @@ class ChannelsManager {
       memberCount: 5,
       creator: User(
         id: '1',
-        fullName: 'John Doe',
+        fullname: 'John Doe',
         jobTitle: "Software Developer",
-        userName: 'johndoe',
+        username: 'johndoe',
         avatarUrl: 'https://picsum.photos/300/300',
         email: 'john@gmail.com',
       ),

@@ -25,3 +25,10 @@ enum SearchThreadFilter {
   myThreads,
   tagged,
 }
+
+enum StatusType {
+  error,
+  info,
+  warning,
+  success,
+}

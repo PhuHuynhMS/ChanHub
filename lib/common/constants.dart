@@ -1,4 +1,7 @@
-import 'enums.dart';
+import 'package:flutter/material.dart';
+
+import '../themes/chanhub_colors.dart';
+import './enums.dart';
 
 const Map<String, ReactionType> reactionType = {
   'like': ReactionType.like,
@@ -23,4 +26,11 @@ const Map<SearchThreadFilter, String> searchThreadFilterString = {
   SearchThreadFilter.unread: 'Unread',
   SearchThreadFilter.myThreads: 'My Threads',
   SearchThreadFilter.tagged: 'Tagged',
+};
+
+const Map<StatusType, Color> statusColor = {
+  StatusType.error: ChanHubColors.error,
+  StatusType.info: ChanHubColors.secondary,
+  StatusType.warning: Colors.orange,
+  StatusType.success: ChanHubColors.primary,
 };

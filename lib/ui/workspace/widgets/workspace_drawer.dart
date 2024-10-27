@@ -1,6 +1,8 @@
 import 'package:flutter/material.dart';
+import 'package:provider/provider.dart';
 
 import '../../../models/index.dart';
+import '../../../managers/index.dart';
 import '../../screens.dart';
 import './index.dart';
 
@@ -26,7 +28,8 @@ class WorkSpaceDrawer extends StatelessWidget {
   }
 
   void _goToHelp(BuildContext context) {
-    print('Help');
+    // TODO: For testing purposes
+    context.read<AuthManager>().logout();
   }
 
   bool _isSelectedWorkspace(Workspace workspace) {

@@ -69,4 +69,13 @@ class Validator {
       return null;
     };
   }
+
+  static ValidatorFunction match(String? value, String? errorMessage) {
+    return (String? confirmValue) {
+      if (confirmValue != value) {
+        return errorMessage ?? 'The values do not match';
+      }
+      return null;
+    };
+  }
 }
