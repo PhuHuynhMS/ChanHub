@@ -101,7 +101,7 @@ class ThreadTitle extends StatelessWidget {
         children: [
           // Username
           Text(
-            user.fullName,
+            user.fullname,
             style: Theme.of(context).textTheme.titleMedium,
           ),
 

@@ -33,7 +33,7 @@ class _AddChannelMemberTileState extends State<AddChannelMemberTile> {
       leading: CircleAvatar(
         backgroundImage: NetworkImage(widget.member.avatarUrl),
       ),
-      title: Text(widget.member.fullName),
+      title: Text(widget.member.fullname),
       subtitle: Text(
         widget.member.email,
         style: Theme.of(context).textTheme.labelSmall,

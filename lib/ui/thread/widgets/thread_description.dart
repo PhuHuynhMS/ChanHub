@@ -15,9 +15,9 @@ class ThreadDescription extends StatelessWidget {
   // TODO: User who is currently logged in
   final User user = User(
     id: '1',
-    fullName: 'John Doe',
+    fullname: 'John Doe',
     jobTitle: 'Software Developer',
-    userName: 'johndoe',
+    username: 'johndoe',
     avatarUrl: 'https://picsum.photos/300/300',
     email: 'john@gmail.com',
   );

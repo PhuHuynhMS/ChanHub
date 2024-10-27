@@ -56,7 +56,7 @@ class InvitationTile extends StatelessWidget {
                     style: Theme.of(context).textTheme.titleMedium,
                   ),
                   Text(
-                    'Invited by ${invitation.creator.fullName}',
+                    'Invited by ${invitation.creator.fullname}',
                     style: Theme.of(context).textTheme.bodySmall,
                   ),
                   const SizedBox(height: 10.0),

@@ -5,7 +5,7 @@ import '../../../models/user.dart';
 
 TextSpan createUserTag({required User user, TextStyle? style}) {
   return TextSpan(
-    text: '@${user.userName}',
+    text: '@${user.username}',
     style: style ??
         const TextStyle(
           color: Colors.blue,

@@ -1,5 +1,8 @@
 import 'package:flutter/material.dart';
 
+import '../../../common/enums.dart';
+import '../../../common/constants.dart';
+
 Future<bool> showConfirmDialog({
   required BuildContext context,
   String title = 'Confirm',
@@ -72,11 +75,14 @@ void showInfoDialog({
   Widget? content,
   String cancelText = 'Close',
   String? confirmText,
+  StatusType status = StatusType.success,
 }) async {
   assert(
       (content != null && children.isEmpty) ||
           (content == null && children.isNotEmpty),
       'Either content or children must be provided');
+  final Color color = statusColor[status]!;
+
   showDialog(
     context: context,
     builder: (context) {
@@ -95,7 +101,9 @@ void showInfoDialog({
               // Title
               Text(
                 title,
-                style: Theme.of(context).textTheme.titleLarge,
+                style: Theme.of(context).textTheme.titleLarge!.copyWith(
+                      color: color,
+                    ),
               ),
               const Divider(height: 20.0),
               const SizedBox(height: 10.0),
@@ -118,7 +126,9 @@ void showInfoDialog({
                     onPressed: () => Navigator.of(context).pop(),
                     child: Text(
                       cancelText,
-                      style: Theme.of(context).textTheme.titleMedium,
+                      style: Theme.of(context).textTheme.titleMedium!.copyWith(
+                            color: color,
+                          ),
                     ),
                   ),
                   if (confirmText != null)
@@ -139,7 +149,7 @@ void showInfoDialog({
   );
 }
 
-Future<bool> showInputDialog({
+void showActionDialog({
   required BuildContext context,
   String title = 'Information',
   List<Widget> children = const <Widget>[],
@@ -175,11 +185,12 @@ Future<bool> showInputDialog({
               // Content
               Flexible(
                 child: SingleChildScrollView(
-                    child: content ??
-                        Column(
-                          crossAxisAlignment: CrossAxisAlignment.start,
-                          children: children,
-                        )),
+                  child: content ??
+                      Column(
+                        crossAxisAlignment: CrossAxisAlignment.start,
+                        children: children,
+                      ),
+                ),
               ),
             ],
           ),

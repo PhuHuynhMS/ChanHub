@@ -1,44 +1,62 @@
+import 'dart:io';
+
+import '../common/constants.dart';
+
 class User {
   final String id;
-  final String fullName;
-  final String jobTitle;
-  final String userName;
+  final String fullname;
+  final String username;
   final String email;
+  String? jobTitle;
   String? password;
+  File? avatar;
   final String avatarUrl;
 
   User({
     required this.id,
-    required this.fullName,
-    required this.jobTitle,
-    required this.userName,
+    required this.fullname,
+    required this.username,
     required this.email,
-    required this.avatarUrl,
+    this.jobTitle,
+    this.avatar,
+    this.avatarUrl = defaultUserAvatarUrl,
     this.password,
   });
 
   User copyWith({
     String? id,
-    String? fullName,
+    String? fullname,
     String? jobTitle,
-    String? userName,
+    String? username,
     String? email,
     String? password,
+    File? avatar,
     String? avatarUrl,
   }) {
     return User(
       id: id ?? this.id,
-      fullName: fullName ?? this.fullName,
+      fullname: fullname ?? this.fullname,
       jobTitle: jobTitle ?? this.jobTitle,
-      userName: userName ?? this.userName,
+      username: username ?? this.username,
       email: email ?? this.email,
       password: password ?? this.password,
+      avatar: avatar ?? this.avatar,
       avatarUrl: avatarUrl ?? this.avatarUrl,
     );
   }
 
   @override
   String toString() {
-    return userName;
+    return username;
+  }
+
+  factory User.fromJson(Map<String, dynamic> json) {
+    return User(
+      id: json['id'],
+      fullname: json['fullname'],
+      jobTitle: json['jobTitle'],
+      username: json['username'],
+      email: json['email'],
+    );
   }
 }
