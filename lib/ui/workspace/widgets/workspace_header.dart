@@ -42,7 +42,7 @@ class WorkspaceHeader extends StatelessWidget {
           ClipRRect(
             borderRadius: BorderRadius.circular(10.0),
             child: Image.network(
-              workspace.imageUrl,
+              workspace.imageUrl!,
               fit: BoxFit.cover,
               width: 120,
               height: 120,

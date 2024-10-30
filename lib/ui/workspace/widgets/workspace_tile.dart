@@ -1,7 +1,10 @@
 import 'package:flutter/material.dart';
+import 'package:provider/provider.dart';
 
 import '../../../models/index.dart';
+import '../../../managers/index.dart';
 import '../../shared/utils/index.dart';
+import '../../screens.dart';
 
 class WorkspaceTile extends StatelessWidget {
   const WorkspaceTile(
@@ -9,17 +12,25 @@ class WorkspaceTile extends StatelessWidget {
     super.key,
     required this.onTap,
     this.isSelectedWorkspace = false,
+    this.isDefaultWorkspace = false,
   });
 
   final Workspace workspace;
   final void Function() onTap;
   final bool isSelectedWorkspace;
+  final bool isDefaultWorkspace;
 
   void _showWorkspaceActions(BuildContext context) {
     showModalBottomSheetActions(
       context: context,
-      header: WorkspaceActionsHeader(workspace),
-      body: WorkspaceActions(workspace),
+      header: WorkspaceActionsHeader(
+        workspace,
+        isDefaultWorkspace: isDefaultWorkspace,
+      ),
+      body: WorkspaceActions(
+        workspace,
+        isDefaultWorkspace: isDefaultWorkspace,
+      ),
     );
   }
 
@@ -51,7 +62,7 @@ class WorkspaceTile extends StatelessWidget {
                   ClipRRect(
                     borderRadius: BorderRadius.circular(10.0),
                     child: Image.network(
-                      workspace.imageUrl,
+                      workspace.imageUrl!,
                       fit: BoxFit.cover,
                       width: 50,
                       height: 50,
@@ -89,45 +100,59 @@ class WorkspaceActionsHeader extends StatelessWidget {
   const WorkspaceActionsHeader(
     this.workspace, {
     super.key,
+    this.isDefaultWorkspace = false,
   });
 
   final Workspace workspace;
+  final bool isDefaultWorkspace;
 
   @override
   Widget build(BuildContext context) {
-    return Row(
-      children: [
-        // Workspace Image
-        Padding(
-          padding: const EdgeInsets.symmetric(vertical: 20.0, horizontal: 10.0),
-          child: ClipRRect(
+    return Padding(
+      padding: const EdgeInsets.symmetric(horizontal: 10, vertical: 20),
+      child: Row(
+        children: [
+          // Workspace Image
+          ClipRRect(
             borderRadius: BorderRadius.circular(10.0),
             child: Image.network(
               width: 50,
               height: 50,
-              workspace.imageUrl,
+              workspace.imageUrl!,
               fit: BoxFit.cover,
             ),
           ),
-        ),
+          const SizedBox(width: 10.0),
+          // Workspace Name
+          Text(
+            workspace.name,
+            style: Theme.of(context).textTheme.titleMedium,
+          ),
 
-        // Workspace Name
-        Text(
-          workspace.name,
-          style: Theme.of(context).textTheme.titleMedium,
-        )
-      ],
+          if (isDefaultWorkspace) ...[
+            const Spacer(),
+            const Icon(Icons.star),
+          ]
+        ],
+      ),
     );
   }
 }
 
 class WorkspaceActions extends StatelessWidget {
-  const WorkspaceActions(
-    this.workspace, {
-    super.key,
-  });
+  const WorkspaceActions(this.workspace,
+      {super.key, this.isDefaultWorkspace = false});
 
   final Workspace workspace;
+  final bool isDefaultWorkspace;
+
+  void _setDefaultWorkspace(BuildContext context) async {
+    Navigator.of(context)
+        .push(MaterialPageRoute(builder: (context) => const SplashScreen()));
+    await context.read<WorkspacesManager>().setDefaultWorkspace(workspace);
+    Navigator.pop(context);
+    Navigator.pop(context);
+  }
 
   void _onInvite() {
     print('Invite');
@@ -141,14 +166,19 @@ class WorkspaceActions extends StatelessWidget {
   Widget build(BuildContext context) {
     return Wrap(
       children: [
-        ListTile(
-          onTap: _onInvite,
-          leading: const Icon(Icons.person_add_alt),
-          title: Text(
-            'Invite',
-            style: Theme.of(context).textTheme.titleSmall,
-          ),
-        ),
+        if (!isDefaultWorkspace) ...[
+          ListTile(
+            onTap: () => _setDefaultWorkspace(context),
+            leading: const Icon(Icons.check),
+            title: Text(
+              'Mark as default workspace',
+              style: Theme.of(context)
+                  .textTheme
+                  .bodyMedium!
+                  .copyWith(color: Theme.of(context).colorScheme.primary),
+            ),
+          )
+        ],
         ListTile(
           onTap: _onInvite,
           leading: Icon(
@@ -157,7 +187,7 @@ class WorkspaceActions extends StatelessWidget {
           ),
           title: Text(
             'Leave',
-            style: Theme.of(context).textTheme.titleSmall!.copyWith(
+            style: Theme.of(context).textTheme.bodyMedium!.copyWith(
                   color: Theme.of(context).colorScheme.error,
                 ),
           ),
