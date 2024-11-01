@@ -66,7 +66,7 @@ class ChanHub extends StatelessWidget {
     }
 
     if (authManager.isLoggedIn) {
-      return WorkspaceScreen();
+      return const WorkspaceScreen();
     }
 
     return FutureBuilder(
@@ -76,7 +76,6 @@ class ChanHub extends StatelessWidget {
           return const SplashScreen();
         }
         return const LoginOrRegisterScreen(isLogin: true);
-        final List<Workspace> workspaces = WorkspacesManager().getAll();
       },
     );
   }
@@ -104,8 +103,8 @@ class ChanHub extends StatelessWidget {
 
     // Workspace
     if (settings.name == WorkspaceScreen.routeName) {
-      return CustomSlideTransition(
-        page: SafeArea(
+      return MaterialPageRoute(
+        builder: (context) => const SafeArea(
           child: WorkspaceScreen(),
         ),
       );

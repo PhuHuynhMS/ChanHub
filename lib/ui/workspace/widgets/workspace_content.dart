@@ -1,5 +1,7 @@
 import 'package:flutter/material.dart';
+import 'package:provider/provider.dart';
 
+import '../../../managers/index.dart';
 import '../../../models/index.dart';
 import '../../screens.dart';
 import './index.dart';
@@ -18,6 +20,7 @@ class WorkSpaceContent extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
+    final channels = context.watch<ChannelsManager>().getAll();
     return Column(
       children: <Widget>[
         // Online Members
@@ -53,9 +56,7 @@ class WorkSpaceContent extends StatelessWidget {
           ),
           children: [
             // Channels
-            // ...(workspace.channels
-            //     .map((channel) => ChannelTile(channel))
-            //     .toList()),
+            ...(channels.map((channel) => ChannelTile(channel)).toList()),
 
             // Add Channel
             ListTile(

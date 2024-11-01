@@ -43,4 +43,17 @@ class Channel {
       creator: creator ?? this.creator,
     );
   }
+
+  factory Channel.fromJson(Map<String, dynamic> json) {
+    return Channel(
+      name: json['name'],
+      description: json['description'],
+      privacy: json['privacy'] == 'public'
+          ? ChannelPrivacy.public
+          : ChannelPrivacy.private,
+      creatorId: json['creator'],
+      createdAt: DateTime.parse(json['created']),
+      creator: User.fromJson(json['expand']['creator']),
+    );
+  }
 }
