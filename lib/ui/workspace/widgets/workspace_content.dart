@@ -22,6 +22,7 @@ class WorkSpaceContent extends StatelessWidget {
       children: <Widget>[
         // Online Members
         ExpansionTile(
+          expandedAlignment: Alignment.centerLeft,
           initiallyExpanded: true,
           title: Text(
             'Online Members',
@@ -50,9 +51,9 @@ class WorkSpaceContent extends StatelessWidget {
           ),
           children: [
             // Channels
-            ...(workspace.channels
-                .map((channel) => ChannelTile(channel))
-                .toList()),
+            // ...(workspace.channels
+            //     .map((channel) => ChannelTile(channel))
+            //     .toList()),
 
             // Add Channel
             ListTile(

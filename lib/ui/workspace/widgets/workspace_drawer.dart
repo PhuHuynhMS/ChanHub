@@ -7,20 +7,15 @@ import '../../screens.dart';
 import './index.dart';
 
 class WorkSpaceDrawer extends StatelessWidget {
-  const WorkSpaceDrawer(
-    this.workspaces, {
+  const WorkSpaceDrawer({
     super.key,
-    this.selectedWorkspace,
   });
 
-  final List<Workspace> workspaces;
-  final Workspace? selectedWorkspace;
-
-  void _changeWorkspace(BuildContext context, Workspace workspace) {
-    Navigator.of(context).pushReplacementNamed(
-      WorkspaceScreen.routeName,
-      arguments: workspace,
-    );
+  void _changeWorkspace(BuildContext context, Workspace workspace) async {
+    await context.read<WorkspacesManager>().setSelectedWorkspace(workspace);
+    if (context.mounted) {
+      Navigator.of(context).pop();
+    }
   }
 
   void _createWorkspace(BuildContext context) {
@@ -30,14 +25,24 @@ class WorkSpaceDrawer extends StatelessWidget {
   void _goToHelp(BuildContext context) {
     // TODO: For testing purposes
     context.read<AuthManager>().logout();
+    Navigator.of(context).popUntil((route) => route.isFirst);
   }
 
-  bool _isSelectedWorkspace(Workspace workspace) {
-    return selectedWorkspace != null && selectedWorkspace!.id == workspace.id;
+  bool _isSelectedWorkspace(Workspace workspace, Workspace? selectedWorkspace) {
+    return selectedWorkspace != null && selectedWorkspace.id == workspace.id;
+  }
+
+  bool _isDefaultWorkspace(Workspace workspace, Workspace? isDefaultWorkspace) {
+    return isDefaultWorkspace != null && isDefaultWorkspace.id == workspace.id;
   }
 
   @override
   Widget build(BuildContext context) {
+    final workspaces = context.watch<WorkspacesManager>().getAll();
+    final selectedWorkspace =
+        context.read<WorkspacesManager>().getSelectedWorkspace();
+    final defaultWorkspace =
+        context.read<WorkspacesManager>().getDefaultWorkspace();
     return Drawer(
       child: Column(
         crossAxisAlignment: CrossAxisAlignment.start,
@@ -58,7 +63,12 @@ class WorkSpaceDrawer extends StatelessWidget {
               itemCount: workspaces.length,
               itemBuilder: (context, index) => WorkspaceTile(
                 workspaces[index],
-                isSelectedWorkspace: _isSelectedWorkspace(workspaces[index]),
+                isSelectedWorkspace: _isSelectedWorkspace(
+                  workspaces[index],
+                  selectedWorkspace,
+                ),
+                isDefaultWorkspace:
+                    _isDefaultWorkspace(workspaces[index], defaultWorkspace),
                 onTap: () => _changeWorkspace(context, workspaces[index]),
               ),
             ),

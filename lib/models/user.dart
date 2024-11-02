@@ -1,5 +1,6 @@
 import 'dart:io';
 
+import '../ui/shared/extensions/index.dart';
 import '../common/constants.dart';
 
 class User {
@@ -53,6 +54,7 @@ class User {
   factory User.fromJson(Map<String, dynamic> json) {
     return User(
       id: json['id'],
+      avatarUrl: json.getImageUrl('avatar') ?? defaultUserAvatarUrl,
       fullname: json['fullname'],
       jobTitle: json['jobTitle'],
       username: json['username'],

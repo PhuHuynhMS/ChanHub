@@ -1,19 +1,17 @@
 import 'package:flutter/material.dart';
+import 'package:provider/provider.dart';
 
+import '../../managers/index.dart';
 import '../../models/index.dart';
+import '../shared/utils/loading_animation.dart';
 import './widgets/index.dart';
 
 class WorkspaceScreen extends StatelessWidget {
   static const String routeName = '/workspace';
 
-  WorkspaceScreen(
-    this.workspaces, {
+  WorkspaceScreen({
     super.key,
-    this.selectedWorkspace,
   });
-
-  final List<Workspace> workspaces;
-  final Workspace? selectedWorkspace;
 
   // TODO: User who is logged in
   final User user = User(
@@ -27,6 +25,10 @@ class WorkspaceScreen extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
+    final workspaces = context.watch<WorkspacesManager>().getAll();
+    final selectedWorkspace =
+        context.watch<WorkspacesManager>().getSelectedWorkspace();
+
     return Scaffold(
       appBar: AppBar(
         title: const Text('ChanHub'),
@@ -36,19 +38,18 @@ class WorkspaceScreen extends StatelessWidget {
         ],
       ),
       body: _buildWorkspaceBody(selectedWorkspace, context, workspaces),
-      drawer: WorkSpaceDrawer(
-        workspaces,
-        selectedWorkspace: selectedWorkspace,
-      ),
+      drawer: const WorkSpaceDrawer(),
     );
   }
 
   Widget _buildWorkspaceBody(
     Workspace? selectedWorkspace,
     BuildContext context,
-    List<Workspace> workspaces,
+    List<Workspace>? workspaces,
   ) {
-    if (workspaces.isNotEmpty && selectedWorkspace != null) {
+    if (workspaces == null || selectedWorkspace == null) {
+      return getLoadingAnimation(context);
+    } else if (workspaces.isNotEmpty) {
       return WorkspaceDescription(selectedWorkspace);
     } else {
       return const WorkspaceGetStarted();

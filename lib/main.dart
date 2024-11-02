@@ -35,6 +35,7 @@ class ChanHub extends StatelessWidget {
         builder: (ctx, onboardingManager, authManager, child) {
           if (authManager.isLoggedIn) {
             // Initialize the app
+            ctx.read<WorkspacesManager>().fetchWorkspaces();
           }
 
           return MaterialApp(
@@ -65,7 +66,7 @@ class ChanHub extends StatelessWidget {
     }
 
     if (authManager.isLoggedIn) {
-      return WorkspaceScreen(const [], selectedWorkspace: null);
+      return WorkspaceScreen();
     }
 
     return FutureBuilder(
@@ -102,16 +103,9 @@ class ChanHub extends StatelessWidget {
 
     // Workspace
     if (settings.name == WorkspaceScreen.routeName) {
-      final List<Workspace> workspaces = WorkspacesManager().getAll();
-      final Workspace? selectedWorkspace = settings.arguments as Workspace? ??
-          WorkspacesManager().getDefaultWorkspace();
-
       return CustomSlideTransition(
         page: SafeArea(
-          child: WorkspaceScreen(
-            workspaces,
-            selectedWorkspace: selectedWorkspace,
-          ),
+          child: WorkspaceScreen(),
         ),
       );
     }

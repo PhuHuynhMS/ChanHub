@@ -38,7 +38,7 @@ class InvitationTile extends StatelessWidget {
             ClipRRect(
               borderRadius: BorderRadius.circular(10.0),
               child: Image.network(
-                invitation.workspace.imageUrl,
+                invitation.workspace.imageUrl!,
                 fit: BoxFit.cover,
                 width: 50,
                 height: 50,

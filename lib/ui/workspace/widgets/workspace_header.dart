@@ -42,7 +42,7 @@ class WorkspaceHeader extends StatelessWidget {
           ClipRRect(
             borderRadius: BorderRadius.circular(10.0),
             child: Image.network(
-              workspace.imageUrl,
+              workspace.imageUrl!,
               fit: BoxFit.cover,
               width: 120,
               height: 120,
@@ -64,6 +64,8 @@ class WorkspaceHeader extends StatelessWidget {
               // Workspace Actions
               Row(
                 children: [
+                  // TODO: Show icon [view members, leave workspace] for workspace members and
+                  // [add members, manage members] for workspace owner
                   IconButton(
                     iconSize: 25.0,
                     onPressed: () => _navigateToManageMembers(context),
