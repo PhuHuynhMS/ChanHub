@@ -76,7 +76,6 @@ class ChanHub extends StatelessWidget {
           return const SplashScreen();
         }
         return const LoginOrRegisterScreen(isLogin: true);
-        final List<Workspace> workspaces = WorkspacesManager().getAll();
       },
     );
   }

@@ -13,7 +13,9 @@ class WorkSpaceDrawer extends StatelessWidget {
 
   void _changeWorkspace(BuildContext context, Workspace workspace) async {
     await context.read<WorkspacesManager>().setSelectedWorkspace(workspace);
-    Navigator.of(context).pushReplacementNamed(WorkspaceScreen.routeName);
+    if (context.mounted) {
+      Navigator.of(context).pop();
+    }
   }
 
   void _createWorkspace(BuildContext context) {
@@ -23,6 +25,7 @@ class WorkSpaceDrawer extends StatelessWidget {
   void _goToHelp(BuildContext context) {
     // TODO: For testing purposes
     context.read<AuthManager>().logout();
+    Navigator.of(context).popUntil((route) => route.isFirst);
   }
 
   bool _isSelectedWorkspace(Workspace workspace, Workspace? selectedWorkspace) {

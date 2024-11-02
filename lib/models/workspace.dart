@@ -1,5 +1,6 @@
 import 'dart:io';
 
+import '../ui/shared/extensions/index.dart';
 import '../models/user.dart';
 
 class Workspace {
@@ -55,7 +56,7 @@ class Workspace {
     return Workspace(
       id: json['id'],
       name: json['name'],
-      imageUrl: json['imageUrl'],
+      imageUrl: json.getImageUrl('image'),
       createdAt: DateTime.parse(json['created']),
       createdBy: User.fromJson(json['expand']['creator']),
       members: (json['expand']['workspace_members_via_workspace'] as List)

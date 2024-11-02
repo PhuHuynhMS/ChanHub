@@ -1,6 +1,6 @@
-import '../services/index.dart';
 import 'package:flutter/foundation.dart';
 
+import '../services/index.dart';
 import '../models/index.dart';
 
 class WorkspacesManager with ChangeNotifier {

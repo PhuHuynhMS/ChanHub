@@ -3,6 +3,7 @@ import 'package:provider/provider.dart';
 
 import '../../managers/index.dart';
 import '../../models/index.dart';
+import '../shared/utils/loading_animation.dart';
 import './widgets/index.dart';
 
 class WorkspaceScreen extends StatelessWidget {
@@ -46,7 +47,9 @@ class WorkspaceScreen extends StatelessWidget {
     BuildContext context,
     List<Workspace>? workspaces,
   ) {
-    if (workspaces != null && selectedWorkspace != null) {
+    if (workspaces == null || selectedWorkspace == null) {
+      return getLoadingAnimation(context);
+    } else if (workspaces.isNotEmpty) {
       return WorkspaceDescription(selectedWorkspace);
     } else {
       return const WorkspaceGetStarted();
