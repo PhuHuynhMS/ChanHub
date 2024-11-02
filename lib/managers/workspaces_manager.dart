@@ -5,7 +5,6 @@ import '../models/index.dart';
 
 class WorkspacesManager with ChangeNotifier {
   final WorkspaceService _workspaceService = WorkspaceService();
-  final ChannelService _channelService = ChannelService();
 
   List<Workspace> _workspaces = [];
   String? _selectedWorkspaceId;

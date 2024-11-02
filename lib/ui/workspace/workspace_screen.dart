@@ -1,4 +1,3 @@
-import 'package:ct484_project/ui/splash_screen.dart';
 import 'package:flutter/material.dart';
 import 'package:provider/provider.dart';
 
@@ -7,44 +6,12 @@ import '../../models/index.dart';
 import '../shared/utils/loading_animation.dart';
 import './widgets/index.dart';
 
-class WorkspaceScreen extends StatefulWidget {
+class WorkspaceScreen extends StatelessWidget {
   static const String routeName = '/workspace';
 
   const WorkspaceScreen({
     super.key,
   });
-
-  @override
-  State<WorkspaceScreen> createState() => _WorkspaceScreenState();
-}
-
-class _WorkspaceScreenState extends State<WorkspaceScreen> {
-  // TODO: User who is logged in
-  final User user = User(
-    id: '1',
-    fullname: 'John Doe',
-    jobTitle: 'Software Developer',
-    username: 'johndoe',
-    email: 'john@gmail.com',
-    avatarUrl: 'https://picsum.photos/300/300',
-  );
-
-  late Future<void> _fetchChannels;
-
-  @override
-  void initState() {
-    super.initState();
-
-    final workspacesManager = context.read<WorkspacesManager>();
-    final channelsManager = context.read<ChannelsManager>();
-
-    final selectedWorkspace = workspacesManager.getSelectedWorkspace();
-    if (selectedWorkspace != null) {
-      _fetchChannels = channelsManager.fetchChannels(selectedWorkspace.id);
-    } else {
-      _fetchChannels = Future.value();
-    }
-  }
 
   @override
   Widget build(BuildContext context) {
@@ -56,19 +23,11 @@ class _WorkspaceScreenState extends State<WorkspaceScreen> {
       appBar: AppBar(
         title: const Text('ChanHub'),
         actions: <Widget>[
-          ProfileButton(user: user),
+          ProfileButton(),
           const SizedBox(width: 10.0),
         ],
       ),
-      body: FutureBuilder(
-          future: _fetchChannels,
-          builder: (ctx, snapshot) {
-            if (snapshot.connectionState == ConnectionState.done) {
-              return _buildWorkspaceBody(
-                  selectedWorkspace, context, workspaces);
-            }
-            return const Center(child: SplashScreen());
-          }),
+      body: _buildWorkspaceBody(selectedWorkspace, context, workspaces),
       drawer: const WorkSpaceDrawer(),
     );
   }

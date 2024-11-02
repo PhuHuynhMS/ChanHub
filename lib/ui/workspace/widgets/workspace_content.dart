@@ -1,7 +1,5 @@
 import 'package:flutter/material.dart';
-import 'package:provider/provider.dart';
 
-import '../../../managers/index.dart';
 import '../../../models/index.dart';
 import '../../screens.dart';
 import './index.dart';
@@ -20,7 +18,6 @@ class WorkSpaceContent extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    final channels = context.watch<ChannelsManager>().getAll();
     return Column(
       children: <Widget>[
         // Online Members
@@ -32,15 +29,7 @@ class WorkSpaceContent extends StatelessWidget {
             style: Theme.of(context).textTheme.titleMedium,
           ),
           children: <Widget>[
-            // Members
-            SingleChildScrollView(
-              scrollDirection: Axis.horizontal,
-              child: Row(children: <Widget>[
-                ...workspace.members.map((member) {
-                  return OnlineMemberTile(member: member);
-                }),
-              ]),
-            ),
+            OnlineMemberList(workspace),
           ],
         ),
 
@@ -54,7 +43,7 @@ class WorkSpaceContent extends StatelessWidget {
           ),
           children: [
             // Channels
-            ...(channels.map((channel) => ChannelTile(channel)).toList()),
+            ChannelList(workspace),
 
             // Add Channel
             ListTile(
