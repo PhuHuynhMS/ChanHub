@@ -4,12 +4,18 @@ import '../../../models/index.dart';
 import '../../screens.dart';
 
 class ProfileButton extends StatelessWidget {
-  const ProfileButton({
+  ProfileButton({
     super.key,
-    required this.user,
   });
 
-  final User user;
+  final User user = User(
+    id: '1',
+    fullname: 'John Doe',
+    jobTitle: 'Software Developer',
+    username: 'johndoe',
+    email: 'john@gmail.com',
+    avatarUrl: 'https://picsum.photos/300/300',
+  );
 
   void goToProfilePage(BuildContext context) {
     Navigator.of(context).pushNamed(

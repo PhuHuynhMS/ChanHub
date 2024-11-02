@@ -9,19 +9,9 @@ import './widgets/index.dart';
 class WorkspaceScreen extends StatelessWidget {
   static const String routeName = '/workspace';
 
-  WorkspaceScreen({
+  const WorkspaceScreen({
     super.key,
   });
-
-  // TODO: User who is logged in
-  final User user = User(
-    id: '1',
-    fullname: 'John Doe',
-    jobTitle: 'Software Developer',
-    username: 'johndoe',
-    email: 'john@gmail.com',
-    avatarUrl: 'https://picsum.photos/300/300',
-  );
 
   @override
   Widget build(BuildContext context) {
@@ -33,7 +23,7 @@ class WorkspaceScreen extends StatelessWidget {
       appBar: AppBar(
         title: const Text('ChanHub'),
         actions: <Widget>[
-          ProfileButton(user: user),
+          ProfileButton(),
           const SizedBox(width: 10.0),
         ],
       ),

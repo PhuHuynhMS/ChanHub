@@ -37,9 +37,8 @@ class WorkspaceService {
           deleted = null && 
           is_default = true
         """,
-        expand: "workspace",
       );
-      return workspaceModels.toJson()['expand']['workspace']['id'] as String;
+      return workspaceModels.toJson()['workspace'] as String;
     } on Exception catch (exception) {
       throw ServiceException(exception);
     }

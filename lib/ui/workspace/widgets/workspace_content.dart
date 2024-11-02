@@ -29,15 +29,7 @@ class WorkSpaceContent extends StatelessWidget {
             style: Theme.of(context).textTheme.titleMedium,
           ),
           children: <Widget>[
-            // Members
-            SingleChildScrollView(
-              scrollDirection: Axis.horizontal,
-              child: Row(children: <Widget>[
-                ...workspace.members.map((member) {
-                  return OnlineMemberTile(member: member);
-                }),
-              ]),
-            ),
+            OnlineMemberList(workspace),
           ],
         ),
 
@@ -51,9 +43,7 @@ class WorkSpaceContent extends StatelessWidget {
           ),
           children: [
             // Channels
-            // ...(workspace.channels
-            //     .map((channel) => ChannelTile(channel))
-            //     .toList()),
+            ChannelList(workspace),
 
             // Add Channel
             ListTile(
