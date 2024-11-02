@@ -4,7 +4,7 @@ import 'package:provider/provider.dart';
 import '../../../models/index.dart';
 import '../../../managers/index.dart';
 import '../../shared/utils/index.dart';
-import '../../screens.dart';
+import '../../shared/extensions/index.dart';
 
 class WorkspaceTile extends StatelessWidget {
   const WorkspaceTile(
@@ -50,7 +50,10 @@ class WorkspaceTile extends StatelessWidget {
                     color: Theme.of(context).colorScheme.primary,
                     width: 3.0,
                   )
-                : null,
+                : Border.all(
+                    color: Colors.transparent,
+                    width: 3.0,
+                  ),
           ),
           child: Row(
             mainAxisAlignment: MainAxisAlignment.spaceBetween,
@@ -140,18 +143,23 @@ class WorkspaceActionsHeader extends StatelessWidget {
 }
 
 class WorkspaceActions extends StatelessWidget {
-  const WorkspaceActions(this.workspace,
-      {super.key, this.isDefaultWorkspace = false});
+  const WorkspaceActions(
+    this.workspace, {
+    super.key,
+    this.isDefaultWorkspace = false,
+  });
 
   final Workspace workspace;
   final bool isDefaultWorkspace;
 
   void _setDefaultWorkspace(BuildContext context) async {
-    Navigator.of(context)
-        .push(MaterialPageRoute(builder: (context) => const SplashScreen()));
-    await context.read<WorkspacesManager>().setDefaultWorkspace(workspace);
-    Navigator.pop(context);
-    Navigator.pop(context);
+    context.executeWithErrorHandling(() async {
+      await context.read<WorkspacesManager>().setDefaultWorkspace(workspace);
+      if (context.mounted) {
+        Navigator.of(context).pop();
+        await context.read<WorkspacesManager>().setSelectedWorkspace(workspace);
+      }
+    });
   }
 
   void _onInvite() {
@@ -179,6 +187,7 @@ class WorkspaceActions extends StatelessWidget {
             ),
           )
         ],
+        // TODO: Show icon like workspace headers
         ListTile(
           onTap: _onInvite,
           leading: Icon(
