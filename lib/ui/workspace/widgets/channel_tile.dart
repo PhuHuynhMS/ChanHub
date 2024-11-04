@@ -1,5 +1,7 @@
 import 'package:flutter/material.dart';
+import 'package:provider/provider.dart';
 
+import '../../../managers/index.dart';
 import '../../../models/channel.dart';
 import '../../shared/utils/index.dart';
 import '../../screens.dart';
@@ -13,10 +15,8 @@ class ChannelTile extends StatelessWidget {
   final Channel channel;
 
   void _navigateToChannel(BuildContext context, Channel channel) {
-    Navigator.of(context).pushNamed(
-      ChannelScreen.routeName,
-      arguments: channel,
-    );
+    context.read<ChannelsManager>().setSelectedChannel(channel);
+    Navigator.of(context).pushNamed(ChannelScreen.routeName);
   }
 
   @override

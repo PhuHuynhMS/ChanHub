@@ -48,7 +48,7 @@ class ThreadActions extends StatelessWidget {
         ),
 
         // Edit message and delete message
-        if (thread.creatorId == user.id) ...[
+        if (thread.creator!.id == user.id) ...[
           ListTile(
             leading: const Icon(Icons.edit),
             title: const Text('Edit thread'),

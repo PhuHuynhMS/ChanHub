@@ -1,7 +1,9 @@
 import 'package:flutter/material.dart';
+import 'package:provider/provider.dart';
 
 import '../../../common/constants.dart';
 import '../../../common/enums.dart';
+import '../../../managers/index.dart';
 import '../../../models/index.dart';
 import '../utils/index.dart';
 import './index.dart';
@@ -13,8 +15,8 @@ class ThreadReaction extends StatefulWidget {
     required this.onReactionPressed,
   });
 
-  final Map<ReactionType, List<Reaction>> reactions;
-  final void Function(ReactionType) onReactionPressed;
+  final List<Reaction> reactions;
+  final void Function(Reaction) onReactionPressed;
 
   @override
   State<ThreadReaction> createState() => _ThreadReactionState();
@@ -22,27 +24,32 @@ class ThreadReaction extends StatefulWidget {
 
 class _ThreadReactionState extends State<ThreadReaction> {
   Map<ReactionType, bool> hasReactionMap = {};
-
-  // TODO: User who is currently logged in
-  final User user = User(
-    id: '1',
-    fullname: 'John Doe',
-    jobTitle: 'Software Engineer',
-    username: 'johndoe',
-    avatarUrl: 'https://picsum.photos/300/300',
-    email: 'john@gmail.com',
-  );
+  Map<ReactionType, List<Reaction>> reactionsMap = {};
 
   @override
   void initState() {
     super.initState();
+    _initReactions();
+  }
+
+  @override
+  void didUpdateWidget(covariant ThreadReaction oldWidget) {
+    super.didUpdateWidget(oldWidget);
+    _initReactions();
+  }
+
+  void _initReactions() {
     for (ReactionType type in reactionType.values) {
-      hasReactionMap[type] = _hasReaction(widget.reactions[type]!);
+      reactionsMap[type] =
+          widget.reactions.where((reaction) => reaction.type == type).toList();
+      hasReactionMap[type] = _hasReaction(widget.reactions, type);
     }
   }
 
-  bool _hasReaction(List<Reaction> listReaction) {
-    return listReaction.any((reaction) => reaction.creatorId == user.id);
+  bool _hasReaction(List<Reaction> listReaction, ReactionType type) {
+    final loggedInUser = context.read<AuthManager>().loggedInUser;
+    return listReaction.any((reaction) =>
+        reaction.creator!.id == loggedInUser!.id && reaction.type == type);
   }
 
   void _onOtherReactionPressed() {
@@ -57,9 +64,20 @@ class _ThreadReactionState extends State<ThreadReaction> {
   }
 
   void _onReactionPressed(ReactionType type) {
-    widget.onReactionPressed(type);
-    hasReactionMap[type] = _hasReaction(widget.reactions[type]!);
+    final loggedInUser = context.read<AuthManager>().loggedInUser;
+    Reaction reaction;
 
+    if (hasReactionMap[type] ?? false) {
+      reaction = reactionsMap[type]!
+          .firstWhere((reaction) => reaction.creator!.id == loggedInUser!.id);
+      hasReactionMap[type] = false;
+      reactionsMap[type]!.remove(reaction);
+    } else {
+      reaction = Reaction(type: type);
+      hasReactionMap[type] = true;
+      reactionsMap[type]!.add(reaction);
+    }
+    widget.onReactionPressed(reaction);
     setState(() {});
   }
 
@@ -72,13 +90,13 @@ class _ThreadReactionState extends State<ThreadReaction> {
         children: <Widget>[
           // Reactions
           for (ReactionType type in reactionType.values)
-            if (widget.reactions[type] != null &&
-                widget.reactions[type]!.isNotEmpty) ...[
+            if (reactionsMap[type] != null &&
+                reactionsMap[type]!.isNotEmpty) ...[
               ReactionButton(
                 type: type,
-                reactions: widget.reactions[type]!,
+                reactions: reactionsMap[type]!,
                 onPressed: () => _onReactionPressed(type),
-                hasReaction: _hasReaction(widget.reactions[type]!),
+                hasReaction: hasReactionMap[type]!,
               ),
               const SizedBox(width: 5.0),
             ],
@@ -202,8 +220,8 @@ class ListReactionBottomSheet extends StatelessWidget {
       child: ListView.builder(
         itemCount: reactions.length,
         itemBuilder: (context, index) => ListTile(
-          leading: UserAvatar(reactions[index].creator, size: 40.0),
-          title: Text(reactions[index].creator.fullname),
+          leading: UserAvatar(reactions[index].creator!, size: 40.0),
+          title: Text(reactions[index].creator!.fullname),
         ),
       ),
     );

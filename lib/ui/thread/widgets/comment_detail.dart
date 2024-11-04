@@ -22,19 +22,18 @@ class CommentDetail extends StatelessWidget {
   );
 
   bool _hasReaction(List<Reaction> listReaction) {
-    return listReaction.any((reaction) => reaction.creatorId == user.id);
+    return listReaction.any((reaction) => reaction.creator!.id == user.id);
   }
 
   void _onReactionPressed(ReactionType type) {
     if (_hasReaction(comment.reactions[type]!)) {
       // Remove reaction
       comment.reactions[type]!
-          .removeWhere((reaction) => reaction.creatorId == user.id);
+          .removeWhere((reaction) => reaction.creator!.id == user.id);
     } else {
       comment.reactions[type]!.add(
         // TODO: Create a new reaction
         Reaction(
-          creatorId: user.id,
           type: type,
           createdAt: DateTime.now(),
           creator: user,
@@ -51,8 +50,9 @@ class CommentDetail extends StatelessWidget {
       createdAt: comment.createdAt,
       content: comment.content,
       mediaUrls: comment.mediaUrls,
-      reactions: comment.reactions,
-      onReactionPressed: _onReactionPressed,
+      // reactions: comment.reactions,
+      onReactionPressed: (thread) {},
+      onChangeTaskStatus: (task) {},
     );
   }
 }

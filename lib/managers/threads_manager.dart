@@ -1,759 +1,165 @@
-import 'package:flutter/foundation.dart';
+import 'dart:io';
 
-import '../common/enums.dart';
+import 'package:pocketbase/pocketbase.dart';
+
+import '../services/thread_service.dart';
 import '../models/index.dart';
 
-class ThreadsManager with ChangeNotifier {
-  final List<Thread> _threads = [
-    Thread(
-      content: null,
-      mediaUrls: [
-        'https://picsum.photos/600/300',
-        'https://picsum.photos/200/500',
-      ],
-      id: '1',
-      creatorId: '1',
-      createdAt: DateTime.parse('2024-09-23'),
-      reactions: <ReactionType, List<Reaction>>{
-        ReactionType.like: [
-          Reaction(
-            id: '1',
-            creatorId: '1',
-            type: ReactionType.like,
-            createdAt: DateTime.now(),
-            creator: User(
-                id: '1',
-                fullname: 'John Doe',
-                jobTitle: "Flutter Developer",
-                username: 'johndoe',
-                avatarUrl: 'https://picsum.photos/300/300',
-                email: ''),
-          ),
-          Reaction(
-            id: '2',
-            creatorId: '2',
-            type: ReactionType.like,
-            createdAt: DateTime.now(),
-            creator: User(
-              id: '2',
-              fullname: 'Anwir Keith',
-              jobTitle: "Flutter Developer",
-              username: 'anwirkeith',
-              avatarUrl: 'https://picsum.photos/400/300',
-              email: 'anwir@gmail.com',
-            ),
-          ),
-        ],
-        ReactionType.love: [
-          Reaction(
-            id: '3',
-            creatorId: '3',
-            type: ReactionType.love,
-            createdAt: DateTime.now(),
-            creator: User(
-              id: '3',
-              fullname: 'Jane Doe',
-              jobTitle: "Flutter Developer",
-              username: 'janedoe',
-              avatarUrl: 'https://picsum.photos/300/400',
-              email: 'jane@gmail.com',
-            ),
-          ),
-          Reaction(
-            id: '4',
-            creatorId: '4',
-            type: ReactionType.love,
-            createdAt: DateTime.now(),
-            creator: User(
-              id: '4',
-              fullname: 'Anwir Keith',
-              jobTitle: "Flutter Developer",
-              username: 'anwirkeith',
-              avatarUrl: 'https://picsum.photos/400/300',
-              email: 'anwir@gmail.com',
-            ),
-          ),
-          Reaction(
-            id: '5',
-            creatorId: '5',
-            type: ReactionType.love,
-            createdAt: DateTime.now(),
-            creator: User(
-              id: '5',
-              fullname: 'Yuya Keith',
-              jobTitle: "Flutter Developer",
-              username: 'yuyakeith',
-              avatarUrl: 'https://picsum.photos/400/600',
-              email: 'yuya@gmail.com',
-            ),
-          ),
-          Reaction(
-            id: '6',
-            creatorId: '6',
-            type: ReactionType.love,
-            createdAt: DateTime.now(),
-            creator: User(
-              id: '6',
-              fullname: 'Sherry',
-              jobTitle: "Flutter Developer",
-              username: 'sherry',
-              avatarUrl: 'https://picsum.photos/400/800',
-              email: 'sherry@gmail.com',
-            ),
-          ),
-        ],
-        ReactionType.haha: [],
-        ReactionType.seen: [],
-        ReactionType.completed: [],
-        ReactionType.dislike: [],
-      },
-      creator: User(
-        id: '1',
-        fullname: 'John Doe',
-        jobTitle: "Flutter Developer",
-        username: 'johndoe',
-        avatarUrl: 'https://picsum.photos/300/300',
-        email: 'john@gmail.com',
-      ),
-      comments: <Comment>[
-        Comment(
-          id: '1',
-          content: 'Lorem ipsum dolor sit amet, consectetur adipiscing elit. ',
-          mediaUrls: <String>[
-            'https://picsum.photos/300/300',
-          ],
-          creatorId: '1',
-          createdAt: DateTime.now(),
-          creator: User(
-            id: '1',
-            fullname: 'John Doe',
-            jobTitle: "Flutter Developer",
-            username: 'johndoe',
-            avatarUrl: 'https://picsum.photos/300/300',
-            email: 'john@gmail.com',
-          ),
-          reactions: <ReactionType, List<Reaction>>{
-            ReactionType.like: [
-              Reaction(
-                id: '1',
-                creatorId: '1',
-                type: ReactionType.like,
-                createdAt: DateTime.now(),
-                creator: User(
-                    id: '1',
-                    fullname: 'John Doe',
-                    jobTitle: "Flutter Developer",
-                    username: 'johndoe',
-                    avatarUrl: 'https://picsum.photos/300/300',
-                    email: ''),
-              ),
-              Reaction(
-                id: '2',
-                creatorId: '2',
-                type: ReactionType.like,
-                createdAt: DateTime.now(),
-                creator: User(
-                  id: '2',
-                  fullname: 'Anwir Keith',
-                  jobTitle: "Flutter Developer",
-                  username: 'anwirkeith',
-                  avatarUrl: 'https://picsum.photos/400/300',
-                  email: 'anwir@gmail.com',
-                ),
-              ),
-            ],
-            ReactionType.love: [
-              Reaction(
-                id: '3',
-                creatorId: '3',
-                type: ReactionType.love,
-                createdAt: DateTime.now(),
-                creator: User(
-                  id: '3',
-                  fullname: 'Jane Doe',
-                  jobTitle: "Flutter Developer",
-                  username: 'janedoe',
-                  avatarUrl: 'https://picsum.photos/300/400',
-                  email: 'jane@gmail.com',
-                ),
-              ),
-              Reaction(
-                id: '4',
-                creatorId: '4',
-                type: ReactionType.love,
-                createdAt: DateTime.now(),
-                creator: User(
-                  id: '4',
-                  fullname: 'Anwir Keith',
-                  jobTitle: "Flutter Developer",
-                  username: 'anwirkeith',
-                  avatarUrl: 'https://picsum.photos/400/300',
-                  email: 'anwir@gmail.com',
-                ),
-              ),
-              Reaction(
-                id: '5',
-                creatorId: '5',
-                type: ReactionType.love,
-                createdAt: DateTime.now(),
-                creator: User(
-                  id: '5',
-                  fullname: 'Yuya Keith',
-                  jobTitle: "Flutter Developer",
-                  username: 'yuyakeith',
-                  avatarUrl: 'https://picsum.photos/400/600',
-                  email: 'yuya@gmail.com',
-                ),
-              ),
-            ],
-            ReactionType.haha: [],
-            ReactionType.seen: [],
-            ReactionType.completed: [],
-            ReactionType.dislike: [],
-          },
-        ),
-        Comment(
-          id: '2',
-          content: 'Lorem ipsum dolor sit amet, consectetur adipiscing elit. ',
-          mediaUrls: <String>[],
-          creatorId: '2',
-          createdAt: DateTime.now(),
-          creator: User(
-            id: '2',
-            fullname: 'Anwir Keith',
-            jobTitle: "Flutter Developer",
-            username: 'anwirkeith',
-            avatarUrl: 'https://picsum.photos/400/300',
-            email: 'anwir@gmail.com',
-          ),
-          reactions: <ReactionType, List<Reaction>>{
-            ReactionType.like: [
-              Reaction(
-                id: '1',
-                creatorId: '1',
-                type: ReactionType.like,
-                createdAt: DateTime.now(),
-                creator: User(
-                    id: '1',
-                    fullname: 'John Doe',
-                    jobTitle: "Flutter Developer",
-                    username: 'johndoe',
-                    avatarUrl: 'https://picsum.photos/300/300',
-                    email: ''),
-              ),
-              Reaction(
-                id: '2',
-                creatorId: '2',
-                type: ReactionType.like,
-                createdAt: DateTime.now(),
-                creator: User(
-                  id: '2',
-                  fullname: 'Anwir Keith',
-                  jobTitle: "Flutter Developer",
-                  username: 'anwirkeith',
-                  avatarUrl: 'https://picsum.photos/400/300',
-                  email: 'anwir@gmail.com',
-                ),
-              ),
-            ],
-            ReactionType.love: [
-              Reaction(
-                id: '3',
-                creatorId: '3',
-                type: ReactionType.love,
-                createdAt: DateTime.now(),
-                creator: User(
-                  id: '3',
-                  fullname: 'Jane Doe',
-                  jobTitle: "Flutter Developer",
-                  username: 'janedoe',
-                  avatarUrl: 'https://picsum.photos/300/400',
-                  email: 'jane@gmail.com',
-                ),
-              ),
-              Reaction(
-                id: '4',
-                creatorId: '4',
-                type: ReactionType.love,
-                createdAt: DateTime.now(),
-                creator: User(
-                  id: '4',
-                  fullname: 'Anwir Keith',
-                  jobTitle: "Flutter Developer",
-                  username: 'anwirkeith',
-                  avatarUrl: 'https://picsum.photos/400/300',
-                  email: 'anwir@gmail.com',
-                ),
-              ),
-              Reaction(
-                id: '5',
-                creatorId: '5',
-                type: ReactionType.love,
-                createdAt: DateTime.now(),
-                creator: User(
-                  id: '5',
-                  fullname: 'Yuya Keith',
-                  jobTitle: "Flutter Developer",
-                  username: 'yuyakeith',
-                  avatarUrl: 'https://picsum.photos/400/600',
-                  email: 'yuya@gmail.com',
-                ),
-              )
-            ],
-            ReactionType.haha: [],
-            ReactionType.seen: [],
-            ReactionType.completed: [],
-            ReactionType.dislike: [],
-          },
-        )
-      ],
-    ),
-    Thread(
-      content:
-          'Lorem ipsum dolor sit amet, consectetur adipiscing elit. Sed do eiusmod tempor incididunt ut labore et dolore magna aliqua.',
-      mediaUrls: <String>[
-        'https://picsum.photos/300/300',
-        'https://picsum.photos/400/300',
-      ],
-      id: '2',
-      creatorId: '2',
-      createdAt: DateTime.parse('2024-09-22'),
-      reactions: <ReactionType, List<Reaction>>{
-        ReactionType.like: [
-          Reaction(
-            id: '1',
-            creatorId: '1',
-            type: ReactionType.like,
-            createdAt: DateTime.now(),
-            creator: User(
-                id: '1',
-                fullname: 'John Doe',
-                jobTitle: "Flutter Developer",
-                username: 'johndoe',
-                avatarUrl: 'https://picsum.photos/300/300',
-                email: 'john@gmail.com'),
-          ),
-        ],
-        ReactionType.love: [
-          Reaction(
-            id: '3',
-            creatorId: '3',
-            type: ReactionType.love,
-            createdAt: DateTime.now(),
-            creator: User(
-              id: '3',
-              fullname: 'Jane Doe',
-              jobTitle: "Flutter Developer",
-              username: 'janedoe',
-              avatarUrl: 'https://picsum.photos/300/400',
-              email: 'jane@gmail.com',
-            ),
-          ),
-        ],
-        ReactionType.haha: [],
-        ReactionType.seen: [],
-        ReactionType.completed: [],
-        ReactionType.dislike: [],
-      },
-      creator: User(
-          id: '2',
-          fullname: 'Anwir Keith',
-          jobTitle: "Flutter Developer",
-          username: 'anwirkeith',
-          avatarUrl: 'https://picsum.photos/400/300',
-          email: 'anwir@gmail.com'),
-      comments: <Comment>[
-        Comment(
-          id: '1',
-          content:
-              'Lorem ipsum dolor sit amet, consectetur adipiscing elit. Sed do eiusmod tempor incididunt ut labore et dolore magna aliqua.',
-          mediaUrls: <String>[
-            'https://picsum.photos/200/300',
-            'https://picsum.photos/300/300',
-          ],
-          creatorId: '1',
-          createdAt: DateTime.now(),
-          creator: User(
-            id: '1',
-            fullname: 'John Doe',
-            jobTitle: "Flutter Developer",
-            username: 'johndoe',
-            avatarUrl: 'https://picsum.photos/300/300',
-            email: 'john@gmail.com',
-          ),
-          reactions: <ReactionType, List<Reaction>>{
-            ReactionType.like: [],
-            ReactionType.love: [],
-            ReactionType.haha: [],
-            ReactionType.seen: [],
-            ReactionType.completed: [],
-            ReactionType.dislike: [],
-          },
-        ),
-        Comment(
-          id: '2',
-          content:
-              'Lorem ipsum dolor sit amet, consectetur adipiscing elit. Sed do eiusmod tempor incididunt ut labore et dolore magna aliqua.',
-          mediaUrls: <String>[
-            'https://picsum.photos/500/300',
-            'https://picsum.photos/1000/300',
-          ],
-          creatorId: '2',
-          createdAt: DateTime.now(),
-          creator: User(
-            id: '2',
-            fullname: 'Anwir Keith',
-            jobTitle: "Flutter Developer",
-            username: 'anwirkeith',
-            avatarUrl: 'https://picsum.photos/400/300',
-            email: 'anwir@gmail.com',
-          ),
-          reactions: <ReactionType, List<Reaction>>{
-            ReactionType.like: [],
-            ReactionType.love: [],
-            ReactionType.haha: [],
-            ReactionType.seen: [
-              Reaction(
-                id: '1',
-                creatorId: '1',
-                type: ReactionType.seen,
-                createdAt: DateTime.now(),
-                creator: User(
-                  id: '1',
-                  fullname: 'John Doe',
-                  jobTitle: "Flutter Developer",
-                  username: 'johndoe',
-                  avatarUrl: 'https://picsum.photos/300/300',
-                  email: 'john@gmail.com',
-                ),
-              ),
-              Reaction(
-                id: '2',
-                creatorId: '2',
-                type: ReactionType.seen,
-                createdAt: DateTime.now(),
-                creator: User(
-                    id: '2',
-                    fullname: 'Anwir Keith',
-                    jobTitle: "Flutter Developer",
-                    username: 'anwirkeith',
-                    avatarUrl: 'https://picsum.photos/400/300',
-                    email: 'anwir@gmail.com'),
-              ),
-            ],
-            ReactionType.completed: [],
-            ReactionType.dislike: [],
-          },
-        ),
-      ],
-    ),
-    Thread(
-      content:
-          'Lorem ipsum dolor sit amet, consectetur adipiscing elit. Sed do eiusmod tempor incididunt ut labore et dolore magna aliqua.',
-      mediaUrls: [
-        'https://picsum.photos/700/700',
-        'https://picsum.photos/800/500',
-      ],
-      id: '3',
-      creatorId: '1',
-      createdAt: DateTime.parse('2024-09-21'),
-      reactions: <ReactionType, List<Reaction>>{
-        ReactionType.like: [
-          Reaction(
-            id: '10',
-            creatorId: '3',
-            type: ReactionType.like,
-            createdAt: DateTime.now(),
-            creator: User(
-                id: '1',
-                fullname: 'John Doe',
-                jobTitle: "Flutter Developer",
-                username: 'johndoe',
-                avatarUrl: 'https://picsum.photos/300/300',
-                email: ''),
-          ),
-          Reaction(
-            id: '2',
-            creatorId: '2',
-            type: ReactionType.like,
-            createdAt: DateTime.now(),
-            creator: User(
-              id: '2',
-              fullname: 'Anwir Keith',
-              jobTitle: "Flutter Developer",
-              username: 'anwirkeith',
-              avatarUrl: 'https://picsum.photos/400/300',
-              email: 'anwir@gmail.com',
-            ),
-          ),
-        ],
-        ReactionType.love: [
-          Reaction(
-            id: '3',
-            creatorId: '3',
-            type: ReactionType.love,
-            createdAt: DateTime.now(),
-            creator: User(
-              id: '3',
-              fullname: 'Jane Doe',
-              jobTitle: "Flutter Developer",
-              username: 'janedoe',
-              avatarUrl: 'https://picsum.photos/300/400',
-              email: 'jane@gmail.com',
-            ),
-          ),
-          Reaction(
-            id: '4',
-            creatorId: '4',
-            type: ReactionType.love,
-            createdAt: DateTime.now(),
-            creator: User(
-              id: '4',
-              fullname: 'Anwir Keith',
-              jobTitle: "Flutter Developer",
-              username: 'anwirkeith',
-              avatarUrl: 'https://picsum.photos/400/300',
-              email: 'anwir@gmail.com',
-            ),
-          ),
-          Reaction(
-            id: '5',
-            creatorId: '5',
-            type: ReactionType.love,
-            createdAt: DateTime.now(),
-            creator: User(
-              id: '5',
-              fullname: 'Yuya Keith',
-              jobTitle: "Flutter Developer",
-              username: 'yuyakeith',
-              avatarUrl: 'https://picsum.photos/400/600',
-              email: 'yuya@gmail.com',
-            ),
-          ),
-          Reaction(
-            id: '6',
-            creatorId: '6',
-            type: ReactionType.love,
-            createdAt: DateTime.now(),
-            creator: User(
-              id: '6',
-              fullname: 'Sherry',
-              jobTitle: "Flutter Developer",
-              username: 'sherry',
-              avatarUrl: 'https://picsum.photos/400/800',
-              email: 'sherry@gmail.com',
-            ),
-          ),
-        ],
-        ReactionType.haha: [],
-        ReactionType.seen: [],
-        ReactionType.completed: [],
-        ReactionType.dislike: [],
-      },
-      creator: User(
-        id: '2',
-        fullname: 'Yuya Keith',
-        jobTitle: "Flutter Developer",
-        username: 'yuyakeith',
-        avatarUrl: 'https://picsum.photos/600/600',
-        email: 'yuya@gmail.com',
-      ),
-      comments: <Comment>[],
-    ),
-    Thread(
-      content:
-          'Lorem ipsum dolor sit amet, consectetur adipiscing elit. Sed do eiusmod tempor incididunt ut labore et dolore magna aliqua.',
-      mediaUrls: [
-        'https://picsum.photos/800/800',
-        'https://picsum.photos/800/600',
-      ],
-      id: '4',
-      creatorId: '1',
-      createdAt: DateTime.parse('2024-09-21'),
-      reactions: <ReactionType, List<Reaction>>{
-        ReactionType.like: [
-          Reaction(
-            id: '10',
-            creatorId: '3',
-            type: ReactionType.like,
-            createdAt: DateTime.now(),
-            creator: User(
-                id: '1',
-                fullname: 'John Doe',
-                jobTitle: "Flutter Developer",
-                username: 'johndoe',
-                avatarUrl: 'https://picsum.photos/300/300',
-                email: ''),
-          ),
-          Reaction(
-            id: '2',
-            creatorId: '2',
-            type: ReactionType.like,
-            createdAt: DateTime.now(),
-            creator: User(
-              id: '2',
-              fullname: 'Anwir Keith',
-              jobTitle: "Flutter Developer",
-              username: 'anwirkeith',
-              avatarUrl: 'https://picsum.photos/400/300',
-              email: 'anwir@gmail.com',
-            ),
-          ),
-        ],
-        ReactionType.love: [
-          Reaction(
-            id: '3',
-            creatorId: '3',
-            type: ReactionType.love,
-            createdAt: DateTime.now(),
-            creator: User(
-              id: '3',
-              fullname: 'Jane Doe',
-              jobTitle: "Flutter Developer",
-              username: 'janedoe',
-              avatarUrl: 'https://picsum.photos/300/400',
-              email: 'jane@gmail.com',
-            ),
-          ),
-          Reaction(
-            id: '4',
-            creatorId: '4',
-            type: ReactionType.love,
-            createdAt: DateTime.now(),
-            creator: User(
-              id: '4',
-              fullname: 'Anwir Keith',
-              jobTitle: "Flutter Developer",
-              username: 'anwirkeith',
-              avatarUrl: 'https://picsum.photos/400/300',
-              email: 'anwir@gmail.com',
-            ),
-          ),
-          Reaction(
-            id: '5',
-            creatorId: '5',
-            type: ReactionType.love,
-            createdAt: DateTime.now(),
-            creator: User(
-              id: '5',
-              fullname: 'Yuya Keith',
-              jobTitle: "Flutter Developer",
-              username: 'yuyakeith',
-              avatarUrl: 'https://picsum.photos/400/600',
-              email: 'yuya@gmail.com',
-            ),
-          ),
-          Reaction(
-            id: '6',
-            creatorId: '6',
-            type: ReactionType.love,
-            createdAt: DateTime.now(),
-            creator: User(
-              id: '6',
-              fullname: 'Sherry',
-              jobTitle: "Flutter Developer",
-              username: 'sherry',
-              avatarUrl: 'https://picsum.photos/400/800',
-              email: 'sherry@gmail.com',
-            ),
-          ),
-        ],
-        ReactionType.haha: [],
-        ReactionType.seen: [],
-        ReactionType.completed: [],
-        ReactionType.dislike: [],
-      },
-      creator: User(
-        id: '2',
-        fullname: 'Yuya Keith',
-        jobTitle: "Flutter Developer",
-        username: 'yuyakeith',
-        avatarUrl: 'https://picsum.photos/600/600',
-        email: 'yuya@gmail.com',
-      ),
-      comments: <Comment>[],
-      tasks: [
-        Task(
-          id: '1',
-          title: 'Complete the first task',
-          description:
-              'This is the first task that you need to complete. It is very important to complete this task as soon as possible.',
-          assignee: User(
-            id: '1',
-            fullname: 'John Doe',
-            jobTitle: "Flutter Developer",
-            username: 'johndoe',
-            avatarUrl: 'https://picsum.photos/300/300',
-            email: 'john@gmail.com',
-          ),
-          deadline: DateTime(2021, 9, 30),
-        ),
-        Task(
-          id: '2',
-          title: 'FE UI/UX Design',
-          description:
-              'Design a new UI/UX for the new feature. The design should be user-friendly and easy to use.',
-          assignee: User(
-            id: '1',
-            fullname: 'John Doe',
-            jobTitle: "Flutter Developer",
-            username: 'johndoe',
-            avatarUrl: 'https://picsum.photos/300/300',
-            email: 'john@gmail.com',
-          ),
-          deadline: DateTime(2024, 10, 4),
-        ),
-        Task(
-          id: '3',
-          title: 'BE API',
-          description:
-              'Design a new UI/UX for the new feature. The design should be user-friendly and easy to use.',
-          assignee: User(
-            id: '1',
-            fullname: 'John Doe',
-            jobTitle: "Flutter Developer",
-            username: 'johndoe',
-            avatarUrl: 'https://picsum.photos/300/300',
-            email: 'john@gmail.com',
-          ),
-          deadline: DateTime(2024, 10, 15),
-        ),
-        Task(
-          id: '4',
-          title: 'FE API Integration',
-          description:
-              'Design a new UI/UX for the new feature. The design should be user-friendly and easy to use.',
-          assignee: User(
-            id: '1',
-            fullname: 'John Doe',
-            jobTitle: "Flutter Developer",
-            username: 'johndoe',
-            avatarUrl: 'https://picsum.photos/300/300',
-            email: 'john@gmail.com',
-          ),
-          deadline: DateTime(2024, 10, 20),
-        ),
-      ],
-    ),
-  ];
+class ThreadsManager {
+  final ThreadService _threadService = ThreadService();
+
+  List<Thread> _threads = [];
+  bool _hasMoreThreads = true;
+  bool _isFetching = false;
+  late Function _notifyChannelListeners;
+  late String _channelId;
+
+  ThreadsManager(String channelId, Function notifyChannelListeners) {
+    _channelId = channelId;
+    _notifyChannelListeners = notifyChannelListeners;
+  }
+
+  bool get isFetching => _isFetching;
+  bool get hasMoreThreads => _hasMoreThreads;
+
+  void init() async {
+    _isFetching = true;
+    _threads = await _threadService.fetchThreads(_channelId);
+    if (_threads.isEmpty || _threads.length % 10 != 0) {
+      _hasMoreThreads = false;
+    }
+    await _threadService.subscribeToChannel(
+      _channelId,
+      _onReceiveThread,
+      _onReceiveTask,
+      _onReceiveReaction,
+    );
+    _isFetching = false;
+    _notifyChannelListeners();
+  }
+
+  Future<bool> fetchMoreThreads() async {
+    int currentPage = (_threads.length / 10).ceil() + 1;
+    final threads =
+        await _threadService.fetchThreads(_channelId, page: currentPage);
+
+    if (threads.isEmpty) {
+      _hasMoreThreads = false;
+      _notifyChannelListeners();
+      return false;
+    }
+
+    for (final fetchThread in threads) {
+      if (_threads.indexWhere((thread) => thread.id == fetchThread.id) == -1) {
+        _threads.add(fetchThread);
+      }
+    }
+
+    _hasMoreThreads = true;
+    _notifyChannelListeners();
+    return true;
+  }
 
   List<Thread> getAll() {
     return [..._threads];
   }
 
-  int count() {
-    return _threads.length;
+  Future<void> createThread(
+    String? content,
+    List<File> mediaFiles,
+    List<Task> tasks,
+  ) async {
+    await _threadService.createThread(
+      _channelId,
+      Thread(
+        content: content,
+        mediaFiles: [...mediaFiles],
+        tasks: [...tasks],
+      ),
+    );
   }
 
-  void add(Thread thread) {
-    _threads.add(thread);
+  Future<bool> changeTaskStatus(Task task) async {
+    return await _threadService.changeTaskStatus(task);
   }
 
-  Thread? getById(String threadId) {
-    try {
-      return _threads.firstWhere((t) => t.id == threadId);
-    } catch (error) {
-      return null;
+  Future<bool> reactToThread(Thread thread, Reaction reaction) async {
+    if (reaction.id != null) {
+      return await _threadService.deleteReaction(reaction);
+    } else {
+      return await _threadService.addReaction(thread.id!, reaction);
     }
+  }
+
+  // Realtime updates
+  void _onReceiveThread(RecordSubscriptionEvent event) {
+    if (event.action == 'create') {
+      final thread = Thread.fromJson(event.record!.toJson());
+      _threads.insert(0, thread);
+    } else if (event.action == 'update') {
+      final updatedThread = Thread.fromJson(event.record!.toJson());
+      final index =
+          _threads.indexWhere((thread) => thread.id == updatedThread.id);
+      if (index != -1) {
+        _threads[index] = updatedThread;
+      }
+    } else if (event.action == 'delete') {
+      final deletedThread = Thread.fromJson(event.record!.toJson());
+      _threads.removeWhere((thread) => thread.id == deletedThread.id);
+    }
+    _notifyChannelListeners();
+  }
+
+  void _onReceiveTask(RecordSubscriptionEvent event) {
+    if (event.action == 'create' || event.action == 'update') {
+      final updatedTask = Task.fromJson(event.record!.toJson());
+      final threadId = event.record!.toJson()['thread'];
+      final threadIndex =
+          _threads.indexWhere((thread) => thread.id == threadId);
+      if (threadIndex != -1) {
+        final taskIndex = _threads[threadIndex]
+            .tasks
+            .indexWhere((task) => task.id == updatedTask.id);
+        if (taskIndex != -1) {
+          _threads[threadIndex].tasks[taskIndex] = updatedTask;
+        } else {
+          _threads[threadIndex].tasks.add(updatedTask);
+        }
+      }
+    } else if (event.action == 'delete') {
+      final deletedTask = Task.fromJson(event.record!.toJson());
+      final threadId = event.record!.toJson()['thread'];
+      final threadIndex =
+          _threads.indexWhere((thread) => thread.id == threadId);
+      if (threadIndex != -1) {
+        _threads[threadIndex]
+            .tasks
+            .removeWhere((task) => task.id == deletedTask.id);
+      }
+    }
+    _notifyChannelListeners();
+  }
+
+  void _onReceiveReaction(RecordSubscriptionEvent event) {
+    if (event.action == 'create') {
+      final reaction = Reaction.fromJson(event.record!.toJson());
+      final threadId = event.record!.toJson()['thread'];
+      final threadIndex =
+          _threads.indexWhere((thread) => thread.id == threadId);
+      if (threadIndex != -1) {
+        _threads[threadIndex].reactions.add(reaction);
+      }
+    } else if (event.action == 'delete') {
+      final deletedReaction = Reaction.fromJson(event.record!.toJson());
+      final threadId = event.record!.toJson()['thread'];
+      final threadIndex =
+          _threads.indexWhere((thread) => thread.id == threadId);
+      if (threadIndex != -1) {
+        _threads[threadIndex]
+            .reactions
+            .removeWhere((reaction) => reaction.id == deletedReaction.id);
+      }
+    }
+    _notifyChannelListeners();
   }
 }

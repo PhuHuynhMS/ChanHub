@@ -13,32 +13,35 @@ void showSuccessSnackBar({
   Color? textColor,
   Color iconColor = ChanHubColors.primary,
 }) {
-  ScaffoldMessenger.of(context).showSnackBar(
-    SnackBar(
-      elevation: 0.0,
-      content: Row(
-        children: [
-          Icon(prefixIcon, color: iconColor),
-          const SizedBox(width: 10.0),
-          Expanded(
-            child: Text(
-              message,
-              style: Theme.of(context).textTheme.bodyMedium!.copyWith(
-                    color: textColor,
-                  ),
-            ),
-          ),
-          action,
-          if (suffixIcon != null) ...[
+  ScaffoldMessenger.of(context)
+    ..hideCurrentSnackBar
+    ..showSnackBar(
+      SnackBar(
+        elevation: 0.0,
+        content: Row(
+          children: [
+            Icon(prefixIcon, color: iconColor),
             const SizedBox(width: 10.0),
-            Icon(suffixIcon, color: iconColor),
+            Expanded(
+              child: Text(
+                message,
+                style: Theme.of(context).textTheme.bodyMedium!.copyWith(
+                      color: textColor,
+                    ),
+              ),
+            ),
+            action,
+            if (suffixIcon != null) ...[
+              const SizedBox(width: 10.0),
+              Icon(suffixIcon, color: iconColor),
+            ],
           ],
-        ],
+        ),
+        backgroundColor:
+            backgroundColor ?? Theme.of(context).colorScheme.surface,
+        duration: Duration(milliseconds: (duration * 1000).toInt()),
       ),
-      backgroundColor: backgroundColor ?? Theme.of(context).colorScheme.surface,
-      duration: Duration(milliseconds: (duration * 1000).toInt()),
-    ),
-  );
+    );
 }
 
 void showErrorSnackBar({
@@ -52,32 +55,35 @@ void showErrorSnackBar({
   Color? textColor,
   Color iconColor = ChanHubColors.error,
 }) {
-  ScaffoldMessenger.of(context).showSnackBar(
-    SnackBar(
-      elevation: 0.0,
-      content: Row(
-        children: [
-          Icon(prefixIcon, color: iconColor),
-          const SizedBox(width: 10.0),
-          Expanded(
-            child: Text(
-              message,
-              style: Theme.of(context).textTheme.bodyMedium!.copyWith(
-                    color: textColor,
-                  ),
-            ),
-          ),
-          action,
-          if (suffixIcon != null) ...[
+  ScaffoldMessenger.of(context)
+    ..hideCurrentSnackBar
+    ..showSnackBar(
+      SnackBar(
+        elevation: 0.0,
+        content: Row(
+          children: [
+            Icon(prefixIcon, color: iconColor),
             const SizedBox(width: 10.0),
-            Icon(suffixIcon, color: iconColor),
+            Expanded(
+              child: Text(
+                message,
+                style: Theme.of(context).textTheme.bodyMedium!.copyWith(
+                      color: textColor,
+                    ),
+              ),
+            ),
+            action,
+            if (suffixIcon != null) ...[
+              const SizedBox(width: 10.0),
+              Icon(suffixIcon, color: iconColor),
+            ],
           ],
-        ],
+        ),
+        backgroundColor:
+            backgroundColor ?? Theme.of(context).colorScheme.surface,
+        duration: Duration(milliseconds: (duration * 1000).toInt()),
       ),
-      backgroundColor: backgroundColor ?? Theme.of(context).colorScheme.surface,
-      duration: Duration(milliseconds: (duration * 1000).toInt()),
-    ),
-  );
+    );
 }
 
 void showInfoSnackBar({
@@ -91,30 +97,33 @@ void showInfoSnackBar({
   Color? textColor,
   Color iconColor = ChanHubColors.secondary,
 }) {
-  ScaffoldMessenger.of(context).showSnackBar(
-    SnackBar(
-      elevation: 0.0,
-      content: Row(
-        children: [
-          Icon(prefixIcon, color: iconColor),
-          const SizedBox(width: 10.0),
-          Expanded(
-            child: Text(
-              message,
-              style: Theme.of(context).textTheme.bodyMedium!.copyWith(
-                    color: textColor,
-                  ),
-            ),
-          ),
-          action,
-          if (suffixIcon != null) ...[
+  ScaffoldMessenger.of(context)
+    ..hideCurrentSnackBar
+    ..showSnackBar(
+      SnackBar(
+        elevation: 0.0,
+        content: Row(
+          children: [
+            Icon(prefixIcon, color: iconColor),
             const SizedBox(width: 10.0),
-            Icon(suffixIcon, color: iconColor),
+            Expanded(
+              child: Text(
+                message,
+                style: Theme.of(context).textTheme.bodyMedium!.copyWith(
+                      color: textColor,
+                    ),
+              ),
+            ),
+            action,
+            if (suffixIcon != null) ...[
+              const SizedBox(width: 10.0),
+              Icon(suffixIcon, color: iconColor),
+            ],
           ],
-        ],
+        ),
+        backgroundColor:
+            backgroundColor ?? Theme.of(context).colorScheme.surface,
+        duration: Duration(milliseconds: (duration * 1000).toInt()),
       ),
-      backgroundColor: backgroundColor ?? Theme.of(context).colorScheme.surface,
-      duration: Duration(milliseconds: (duration * 1000).toInt()),
-    ),
-  );
+    );
 }

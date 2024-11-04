@@ -22,26 +22,18 @@ class ThreadDescription extends StatelessWidget {
     email: 'john@gmail.com',
   );
 
-  bool _hasReaction(List<Reaction> listReaction) {
-    return listReaction.any((reaction) => reaction.creatorId == user.id);
+  bool _hasReaction(List<Reaction> listReaction, ReactionType type) {
+    return listReaction.any(
+        (reaction) => reaction.creator!.id == user.id && reaction.type == type);
   }
 
   void _onReactionPressed(ReactionType type) {
-    if (_hasReaction(thread.reactions[type]!)) {
+    if (_hasReaction(thread.reactions, type)) {
       // Remove reaction
-      thread.reactions[type]!
-          .removeWhere((reaction) => reaction.creatorId == user.id);
+      thread.reactions.removeWhere((reaction) =>
+          reaction.creator!.id == user.id && reaction.type == type);
     } else {
-      thread.reactions[type]!.add(
-        // TODO: Create a new reaction
-        Reaction(
-          creatorId: user.id,
-          type: type,
-          createdAt: DateTime.now(),
-          creator: user,
-          id: '5',
-        ),
-      );
+      // add reaction
     }
   }
 
@@ -50,13 +42,14 @@ class ThreadDescription extends StatelessWidget {
     return Container(
       color: Theme.of(context).colorScheme.primary.withOpacity(0.1),
       child: ThreadCard(
-        creator: thread.creator,
-        createdAt: thread.createdAt,
+        creator: thread.creator!,
+        createdAt: thread.createdAt!,
         content: thread.content,
         mediaUrls: thread.mediaUrls,
         reactions: thread.reactions,
         tasks: thread.tasks,
-        onReactionPressed: _onReactionPressed,
+        onReactionPressed: (reaction) {},
+        onChangeTaskStatus: (task) {},
       ),
     );
   }

@@ -32,3 +32,9 @@ enum StatusType {
   warning,
   success,
 }
+
+enum ThreadType {
+  message,
+  event,
+  milestone,
+}
