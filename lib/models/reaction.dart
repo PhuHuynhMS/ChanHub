@@ -3,16 +3,16 @@ import '../common/enums.dart';
 import './user.dart';
 
 class Reaction {
-  final String id;
+  final String? id;
   final ReactionType type;
-  final DateTime createdAt;
-  final User creator;
+  final DateTime? createdAt;
+  final User? creator;
 
   Reaction({
-    required this.id,
+    this.id,
     required this.type,
-    required this.createdAt,
-    required this.creator,
+    this.createdAt,
+    this.creator,
   });
 
   Reaction copyWith({
@@ -27,6 +27,13 @@ class Reaction {
       createdAt: createdAt ?? this.createdAt,
       creator: creator ?? this.creator,
     );
+  }
+
+  Map<String, dynamic> toJson() {
+    return {
+      'id': id,
+      'type': reactionTypeString[type],
+    };
   }
 
   factory Reaction.fromJson(Map<String, dynamic> json) {

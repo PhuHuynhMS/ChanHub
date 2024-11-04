@@ -113,14 +113,6 @@ class ChannelScreen extends StatelessWidget {
     await threadsManager.createThread(message, mediaFiles, tasks);
   }
 
-  void _onChangeTaskStatus(ThreadsManager threadsManager, Task task) async {
-    await threadsManager.changeTaskStatus(task);
-  }
-
-  void _onReactionPressed(ThreadsManager threadsManager, ReactionType type) {
-    // threadsManager.createReaction(type);
-  }
-
   Widget _buildThreadDetail(
     BuildContext context,
     ThreadsManager threadsManager,
@@ -130,13 +122,7 @@ class ChannelScreen extends StatelessWidget {
     bool hasMoreThreads,
   ) {
     if (index < threads.length) {
-      return ThreadDetail(
-        threads[index],
-        onChangeTaskStatus: (Task task) =>
-            _onChangeTaskStatus(threadsManager, task),
-        onReactionPressed: (ReactionType type) =>
-            _onReactionPressed(threadsManager, type),
-      );
+      return ThreadDetail(threads[index]);
     }
     if (hasMoreThreads) {
       return getLoadingAnimation(context);

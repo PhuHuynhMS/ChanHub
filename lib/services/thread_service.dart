@@ -59,8 +59,7 @@ class ThreadService {
             '*',
             taskCallback,
             filter: """
-                      thread.channel.id='$channelId' && 
-                      deleted=null
+                      thread.channel.id='$channelId'
                     """,
             expand: 'assignee,completed_by',
           );
@@ -68,8 +67,7 @@ class ThreadService {
             '*',
             reactionCallback,
             filter: """
-                      thread.channel.id='$channelId' && 
-                      deleted=null
+                      thread.channel.id='$channelId'
                     """,
             expand: 'creator',
           );
@@ -127,6 +125,32 @@ class ThreadService {
                 ..['completed_by'] = userId,
             );
       }
+      return true;
+    } on Exception catch (exception) {
+      throw ServiceException(exception);
+    }
+  }
+
+  Future<bool> addReaction(String threadId, Reaction reaction) async {
+    try {
+      final pb = await PocketBaseService.getInstance();
+      final userId = pb.authStore.model!.id;
+
+      await pb.collection('thread_reactions').create(
+            body: reaction.toJson()
+              ..['creator'] = userId
+              ..['thread'] = threadId,
+          );
+      return true;
+    } on Exception catch (exception) {
+      throw ServiceException(exception);
+    }
+  }
+
+  Future<bool> deleteReaction(Reaction reaction) async {
+    try {
+      final pb = await PocketBaseService.getInstance();
+      await pb.collection('thread_reactions').delete(reaction.id!);
       return true;
     } on Exception catch (exception) {
       throw ServiceException(exception);

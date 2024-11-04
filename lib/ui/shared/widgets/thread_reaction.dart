@@ -1,7 +1,9 @@
 import 'package:flutter/material.dart';
+import 'package:provider/provider.dart';
 
 import '../../../common/constants.dart';
 import '../../../common/enums.dart';
+import '../../../managers/index.dart';
 import '../../../models/index.dart';
 import '../utils/index.dart';
 import './index.dart';
@@ -14,7 +16,7 @@ class ThreadReaction extends StatefulWidget {
   });
 
   final List<Reaction> reactions;
-  final void Function(ReactionType) onReactionPressed;
+  final void Function(Reaction) onReactionPressed;
 
   @override
   State<ThreadReaction> createState() => _ThreadReactionState();
@@ -24,19 +26,15 @@ class _ThreadReactionState extends State<ThreadReaction> {
   Map<ReactionType, bool> hasReactionMap = {};
   Map<ReactionType, List<Reaction>> reactionsMap = {};
 
-  // TODO: User who is currently logged in
-  final User user = User(
-    id: '1',
-    fullname: 'John Doe',
-    jobTitle: 'Software Engineer',
-    username: 'johndoe',
-    avatarUrl: 'https://picsum.photos/300/300',
-    email: 'john@gmail.com',
-  );
-
   @override
   void initState() {
     super.initState();
+    _initReactions();
+  }
+
+  @override
+  void didUpdateWidget(covariant ThreadReaction oldWidget) {
+    super.didUpdateWidget(oldWidget);
     _initReactions();
   }
 
@@ -49,8 +47,9 @@ class _ThreadReactionState extends State<ThreadReaction> {
   }
 
   bool _hasReaction(List<Reaction> listReaction, ReactionType type) {
-    return listReaction.any(
-        (reaction) => reaction.creator.id == user.id && reaction.type == type);
+    final loggedInUser = context.read<AuthManager>().loggedInUser;
+    return listReaction.any((reaction) =>
+        reaction.creator!.id == loggedInUser!.id && reaction.type == type);
   }
 
   void _onOtherReactionPressed() {
@@ -65,9 +64,20 @@ class _ThreadReactionState extends State<ThreadReaction> {
   }
 
   void _onReactionPressed(ReactionType type) {
-    widget.onReactionPressed(type);
-    hasReactionMap[type] = _hasReaction(widget.reactions, type);
+    final loggedInUser = context.read<AuthManager>().loggedInUser;
+    Reaction reaction;
 
+    if (hasReactionMap[type] ?? false) {
+      reaction = reactionsMap[type]!
+          .firstWhere((reaction) => reaction.creator!.id == loggedInUser!.id);
+      hasReactionMap[type] = false;
+      reactionsMap[type]!.remove(reaction);
+    } else {
+      reaction = Reaction(type: type);
+      hasReactionMap[type] = true;
+      reactionsMap[type]!.add(reaction);
+    }
+    widget.onReactionPressed(reaction);
     setState(() {});
   }
 
@@ -86,7 +96,7 @@ class _ThreadReactionState extends State<ThreadReaction> {
                 type: type,
                 reactions: reactionsMap[type]!,
                 onPressed: () => _onReactionPressed(type),
-                hasReaction: hasReactionMap[type] ?? false,
+                hasReaction: hasReactionMap[type]!,
               ),
               const SizedBox(width: 5.0),
             ],
@@ -210,8 +220,8 @@ class ListReactionBottomSheet extends StatelessWidget {
       child: ListView.builder(
         itemCount: reactions.length,
         itemBuilder: (context, index) => ListTile(
-          leading: UserAvatar(reactions[index].creator, size: 40.0),
-          title: Text(reactions[index].creator.fullname),
+          leading: UserAvatar(reactions[index].creator!, size: 40.0),
+          title: Text(reactions[index].creator!.fullname),
         ),
       ),
     );

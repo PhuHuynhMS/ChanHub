@@ -32,7 +32,7 @@ class ThreadsManager {
       _channelId,
       _onReceiveThread,
       _onReceiveTask,
-      (e) {},
+      _onReceiveReaction,
     );
     _isFetching = false;
     _notifyChannelListeners();
@@ -83,6 +83,14 @@ class ThreadsManager {
     return await _threadService.changeTaskStatus(task);
   }
 
+  Future<bool> reactToThread(Thread thread, Reaction reaction) async {
+    if (reaction.id != null) {
+      return await _threadService.deleteReaction(reaction);
+    } else {
+      return await _threadService.addReaction(thread.id!, reaction);
+    }
+  }
+
   // Realtime updates
   void _onReceiveThread(RecordSubscriptionEvent event) {
     if (event.action == 'create') {
@@ -127,6 +135,29 @@ class ThreadsManager {
         _threads[threadIndex]
             .tasks
             .removeWhere((task) => task.id == deletedTask.id);
+      }
+    }
+    _notifyChannelListeners();
+  }
+
+  void _onReceiveReaction(RecordSubscriptionEvent event) {
+    if (event.action == 'create') {
+      final reaction = Reaction.fromJson(event.record!.toJson());
+      final threadId = event.record!.toJson()['thread'];
+      final threadIndex =
+          _threads.indexWhere((thread) => thread.id == threadId);
+      if (threadIndex != -1) {
+        _threads[threadIndex].reactions.add(reaction);
+      }
+    } else if (event.action == 'delete') {
+      final deletedReaction = Reaction.fromJson(event.record!.toJson());
+      final threadId = event.record!.toJson()['thread'];
+      final threadIndex =
+          _threads.indexWhere((thread) => thread.id == threadId);
+      if (threadIndex != -1) {
+        _threads[threadIndex]
+            .reactions
+            .removeWhere((reaction) => reaction.id == deletedReaction.id);
       }
     }
     _notifyChannelListeners();

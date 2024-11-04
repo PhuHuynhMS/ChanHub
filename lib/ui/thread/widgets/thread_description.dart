@@ -24,14 +24,14 @@ class ThreadDescription extends StatelessWidget {
 
   bool _hasReaction(List<Reaction> listReaction, ReactionType type) {
     return listReaction.any(
-        (reaction) => reaction.creator.id == user.id && reaction.type == type);
+        (reaction) => reaction.creator!.id == user.id && reaction.type == type);
   }
 
   void _onReactionPressed(ReactionType type) {
     if (_hasReaction(thread.reactions, type)) {
       // Remove reaction
       thread.reactions.removeWhere((reaction) =>
-          reaction.creator.id == user.id && reaction.type == type);
+          reaction.creator!.id == user.id && reaction.type == type);
     } else {
       // add reaction
     }
@@ -48,7 +48,7 @@ class ThreadDescription extends StatelessWidget {
         mediaUrls: thread.mediaUrls,
         reactions: thread.reactions,
         tasks: thread.tasks,
-        onReactionPressed: _onReactionPressed,
+        onReactionPressed: (reaction) {},
         onChangeTaskStatus: (task) {},
       ),
     );

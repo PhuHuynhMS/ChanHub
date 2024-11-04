@@ -1,23 +1,27 @@
 import 'package:flutter/material.dart';
+import 'package:provider/provider.dart';
 
 import '../../../common/enums.dart';
 import '../../../models/index.dart';
+import '../../../managers/index.dart';
 import '../../shared/utils/index.dart';
 import '../../shared/widgets/index.dart';
 import '../../screens.dart';
 import './index.dart';
 
 class ThreadDetail extends StatelessWidget {
-  const ThreadDetail(
-    this.thread, {
-    super.key,
-    required this.onChangeTaskStatus,
-    required this.onReactionPressed,
-  });
+  const ThreadDetail(this.thread, {super.key});
 
   final Thread thread;
-  final Function(Task) onChangeTaskStatus;
-  final Function(ReactionType) onReactionPressed;
+
+  void _onChangeTaskStatus(ThreadsManager threadsManager, Task task) async {
+    await threadsManager.changeTaskStatus(task);
+  }
+
+  void _onReactionPressed(
+      ThreadsManager threadsManager, Reaction reaction) async {
+    await threadsManager.reactToThread(thread, reaction);
+  }
 
   void _showThreadActions(BuildContext context) {
     showModalBottomSheetActions(
@@ -36,6 +40,8 @@ class ThreadDetail extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
+    final threadsManager =
+        context.read<ChannelsManager>().getCurrentThreadsManager();
     if (thread.type == ThreadType.message) {
       return GestureDetector(
         onTap: () => _showThreadDetails(context),
@@ -48,8 +54,10 @@ class ThreadDetail extends StatelessWidget {
           reactions: thread.reactions,
           comments: thread.comments,
           tasks: thread.tasks,
-          onReactionPressed: onReactionPressed,
-          onChangeTaskStatus: onChangeTaskStatus,
+          onReactionPressed: (reaction) =>
+              _onReactionPressed(threadsManager, reaction),
+          onChangeTaskStatus: (task) =>
+              _onChangeTaskStatus(threadsManager, task),
         ),
       );
     }
