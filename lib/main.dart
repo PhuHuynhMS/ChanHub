@@ -28,8 +28,10 @@ class ChanHub extends StatelessWidget {
         ChangeNotifierProvider(create: (_) => OnboardingManager()..init()),
         ChangeNotifierProvider(create: (_) => AuthManager()),
         ChangeNotifierProvider(create: (_) => WorkspacesManager()),
-        ChangeNotifierProvider(create: (_) => ChannelsManager()),
-        ChangeNotifierProvider(create: (_) => ThreadsManager()),
+        ListenableProxyProvider<WorkspacesManager, ChannelsManager>(
+            create: (_) => ChannelsManager(),
+            update: (_, workspacesManager, channelsManager) => channelsManager!
+              ..fetchChannels(workspacesManager.getSelectedWorkspace()?.id)),
       ],
       child: Consumer2<OnboardingManager, AuthManager>(
         builder: (ctx, onboardingManager, authManager, child) {
@@ -136,11 +138,9 @@ class ChanHub extends StatelessWidget {
 
     // Channel
     if (settings.name == ChannelScreen.routeName) {
-      final Channel channel = ChannelsManager().getById('1')!;
-
       return CustomSlideTransition(
-        page: SafeArea(
-          child: ChannelScreen(channel),
+        page: const SafeArea(
+          child: ChannelScreen(),
         ),
       );
     }
@@ -190,19 +190,19 @@ class ChanHub extends StatelessWidget {
     }
 
     // Thread Detail
-    if (settings.name == ThreadScreen.routeName) {
-      final String threadId = settings.arguments as String;
-      final Thread thread = ThreadsManager().getById(threadId)!;
-      final Channel channel = ChannelsManager().getById('1')!;
+    // if (settings.name == ThreadScreen.routeName) {
+    //   final String threadId = settings.arguments as String;
+    //   final Thread thread = ThreadsManager('abc').getById(threadId)!;
+    //   final Channel channel = ChannelsManager().getById('1')!;
 
-      return MaterialPageRoute(
-        builder: (context) => SafeArea(
-          child: SafeArea(
-            child: ThreadScreen(thread, channelName: channel.name),
-          ),
-        ),
-      );
-    }
+    //   return MaterialPageRoute(
+    //     builder: (context) => SafeArea(
+    //       child: SafeArea(
+    //         child: ThreadScreen(thread, channelName: channel.name),
+    //       ),
+    //     ),
+    //   );
+    // }
 
     // Profile
     if (settings.name == ProfileScreen.routeName) {

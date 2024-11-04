@@ -47,9 +47,8 @@ class ThreadScreen extends StatelessWidget {
           builder: (context) {
             return MessageInput(
               onAddMedia: () {},
-              onSend: (String message, List<File> mediaUrls) {
-                print('Send message: $message');
-              },
+              onSend:
+                  (String message, List<File> mediaUrls, List<Task> tasks) {},
             );
           }),
     );

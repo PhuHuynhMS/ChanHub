@@ -1,5 +1,6 @@
 import 'package:flutter/material.dart';
 
+import '../../../common/enums.dart';
 import '../../../models/channel.dart';
 import '../../shared/utils/index.dart';
 
@@ -23,7 +24,9 @@ class ChannelAppBarTitle extends StatelessWidget {
           ],
         ),
         Text(
-          '${channel.memberCount} members',
+          channel.privacy == ChannelPrivacy.private
+              ? '${channel.memberCount} members'
+              : 'Everyone can join',
           style: Theme.of(context).primaryTextTheme.titleSmall,
         ),
       ],

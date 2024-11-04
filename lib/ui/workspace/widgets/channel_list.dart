@@ -16,21 +16,18 @@ class ChannelList extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    return FutureBuilder(
-        future: context.read<ChannelsManager>().fetchChannels(workspace.id),
-        builder: (context, snapshot) {
-          if (snapshot.connectionState == ConnectionState.waiting) {
-            return getLoadingAnimation(context);
-          }
-          return Column(
-            children: <Widget>[
-              ...context.read<ChannelsManager>().getAll().map((channel) {
-                return ChannelTile(
-                  channel,
-                );
-              }),
-            ],
+    bool isLoading = context.watch<ChannelsManager>().isFetching;
+    List<Channel> channels = context.read<ChannelsManager>().getAll();
+
+    return isLoading
+        ? getLoadingAnimation(context)
+        : ListView.builder(
+            shrinkWrap: true,
+            physics: const NeverScrollableScrollPhysics(),
+            itemCount: channels.length,
+            itemBuilder: (BuildContext context, int index) {
+              return ChannelTile(channels[index]);
+            },
           );
-        });
   }
 }

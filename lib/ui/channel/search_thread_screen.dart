@@ -3,7 +3,6 @@ import 'package:flutter/material.dart';
 import '../../models/index.dart';
 import '../../common/constants.dart';
 import '../../common/enums.dart';
-import '../../managers/index.dart';
 import '../shared/utils/index.dart';
 import './widgets/index.dart';
 
@@ -20,7 +19,7 @@ class _SearchThreadScreenState extends State<SearchThreadScreen> {
   final TextEditingController _searchController = TextEditingController();
   final FocusNode _searchFocusNode = FocusNode();
   SearchThreadFilter _searchThreadFilter = SearchThreadFilter.all;
-  List<Thread> threads = ThreadsManager().getAll();
+  List<Thread> threads = [];
 
   @override
   void initState() {
@@ -107,6 +106,7 @@ class _SearchThreadScreenState extends State<SearchThreadScreen> {
   }
 
   Widget _buildThreadDetail(List<Thread> threads, int index) {
-    return ThreadDetail(threads[index]);
+    // return ThreadDetail(threads[index]);
+    return const SizedBox();
   }
 }

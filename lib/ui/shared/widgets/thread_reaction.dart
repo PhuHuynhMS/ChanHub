@@ -13,7 +13,7 @@ class ThreadReaction extends StatefulWidget {
     required this.onReactionPressed,
   });
 
-  final Map<ReactionType, List<Reaction>> reactions;
+  final List<Reaction> reactions;
   final void Function(ReactionType) onReactionPressed;
 
   @override
@@ -22,6 +22,7 @@ class ThreadReaction extends StatefulWidget {
 
 class _ThreadReactionState extends State<ThreadReaction> {
   Map<ReactionType, bool> hasReactionMap = {};
+  Map<ReactionType, List<Reaction>> reactionsMap = {};
 
   // TODO: User who is currently logged in
   final User user = User(
@@ -36,13 +37,20 @@ class _ThreadReactionState extends State<ThreadReaction> {
   @override
   void initState() {
     super.initState();
+    _initReactions();
+  }
+
+  void _initReactions() {
     for (ReactionType type in reactionType.values) {
-      hasReactionMap[type] = _hasReaction(widget.reactions[type]!);
+      reactionsMap[type] =
+          widget.reactions.where((reaction) => reaction.type == type).toList();
+      hasReactionMap[type] = _hasReaction(widget.reactions, type);
     }
   }
 
-  bool _hasReaction(List<Reaction> listReaction) {
-    return listReaction.any((reaction) => reaction.creatorId == user.id);
+  bool _hasReaction(List<Reaction> listReaction, ReactionType type) {
+    return listReaction.any(
+        (reaction) => reaction.creator.id == user.id && reaction.type == type);
   }
 
   void _onOtherReactionPressed() {
@@ -58,7 +66,7 @@ class _ThreadReactionState extends State<ThreadReaction> {
 
   void _onReactionPressed(ReactionType type) {
     widget.onReactionPressed(type);
-    hasReactionMap[type] = _hasReaction(widget.reactions[type]!);
+    hasReactionMap[type] = _hasReaction(widget.reactions, type);
 
     setState(() {});
   }
@@ -72,13 +80,13 @@ class _ThreadReactionState extends State<ThreadReaction> {
         children: <Widget>[
           // Reactions
           for (ReactionType type in reactionType.values)
-            if (widget.reactions[type] != null &&
-                widget.reactions[type]!.isNotEmpty) ...[
+            if (reactionsMap[type] != null &&
+                reactionsMap[type]!.isNotEmpty) ...[
               ReactionButton(
                 type: type,
-                reactions: widget.reactions[type]!,
+                reactions: reactionsMap[type]!,
                 onPressed: () => _onReactionPressed(type),
-                hasReaction: _hasReaction(widget.reactions[type]!),
+                hasReaction: hasReactionMap[type] ?? false,
               ),
               const SizedBox(width: 5.0),
             ],

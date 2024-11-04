@@ -9,7 +9,9 @@ class Channel {
   final String creatorId;
   final DateTime createdAt;
   User creator;
-  int memberCount = 0;
+  List<User> members;
+
+  int get memberCount => members.length;
 
   Channel({
     this.id,
@@ -19,7 +21,7 @@ class Channel {
     required this.creatorId,
     required this.createdAt,
     required this.creator,
-    this.memberCount = 0,
+    this.members = const [],
   });
 
   Channel copyWith({
@@ -29,7 +31,7 @@ class Channel {
     ChannelPrivacy? privacy,
     String? creatorId,
     DateTime? createdAt,
-    int? memberCount,
+    List<User>? members,
     User? creator,
   }) {
     return Channel(
@@ -39,13 +41,14 @@ class Channel {
       privacy: privacy ?? this.privacy,
       creatorId: creatorId ?? this.creatorId,
       createdAt: createdAt ?? this.createdAt,
-      memberCount: memberCount ?? this.memberCount,
+      members: members ?? this.members,
       creator: creator ?? this.creator,
     );
   }
 
   factory Channel.fromJson(Map<String, dynamic> json) {
     return Channel(
+      id: json['id'],
       name: json['name'],
       description: json['description'],
       privacy: json['privacy'] == 'public'
@@ -53,6 +56,10 @@ class Channel {
           : ChannelPrivacy.private,
       creatorId: json['creator'],
       createdAt: DateTime.parse(json['created']),
+      members: ((json['expand']['channel_members_via_channel'] ?? []) as List)
+          .map((channelMember) =>
+              User.fromJson(channelMember['expand']['member']))
+          .toList(),
       creator: User.fromJson(json['expand']['creator']),
     );
   }
