@@ -12,7 +12,7 @@ class WorkSpaceDrawer extends StatelessWidget {
   });
 
   void _changeWorkspace(BuildContext context, Workspace workspace) async {
-    await context.read<WorkspacesManager>().setSelectedWorkspace(workspace);
+    await context.read<WorkspacesManager>().setSelectedWorkspace(workspace.id);
     if (context.mounted) {
       Navigator.of(context).pop();
     }
@@ -40,9 +40,9 @@ class WorkSpaceDrawer extends StatelessWidget {
   Widget build(BuildContext context) {
     final workspaces = context.watch<WorkspacesManager>().getAll();
     final selectedWorkspace =
-        context.read<WorkspacesManager>().getSelectedWorkspace();
+        context.watch<WorkspacesManager>().getSelectedWorkspace();
     final defaultWorkspace =
-        context.read<WorkspacesManager>().getDefaultWorkspace();
+        context.watch<WorkspacesManager>().getDefaultWorkspace();
     return Drawer(
       child: Column(
         crossAxisAlignment: CrossAxisAlignment.start,

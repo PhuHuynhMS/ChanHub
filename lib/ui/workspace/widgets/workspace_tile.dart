@@ -157,7 +157,9 @@ class WorkspaceActions extends StatelessWidget {
       await context.read<WorkspacesManager>().setDefaultWorkspace(workspace);
       if (context.mounted) {
         Navigator.of(context).pop();
-        await context.read<WorkspacesManager>().setSelectedWorkspace(workspace);
+        await context
+            .read<WorkspacesManager>()
+            .setSelectedWorkspace(workspace.id);
       }
     });
   }

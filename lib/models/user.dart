@@ -51,6 +51,15 @@ class User {
     return username;
   }
 
+  Map<String, dynamic> toJson() {
+    return {
+      'fullname': fullname,
+      'jobtitle': jobTitle,
+      'username': username,
+      'email': email,
+    };
+  }
+
   factory User.fromJson(Map<String, dynamic> json) {
     return User(
       id: json['id'],

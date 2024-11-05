@@ -42,15 +42,11 @@ class Workspace {
     );
   }
 
-  // Map<String, dynamic> toJson() {
-  //   return {
-  //     'id': id,
-  //     'name': name,
-  //     'imageUrl': imageUrl,
-  //     'created': createdAt.toIso8601String(),
-  //     'creator': createdBy.toJson(),
-  //   };
-  // }
+  Map<String, dynamic> toJson() {
+    return {
+      'name': name,
+    };
+  }
 
   factory Workspace.fromJson(Map<String, dynamic> json) {
     return Workspace(

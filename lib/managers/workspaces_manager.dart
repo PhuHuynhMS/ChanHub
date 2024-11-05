@@ -1,3 +1,5 @@
+import 'dart:io';
+
 import 'package:flutter/foundation.dart';
 
 import '../services/index.dart';
@@ -9,6 +11,7 @@ class WorkspacesManager with ChangeNotifier {
   List<Workspace> _workspaces = [];
   String? _selectedWorkspaceId;
   String? _defaultWorkspaceId;
+  List<User> _members = [];
 
   Future<void> fetchWorkspaces() async {
     _workspaces = await _workspaceService.fetchAllWorkspaces();
@@ -17,10 +20,26 @@ class WorkspacesManager with ChangeNotifier {
     notifyListeners();
   }
 
-  Workspace? getDefaultWorkspace() {
-    if (_defaultWorkspaceId == null) return null;
-    return _workspaces
-        .firstWhere((workspace) => workspace.id == _defaultWorkspaceId);
+  Future<String?> addWorkspace(String workspaceName, File image) async {
+    final newWorkspace =
+        await _workspaceService.addWorkspace(workspaceName, image);
+    if (newWorkspace != null) {
+      _workspaces.add(newWorkspace);
+      await setSelectedWorkspace(newWorkspace.id);
+      notifyListeners();
+      return newWorkspace.id;
+    }
+    return null;
+  }
+
+  Future<void> fetchWorkspaceMembers() async {
+    _members = await _workspaceService.fetchAllWorkspaceMembers();
+    notifyListeners();
+  }
+
+  Future<void> addWorkspaceMembers(
+      List<User> members, String workspaceId) async {
+    await _workspaceService.addWorkspaceMembers(members, workspaceId);
   }
 
   Workspace? getSelectedWorkspace() {
@@ -29,9 +48,15 @@ class WorkspacesManager with ChangeNotifier {
         .firstWhere((workspace) => workspace.id == _selectedWorkspaceId);
   }
 
-  Future<void> setSelectedWorkspace(Workspace newWorkspace) async {
-    _selectedWorkspaceId = newWorkspace.id;
+  Future<void> setSelectedWorkspace(String newWorkspaceId) async {
+    _selectedWorkspaceId = newWorkspaceId;
     notifyListeners();
+  }
+
+  Workspace? getDefaultWorkspace() {
+    if (_defaultWorkspaceId == null) return null;
+    return _workspaces
+        .firstWhere((workspace) => workspace.id == _defaultWorkspaceId);
   }
 
   Future<void> setDefaultWorkspace(Workspace newWorkspace) async {
@@ -42,6 +67,10 @@ class WorkspacesManager with ChangeNotifier {
 
   List<Workspace> getAll() {
     return [..._workspaces];
+  }
+
+  List<User> getAllMembers() {
+    return [..._members];
   }
 
   void add(Workspace workspace) {
