@@ -12,3 +12,4 @@ export './event_card.dart';
 export './milestone_card.dart';
 export './underline_dropdown_button.dart';
 export './user_avatar.dart';
+export './status_chip.dart';

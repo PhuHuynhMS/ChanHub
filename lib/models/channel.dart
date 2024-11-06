@@ -1,3 +1,4 @@
+import '../common/constants.dart';
 import '../common/enums.dart';
 import './user.dart';
 
@@ -6,10 +7,12 @@ class Channel {
   final String name;
   final String description;
   final ChannelPrivacy privacy;
-  final String creatorId;
   final DateTime createdAt;
   User creator;
   List<User> members;
+
+  final String? channelMemberId;
+  final DateTime? lastReadAt;
 
   int get memberCount => members.length;
 
@@ -18,10 +21,11 @@ class Channel {
     required this.name,
     required this.description,
     required this.privacy,
-    required this.creatorId,
     required this.createdAt,
     required this.creator,
     this.members = const [],
+    this.channelMemberId,
+    this.lastReadAt,
   });
 
   Channel copyWith({
@@ -29,38 +33,54 @@ class Channel {
     String? name,
     String? description,
     ChannelPrivacy? privacy,
-    String? creatorId,
     DateTime? createdAt,
     List<User>? members,
     User? creator,
+    String? channelMemberId,
+    DateTime? lastReadAt,
   }) {
     return Channel(
       id: id ?? this.id,
       name: name ?? this.name,
       description: description ?? this.description,
       privacy: privacy ?? this.privacy,
-      creatorId: creatorId ?? this.creatorId,
       createdAt: createdAt ?? this.createdAt,
       members: members ?? this.members,
       creator: creator ?? this.creator,
+      channelMemberId: channelMemberId ?? this.channelMemberId,
+      lastReadAt: lastReadAt ?? this.lastReadAt,
     );
   }
 
   factory Channel.fromJson(Map<String, dynamic> json) {
+    final members = ((json['expand']['channel_members_via_channel'] ?? [])
+            as List)
+        .map(
+            (channelMember) => User.fromJson(channelMember['expand']['member']))
+        .toList();
+
+    final channelMemberId =
+        ((json['expand']['channel_members_via_channel'] ?? []) as List)
+            .firstWhere(
+                (channelMember) => channelMember['member'] == json['userId'],
+                orElse: () => <String, dynamic>{})['id'];
+
+    final lastReadAt =
+        ((json['expand']['channel_member_status_via_channel'] ?? []) as List)
+            .firstWhere(
+                (channelMember) => channelMember['member'] == json['userId'],
+                orElse: () => <String, dynamic>{})['last_read'];
     return Channel(
       id: json['id'],
       name: json['name'],
       description: json['description'],
-      privacy: json['privacy'] == 'public'
-          ? ChannelPrivacy.public
-          : ChannelPrivacy.private,
-      creatorId: json['creator'],
+      privacy:
+          channelPrivacyFromString[json['privacy']] ?? ChannelPrivacy.public,
       createdAt: DateTime.parse(json['created']),
-      members: ((json['expand']['channel_members_via_channel'] ?? []) as List)
-          .map((channelMember) =>
-              User.fromJson(channelMember['expand']['member']))
-          .toList(),
+      members: members,
       creator: User.fromJson(json['expand']['creator']),
+      channelMemberId: channelMemberId,
+      lastReadAt: lastReadAt != null ? DateTime.parse(lastReadAt) : null,
     );
   }
 }

@@ -33,6 +33,9 @@ class ChannelScreen extends StatelessWidget {
       }
     });
 
+    // Mark all threads as read
+    context.read<ChannelsManager>().markAllThreadsAsRead(channel.id!);
+
     return Scaffold(
       appBar: AppBar(
         title: ChannelAppBarTitle(channel),
