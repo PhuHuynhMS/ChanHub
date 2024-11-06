@@ -62,7 +62,7 @@ class _TaskInputState extends State<TaskInput> {
                     children: <Widget>[
                       _buildTitleField(),
                       _buildDescriptionField(),
-                      _buildAssigneeField(),
+                      if (assignees.isNotEmpty) _buildAssigneeField(),
                       _buildDeadlineField(),
 
                       // Buttons

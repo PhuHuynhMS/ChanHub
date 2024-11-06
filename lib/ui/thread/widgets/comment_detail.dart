@@ -51,8 +51,8 @@ class CommentDetail extends StatelessWidget {
       content: comment.content,
       mediaUrls: comment.mediaUrls,
       // reactions: comment.reactions,
-      onReactionPressed: (thread) {},
-      onChangeTaskStatus: (task) {},
+      onReactionPressed: (thread) async {},
+      onChangeTaskStatus: (task) async {},
     );
   }
 }

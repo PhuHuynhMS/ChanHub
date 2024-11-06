@@ -14,6 +14,7 @@ class MessageInput extends StatefulWidget {
     this.canAddMedia = true,
     this.onAddMedia,
     this.canAddTask = true,
+    this.initialMessage = '',
     this.taskAssignees = const [],
   });
 
@@ -21,6 +22,7 @@ class MessageInput extends StatefulWidget {
   final void Function()? onAddMedia;
   final bool canAddTask;
   final List<User> taskAssignees;
+  final String initialMessage;
   final void Function(String, List<File>, List<Task>) onSend;
 
   @override
@@ -39,6 +41,12 @@ class _MessageInputState extends State<MessageInput> {
       mediaFiles.isEmpty &&
       tasks.isEmpty;
 
+  @override
+  void initState() {
+    super.initState();
+    _messageController.text = widget.initialMessage;
+  }
+
   // Messages
   void onMessageChanged(String value) {
     setState(() {});
@@ -50,6 +58,7 @@ class _MessageInputState extends State<MessageInput> {
     mediaFiles.clear();
     tasks.clear();
     showMoreActions = false;
+    FocusScope.of(context).unfocus();
     setState(() {});
   }
 
@@ -170,6 +179,7 @@ class _MessageInputState extends State<MessageInput> {
                   style: Theme.of(context).textTheme.bodyMedium,
                   controller: _messageController,
                   onChanged: onMessageChanged,
+                  autofocus: false,
                 ),
               ),
 

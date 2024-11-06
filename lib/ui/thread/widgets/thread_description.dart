@@ -48,8 +48,8 @@ class ThreadDescription extends StatelessWidget {
         mediaUrls: thread.mediaUrls,
         reactions: thread.reactions,
         tasks: thread.tasks,
-        onReactionPressed: (reaction) {},
-        onChangeTaskStatus: (task) {},
+        onReactionPressed: (reaction) async {},
+        onChangeTaskStatus: (task) async {},
       ),
     );
   }
