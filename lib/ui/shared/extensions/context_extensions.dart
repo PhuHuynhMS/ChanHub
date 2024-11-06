@@ -5,9 +5,13 @@ import '../utils/index.dart';
 
 extension ContextExtensions on BuildContext {
   Future<T> executeWithErrorHandling<T>(
-    Future<T> Function() operation,
-  ) async {
-    showLoadingOverlay(this);
+    Future<T> Function() operation, {
+    bool isShowLoading = true,
+    bool ignoreError = false,
+  }) async {
+    if (isShowLoading) {
+      showLoadingOverlay(this);
+    }
 
     try {
       return await operation();
@@ -19,7 +23,9 @@ extension ContextExtensions on BuildContext {
         status: StatusType.error,
       );
     } finally {
-      hideLoadingOverlay(this);
+      if (isShowLoading) {
+        hideLoadingOverlay(this);
+      }
     }
     return Future.value();
   }

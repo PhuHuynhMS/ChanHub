@@ -1,6 +1,5 @@
 import 'package:flutter/material.dart';
 
-import '../../../common/enums.dart';
 import '../../../models/index.dart';
 import '../utils/index.dart';
 import './index.dart';
@@ -16,6 +15,7 @@ class ThreadCard extends StatelessWidget {
     this.reactions,
     this.comments,
     required this.onReactionPressed,
+    required this.onChangeTaskStatus,
   });
 
   final User creator;
@@ -23,9 +23,10 @@ class ThreadCard extends StatelessWidget {
   final String? content;
   final List<String>? mediaUrls;
   final List<Task>? tasks;
-  final Map<ReactionType, List<Reaction>>? reactions;
+  final List<Reaction>? reactions;
   final List<Comment>? comments;
-  final void Function(ReactionType) onReactionPressed;
+  final Future<void> Function(Reaction) onReactionPressed;
+  final Future<void> Function(Task task) onChangeTaskStatus;
 
   @override
   Widget build(BuildContext context) {
@@ -52,15 +53,22 @@ class ThreadCard extends StatelessWidget {
 
                 if (mediaUrls != null && mediaUrls!.isNotEmpty) ...[
                   const SizedBox(height: 5.0),
-                  MediaPreview(mediaUrls!),
+                  MediaPreview(
+                    mediaUrls!,
+                    height: 150,
+                    width: 150,
+                  ),
                 ],
 
                 if (tasks != null && tasks!.isNotEmpty) ...[
                   const SizedBox(height: 5.0),
-                  TaskPreview(tasks!),
+                  TaskPreview(
+                    tasks!,
+                    onTaskStatusChanged: onChangeTaskStatus,
+                  ),
                 ],
 
-                if (reactions != null && reactions!.isNotEmpty) ...[
+                if (reactions != null) ...[
                   const SizedBox(height: 5.0),
                   ThreadReaction(
                     reactions!,
@@ -107,7 +115,7 @@ class ThreadTitle extends StatelessWidget {
 
           // Timestamp
           Text(
-            formatDateTime(createdAt),
+            formatTime(createdAt),
             style: Theme.of(context).textTheme.labelSmall,
           ),
         ],

@@ -1,6 +1,6 @@
 import 'dart:io';
 
-import '../ui/shared/extensions/index.dart';
+import '../services/index.dart';
 import '../common/constants.dart';
 
 class User {

@@ -1,25 +1,20 @@
 import 'package:flutter/material.dart';
+import 'package:provider/provider.dart';
 
+import '../../../managers/index.dart';
 import '../../../models/index.dart';
+import '../../shared/extensions/index.dart';
+import '../../shared/utils/index.dart';
 import '../../screens.dart';
+import './index.dart';
 
 class ThreadActions extends StatelessWidget {
-  ThreadActions(
+  const ThreadActions(
     this.thread, {
     super.key,
   });
 
   final Thread thread;
-
-  // TODO: User who is currently logged in
-  final User user = User(
-    id: '1',
-    fullname: 'John Doe',
-    jobTitle: 'Software Engineer',
-    username: 'johndoe',
-    avatarUrl: 'https://picsum.photos/300/300',
-    email: 'john@gmail.com',
-  );
 
   void _showThreadDetails(BuildContext context) {
     Navigator.of(context).pushNamed(
@@ -28,16 +23,28 @@ class ThreadActions extends StatelessWidget {
     );
   }
 
-  void _onEditThread() {
-    print('Edit thread');
+  void _onEditThread(BuildContext context) {
+    Navigator.of(context).pop();
+    showActionDialog(
+      context: context,
+      title: 'Edit thread',
+      content: EditThreadForm(thread),
+    );
   }
 
-  void _onDeleteThread() {
-    print('Delete thread');
+  void _onDeleteThread(BuildContext context) async {
+    ThreadsManager threadsManager =
+        context.read<ChannelsManager>().getCurrentThreadsManager();
+    context.executeWithErrorHandling(() async {
+      await threadsManager.deleteThread(thread);
+    }, isShowLoading: false);
+    Navigator.of(context).pop();
   }
 
   @override
   Widget build(BuildContext context) {
+    final loggedInUser = context.read<AuthManager>().loggedInUser;
+
     return Wrap(
       children: <Widget>[
         // Reply in thread
@@ -48,18 +55,18 @@ class ThreadActions extends StatelessWidget {
         ),
 
         // Edit message and delete message
-        if (thread.creatorId == user.id) ...[
+        if (thread.creator!.id == loggedInUser!.id) ...[
           ListTile(
             leading: const Icon(Icons.edit),
             title: const Text('Edit thread'),
-            onTap: _onEditThread,
+            onTap: () => _onEditThread(context),
           ),
           ListTile(
             leading: const Icon(Icons.delete),
             title: const Text('Delete thread'),
             textColor: Theme.of(context).colorScheme.error,
             iconColor: Theme.of(context).colorScheme.error,
-            onTap: _onDeleteThread,
+            onTap: () => _onDeleteThread(context),
           ),
         ],
       ],

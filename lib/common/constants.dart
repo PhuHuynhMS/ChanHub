@@ -12,6 +12,15 @@ const Map<String, ReactionType> reactionType = {
   'dislike': ReactionType.dislike,
 };
 
+const Map<ReactionType, String> reactionTypeString = {
+  ReactionType.like: 'like',
+  ReactionType.love: 'love',
+  ReactionType.haha: 'haha',
+  ReactionType.seen: 'seen',
+  ReactionType.completed: 'completed',
+  ReactionType.dislike: 'dislike',
+};
+
 const Map<TaskStatus, String> taskStatusString = {
   TaskStatus.inProgress: 'In Progress',
   TaskStatus.completed: 'Completed',
@@ -33,4 +42,26 @@ const Map<StatusType, Color> statusColor = {
   StatusType.info: ChanHubColors.secondary,
   StatusType.warning: Colors.orange,
   StatusType.success: ChanHubColors.primary,
+};
+
+const Map<ChannelPrivacy, String> channelPrivacyString = {
+  ChannelPrivacy.public: 'public',
+  ChannelPrivacy.private: 'private',
+};
+
+const Map<String, ChannelPrivacy> channelPrivacyFromString = {
+  'public': ChannelPrivacy.public,
+  'private': ChannelPrivacy.private,
+};
+
+const Map<ThreadType, String> threadTypeString = {
+  ThreadType.message: 'message',
+  ThreadType.event: 'event',
+  ThreadType.milestone: 'milestone',
+};
+
+const Map<String, ThreadType> threadTypeFromString = {
+  'message': ThreadType.message,
+  'event': ThreadType.event,
+  'milestone': ThreadType.milestone,
 };

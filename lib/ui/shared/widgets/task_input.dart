@@ -8,63 +8,28 @@ class TaskInput extends StatefulWidget {
   const TaskInput({
     super.key,
     required this.taskData,
+    required this.assignees,
+    this.isEdit = false,
   });
 
-  final Map<String, dynamic> taskData;
+  final Task taskData;
+  final List<User> assignees;
+  final bool isEdit;
 
   @override
   State<TaskInput> createState() => _TaskInputState();
 }
 
 class _TaskInputState extends State<TaskInput> {
-  late Map<String, dynamic> taskData = {
-    'title': widget.taskData['title'] ?? '',
-    'description': widget.taskData['description'] ?? '',
-    'deadline': widget.taskData['deadline'],
-    'assignee': widget.taskData['assignee'],
-  };
-
-  // TODO: Get all user from channel and display in dropdown
-  final List<User> assignees = <User>[
-    User(
-      id: '1',
-      fullname: 'John Doe',
-      jobTitle: 'Flutter Developer',
-      username: 'johndoe',
-      avatarUrl: 'https://picsum.photos/300/300',
-      email: 'john@gmail.com',
-    ),
-    User(
-      id: '6',
-      fullname: 'John Doe',
-      jobTitle: 'Flutter Developer',
-      username: 'mrTeo',
-      email: 'johndoe@me.com',
-      avatarUrl: 'https://picsum.photos/200',
-    ),
-    User(
-      id: '7',
-      fullname: 'John Doe',
-      jobTitle: 'Flutter Developer',
-      username: 'mrTeo',
-      email: 'johndoe@me.com',
-      avatarUrl: 'https://picsum.photos/200',
-    ),
-  ];
-
-  void _onSelectAssignee(User? value) {
-    taskData['assignee'] = value;
-    setState(() {});
-  }
-
-  void _onShowDateTimePicker() async {
-    final DateTime? deadline = await showDateTimePicker(context);
-
-    if (deadline != null) {
-      taskData['deadline'] = deadline;
-      setState(() {});
-    }
-  }
+  late Task editedTask = Task(
+    id: widget.taskData.id,
+    title: widget.taskData.title,
+    description: widget.taskData.description,
+    assignee: widget.taskData.assignee,
+    deadline: widget.taskData.deadline,
+  );
+  late List<User> assignees = widget.assignees;
+  final GlobalKey<FormState> _formKey = GlobalKey<FormState>();
 
   @override
   Widget build(BuildContext context) {
@@ -82,7 +47,7 @@ class _TaskInputState extends State<TaskInput> {
           children: <Widget>[
             // Title
             Text(
-              'Add task',
+              widget.isEdit ? 'Edit Task' : 'Add Task',
               style: Theme.of(context).textTheme.titleLarge,
             ),
             const SizedBox(height: 10.0),
@@ -91,88 +56,25 @@ class _TaskInputState extends State<TaskInput> {
             // Content
             Flexible(
               child: SingleChildScrollView(
-                child: Column(
-                  children: <Widget>[
-                    // Title
-                    TextField(
-                      decoration: underlineInputDecoration(context, 'Title'),
-                      style: Theme.of(context).textTheme.bodyMedium,
-                      onChanged: (value) => taskData['title'] = value,
-                    ),
+                child: Form(
+                  key: _formKey,
+                  child: Column(
+                    children: <Widget>[
+                      _buildTitleField(),
+                      _buildDescriptionField(),
+                      if (assignees.isNotEmpty) _buildAssigneeField(),
+                      _buildDeadlineField(),
 
-                    // Description
-                    TextField(
-                      minLines: 1,
-                      maxLines: 3,
-                      decoration:
-                          underlineInputDecoration(context, 'Description'),
-                      style: Theme.of(context).textTheme.bodyMedium,
-                      onChanged: (value) => taskData['description'] = value,
-                    ),
-
-                    // Assignee
-                    UnderlineDropdownButton<User>(
-                      hint: 'Assignee',
-                      selectedValue: taskData['assignee'],
-                      items: assignees,
-                      onChanged: _onSelectAssignee,
-                    ),
-
-                    // Deadline
-                    TextButton(
-                      style: TextButton.styleFrom(
-                        padding: const EdgeInsets.all(0.0),
-                        shape: const RoundedRectangleBorder(
-                          borderRadius: BorderRadius.zero,
-                        ),
-                      ),
-                      onPressed: _onShowDateTimePicker,
-                      child: Row(
+                      // Buttons
+                      Row(
+                        mainAxisAlignment: MainAxisAlignment.end,
                         children: <Widget>[
-                          Icon(
-                            Icons.calendar_today,
-                            color: Theme.of(context).colorScheme.primary,
-                          ),
-                          const SizedBox(width: 10.0),
-                          Text(
-                            formatDeadlineTime(taskData['deadline']),
-                            style: Theme.of(context).textTheme.bodyMedium,
-                          ),
+                          _buildCancelButton(),
+                          _buildSubmitButton(),
                         ],
                       ),
-                    ),
-
-                    // Buttons
-                    Row(
-                      mainAxisAlignment: MainAxisAlignment.end,
-                      children: <Widget>[
-                        TextButton(
-                          onPressed: () => Navigator.of(context).pop(),
-                          child: Text(
-                            'Close',
-                            style: Theme.of(context)
-                                .textTheme
-                                .bodyMedium!
-                                .copyWith(
-                                  color: Theme.of(context).colorScheme.error,
-                                ),
-                          ),
-                        ),
-                        TextButton(
-                          onPressed: () => Navigator.of(context).pop(taskData),
-                          child: Text(
-                            'Add',
-                            style: Theme.of(context)
-                                .textTheme
-                                .bodyMedium!
-                                .copyWith(
-                                  color: Theme.of(context).colorScheme.primary,
-                                ),
-                          ),
-                        ),
-                      ],
-                    ),
-                  ],
+                    ],
+                  ),
                 ),
               ),
             ),
@@ -180,5 +82,109 @@ class _TaskInputState extends State<TaskInput> {
         ),
       ),
     );
+  }
+
+  Widget _buildTitleField() {
+    return TextFormField(
+      initialValue: editedTask.title,
+      decoration: underlineInputDecoration(context, 'Title'),
+      style: Theme.of(context).textTheme.bodyMedium,
+      validator: Validator.compose([
+        Validator.required('Title is required'),
+      ]),
+      onSaved: (value) => editedTask = editedTask.copyWith(title: value),
+    );
+  }
+
+  Widget _buildDescriptionField() {
+    return TextFormField(
+      initialValue: editedTask.description,
+      minLines: 1,
+      maxLines: 3,
+      decoration: underlineInputDecoration(context, 'Description'),
+      style: Theme.of(context).textTheme.bodyMedium,
+      onSaved: (value) => editedTask = editedTask.copyWith(description: value),
+    );
+  }
+
+  Widget _buildAssigneeField() {
+    return UnderlineDropdownButton<User>(
+      hint: 'Assignee',
+      selectedValue: editedTask.assignee,
+      items: assignees,
+      onChanged: _onSelectAssignee,
+    );
+  }
+
+  Widget _buildDeadlineField() {
+    return TextButton(
+      style: TextButton.styleFrom(
+        padding: const EdgeInsets.all(0.0),
+        shape: const RoundedRectangleBorder(
+          borderRadius: BorderRadius.zero,
+        ),
+      ),
+      onPressed: _onShowDateTimePicker,
+      child: Row(
+        children: <Widget>[
+          const Icon(Icons.calendar_today),
+          const SizedBox(width: 10.0),
+          Text(
+            formatDeadlineTime(editedTask.deadline),
+            style: Theme.of(context).textTheme.bodyMedium,
+          ),
+        ],
+      ),
+    );
+  }
+
+  void _onSelectAssignee(User? value) {
+    editedTask = editedTask.copyWith(assignee: value);
+    setState(() {});
+  }
+
+  void _onShowDateTimePicker() async {
+    final DateTime? deadline = await showDateTimePicker(context);
+
+    if (deadline != null) {
+      editedTask = editedTask.copyWith(deadline: deadline);
+      setState(() {});
+    }
+  }
+
+  Widget _buildCancelButton() {
+    return TextButton(
+      onPressed: _onClose,
+      child: Text(
+        'Close',
+        style: Theme.of(context).textTheme.bodyMedium!.copyWith(
+              color: Theme.of(context).colorScheme.error,
+            ),
+      ),
+    );
+  }
+
+  Widget _buildSubmitButton() {
+    return TextButton(
+      onPressed: _onAddTask,
+      child: Text(
+        'Add',
+        style: Theme.of(context).textTheme.bodyMedium!.copyWith(
+              color: Theme.of(context).colorScheme.primary,
+            ),
+      ),
+    );
+  }
+
+  void _onAddTask() {
+    if (!_formKey.currentState!.validate()) {
+      return;
+    }
+    _formKey.currentState!.save();
+    Navigator.of(context).pop(editedTask);
+  }
+
+  void _onClose() {
+    Navigator.of(context).pop();
   }
 }

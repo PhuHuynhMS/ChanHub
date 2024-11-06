@@ -3,6 +3,7 @@ import 'dart:io';
 import 'package:flutter/material.dart';
 import 'package:image_picker/image_picker.dart';
 
+import '../../../models/index.dart';
 import '../utils/index.dart';
 import './index.dart';
 
@@ -13,12 +14,16 @@ class MessageInput extends StatefulWidget {
     this.canAddMedia = true,
     this.onAddMedia,
     this.canAddTask = true,
+    this.initialMessage = '',
+    this.taskAssignees = const [],
   });
 
   final bool canAddMedia;
   final void Function()? onAddMedia;
   final bool canAddTask;
-  final void Function(String, List<File>) onSend; // TODO: Add task
+  final List<User> taskAssignees;
+  final String initialMessage;
+  final void Function(String, List<File>, List<Task>) onSend;
 
   @override
   State<MessageInput> createState() => _MessageInputState();
@@ -28,7 +33,7 @@ class _MessageInputState extends State<MessageInput> {
   final TextEditingController _messageController = TextEditingController();
   final ImagePicker _imagePicker = ImagePicker();
   late List<File> mediaFiles = [];
-  late List<Map<String, dynamic>> tasks = [];
+  late List<Task> tasks = [];
   bool showMoreActions = false;
 
   bool get isMessageEmpty =>
@@ -36,17 +41,24 @@ class _MessageInputState extends State<MessageInput> {
       mediaFiles.isEmpty &&
       tasks.isEmpty;
 
+  @override
+  void initState() {
+    super.initState();
+    _messageController.text = widget.initialMessage;
+  }
+
   // Messages
   void onMessageChanged(String value) {
     setState(() {});
   }
 
   void onSend() {
-    widget.onSend(_messageController.text, mediaFiles);
+    widget.onSend(_messageController.text, mediaFiles, tasks);
     _messageController.clear();
     mediaFiles.clear();
     tasks.clear();
     showMoreActions = false;
+    FocusScope.of(context).unfocus();
     setState(() {});
   }
 
@@ -74,10 +86,13 @@ class _MessageInputState extends State<MessageInput> {
 
   // Tasks
   void onAddTask(BuildContext context) async {
-    Map<String, dynamic>? data = await showDialog(
+    Task? data = await showDialog(
       context: context,
       builder: (context) {
-        return const TaskInput(taskData: {});
+        return TaskInput(
+          taskData: Task(),
+          assignees: widget.taskAssignees,
+        );
       },
     );
     if (data != null) {
@@ -87,14 +102,19 @@ class _MessageInputState extends State<MessageInput> {
   }
 
   void onEditTask(BuildContext context, int index) async {
-    Map<String, dynamic>? data = await showDialog(
+    Task? data = await showDialog(
       context: context,
       builder: (context) {
-        return TaskInput(taskData: tasks[index]);
+        return TaskInput(
+          taskData: tasks[index],
+          assignees: widget.taskAssignees,
+          isEdit: true,
+        );
       },
     );
     if (data != null) {
       tasks[index] = data;
+      setState(() {});
     }
   }
 
@@ -159,6 +179,7 @@ class _MessageInputState extends State<MessageInput> {
                   style: Theme.of(context).textTheme.bodyMedium,
                   controller: _messageController,
                   onChanged: onMessageChanged,
+                  autofocus: false,
                 ),
               ),
 
@@ -191,6 +212,7 @@ class _MessageInputState extends State<MessageInput> {
             MessageTaskPreview(
               tasks: tasks,
               onRemoveTask: onRemoveTask,
+              onEditTask: onEditTask,
             ),
           ],
 
@@ -380,10 +402,12 @@ class MessageTaskPreview extends StatelessWidget {
     super.key,
     required this.tasks,
     required this.onRemoveTask,
+    required this.onEditTask,
   });
 
-  final List<Map<String, dynamic>> tasks;
+  final List<Task> tasks;
   final void Function(int) onRemoveTask;
+  final void Function(BuildContext, int) onEditTask;
 
   @override
   Widget build(BuildContext context) {
@@ -400,10 +424,13 @@ class MessageTaskPreview extends StatelessWidget {
           shrinkWrap: true,
           itemCount: tasks.length,
           itemBuilder: (context, index) {
-            final Map<String, dynamic> task = tasks[index];
-            return MessageTaskPreviewItem(
-              task: task,
-              onRemoveTask: () => onRemoveTask(index),
+            final Task task = tasks[index];
+            return GestureDetector(
+              onTap: () => onEditTask(context, index),
+              child: MessageTaskPreviewItem(
+                task: task,
+                onRemoveTask: () => onRemoveTask(index),
+              ),
             );
           },
         ),
@@ -419,12 +446,12 @@ class MessageTaskPreviewItem extends StatelessWidget {
     required this.onRemoveTask,
   });
 
-  final Map<String, dynamic> task;
+  final Task task;
   final void Function() onRemoveTask;
 
   @override
   Widget build(BuildContext context) {
-    final Key key = Key(task['id'] ?? ('${task['title']}-${task['assignee']}'));
+    final Key key = Key(task.id ?? ('${task.title}-${task.assignee?.id}'));
     return Dismissible(
       key: key,
       direction: DismissDirection.endToStart,
@@ -459,21 +486,23 @@ class MessageTaskPreviewItem extends StatelessWidget {
           children: <Widget>[
             Expanded(
               child: Text(
-                task['title'],
+                task.title,
                 style: Theme.of(context).textTheme.bodyMedium,
               ),
             ),
 
             // Assignee
-            ClipRRect(
-              borderRadius: BorderRadius.circular(50.0),
-              child: Image.network(
-                task['assignee'].avatarUrl,
-                width: 25.0,
-                height: 25.0,
-                fit: BoxFit.cover,
-              ),
-            ),
+            if (task.assignee != null) ...[
+              ClipRRect(
+                borderRadius: BorderRadius.circular(50.0),
+                child: Image.network(
+                  task.assignee!.avatarUrl,
+                  width: 25.0,
+                  height: 25.0,
+                  fit: BoxFit.cover,
+                ),
+              )
+            ],
           ],
         ),
       ),
