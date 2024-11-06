@@ -188,18 +188,10 @@ class TaskPreview extends StatelessWidget {
 
   Widget _buildTaskStatusChip(BuildContext context, TaskStatus status) {
     Color statusColor = getTaskStatusColor(status, context);
-    return Container(
-      padding: const EdgeInsets.symmetric(horizontal: 5.0),
-      decoration: BoxDecoration(
-        color: statusColor.withOpacity(0.1),
-        borderRadius: BorderRadius.circular(50.0),
-      ),
-      child: Text(
-        taskStatusString[status]!,
-        style: Theme.of(context).textTheme.labelSmall!.copyWith(
-              color: statusColor,
-            ),
-      ),
+    String statusString = taskStatusString[status]!;
+    return StatusChip(
+      color: statusColor,
+      title: statusString,
     );
   }
 }

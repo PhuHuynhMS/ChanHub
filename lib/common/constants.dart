@@ -44,6 +44,16 @@ const Map<StatusType, Color> statusColor = {
   StatusType.success: ChanHubColors.primary,
 };
 
+const Map<ChannelPrivacy, String> channelPrivacyString = {
+  ChannelPrivacy.public: 'public',
+  ChannelPrivacy.private: 'private',
+};
+
+const Map<String, ChannelPrivacy> channelPrivacyFromString = {
+  'public': ChannelPrivacy.public,
+  'private': ChannelPrivacy.private,
+};
+
 const Map<ThreadType, String> threadTypeString = {
   ThreadType.message: 'message',
   ThreadType.event: 'event',
