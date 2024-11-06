@@ -17,8 +17,7 @@ class ThreadService {
       final pb = await PocketBaseService.getInstance();
       final threadModels = await pb.collection('threads').getList(
         filter: """
-          channel.id='$channelId' && 
-          deleted=null
+          channel.id='$channelId'
         """,
         expand:
             'creator,thread_tasks_via_thread,thread_tasks_via_thread.assignee,thread_tasks_via_thread.completed_by,thread_reactions_via_thread,thread_reactions_via_thread.creator',
@@ -49,8 +48,7 @@ class ThreadService {
             '*',
             threadCallback,
             filter: """
-                      channel.id='$channelId' && 
-                      deleted=null
+                      channel.id='$channelId'
                     """,
             expand:
                 'creator,thread_tasks_via_thread,thread_tasks_via_thread.assignee',
@@ -93,6 +91,33 @@ class ThreadService {
               body: task.toJson()..['thread'] = createdThread.id,
             );
       }
+      return true;
+    } on Exception catch (exception) {
+      throw ServiceException(exception);
+    }
+  }
+
+  Future<bool> updateThread(Thread thread) async {
+    try {
+      final pb = await PocketBaseService.getInstance();
+
+      await pb.collection('threads').update(
+            thread.id!,
+            body: thread.toJson(),
+          );
+
+      return true;
+    } on Exception catch (exception) {
+      throw ServiceException(exception);
+    }
+  }
+
+  Future<bool> deleteThread(Thread thread) async {
+    try {
+      final pb = await PocketBaseService.getInstance();
+
+      await pb.collection('threads').delete(thread.id!);
+
       return true;
     } on Exception catch (exception) {
       throw ServiceException(exception);

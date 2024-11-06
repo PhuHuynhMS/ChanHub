@@ -17,6 +17,9 @@ class ServiceException implements Exception {
 
   String _getSingleMessage() {
     if (exception is ClientException) {
+      if ((exception as ClientException).statusCode == 429) {
+        return 'Too many requests. Please try again later.';
+      }
       final Map<String, dynamic> response =
           (exception as ClientException).response;
 

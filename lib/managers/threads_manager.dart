@@ -79,6 +79,28 @@ class ThreadsManager {
     );
   }
 
+  Future<void> updateThread(Thread updatedThread) async {
+    final isUpdated = await _threadService.updateThread(updatedThread);
+
+    if (isUpdated) {
+      final index =
+          _threads.indexWhere((thread) => thread.id == updatedThread.id);
+      if (index != -1) {
+        _threads[index] = updatedThread;
+        _notifyChannelListeners();
+      }
+    }
+  }
+
+  Future<void> deleteThread(Thread deletedThread) async {
+    final isDeleted = await _threadService.deleteThread(deletedThread);
+
+    if (isDeleted) {
+      _threads.removeWhere((thread) => thread.id == deletedThread.id);
+      _notifyChannelListeners();
+    }
+  }
+
   Future<bool> changeTaskStatus(Task task) async {
     return await _threadService.changeTaskStatus(task);
   }

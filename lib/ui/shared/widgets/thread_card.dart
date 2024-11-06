@@ -25,8 +25,8 @@ class ThreadCard extends StatelessWidget {
   final List<Task>? tasks;
   final List<Reaction>? reactions;
   final List<Comment>? comments;
-  final Function(Reaction) onReactionPressed;
-  final Function(Task task) onChangeTaskStatus;
+  final Future<void> Function(Reaction) onReactionPressed;
+  final Future<void> Function(Task task) onChangeTaskStatus;
 
   @override
   Widget build(BuildContext context) {

@@ -16,7 +16,7 @@ class ThreadReaction extends StatefulWidget {
   });
 
   final List<Reaction> reactions;
-  final void Function(Reaction) onReactionPressed;
+  final Future<void> Function(Reaction) onReactionPressed;
 
   @override
   State<ThreadReaction> createState() => _ThreadReactionState();
@@ -25,6 +25,7 @@ class ThreadReaction extends StatefulWidget {
 class _ThreadReactionState extends State<ThreadReaction> {
   Map<ReactionType, bool> hasReactionMap = {};
   Map<ReactionType, List<Reaction>> reactionsMap = {};
+  bool isReacting = false;
 
   @override
   void initState() {
@@ -63,13 +64,16 @@ class _ThreadReactionState extends State<ThreadReaction> {
     );
   }
 
-  void _onReactionPressed(ReactionType type) {
+  void _onReactionPressed(ReactionType type) async {
+    if (isReacting) return;
+
+    isReacting = true;
     final loggedInUser = context.read<AuthManager>().loggedInUser;
     Reaction reaction;
 
     if (hasReactionMap[type] ?? false) {
       reaction = reactionsMap[type]!
-          .firstWhere((reaction) => reaction.creator!.id == loggedInUser!.id);
+          .firstWhere((reaction) => reaction.creator?.id == loggedInUser!.id);
       hasReactionMap[type] = false;
       reactionsMap[type]!.remove(reaction);
     } else {
@@ -77,8 +81,10 @@ class _ThreadReactionState extends State<ThreadReaction> {
       hasReactionMap[type] = true;
       reactionsMap[type]!.add(reaction);
     }
-    widget.onReactionPressed(reaction);
     setState(() {});
+
+    await widget.onReactionPressed(reaction);
+    isReacting = false;
   }
 
   @override

@@ -8,6 +8,7 @@ import '../../models/index.dart';
 import '../../managers/index.dart';
 import '../shared/utils/index.dart';
 import '../shared/widgets/index.dart';
+import '../shared/extensions/index.dart';
 import './widgets/index.dart';
 
 class ChannelScreen extends StatelessWidget {
@@ -29,12 +30,16 @@ class ChannelScreen extends StatelessWidget {
               scrollController.position.maxScrollExtent &&
           threadsManager.hasMoreThreads &&
           !threadsManager.isFetching) {
-        threadsManager.fetchMoreThreads();
+        context.executeWithErrorHandling(() async {
+          threadsManager.fetchMoreThreads();
+        }, isShowLoading: false, ignoreError: true);
       }
     });
 
-    // Mark all threads as read
-    context.read<ChannelsManager>().markAllThreadsAsRead(channel.id!);
+    // Mark all threads as read when open the channel
+    context.executeWithErrorHandling(() async {
+      context.read<ChannelsManager>().markAllThreadsAsRead(channel.id!);
+    }, isShowLoading: false, ignoreError: true);
 
     return Scaffold(
       appBar: AppBar(

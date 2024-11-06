@@ -16,7 +16,7 @@ class TaskPreview extends StatelessWidget {
   });
 
   final List<Task> threadTasks;
-  final Function(Task) onTaskStatusChanged;
+  final Future<void> Function(Task) onTaskStatusChanged;
   late final ValueNotifier<List<Task>> tasks = ValueNotifier(threadTasks);
 
   bool _isAssignedToMe(BuildContext context, Task task) {

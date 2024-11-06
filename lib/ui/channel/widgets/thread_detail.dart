@@ -14,11 +14,12 @@ class ThreadDetail extends StatelessWidget {
 
   final Thread thread;
 
-  void _onChangeTaskStatus(ThreadsManager threadsManager, Task task) async {
+  Future<void> _onChangeTaskStatus(
+      ThreadsManager threadsManager, Task task) async {
     await threadsManager.changeTaskStatus(task);
   }
 
-  void _onReactionPressed(
+  Future<void> _onReactionPressed(
       ThreadsManager threadsManager, Reaction reaction) async {
     await threadsManager.reactToThread(thread, reaction);
   }
@@ -44,6 +45,7 @@ class ThreadDetail extends StatelessWidget {
         context.read<ChannelsManager>().getCurrentThreadsManager();
     if (thread.type == ThreadType.message) {
       return GestureDetector(
+        behavior: HitTestBehavior.translucent,
         onTap: () => _showThreadDetails(context),
         onLongPress: () => _showThreadActions(context),
         child: ThreadCard(
@@ -54,10 +56,10 @@ class ThreadDetail extends StatelessWidget {
           reactions: thread.reactions,
           comments: thread.comments,
           tasks: thread.tasks,
-          onReactionPressed: (reaction) =>
-              _onReactionPressed(threadsManager, reaction),
-          onChangeTaskStatus: (task) =>
-              _onChangeTaskStatus(threadsManager, task),
+          onReactionPressed: (reaction) async =>
+              await _onReactionPressed(threadsManager, reaction),
+          onChangeTaskStatus: (task) async =>
+              await _onChangeTaskStatus(threadsManager, task),
         ),
       );
     }
