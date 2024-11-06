@@ -3,20 +3,24 @@ import 'package:flutter/material.dart';
 import 'package:provider/provider.dart';
 
 import '../../managers/index.dart';
-import './workspace_screen.dart';
-
 import '../../models/index.dart';
-import '../shared/widgets/index.dart';
+import '../shared/extensions/index.dart';
 import '../screens.dart';
+import './widgets/index.dart';
 
 class AddWorkspaceMembersScreen extends StatefulWidget {
   static const String routeName = '/workspace/members/add';
 
-  const AddWorkspaceMembersScreen(
-      {super.key, required this.workspaceName, required this.image});
+  const AddWorkspaceMembersScreen({
+    super.key,
+    this.workspaceName,
+    this.image,
+    this.isCreating = false,
+  });
 
-  final String workspaceName;
-  final File image;
+  final String? workspaceName;
+  final File? image;
+  final bool isCreating;
 
   @override
   State<AddWorkspaceMembersScreen> createState() =>
@@ -25,24 +29,25 @@ class AddWorkspaceMembersScreen extends StatefulWidget {
 
 class _AddWorkspaceMembersScreenState extends State<AddWorkspaceMembersScreen> {
   List<User> selectedUsers = [];
-  void _navigateToWorkspaceScreen(
-      {bool isSkip = false, required BuildContext context}) async {
-    if (isSkip) {
-      selectedUsers.clear();
-    }
+  void _navigateToWorkspaceScreen({
+    bool isSkip = false,
+    required BuildContext context,
+  }) async {
+    if (widget.isCreating) {
+      context.executeWithErrorHandling(() async {
+        if (isSkip) {
+          selectedUsers.clear();
+        }
 
-    final workspaceId = await context
-        .read<WorkspacesManager>()
-        .addWorkspace(widget.workspaceName, widget.image);
-
-    if (workspaceId != null && selectedUsers.isNotEmpty) {
-      if (context.mounted) {
         await context
             .read<WorkspacesManager>()
-            .addWorkspaceMembers(selectedUsers, workspaceId);
-      }
-    }
-    Navigator.of(context).pushReplacementNamed(WorkspaceScreen.routeName);
+            .addWorkspace(widget.workspaceName!, widget.image!, selectedUsers);
+
+        if (context.mounted) {
+          Navigator.of(context).popUntil((route) => route.isFirst);
+        }
+      });
+    } else {}
   }
 
   void updateSelectedMembers(List<User> newMembers) {

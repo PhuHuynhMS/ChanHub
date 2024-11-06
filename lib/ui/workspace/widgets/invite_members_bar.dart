@@ -5,7 +5,7 @@ import 'package:provider/provider.dart';
 import '../../../managers/index.dart';
 import '../../../models/index.dart';
 import '../../shared/utils/index.dart';
-import './index.dart';
+import '../../shared/widgets/index.dart';
 
 class InviteMembersBar extends StatefulWidget {
   const InviteMembersBar(
@@ -52,6 +52,7 @@ class _MemberSearchBarState extends State<InviteMembersBar> {
     setState(() {});
   }
 
+//TODO: fetch users who are not in workspace && show users with invitation status
   @override
   Widget build(BuildContext context) {
     return FutureBuilder(

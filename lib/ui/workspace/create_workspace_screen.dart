@@ -1,5 +1,6 @@
 import 'dart:io';
 
+import 'package:ct484_project/ui/shared/utils/index.dart';
 import 'package:flutter/material.dart';
 import 'package:image_picker/image_picker.dart';
 
@@ -42,7 +43,11 @@ class _CreateWorkspaceScreenState extends State<CreateWorkspaceScreen> {
     if (_isValidName) {
       final name = _nameController.text;
       Navigator.of(context).pushNamed(AddWorkspaceMembersScreen.routeName,
-          arguments: {'workspace_name': name, 'image': image});
+          arguments: {
+            'workspaceName': name,
+            'image': image,
+            'isCreating': true
+          });
     }
   }
 
@@ -51,15 +56,6 @@ class _CreateWorkspaceScreenState extends State<CreateWorkspaceScreen> {
       return true;
     }
     return false;
-  }
-
-  String? _nameValidator(String? value) {
-    if (value == null || value.trim().length < 6) {
-      return 'Workspace name must be at least 6 characters long';
-    } else if (value.trim().length > 15) {
-      return 'Workspace name must be at most 15 characters long';
-    }
-    return null;
   }
 
   Widget _buildProductPreview() {
@@ -140,7 +136,12 @@ class _CreateWorkspaceScreenState extends State<CreateWorkspaceScreen> {
                 CustomizedTextField(
                   onChanged: _onInput,
                   controller: _nameController,
-                  validator: _nameValidator,
+                  validator: Validator.compose([
+                    Validator.minLength(
+                        6, 'Workspace name must be at least 6 characters long'),
+                    Validator.maxLength(
+                        15, 'Workspace name must be at most 15 characters long')
+                  ]),
                   labelText: 'Workspace Name',
                   hintText: 'Eg. Acme Co.',
                 ),

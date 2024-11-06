@@ -1,6 +1,5 @@
 export './block_text_field.dart';
 export './customized_text_field.dart';
-export './invite_members_bar.dart';
 export './media_preview.dart';
 export './message_input.dart';
 export './progress_bar.dart';

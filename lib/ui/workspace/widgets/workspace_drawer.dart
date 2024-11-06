@@ -11,11 +11,9 @@ class WorkSpaceDrawer extends StatelessWidget {
     super.key,
   });
 
-  void _changeWorkspace(BuildContext context, Workspace workspace) async {
-    await context.read<WorkspacesManager>().setSelectedWorkspace(workspace.id);
-    if (context.mounted) {
-      Navigator.of(context).pop();
-    }
+  void _changeWorkspace(BuildContext context, Workspace workspace) {
+    context.read<WorkspacesManager>().setSelectedWorkspace(workspace.id);
+    Navigator.of(context).pop();
   }
 
   void _createWorkspace(BuildContext context) {

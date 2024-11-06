@@ -1,5 +1,7 @@
 import 'package:flutter/material.dart';
+import 'package:provider/provider.dart';
 
+import '../../../managers/index.dart';
 import '../../../models/index.dart';
 import '../../shared/utils/index.dart';
 import '../../screens.dart';
@@ -12,7 +14,7 @@ class ListWorkspaceMembers extends StatelessWidget {
   });
 
   final List<User> filteredMembers;
-  final void Function(User member) onRemoveMember;
+  final void Function(BuildContext context, User member) onRemoveMember;
 
   void _onViewProfile(BuildContext context, User member) {
     Navigator.of(context).pushNamed(ProfileScreen.routeName, arguments: member);
@@ -24,17 +26,21 @@ class ListWorkspaceMembers extends StatelessWidget {
       content: 'Are you sure you want to remove this member?',
     );
 
-    if (isConfirmed) {
-      onRemoveMember(member);
+    if (isConfirmed && context.mounted) {
+      onRemoveMember(context, member);
     }
   }
 
   @override
   Widget build(BuildContext context) {
+    final userId = context.read<AuthManager>().loggedInUser?.id;
+    bool isAdmin = context.read<WorkspacesManager>().isWorkspaceAdmin(userId!);
+
     return ListView.builder(
       itemCount: filteredMembers.length,
       itemBuilder: (context, index) {
         final member = filteredMembers[index];
+        final isAdminTile = member.id == userId;
 
         return ListTile(
           leading: CircleAvatar(
@@ -45,13 +51,15 @@ class ListWorkspaceMembers extends StatelessWidget {
             member.email,
             style: Theme.of(context).textTheme.labelSmall,
           ),
-          trailing: IconButton(
-            icon: Icon(
-              Icons.delete,
-              color: Theme.of(context).colorScheme.error,
-            ),
-            onPressed: () => _onRemoveMember(context, member),
-          ),
+          trailing: isAdmin && !isAdminTile
+              ? IconButton(
+                  icon: Icon(
+                    Icons.delete,
+                    color: Theme.of(context).colorScheme.error,
+                  ),
+                  onPressed: () => _onRemoveMember(context, member),
+                )
+              : null,
           onTap: () => _onViewProfile(context, member),
         );
       },

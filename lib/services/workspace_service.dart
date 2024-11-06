@@ -83,33 +83,28 @@ class WorkspaceService {
     }
   }
 
-  Future<Workspace?> addWorkspace(String workspaceName, File image) async {
+  Future<Workspace?> addWorkspace(
+      String workspaceName, File image, List<User> members) async {
     try {
       final pb = await PocketBaseService.getInstance();
       final userId = await pb.authStore.model.id;
       final user = await pb.authStore.model;
-      final workspaceModel = await pb.collection('workspaces').create(body: {
-        'name': workspaceName,
-        'creator': userId,
-      }, files: [
-        http.MultipartFile.fromBytes('image', await image.readAsBytes(),
-            filename: image.uri.pathSegments.last)
-      ]);
-      final workspaceJson = workspaceModel.toJson();
-      workspaceJson['expand'] = {
-        'workspace_members_via_workspace': [
-          {
-            'expand': {
-              'member': user.toJson(),
-            }
-          }
+      final workspaceModel = await pb.collection('workspaces').create(
+        body: {
+          'name': workspaceName,
+          'creator': userId,
+        },
+        files: [
+          http.MultipartFile.fromBytes('image', await image.readAsBytes(),
+              filename: image.uri.pathSegments.last)
         ],
-        'creator': user.toJson(),
-      };
+        expand: 'creator,workspace_members_via_workspace.member',
+      );
 
-      addWorkspaceMembers([User.fromJson(user.toJson())], workspaceModel.id);
+      await addWorkspaceMembers(
+          [User.fromJson(user.toJson()), ...members], workspaceModel.id);
 
-      return Workspace.fromJson(workspaceJson);
+      return await fetchSelectedWorkspace(workspaceModel.id);
     } on Exception catch (exception) {
       throw ServiceException(exception);
     }
@@ -122,37 +117,50 @@ class WorkspaceService {
       final userId = await pb.authStore.model.id;
 
       for (final member in members) {
-        String status = "pending";
-        if (member.id == userId) {
-          status = 'accepted';
-        }
         final body = <String, dynamic>{
           "member": member.id,
           "workspace": workspaceId,
-          "status": status,
+          "status": member.id == userId ? 'accepted' : 'pending',
         };
 
         await pb.collection('workspace_members').create(body: body);
+        print(member.id);
       }
     } on Exception catch (exception) {
       throw ServiceException(exception);
     }
   }
 
-//TODO: Need to fix
-  Future<List<User>> fetchAllWorkspaceMembers() async {
-    List<User> users = [];
+  Future<Workspace?> fetchSelectedWorkspace(String workspaceId) async {
+    try {
+      print(workspaceId);
+      final pb = await PocketBaseService.getInstance();
+      final selectedWorkspaceModel = await pb.collection('workspaces').getOne(
+            workspaceId,
+            expand:
+                "creator,workspace_members_via_workspace,workspace_members_via_workspace.member",
+          );
+      print('================');
+      print(selectedWorkspaceModel);
+      return Workspace.fromJson(selectedWorkspaceModel.toJson());
+    } on Exception catch (exception) {
+      throw ServiceException(exception);
+    }
+  }
+
+  Future<void> deleteWorkspaceMembers(
+      String memberId, String workspaceId) async {
     try {
       final pb = await PocketBaseService.getInstance();
-      final userId = await pb.authStore.model.id;
 
-      final userModels =
-          await pb.collection('users').getFullList(filter: "id != '$userId'");
-
-      for (final userModel in userModels) {
-        users.add(User.fromJson(userModel.toJson()));
-      }
-      return users;
+      final workspaceMemberModel =
+          await pb.collection('workspace_members').getFirstListItem("""
+            member = '$memberId' && 
+            workspace = '$workspaceId' 
+          """);
+      await pb.collection('workspace_members').delete(
+            workspaceMemberModel.toJson()['id'],
+          );
     } on Exception catch (exception) {
       throw ServiceException(exception);
     }

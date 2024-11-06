@@ -1,5 +1,7 @@
 import 'package:flutter/material.dart';
+import 'package:provider/provider.dart';
 
+import '../../../managers/index.dart';
 import '../../../models/index.dart';
 import '../../shared/utils/index.dart';
 import '../../screens.dart';
@@ -28,6 +30,50 @@ class WorkspaceHeader extends StatelessWidget {
 
     if (isConfirmed && context.mounted) {
       Navigator.of(context).pushNamed(WorkspaceScreen.routeName);
+    }
+  }
+
+  List<Widget> _buildWorkspaceActions(BuildContext context) {
+    const iconSize = 25.0;
+    final userId = context.read<AuthManager>().loggedInUser?.id;
+    bool isAdmin = context.read<WorkspacesManager>().isWorkspaceAdmin(userId!);
+
+    if (isAdmin) {
+      return [
+        IconButton(
+          iconSize: iconSize,
+          onPressed: () => _navigateToManageMembers(context),
+          icon: const Icon(Icons.manage_accounts),
+          color: Theme.of(context).colorScheme.onSurface,
+        ),
+        IconButton(
+          iconSize: iconSize,
+          color: Theme.of(context).colorScheme.onSurface,
+          onPressed: () => _navigateToAddWorkspacesMembers(context),
+          icon: const Icon(Icons.person_add),
+        ),
+        IconButton(
+          iconSize: iconSize,
+          color: Theme.of(context).colorScheme.error,
+          onPressed: () => _navigateToAddWorkspacesMembers(context),
+          icon: const Icon(Icons.delete),
+        ),
+      ];
+    } else {
+      return [
+        IconButton(
+          iconSize: iconSize,
+          onPressed: () => _navigateToManageMembers(context),
+          icon: const Icon(Icons.people),
+          color: Theme.of(context).colorScheme.onSurface,
+        ),
+        IconButton(
+          iconSize: iconSize,
+          onPressed: () => _leaveWorkspace(context),
+          icon: const Icon(Icons.exit_to_app),
+          color: Theme.of(context).colorScheme.error,
+        ),
+      ];
     }
   }
 
@@ -62,30 +108,7 @@ class WorkspaceHeader extends StatelessWidget {
               const SizedBox(height: 10.0),
 
               // Workspace Actions
-              Row(
-                children: [
-                  // TODO: Show icon [view members, leave workspace] for workspace members and
-                  // [add members, manage members] for workspace owner
-                  IconButton(
-                    iconSize: 25.0,
-                    onPressed: () => _navigateToManageMembers(context),
-                    icon: const Icon(Icons.manage_accounts),
-                    color: Theme.of(context).colorScheme.primary,
-                  ),
-                  IconButton(
-                    iconSize: 25.0,
-                    color: Theme.of(context).colorScheme.primary,
-                    onPressed: () => _navigateToAddWorkspacesMembers(context),
-                    icon: const Icon(Icons.person_add),
-                  ),
-                  IconButton(
-                    iconSize: 25.0,
-                    onPressed: () => _leaveWorkspace(context),
-                    icon: const Icon(Icons.exit_to_app),
-                    color: Theme.of(context).colorScheme.error,
-                  ),
-                ],
-              )
+              Row(children: _buildWorkspaceActions(context))
             ],
           )
         ],

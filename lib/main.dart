@@ -121,12 +121,16 @@ class ChanHub extends StatelessWidget {
 
     if (settings.name == AddWorkspaceMembersScreen.routeName) {
       final agrs = settings.arguments as Map<String, dynamic>;
-      final workspaceName = agrs['workspace_name'];
+      final workspaceName = agrs['workspaceName'];
       final image = agrs['image'];
+      final isCreating = agrs['isCreating'];
       return MaterialPageRoute(
         builder: (context) => SafeArea(
           child: AddWorkspaceMembersScreen(
-              workspaceName: workspaceName, image: image),
+            workspaceName: workspaceName,
+            image: image,
+            isCreating: isCreating,
+          ),
         ),
       );
     }

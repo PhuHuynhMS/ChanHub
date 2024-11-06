@@ -15,10 +15,10 @@ class WorkspaceScreen extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
+    print('123456789');
     final workspaces = context.watch<WorkspacesManager>().getAll();
-    final selectedWorkspace =
-        context.watch<WorkspacesManager>().getSelectedWorkspace();
 
+    print('===================================================0');
     return Scaffold(
       appBar: AppBar(
         title: const Text('ChanHub'),
@@ -27,20 +27,25 @@ class WorkspaceScreen extends StatelessWidget {
           const SizedBox(width: 10.0),
         ],
       ),
-      body: _buildWorkspaceBody(selectedWorkspace, context, workspaces),
+      body: RefreshIndicator(
+          onRefresh: () {
+            return context.read<WorkspacesManager>().fetchSelectedWorkspace();
+          },
+          child: _buildWorkspaceBody(context, workspaces)),
       drawer: const WorkSpaceDrawer(),
     );
   }
 
   Widget _buildWorkspaceBody(
-    Workspace? selectedWorkspace,
     BuildContext context,
     List<Workspace>? workspaces,
   ) {
-    if (workspaces == null || selectedWorkspace == null) {
+    if (workspaces == null) {
       return getLoadingAnimation(context);
     } else if (workspaces.isNotEmpty) {
-      return WorkspaceDescription(selectedWorkspace);
+      final selectedWorkspace =
+          context.read<WorkspacesManager>().getSelectedWorkspace();
+      return WorkspaceDescription(selectedWorkspace!);
     } else {
       return const WorkspaceGetStarted();
     }
