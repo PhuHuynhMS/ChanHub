@@ -5,7 +5,6 @@ import 'package:provider/provider.dart';
 import '../../managers/index.dart';
 import '../../models/index.dart';
 import '../shared/extensions/index.dart';
-import '../screens.dart';
 import './widgets/index.dart';
 
 class AddWorkspaceMembersScreen extends StatefulWidget {
@@ -29,10 +28,8 @@ class AddWorkspaceMembersScreen extends StatefulWidget {
 
 class _AddWorkspaceMembersScreenState extends State<AddWorkspaceMembersScreen> {
   List<User> selectedUsers = [];
-  void _navigateToWorkspaceScreen({
-    bool isSkip = false,
-    required BuildContext context,
-  }) async {
+
+  void _onSubmit({bool isSkip = false, required BuildContext context}) async {
     if (widget.isCreating) {
       context.executeWithErrorHandling(() async {
         if (isSkip) {
@@ -63,8 +60,7 @@ class _AddWorkspaceMembersScreenState extends State<AddWorkspaceMembersScreen> {
         title: const Text('Add Collaborators'),
         actions: [
           TextButton(
-            onPressed: () =>
-                _navigateToWorkspaceScreen(isSkip: true, context: context),
+            onPressed: () => _onSubmit(isSkip: true, context: context),
             child: Text(
               'Skip',
               style: Theme.of(context).primaryTextTheme.titleSmall,
@@ -100,7 +96,7 @@ class _AddWorkspaceMembersScreenState extends State<AddWorkspaceMembersScreen> {
                   width: double.infinity,
                   child: ElevatedButton(
                     onPressed: selectedUsers.isNotEmpty
-                        ? () => _navigateToWorkspaceScreen(context: context)
+                        ? () => _onSubmit(context: context)
                         : null,
                     child: const Text('Create And Invite'),
                   ),

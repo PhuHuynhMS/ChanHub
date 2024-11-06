@@ -24,15 +24,16 @@ class Workspace {
       required this.members,
       this.workspaceMemberId});
 
-  Workspace copyWith(
-      {String? id,
-      String? name,
-      String? imageUrl,
-      File? image,
-      DateTime? createdAt,
-      User? creator,
-      List<User>? members,
-      String? workspaceMemberId}) {
+  Workspace copyWith({
+    String? id,
+    String? name,
+    String? imageUrl,
+    File? image,
+    DateTime? createdAt,
+    User? creator,
+    List<User>? members,
+    String? workspaceMemberId,
+  }) {
     return Workspace(
       id: id ?? this.id,
       name: name ?? this.name,

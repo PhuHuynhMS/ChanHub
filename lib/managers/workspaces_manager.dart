@@ -14,26 +14,33 @@ class WorkspacesManager with ChangeNotifier {
 
   Future<void> fetchWorkspaces() async {
     _workspaces = await _workspaceService.fetchAllWorkspaces();
-    _defaultWorkspaceId = await _workspaceService.getDefaultWorkspace();
+    _defaultWorkspaceId = await _workspaceService.getDefaultWorkspace() ??
+        _workspaces.firstOrNull?.id;
     _selectedWorkspaceId = _defaultWorkspaceId;
     notifyListeners();
   }
 
   Future<String?> addWorkspace(
-      String workspaceName, File image, List<User> members) async {
-    final newWorkspace =
-        await _workspaceService.addWorkspace(workspaceName, image, members);
-
-    setSelectedWorkspace(newWorkspace!.id);
-    print('2====================5');
-    print(newWorkspace);
+    String workspaceName,
+    File image,
+    List<User> members,
+  ) async {
+    final newWorkspace = await _workspaceService.addWorkspace(
+      workspaceName,
+      image,
+      members,
+    );
+    _workspaces.add(newWorkspace!);
+    setSelectedWorkspace(newWorkspace.id);
     notifyListeners();
-    return newWorkspace!.id;
+    return newWorkspace.id;
   }
 
   Future<bool> deleteWorkspaceMember(User member) async {
     await _workspaceService.deleteWorkspaceMembers(
-        member.id, _selectedWorkspaceId!);
+      member.id,
+      _selectedWorkspaceId!,
+    );
     notifyListeners();
     return true;
   }
@@ -43,13 +50,13 @@ class WorkspacesManager with ChangeNotifier {
   }
 
   Future<void> addWorkspaceMembers(
-      List<User> members, String workspaceId) async {
+    List<User> members,
+    String workspaceId,
+  ) async {
     await _workspaceService.addWorkspaceMembers(members, workspaceId);
   }
 
   Workspace? getSelectedWorkspace() {
-    print('========================');
-    print('object');
     if (_selectedWorkspaceId == null) return null;
     return _workspaces
         .firstWhere((workspace) => workspace.id == _selectedWorkspaceId);
@@ -62,8 +69,7 @@ class WorkspacesManager with ChangeNotifier {
 
   Future<void> fetchSelectedWorkspace() async {
     final newSelectedWorkspace =
-        await _workspaceService.fetchSelectedWorkspace(_selectedWorkspaceId!);
-    print(newSelectedWorkspace);
+        await _workspaceService.fetchWorkspace(_selectedWorkspaceId!);
     final index = _workspaces.indexOf(getSelectedWorkspace()!);
     _workspaces[index] = newSelectedWorkspace!;
     notifyListeners();
@@ -76,7 +82,10 @@ class WorkspacesManager with ChangeNotifier {
   }
 
   Future<void> setDefaultWorkspace(Workspace newWorkspace) async {
-    await _workspaceService.setDefaultWorkspace(newWorkspace);
+    await _workspaceService.setDefaultWorkspace(
+      getDefaultWorkspace(),
+      newWorkspace,
+    );
     _defaultWorkspaceId = newWorkspace.id;
     notifyListeners();
   }

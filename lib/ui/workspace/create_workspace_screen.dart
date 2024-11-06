@@ -1,9 +1,9 @@
 import 'dart:io';
 
-import 'package:ct484_project/ui/shared/utils/index.dart';
 import 'package:flutter/material.dart';
 import 'package:image_picker/image_picker.dart';
 
+import '../shared/utils/index.dart';
 import '../shared/widgets/index.dart';
 import '../screens.dart';
 
@@ -17,9 +17,8 @@ class CreateWorkspaceScreen extends StatefulWidget {
 }
 
 class _CreateWorkspaceScreenState extends State<CreateWorkspaceScreen> {
+  final GlobalKey<FormState> _formKey = GlobalKey<FormState>();
   final _nameController = TextEditingController();
-  bool _isValidName = false;
-
   late File? image;
 
   @override
@@ -34,56 +33,57 @@ class _CreateWorkspaceScreenState extends State<CreateWorkspaceScreen> {
     _nameController.dispose();
   }
 
-  void _onInput(value) {
-    _isValidName = value.toString().trim().length >= 6;
-    setState(() {});
-  }
-
   void _onContinue() {
-    if (_isValidName) {
-      final name = _nameController.text;
-      Navigator.of(context).pushNamed(AddWorkspaceMembersScreen.routeName,
-          arguments: {
-            'workspaceName': name,
-            'image': image,
-            'isCreating': true
-          });
+    if (!_formKey.currentState!.validate() || image == null) {
+      return;
     }
+    Navigator.of(context).pushNamed(
+      AddWorkspaceMembersScreen.routeName,
+      arguments: {
+        'workspaceName': _nameController.text,
+        'image': image,
+        'isCreating': true,
+      },
+    );
   }
 
-  bool _isValid() {
-    if (_isValidName && image != null) {
-      return true;
-    }
-    return false;
-  }
-
-  Widget _buildProductPreview() {
-    return Row(crossAxisAlignment: CrossAxisAlignment.center, children: [
-      Container(
+  Widget _buildWorkspaceImagePreview() {
+    return Row(
+      crossAxisAlignment: CrossAxisAlignment.center,
+      children: [
+        Container(
           alignment: Alignment.center,
           width: 100,
           height: 100,
           margin: const EdgeInsets.only(top: 8, right: 10),
           decoration: BoxDecoration(
-            border: Border.all(width: 1, color: Colors.grey),
+            borderRadius: const BorderRadius.all(Radius.circular(5.0)),
+            border: Border.all(
+              width: 1,
+              color: Theme.of(context).colorScheme.tertiary,
+            ),
           ),
           child: image == null
               ? const Text(
-                  'Add your workspace avatar',
+                  'Workspace image',
                   textAlign: TextAlign.center,
                 )
-              : Image.file(
-                  image!,
-                  fit: BoxFit.cover,
-                )),
-      Expanded(
-        child: SizedBox(
-          height: 100,
-          child: _buildImagePickerButton(),
+              : ClipRRect(
+                  borderRadius: const BorderRadius.all(Radius.circular(5.0)),
+                  child: Image.file(
+                    image!,
+                    fit: BoxFit.cover,
+                  ),
+                ),
         ),
-      )
-    ]);
+        Expanded(
+          child: SizedBox(
+            height: 100,
+            child: _buildImagePickerButton(),
+          ),
+        )
+      ],
+    );
   }
 
   TextButton _buildImagePickerButton() {
@@ -102,11 +102,21 @@ class _CreateWorkspaceScreenState extends State<CreateWorkspaceScreen> {
           image = File(imageFile.path);
           setState(() {});
         } catch (error) {
-          if (mounted) {
-            print('Error');
-          }
+          // ignore error
         }
       },
+    );
+  }
+
+  Widget _buildWorkspaceNameField() {
+    return CustomizedTextField(
+      controller: _nameController,
+      validator: Validator.compose([
+        Validator.minLength(6, 'Workspace name must be at least 6 characters'),
+        Validator.maxLength(15, 'Workspace name must be at most 15 characters')
+      ]),
+      labelText: 'Workspace Name',
+      hintText: 'Eg. Acme Co.',
     );
   }
 
@@ -120,48 +130,40 @@ class _CreateWorkspaceScreenState extends State<CreateWorkspaceScreen> {
         child: SingleChildScrollView(
           child: Padding(
             padding: const EdgeInsets.all(20.0),
-            child: Column(
-              children: [
-                // Title
-                Text(
-                  'What\'s is the name of your company or team?',
-                  style: Theme.of(context).textTheme.headlineSmall,
-                  textAlign: TextAlign.center,
-                ),
-                const SizedBox(height: 30.0),
-                const Text('This will be the name of your workspace'),
-                const SizedBox(height: 10.0),
-
-                // Input field
-                CustomizedTextField(
-                  onChanged: _onInput,
-                  controller: _nameController,
-                  validator: Validator.compose([
-                    Validator.minLength(
-                        6, 'Workspace name must be at least 6 characters long'),
-                    Validator.maxLength(
-                        15, 'Workspace name must be at most 15 characters long')
-                  ]),
-                  labelText: 'Workspace Name',
-                  hintText: 'Eg. Acme Co.',
-                ),
-                _buildProductPreview(),
-                // Next button
-                Container(
-                  margin: const EdgeInsets.symmetric(vertical: 20.0),
-                  width: double.infinity,
-                  child: ElevatedButton(
-                    onPressed: _isValid() ? _onContinue : null,
-                    child: const Text('Next'),
+            child: Form(
+              key: _formKey,
+              child: Column(
+                children: [
+                  // Title
+                  Text(
+                    'What\'s is the name of your company or team?',
+                    style: Theme.of(context).textTheme.headlineSmall,
+                    textAlign: TextAlign.center,
                   ),
-                ),
+                  const SizedBox(height: 30.0),
+                  const Text('This will be the name of your workspace'),
+                  const SizedBox(height: 10.0),
 
-                // Terms and conditions
-                Text(
-                  'By continuing, you\'re agreeing to our Main Services Agreement, User Terms of Service, and ChanHub Supplemental Terms. Additional disclosures are available in out Privacy Policy and Cookie Policy.',
-                  style: Theme.of(context).textTheme.labelSmall,
-                ),
-              ],
+                  // Input field
+                  _buildWorkspaceNameField(),
+                  _buildWorkspaceImagePreview(),
+                  // Next button
+                  Container(
+                    margin: const EdgeInsets.symmetric(vertical: 20.0),
+                    width: double.infinity,
+                    child: ElevatedButton(
+                      onPressed: _onContinue,
+                      child: const Text('Next'),
+                    ),
+                  ),
+
+                  // Terms and conditions
+                  Text(
+                    'By continuing, you\'re agreeing to our Main Services Agreement, User Terms of Service, and ChanHub Supplemental Terms. Additional disclosures are available in out Privacy Policy and Cookie Policy.',
+                    style: Theme.of(context).textTheme.labelSmall,
+                  ),
+                ],
+              ),
             ),
           ),
         ),

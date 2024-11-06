@@ -1,8 +1,8 @@
 import 'package:flutter/material.dart';
 import 'package:provider/provider.dart';
 
-import '../../managers/index.dart';
 import '../../models/index.dart';
+import '../../managers/index.dart';
 import '../shared/utils/loading_animation.dart';
 import './widgets/index.dart';
 
@@ -15,10 +15,10 @@ class WorkspaceScreen extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    print('123456789');
     final workspaces = context.watch<WorkspacesManager>().getAll();
+    final selectedWorkspace =
+        context.watch<WorkspacesManager>().getSelectedWorkspace();
 
-    print('===================================================0');
     return Scaffold(
       appBar: AppBar(
         title: const Text('ChanHub'),
@@ -31,21 +31,20 @@ class WorkspaceScreen extends StatelessWidget {
           onRefresh: () {
             return context.read<WorkspacesManager>().fetchSelectedWorkspace();
           },
-          child: _buildWorkspaceBody(context, workspaces)),
+          child: _buildWorkspaceBody(context, workspaces, selectedWorkspace)),
       drawer: const WorkSpaceDrawer(),
     );
   }
 
   Widget _buildWorkspaceBody(
     BuildContext context,
-    List<Workspace>? workspaces,
+    List<Workspace> workspaces,
+    Workspace? selectedWorkspace,
   ) {
-    if (workspaces == null) {
+    if (workspaces.isEmpty && selectedWorkspace == null) {
       return getLoadingAnimation(context);
-    } else if (workspaces.isNotEmpty) {
-      final selectedWorkspace =
-          context.read<WorkspacesManager>().getSelectedWorkspace();
-      return WorkspaceDescription(selectedWorkspace!);
+    } else if (workspaces.isNotEmpty && selectedWorkspace != null) {
+      return WorkspaceDescription(selectedWorkspace);
     } else {
       return const WorkspaceGetStarted();
     }

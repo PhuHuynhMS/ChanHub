@@ -1,12 +1,10 @@
-import 'package:ct484_project/models/user.dart';
-import 'package:ct484_project/ui/shared/extensions/index.dart';
 import 'package:flutter/material.dart';
 import 'package:provider/provider.dart';
 
 import '../../models/index.dart';
 import '../../managers/index.dart';
+import '../shared/extensions/index.dart';
 import '../shared/utils/index.dart';
-import '../screens.dart';
 import './widgets/index.dart';
 
 class WorkspaceMembersScreen extends StatefulWidget {

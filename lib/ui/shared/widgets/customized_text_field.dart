@@ -1,17 +1,19 @@
 import 'package:flutter/material.dart';
 
 class CustomizedTextField extends StatelessWidget {
-  const CustomizedTextField(
-      {this.onChanged,
-      this.controller,
-      this.validator,
-      this.maxLength,
-      this.maxLines = 1,
-      this.labelText,
-      this.hintText,
-      this.readOnly = false,
-      this.initialValue,
-      super.key});
+  const CustomizedTextField({
+    this.onChanged,
+    this.controller,
+    this.validator,
+    this.maxLength,
+    this.maxLines = 1,
+    this.labelText,
+    this.hintText,
+    this.readOnly = false,
+    this.initialValue,
+    this.onSaved,
+    super.key,
+  });
 
   final void Function(String)? onChanged;
   final TextEditingController? controller;
@@ -22,6 +24,7 @@ class CustomizedTextField extends StatelessWidget {
   final String? hintText;
   final bool readOnly;
   final String? initialValue;
+  final String? Function(String?)? onSaved;
 
   @override
   Widget build(BuildContext context) {
@@ -39,6 +42,7 @@ class CustomizedTextField extends StatelessWidget {
       ),
       style: Theme.of(context).textTheme.bodyMedium,
       readOnly: readOnly,
+      onSaved: onSaved,
     );
   }
 }
