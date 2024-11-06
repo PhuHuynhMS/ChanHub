@@ -1,8 +1,8 @@
 import 'package:flutter/material.dart';
 import 'package:provider/provider.dart';
 
-import '../../managers/index.dart';
 import '../../models/index.dart';
+import '../../managers/index.dart';
 import '../shared/utils/loading_animation.dart';
 import './widgets/index.dart';
 
@@ -27,19 +27,23 @@ class WorkspaceScreen extends StatelessWidget {
           const SizedBox(width: 10.0),
         ],
       ),
-      body: _buildWorkspaceBody(selectedWorkspace, context, workspaces),
+      body: RefreshIndicator(
+          onRefresh: () {
+            return context.read<WorkspacesManager>().fetchSelectedWorkspace();
+          },
+          child: _buildWorkspaceBody(context, workspaces, selectedWorkspace)),
       drawer: const WorkSpaceDrawer(),
     );
   }
 
   Widget _buildWorkspaceBody(
-    Workspace? selectedWorkspace,
     BuildContext context,
-    List<Workspace>? workspaces,
+    List<Workspace> workspaces,
+    Workspace? selectedWorkspace,
   ) {
-    if (workspaces == null || selectedWorkspace == null) {
+    if (workspaces.isEmpty && selectedWorkspace == null) {
       return getLoadingAnimation(context);
-    } else if (workspaces.isNotEmpty) {
+    } else if (workspaces.isNotEmpty && selectedWorkspace != null) {
       return WorkspaceDescription(selectedWorkspace);
     } else {
       return const WorkspaceGetStarted();

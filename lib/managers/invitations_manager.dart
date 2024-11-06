@@ -6,7 +6,7 @@ class InvitationsManager {
         id: '1',
         workspace: Workspace(
           name: 'ChanHub Developer',
-          createdBy: User(
+          creator: User(
             jobTitle: "Flutter Developer",
             id: '1',
             fullname: 'John Doe',
@@ -153,7 +153,7 @@ class InvitationsManager {
         id: '2',
         workspace: Workspace(
           name: 'Pineapple and Banana',
-          createdBy: User(
+          creator: User(
             jobTitle: "Flutter Developer",
             id: '1',
             fullname: 'John Doe',
@@ -188,7 +188,7 @@ class InvitationsManager {
         id: '3',
         workspace: Workspace(
           name: 'ABCXYZ',
-          createdBy: User(
+          creator: User(
             jobTitle: "Flutter Developer",
             id: '2',
             fullname: 'Emily Brown',

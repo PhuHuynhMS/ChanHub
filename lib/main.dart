@@ -32,6 +32,7 @@ class ChanHub extends StatelessWidget {
             create: (_) => ChannelsManager(),
             update: (_, workspacesManager, channelsManager) => channelsManager!
               ..fetchChannels(workspacesManager.getSelectedWorkspace()?.id)),
+        ChangeNotifierProvider(create: (_) => UsersManager())
       ],
       child: Consumer2<OnboardingManager, AuthManager>(
         builder: (ctx, onboardingManager, authManager, child) {
@@ -121,9 +122,17 @@ class ChanHub extends StatelessWidget {
     }
 
     if (settings.name == AddWorkspaceMembersScreen.routeName) {
+      final agrs = settings.arguments as Map<String, dynamic>;
+      final workspaceName = agrs['workspaceName'];
+      final image = agrs['image'];
+      final isCreating = agrs['isCreating'];
       return MaterialPageRoute(
-        builder: (context) => const SafeArea(
-          child: AddWorkspaceMembersScreen(),
+        builder: (context) => SafeArea(
+          child: AddWorkspaceMembersScreen(
+            workspaceName: workspaceName,
+            image: image,
+            isCreating: isCreating,
+          ),
         ),
       );
     }

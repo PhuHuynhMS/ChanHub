@@ -5,3 +5,4 @@ export './onboarding_manager.dart';
 export './profile_manager.dart';
 export './threads_manager.dart';
 export './workspaces_manager.dart';
+export './users_manager.dart';

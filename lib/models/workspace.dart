@@ -9,18 +9,20 @@ class Workspace {
   final String? imageUrl;
   final File? image;
   final DateTime createdAt;
-  final User createdBy;
+  final User creator;
   List<User> members = [];
 
-  Workspace({
-    required this.id,
-    required this.name,
-    this.imageUrl,
-    this.image,
-    required this.createdAt,
-    required this.createdBy,
-    required this.members,
-  });
+  String? workspaceMemberId;
+
+  Workspace(
+      {required this.id,
+      required this.name,
+      this.imageUrl,
+      this.image,
+      required this.createdAt,
+      required this.creator,
+      required this.members,
+      this.workspaceMemberId});
 
   Workspace copyWith({
     String? id,
@@ -28,8 +30,9 @@ class Workspace {
     String? imageUrl,
     File? image,
     DateTime? createdAt,
-    User? createdBy,
+    User? creator,
     List<User>? members,
+    String? workspaceMemberId,
   }) {
     return Workspace(
       id: id ?? this.id,
@@ -37,32 +40,37 @@ class Workspace {
       imageUrl: imageUrl ?? this.imageUrl,
       image: image ?? this.image,
       createdAt: createdAt ?? this.createdAt,
-      createdBy: createdBy ?? this.createdBy,
+      creator: creator ?? this.creator,
       members: members ?? this.members,
+      workspaceMemberId: workspaceMemberId ?? this.workspaceMemberId,
     );
   }
 
-  // Map<String, dynamic> toJson() {
-  //   return {
-  //     'id': id,
-  //     'name': name,
-  //     'imageUrl': imageUrl,
-  //     'created': createdAt.toIso8601String(),
-  //     'creator': createdBy.toJson(),
-  //   };
-  // }
+  Map<String, dynamic> toJson() {
+    return {
+      'name': name,
+    };
+  }
 
   factory Workspace.fromJson(Map<String, dynamic> json) {
+    final workspaceMemberId = ((json['expand']
+                ['workspace_members_via_workspace'] ??
+            []) as List)
+        .firstWhere(
+            (workspaceMember) => workspaceMember['member'] == json['userId'],
+            orElse: () => <String, dynamic>{})['id'];
     return Workspace(
       id: json['id'],
       name: json['name'],
       imageUrl: json.getImageUrl('image'),
       createdAt: DateTime.parse(json['created']),
-      createdBy: User.fromJson(json['expand']['creator']),
-      members: (json['expand']['workspace_members_via_workspace'] as List)
-          .map((workspaceMember) =>
-              User.fromJson(workspaceMember['expand']['member']))
-          .toList(),
+      creator: User.fromJson(json['expand']['creator']),
+      members:
+          ((json['expand']['workspace_members_via_workspace'] ?? []) as List)
+              .map((workspaceMember) =>
+                  User.fromJson(workspaceMember['expand']['member']))
+              .toList(),
+      workspaceMemberId: workspaceMemberId,
     );
   }
 }

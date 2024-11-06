@@ -14,6 +14,7 @@ class WorkspaceDescription extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return SingleChildScrollView(
+      physics: const AlwaysScrollableScrollPhysics(),
       child: Column(
         children: [
           WorkspaceHeader(workspace),

@@ -75,13 +75,12 @@ class WorkspaceTile extends StatelessWidget {
 
                   // Workspace Name
                   Text(
-                    workspace.name,
+                    truncate(workspace.name, 20),
                     style: Theme.of(context).textTheme.titleSmall!.copyWith(
                           color: isSelectedWorkspace
                               ? Theme.of(context).colorScheme.primary
                               : Theme.of(context).colorScheme.onSurface,
                         ),
-                    overflow: TextOverflow.ellipsis,
                   )
                 ],
               ),
@@ -157,7 +156,7 @@ class WorkspaceActions extends StatelessWidget {
       await context.read<WorkspacesManager>().setDefaultWorkspace(workspace);
       if (context.mounted) {
         Navigator.of(context).pop();
-        await context.read<WorkspacesManager>().setSelectedWorkspace(workspace);
+        context.read<WorkspacesManager>().setSelectedWorkspace(workspace.id);
       }
     });
   }
