@@ -4,6 +4,7 @@ class BlockTextField extends StatefulWidget {
   const BlockTextField({
     super.key,
     this.margin = const EdgeInsets.symmetric(horizontal: 0.0, vertical: 0.0),
+    this.controller,
     this.backgroundColor,
     this.labelText,
     this.textStyle,
@@ -24,6 +25,7 @@ class BlockTextField extends StatefulWidget {
 
   final EdgeInsets margin;
   final Color? backgroundColor;
+  final TextEditingController? controller;
   final String? labelText;
   final TextStyle? textStyle;
   final Widget? prefixIcon;
@@ -113,7 +115,7 @@ class _BlockTextFieldState extends State<BlockTextField> {
                     : focusedInactiveShadow,
           ),
           child: TextFormField(
-            initialValue: widget.initialValue,
+            controller: widget.controller,
             enabled: widget.enabled,
             keyboardType: widget.keyboardType ?? TextInputType.text,
             textInputAction: widget.textInputAction ?? TextInputAction.next,

@@ -62,4 +62,15 @@ class AuthManager with ChangeNotifier {
   Future<void> resetPassword(String email) async {
     await _authService.requestPasswordReset(email);
   }
+
+  Future<void> updateUserInfo(User newUserInfo) async {
+    await _authService.updateUserInfo(newUserInfo);
+    _loggedInUser = _loggedInUser!.copyWith(
+      email: newUserInfo.email,
+      fullname: newUserInfo.fullname,
+      jobTitle: newUserInfo.jobTitle,
+      username: newUserInfo.username,
+    );
+    notifyListeners();
+  }
 }

@@ -1,5 +1,8 @@
 import 'package:flutter/material.dart';
+import 'package:provider/provider.dart';
 
+import '../../shared/extensions/index.dart';
+import '../../../managers/index.dart';
 import '../../../models/index.dart';
 import '../../shared/widgets/index.dart';
 import '../../screens.dart';
@@ -19,7 +22,41 @@ class ProfileDetails extends StatefulWidget {
 class _ProfileDetailsState extends State<ProfileDetails> {
   bool _isEditing = false;
 
+  late final TextEditingController _fullNameController;
+  late final TextEditingController _jobTitleController;
+  late final TextEditingController _emailController;
+  late final TextEditingController _usernameController;
+
+  @override
+  void initState() {
+    super.initState();
+    final user = context.read<AuthManager>().loggedInUser!;
+    _fullNameController = TextEditingController(text: user.fullname);
+    _jobTitleController = TextEditingController(text: user.jobTitle);
+    _emailController = TextEditingController(text: user.email);
+    _usernameController = TextEditingController(text: user.username);
+  }
+
+  @override
+  void dispose() {
+    _fullNameController.dispose();
+    _jobTitleController.dispose();
+    _emailController.dispose();
+    _usernameController.dispose();
+    super.dispose();
+  }
+
   void _saveInfo() {
+    final newUserInfo = User(
+      id: context.read<AuthManager>().loggedInUser!.id,
+      fullname: _fullNameController.text,
+      jobTitle: _jobTitleController.text,
+      email: _emailController.text,
+      username: _usernameController.text,
+    );
+    context.executeWithErrorHandling(() async {
+      context.read<AuthManager>().updateUserInfo(newUserInfo);
+    });
     _isEditing = false;
     setState(() {});
   }
@@ -40,14 +77,6 @@ class _ProfileDetailsState extends State<ProfileDetails> {
 
   @override
   Widget build(BuildContext context) {
-    final User user = User(
-      id: '1',
-      fullname: 'John Doe',
-      jobTitle: 'Software Engineer',
-      username: 'johndoe',
-      email: 'john@gmail.com',
-      avatarUrl: 'https://picsum.photos/420/380',
-    );
     final Color activeColor = Theme.of(context).colorScheme.primary;
     final Color inactiveColor =
         Theme.of(context).colorScheme.onSurface.withOpacity(0.5);
@@ -58,7 +87,7 @@ class _ProfileDetailsState extends State<ProfileDetails> {
         // Full name field
         BlockTextField(
           labelText: 'Full Name',
-          initialValue: user.fullname,
+          controller: _fullNameController,
           enabled: _isEditing,
           prefixIcon: Icon(Icons.person,
               color: _isEditing ? activeColor : inactiveColor),
@@ -68,7 +97,7 @@ class _ProfileDetailsState extends State<ProfileDetails> {
         // Job title field
         BlockTextField(
           labelText: 'Job Title',
-          initialValue: user.jobTitle,
+          controller: _jobTitleController,
           enabled: _isEditing,
           prefixIcon:
               Icon(Icons.work, color: _isEditing ? activeColor : inactiveColor),
@@ -78,7 +107,7 @@ class _ProfileDetailsState extends State<ProfileDetails> {
         // Email field
         BlockTextField(
           labelText: 'Email',
-          initialValue: user.email,
+          controller: _emailController,
           enabled: _isEditing,
           prefixIcon: Icon(Icons.email,
               color: _isEditing ? activeColor : inactiveColor),
@@ -88,7 +117,7 @@ class _ProfileDetailsState extends State<ProfileDetails> {
         // Username field
         BlockTextField(
           labelText: 'Username',
-          initialValue: user.username,
+          controller: _emailController,
           enabled: _isEditing,
           prefixIcon: Icon(Icons.person_pin,
               color: _isEditing ? activeColor : inactiveColor),

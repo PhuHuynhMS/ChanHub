@@ -1,5 +1,7 @@
 import 'package:flutter/material.dart';
+import 'package:provider/provider.dart';
 
+import '../../../managers/index.dart';
 import '../../../models/index.dart';
 import '../../shared/widgets/index.dart';
 
@@ -13,21 +15,14 @@ class ProfileHeader extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    final User user = User(
-      id: '1',
-      fullname: 'John Doe',
-      jobTitle: 'Software Engineer',
-      username: 'johndoe',
-      email: 'john@gmail.com',
-      avatarUrl: 'https://picsum.photos/420/380',
-    );
+    final User? user = context.watch<AuthManager>().loggedInUser;
 
     return Column(
       children: [
         Stack(
           children: [
             UserAvatar(
-              user,
+              user!,
               size: 140,
               borderRadius: 70,
             ),
