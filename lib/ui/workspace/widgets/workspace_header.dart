@@ -1,6 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:provider/provider.dart';
 
+import '../../shared/extensions/index.dart';
 import '../../../managers/index.dart';
 import '../../../models/index.dart';
 import '../../shared/utils/index.dart';
@@ -19,7 +20,10 @@ class WorkspaceHeader extends StatelessWidget {
   }
 
   void _navigateToAddWorkspacesMembers(BuildContext context) {
-    Navigator.of(context).pushNamed(AddWorkspaceMembersScreen.routeName);
+    Navigator.of(context)
+        .pushNamed(AddWorkspaceMembersScreen.routeName, arguments: {
+      'isCreating': false,
+    });
   }
 
   void _leaveWorkspace(BuildContext context) async {
@@ -30,6 +34,32 @@ class WorkspaceHeader extends StatelessWidget {
 
     if (isConfirmed && context.mounted) {
       Navigator.of(context).pushNamed(WorkspaceScreen.routeName);
+    }
+  }
+
+  void _deleteWorkspace(BuildContext context) async {
+    bool? isConfirmed = await showConfirmDialog(
+      context: context,
+      content: 'Are you sure you want to delete this workspace?',
+    );
+    if (isConfirmed && context.mounted) {
+      context.executeWithErrorHandling(() async {
+        final workspaceId =
+            context.read<WorkspacesManager>().getSelectedWorkspaceId();
+
+        await context.read<WorkspacesManager>().deleteWorkspace(workspaceId!);
+
+        if (context.mounted) {
+          if (context.read<WorkspacesManager>().getAll().isEmpty) {
+            Navigator.of(context)
+                .pushReplacementNamed(CreateWorkspaceScreen.routeName);
+          } else {
+            Navigator.of(context)
+                .pushReplacementNamed(WorkspaceScreen.routeName);
+          }
+        }
+      });
+      // }
     }
   }
 
@@ -55,7 +85,7 @@ class WorkspaceHeader extends StatelessWidget {
         IconButton(
           iconSize: iconSize,
           color: Theme.of(context).colorScheme.error,
-          onPressed: () => _navigateToAddWorkspacesMembers(context),
+          onPressed: () => _deleteWorkspace(context),
           icon: const Icon(Icons.delete),
         ),
       ];

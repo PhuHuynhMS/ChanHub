@@ -3,6 +3,7 @@ import 'package:provider/provider.dart';
 
 import '../../../models/index.dart';
 import '../../../managers/index.dart';
+import '../../screens.dart';
 import '../../shared/utils/index.dart';
 import '../../shared/extensions/index.dart';
 
@@ -13,12 +14,14 @@ class WorkspaceTile extends StatelessWidget {
     required this.onTap,
     this.isSelectedWorkspace = false,
     this.isDefaultWorkspace = false,
+    this.isAdmin = false,
   });
 
   final Workspace workspace;
   final void Function() onTap;
   final bool isSelectedWorkspace;
   final bool isDefaultWorkspace;
+  final bool isAdmin;
 
   void _showWorkspaceActions(BuildContext context) {
     showModalBottomSheetActions(
@@ -161,12 +164,124 @@ class WorkspaceActions extends StatelessWidget {
     });
   }
 
-  void _onInvite() {
-    print('Invite');
+  void _navigateToManageMembers(BuildContext context) {
+    Navigator.of(context).pushNamed(WorkspaceMembersScreen.routeName);
   }
 
-  void _onLeave() {
-    print('Leave');
+  void _navigateToAddWorkspacesMembers(BuildContext context) {
+    Navigator.of(context)
+        .pushNamed(AddWorkspaceMembersScreen.routeName, arguments: {
+      'isCreating': false,
+    });
+  }
+
+  void _leaveWorkspace(BuildContext context) async {
+    bool isConfirmed = await showConfirmDialog(
+      context: context,
+      content: 'Are you sure you want to leave this workspace?',
+    );
+
+    if (isConfirmed && context.mounted) {
+      Navigator.of(context).pushNamed(WorkspaceScreen.routeName);
+    }
+  }
+
+  List<Widget> _buildWorkspaceActions(BuildContext context) {
+    const iconSize = 25.0;
+    final userId = context.read<AuthManager>().loggedInUser?.id;
+    bool isAdmin = context.read<WorkspacesManager>().isWorkspaceAdmin(userId!);
+
+    if (isAdmin) {
+      return [
+        ListTile(
+          onTap: () => _navigateToManageMembers(context),
+          leading: Icon(
+            Icons.manage_accounts,
+            color: Theme.of(context).colorScheme.onSurface,
+          ),
+          title: Text(
+            'Manage members',
+            style: Theme.of(context).textTheme.bodyMedium!.copyWith(
+                  color: Theme.of(context).colorScheme.onSurface,
+                ),
+          ),
+        ),
+        ListTile(
+          onTap: () => _navigateToAddWorkspacesMembers(context),
+          leading: Icon(
+            Icons.person_add,
+            color: Theme.of(context).colorScheme.onSurface,
+          ),
+          title: Text(
+            'Add members',
+            style: Theme.of(context).textTheme.bodyMedium!.copyWith(
+                  color: Theme.of(context).colorScheme.onSurface,
+                ),
+          ),
+        ),
+        ListTile(
+          onTap: () => _deleteWorkspace(context),
+          leading: Icon(
+            Icons.delete,
+            color: Theme.of(context).colorScheme.error,
+          ),
+          title: Text(
+            'Delete workspace',
+            style: Theme.of(context).textTheme.bodyMedium!.copyWith(
+                  color: Theme.of(context).colorScheme.error,
+                ),
+          ),
+        ),
+      ];
+    } else {
+      return [
+        ListTile(
+          onTap: () => _navigateToManageMembers(context),
+          leading: Icon(
+            Icons.people,
+            color: Theme.of(context).colorScheme.onSurface,
+          ),
+          title: Text(
+            'View members',
+            style: Theme.of(context).textTheme.bodyMedium!.copyWith(
+                  color: Theme.of(context).colorScheme.onSurface,
+                ),
+          ),
+        ),
+        ListTile(
+          onTap: () => _leaveWorkspace(context),
+          leading: Icon(
+            Icons.exit_to_app,
+            color: Theme.of(context).colorScheme.error,
+          ),
+          title: Text(
+            'Leave',
+            style: Theme.of(context).textTheme.bodyMedium!.copyWith(
+                  color: Theme.of(context).colorScheme.error,
+                ),
+          ),
+        ),
+      ];
+    }
+  }
+
+  void _deleteWorkspace(BuildContext context) async {
+    bool? isConfirmed = await showConfirmDialog(
+      context: context,
+      content: 'Are you sure you want to delete this workspace?',
+    );
+    if (isConfirmed && context.mounted) {
+      context.executeWithErrorHandling(() async {
+        final workspaceId =
+            context.read<WorkspacesManager>().getSelectedWorkspaceId();
+
+        await context.read<WorkspacesManager>().deleteWorkspace(workspaceId!);
+        if (context.mounted) {
+          Navigator.of(context).pushReplacementNamed(WorkspaceScreen.routeName);
+        }
+      });
+      // }
+    }
   }
 
   @override
@@ -186,20 +301,7 @@ class WorkspaceActions extends StatelessWidget {
             ),
           )
         ],
-        // TODO: Show icon like workspace headers
-        ListTile(
-          onTap: _onInvite,
-          leading: Icon(
-            Icons.exit_to_app,
-            color: Theme.of(context).colorScheme.error,
-          ),
-          title: Text(
-            'Leave',
-            style: Theme.of(context).textTheme.bodyMedium!.copyWith(
-                  color: Theme.of(context).colorScheme.error,
-                ),
-          ),
-        ),
+        ..._buildWorkspaceActions(context),
       ],
     );
   }

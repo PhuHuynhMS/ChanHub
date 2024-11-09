@@ -44,7 +44,18 @@ class _AddWorkspaceMembersScreenState extends State<AddWorkspaceMembersScreen> {
           Navigator.of(context).popUntil((route) => route.isFirst);
         }
       });
-    } else {}
+    } else {
+      context.executeWithErrorHandling(() async {
+        final selectedWorkspaceId =
+            context.read<WorkspacesManager>().getSelectedWorkspaceId();
+        await context
+            .read<WorkspacesManager>()
+            .addWorkspaceMembers(selectedUsers, selectedWorkspaceId!);
+        if (context.mounted) {
+          Navigator.of(context).popUntil((route) => route.isFirst);
+        }
+      });
+    }
   }
 
   void updateSelectedMembers(List<User> newMembers) {
@@ -53,19 +64,25 @@ class _AddWorkspaceMembersScreenState extends State<AddWorkspaceMembersScreen> {
     });
   }
 
+  Widget _buildActions() {
+    return widget.isCreating
+        ? TextButton(
+            onPressed: () => _onSubmit(isSkip: true, context: context),
+            child: Text(
+              'Skip',
+              style: Theme.of(context).primaryTextTheme.titleSmall,
+            ),
+          )
+        : Container();
+  }
+
   @override
   Widget build(BuildContext context) {
     return Scaffold(
       appBar: AppBar(
         title: const Text('Add Collaborators'),
         actions: [
-          TextButton(
-            onPressed: () => _onSubmit(isSkip: true, context: context),
-            child: Text(
-              'Skip',
-              style: Theme.of(context).primaryTextTheme.titleSmall,
-            ),
-          ),
+          _buildActions(),
         ],
       ),
       body: Center(
@@ -98,7 +115,9 @@ class _AddWorkspaceMembersScreenState extends State<AddWorkspaceMembersScreen> {
                     onPressed: selectedUsers.isNotEmpty
                         ? () => _onSubmit(context: context)
                         : null,
-                    child: const Text('Create And Invite'),
+                    child: widget.isCreating
+                        ? const Text('Create And Invite')
+                        : const Text('Invite'),
                   ),
                 ),
               ],

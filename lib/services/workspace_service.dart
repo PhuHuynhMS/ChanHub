@@ -124,6 +124,16 @@ class WorkspaceService {
     }
   }
 
+  Future<void> deleteWorkspace(String workspaceId) async {
+    try {
+      final pb = await PocketBaseService.getInstance();
+
+      await pb.collection('workspaces').delete(workspaceId);
+    } on Exception catch (exception) {
+      throw ServiceException(exception);
+    }
+  }
+
   Future<Workspace?> fetchWorkspace(String workspaceId) async {
     try {
       final pb = await PocketBaseService.getInstance();

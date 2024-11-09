@@ -30,10 +30,27 @@ class WorkspacesManager with ChangeNotifier {
       image,
       members,
     );
+    if (_defaultWorkspaceId == null) {
+      await setDefaultWorkspace(newWorkspace!);
+    }
     _workspaces.add(newWorkspace!);
     setSelectedWorkspace(newWorkspace.id);
     notifyListeners();
     return newWorkspace.id;
+  }
+
+  Future<void> deleteWorkspace(String workspaceId) async {
+    await _workspaceService.deleteWorkspace(workspaceId);
+
+    _workspaces.removeWhere((workspace) => workspace.id == workspaceId);
+
+    if (workspaceId == _defaultWorkspaceId) {
+      _defaultWorkspaceId = _workspaces.isNotEmpty ? _workspaces.last.id : null;
+    }
+
+    _selectedWorkspaceId = _defaultWorkspaceId;
+
+    notifyListeners();
   }
 
   Future<bool> deleteWorkspaceMember(User member) async {
@@ -86,6 +103,8 @@ class WorkspacesManager with ChangeNotifier {
       getDefaultWorkspace(),
       newWorkspace,
     );
+    print(_defaultWorkspaceId);
+
     _defaultWorkspaceId = newWorkspace.id;
     notifyListeners();
   }
@@ -100,6 +119,10 @@ class WorkspacesManager with ChangeNotifier {
       return [...selectedworkspace.members];
     }
     return [];
+  }
+
+  String? getSelectedWorkspaceId() {
+    return _selectedWorkspaceId;
   }
 
   void add(Workspace workspace) {
