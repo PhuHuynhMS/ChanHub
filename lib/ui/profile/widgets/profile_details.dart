@@ -117,7 +117,7 @@ class _ProfileDetailsState extends State<ProfileDetails> {
         // Username field
         BlockTextField(
           labelText: 'Username',
-          controller: _emailController,
+          controller: _usernameController,
           enabled: _isEditing,
           prefixIcon: Icon(Icons.person_pin,
               color: _isEditing ? activeColor : inactiveColor),

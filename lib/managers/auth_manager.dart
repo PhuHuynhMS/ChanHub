@@ -73,4 +73,11 @@ class AuthManager with ChangeNotifier {
     );
     notifyListeners();
   }
+
+  Future<void> updatePassword(Map<String, dynamic> passwords) async {
+    await _authService.updatePassword(passwords);
+
+    _loggedInUser = _loggedInUser!.copyWith(password: passwords['password']);
+    notifyListeners();
+  }
 }
