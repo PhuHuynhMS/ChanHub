@@ -16,15 +16,17 @@ class ChannelTile extends StatelessWidget {
 
   final Channel channel;
 
-  void _navigateToChannel(BuildContext context, Channel channel) {
+  void _navigateToChannel(BuildContext context, Channel channel) async {
     context.read<ChannelsManager>().setSelectedChannel(channel);
-    Navigator.of(context).pushNamed(ChannelScreen.routeName);
+    await Navigator.of(context).pushNamed(ChannelScreen.routeName);
   }
 
   @override
   Widget build(BuildContext context) {
-    final hasNewThreads =
-        context.watch<ChannelsManager>().hasNewThreads(channel.id!);
+    final loggedInUser = context.read<AuthManager>().loggedInUser!;
+    final hasNewThreads = context
+        .watch<ChannelsManager>()
+        .hasNewThreads(channel.id!, loggedInUser);
     return ListTile(
       onTap: () => _navigateToChannel(context, channel),
       leading: Icon(getChannelIcon(channel.privacy)),

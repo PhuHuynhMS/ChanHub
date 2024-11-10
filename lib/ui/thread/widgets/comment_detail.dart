@@ -1,58 +1,41 @@
 import 'package:flutter/material.dart';
+import 'package:provider/provider.dart';
 
-import '../../../common/enums.dart';
+import '../../../managers/index.dart';
 import '../../../models/index.dart';
+import '../../shared/utils/index.dart';
 import '../../shared/widgets/index.dart';
+import './index.dart';
 
 class CommentDetail extends StatelessWidget {
-  CommentDetail(
-    this.comment, {
-    super.key,
-  });
+  const CommentDetail(this.comment, {super.key});
 
   final Comment comment;
-// TODO: User who is currently logged in
-  final User user = User(
-    id: '1',
-    fullname: 'John Doe',
-    jobTitle: 'Software Engineer',
-    username: 'johndoe',
-    avatarUrl: 'https://picsum.photos/300/300',
-    email: 'john@gmail.com',
-  );
 
-  bool _hasReaction(List<Reaction> listReaction) {
-    return listReaction.any((reaction) => reaction.creator!.id == user.id);
-  }
-
-  void _onReactionPressed(ReactionType type) {
-    if (_hasReaction(comment.reactions[type]!)) {
-      // Remove reaction
-      comment.reactions[type]!
-          .removeWhere((reaction) => reaction.creator!.id == user.id);
-    } else {
-      comment.reactions[type]!.add(
-        // TODO: Create a new reaction
-        Reaction(
-          type: type,
-          createdAt: DateTime.now(),
-          creator: user,
-          id: '5',
-        ),
-      );
-    }
+  void _showcommentActions(BuildContext context) {
+    showModalBottomSheetActions(
+      context: context,
+      title: 'Comment Options',
+      body: CommentActions(comment),
+    );
   }
 
   @override
   Widget build(BuildContext context) {
-    return ThreadCard(
-      creator: comment.creator,
-      createdAt: comment.createdAt,
-      content: comment.content,
-      mediaUrls: comment.mediaUrls,
-      // reactions: comment.reactions,
-      onReactionPressed: (thread) async {},
-      onChangeTaskStatus: (task) async {},
+    final bool isCreator =
+        comment.creator!.id == context.read<AuthManager>().loggedInUser!.id;
+    return GestureDetector(
+      behavior: HitTestBehavior.translucent,
+      onLongPress: isCreator ? () => _showcommentActions(context) : null,
+      child: ThreadCard(
+        creator: comment.creator!,
+        createdAt: comment.createdAt!,
+        updatedAt: comment.updatedAt,
+        content: comment.content,
+        mediaUrls: comment.mediaUrls,
+        onReactionPressed: (reaction) async {},
+        onChangeTaskStatus: (task) async {},
+      ),
     );
   }
 }

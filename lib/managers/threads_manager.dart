@@ -33,6 +33,7 @@ class ThreadsManager {
       _onReceiveThread,
       _onReceiveTask,
       _onReceiveReaction,
+      _onReceiveComment,
     );
     _isFetching = false;
     _notifyChannelListeners();
@@ -80,16 +81,7 @@ class ThreadsManager {
   }
 
   Future<void> updateThread(Thread updatedThread) async {
-    final isUpdated = await _threadService.updateThread(updatedThread);
-
-    if (isUpdated) {
-      final index =
-          _threads.indexWhere((thread) => thread.id == updatedThread.id);
-      if (index != -1) {
-        _threads[index] = updatedThread;
-        _notifyChannelListeners();
-      }
-    }
+    await _threadService.updateThread(updatedThread);
   }
 
   Future<void> deleteThread(Thread deletedThread) async {
@@ -111,6 +103,31 @@ class ThreadsManager {
     } else {
       return await _threadService.addReaction(thread.id!, reaction);
     }
+  }
+
+  Future<bool> addCommentToThread(
+      Thread thread, String content, List<File> mediaFiles) async {
+    final comment = Comment(
+      content: content,
+      mediaFiles: mediaFiles,
+    );
+    return await _threadService.addComment(thread.id!, comment);
+  }
+
+  Future<bool> updateComment(Comment comment) async {
+    return await _threadService.updateComment(comment);
+  }
+
+  Future<bool> deleteComment(Comment comment) async {
+    return await _threadService.deleteComment(comment);
+  }
+
+  Thread? getById(String threadId) {
+    int index = _threads.indexWhere((thread) => thread.id == threadId);
+    if (index != -1) {
+      return _threads[index];
+    }
+    return null;
   }
 
   // Realtime updates
@@ -180,6 +197,42 @@ class ThreadsManager {
         _threads[threadIndex]
             .reactions
             .removeWhere((reaction) => reaction.id == deletedReaction.id);
+      }
+    }
+    _notifyChannelListeners();
+  }
+
+  void _onReceiveComment(RecordSubscriptionEvent event) {
+    if (event.action == 'create') {
+      final comment = Comment.fromJson(event.record!.toJson());
+      final threadId = event.record!.toJson()['thread'];
+      final threadIndex =
+          _threads.indexWhere((thread) => thread.id == threadId);
+      if (threadIndex != -1) {
+        _threads[threadIndex].comments.add(comment);
+      }
+    } else if (event.action == 'update') {
+      final updatedComment = Comment.fromJson(event.record!.toJson());
+      final threadId = event.record!.toJson()['thread'];
+      final threadIndex =
+          _threads.indexWhere((thread) => thread.id == threadId);
+      if (threadIndex != -1) {
+        final commentIndex = _threads[threadIndex]
+            .comments
+            .indexWhere((comment) => comment.id == updatedComment.id);
+        if (commentIndex != -1) {
+          _threads[threadIndex].comments[commentIndex] = updatedComment;
+        }
+      }
+    } else if (event.action == 'delete') {
+      final deletedComment = Comment.fromJson(event.record!.toJson());
+      final threadId = event.record!.toJson()['thread'];
+      final threadIndex =
+          _threads.indexWhere((thread) => thread.id == threadId);
+      if (threadIndex != -1) {
+        _threads[threadIndex]
+            .comments
+            .removeWhere((comment) => comment.id == deletedComment.id);
       }
     }
     _notifyChannelListeners();

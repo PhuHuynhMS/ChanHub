@@ -51,6 +51,7 @@ class ThreadDetail extends StatelessWidget {
         child: ThreadCard(
           creator: thread.creator!,
           createdAt: thread.createdAt!,
+          updatedAt: thread.updatedAt,
           content: thread.content,
           mediaUrls: thread.mediaUrls,
           reactions: thread.reactions,
