@@ -16,4 +16,8 @@ class UsersManager with ChangeNotifier {
   List<User> getAll() {
     return [..._users];
   }
+
+  Future<List<User>> searchUsers(String query) async {
+    return await _userService.searchUsers(query);
+  }
 }

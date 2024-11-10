@@ -210,17 +210,19 @@ class ChanHub extends StatelessWidget {
 
     // Profile
     if (settings.name == ProfileScreen.routeName) {
+      final User user = settings.arguments as User;
+
       return CustomSlideTransition(
-        page: const SafeArea(child: ProfileScreen()),
+        page: SafeArea(
+          child: ProfileScreen(user),
+        ),
       );
     }
 
     if (settings.name == InvitationScreen.routeName) {
-      final agrs = settings.arguments as Map<String, dynamic>;
-      final invitations = agrs['invitations'];
-      return MaterialPageRoute(
-        builder: (context) => SafeArea(
-          child: InvitationScreen(invitations: invitations),
+      return CustomSlideTransition(
+        page: const SafeArea(
+          child: InvitationScreen(),
         ),
       );
     }

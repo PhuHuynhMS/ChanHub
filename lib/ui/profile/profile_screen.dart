@@ -2,52 +2,26 @@ import 'package:flutter/material.dart';
 import 'package:provider/provider.dart';
 
 import '../../models/index.dart';
-import './widgets/index.dart';
-import '../screens.dart';
 import '../../managers/index.dart';
+import '../screens.dart';
+import './widgets/index.dart';
 
-class ProfileScreen extends StatefulWidget {
+class ProfileScreen extends StatelessWidget {
   static const String routeName = '/profile';
 
-  const ProfileScreen({super.key});
+  const ProfileScreen(this.user, {super.key});
 
-  @override
-  State<ProfileScreen> createState() => _ProfileScreenState();
-}
-
-class _ProfileScreenState extends State<ProfileScreen> {
-  @override
-  void initState() {
-    context.read<InvitationsManager>().fetchInvitations();
-    super.initState();
-  }
-
-  void _viewInvitation(BuildContext context, List<Invitation> invitations) {
-    Navigator.of(context).pushNamed(InvitationScreen.routeName, arguments: {
-      'invitations': invitations,
-    });
-  }
+  final User user;
 
   @override
   Widget build(BuildContext context) {
-    final List<Invitation> invitation =
-        context.watch<InvitationsManager>().getAll();
-
-    bool isMyProfile = true;
+    final loggedInUser = context.read<AuthManager>().loggedInUser!;
+    bool isMyProfile = loggedInUser.id == user.id;
 
     return Scaffold(
       appBar: AppBar(
         title: const Text('Profile'),
-        actions: [
-          IconButton(
-            icon: Badge.count(
-              count: context.watch<InvitationsManager>().count(),
-              child: const Icon(Icons.mail),
-            ),
-            onPressed: () => _viewInvitation(context, invitation),
-          ),
-          const SizedBox(width: 10.0),
-        ],
+        actions: isMyProfile ? [_buildInvitationButton(context)] : null,
       ),
       body: Center(
         child: SingleChildScrollView(
@@ -56,16 +30,28 @@ class _ProfileScreenState extends State<ProfileScreen> {
             child: Column(
               mainAxisAlignment: MainAxisAlignment.center,
               children: [
-                ProfileHeader(isMyProfile: isMyProfile),
+                ProfileHeader(user),
                 const SizedBox(height: 20.0),
-                ProfileDetails(
-                  isMyProfile: isMyProfile,
-                ),
+                ProfileDetails(user),
               ],
             ),
           ),
         ),
       ),
     );
+  }
+
+  Widget _buildInvitationButton(BuildContext context) {
+    return IconButton(
+      icon: Badge.count(
+        count: context.watch<InvitationsManager>().count(),
+        child: const Icon(Icons.mail),
+      ),
+      onPressed: () => _viewInvitation(context),
+    );
+  }
+
+  void _viewInvitation(BuildContext context) {
+    Navigator.of(context).pushNamed(InvitationScreen.routeName);
   }
 }

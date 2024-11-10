@@ -12,16 +12,16 @@ class WorkspaceService {
       final pb = await PocketBaseService.getInstance();
       final userId = pb.authStore.model!.id;
 
-      final workspaceModels = await pb.collection("workspaces").getFullList(
-        filter: """
-                  workspace_members_via_workspace.member.id ?= '$userId' && 
-                  workspace_members_via_workspace.status ?= 'accepted'
-                """,
-        expand:
-            "creator,workspace_members_via_workspace,workspace_members_via_workspace.member",
-      );
+      final workspaceMemberModels =
+          await pb.collection("accepted_workspace_members").getFullList(
+                filter: "member = '$userId'",
+                expand: 'workspace.creator,'
+                    'workspace.accepted_workspace_members_via_workspace.member,'
+                    'workspace.workspace_invitations_via_workspace.member',
+              );
 
-      for (final workspaceModel in workspaceModels) {
+      for (final workspaceMemberModel in workspaceMemberModels) {
+        final workspaceModel = workspaceMemberModel.expand['workspace']!.first;
         workspaces.add(Workspace.fromJson(workspaceModel.toJson()
           ..addAll({
             'userId': userId,
@@ -38,14 +38,15 @@ class WorkspaceService {
       final pb = await PocketBaseService.getInstance();
       final userId = pb.authStore.model!.id;
       final workspaceModels =
-          await pb.collection("workspace_members").getFirstListItem(
-        """
-          member.id = '$userId' && 
-          status = 'accepted' && 
-          is_default = true
-        """,
-      );
-      return workspaceModels.toJson()['workspace'] as String?;
+          await pb.collection("workspace_members").getFullList(
+                filter: "member.id = '$userId' && "
+                    "status = 'accepted' && is_default = true",
+              );
+      if (workspaceModels.isEmpty) {
+        return null;
+      }
+
+      return workspaceModels[0].toJson()['workspace'] as String?;
     } on Exception catch (exception) {
       throw ServiceException(exception);
     }
@@ -92,7 +93,7 @@ class WorkspaceService {
           http.MultipartFile.fromBytes('image', await image.readAsBytes(),
               filename: image.uri.pathSegments.last)
         ],
-        expand: 'creator,workspace_members_via_workspace.member',
+        expand: 'creator',
       );
 
       await addWorkspaceMembers(
@@ -139,8 +140,9 @@ class WorkspaceService {
       final pb = await PocketBaseService.getInstance();
       final selectedWorkspaceModel = await pb.collection('workspaces').getOne(
             workspaceId,
-            expand:
-                "creator,workspace_members_via_workspace,workspace_members_via_workspace.member",
+            expand: 'creator,'
+                'accepted_workspace_members_via_workspace.member,'
+                'workspace_invitations_via_workspace.member',
           );
       return Workspace.fromJson(selectedWorkspaceModel.toJson()
         ..addAll({
@@ -157,10 +159,9 @@ class WorkspaceService {
       final pb = await PocketBaseService.getInstance();
 
       final workspaceMemberModel =
-          await pb.collection('workspace_members').getFirstListItem("""
-            member = '$memberId' && 
-            workspace = '$workspaceId' 
-          """);
+          await pb.collection('workspace_members').getFirstListItem(
+                "member = '$memberId' && workspace = '$workspaceId",
+              );
       await pb.collection('workspace_members').delete(
             workspaceMemberModel.toJson()['id'],
           );

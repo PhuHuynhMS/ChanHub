@@ -34,7 +34,7 @@ class ServiceException implements Exception {
         }
       }
 
-      return response['message'];
+      return response['message'] ?? 'An error occurred';
     }
     return 'An error occurred';
   }

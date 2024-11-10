@@ -135,6 +135,7 @@ class _RegisterFormState extends State<RegisterForm> {
       validator: Validator.compose([
         Validator.required('Full name is required'),
         Validator.minLength(3, 'Full name must be at least 3 characters'),
+        Validator.maxLength(50, 'Full name must be at most 50 characters'),
       ]),
       onSaved: (value) => _formData['fullname'] = value,
     );

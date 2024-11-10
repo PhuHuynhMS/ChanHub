@@ -15,23 +15,28 @@ class WorkspaceScreen extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    final workspaces = context.watch<WorkspacesManager>().getAll();
+    final workspaces = context.read<WorkspacesManager>().getAll();
     final selectedWorkspace =
-        context.watch<WorkspacesManager>().getSelectedWorkspace();
+        context.read<WorkspacesManager>().getSelectedWorkspace();
+    final isFetching = context.watch<WorkspacesManager>().isFetching;
 
     return Scaffold(
       appBar: AppBar(
         title: const Text('ChanHub'),
-        actions: <Widget>[
+        actions: const <Widget>[
           ProfileButton(),
-          const SizedBox(width: 10.0),
+          SizedBox(width: 10.0),
         ],
       ),
       body: RefreshIndicator(
           onRefresh: () {
-            return context.read<WorkspacesManager>().fetchSelectedWorkspace();
+            if (selectedWorkspace != null) {
+              return context.read<WorkspacesManager>().fetchSelectedWorkspace();
+            }
+            return context.read<WorkspacesManager>().fetchWorkspaces();
           },
-          child: _buildWorkspaceBody(context, workspaces, selectedWorkspace)),
+          child: _buildWorkspaceBody(
+              context, workspaces, selectedWorkspace, isFetching)),
       drawer: const WorkSpaceDrawer(),
     );
   }
@@ -40,8 +45,9 @@ class WorkspaceScreen extends StatelessWidget {
     BuildContext context,
     List<Workspace> workspaces,
     Workspace? selectedWorkspace,
+    bool isFetching,
   ) {
-    if (workspaces.isEmpty && selectedWorkspace == null) {
+    if (isFetching) {
       return getLoadingAnimation(context);
     } else if (workspaces.isNotEmpty && selectedWorkspace != null) {
       return WorkspaceDescription(selectedWorkspace);

@@ -69,7 +69,7 @@ class _BlockTextFieldState extends State<BlockTextField> {
   }
 
   String? _validate(String? value) {
-    _error = widget.validator!(value);
+    _error = widget.validator?.call(value);
     setState(() {});
     return _error;
   }
@@ -115,7 +115,10 @@ class _BlockTextFieldState extends State<BlockTextField> {
                     : focusedInactiveShadow,
           ),
           child: TextFormField(
+            autofocus: false,
+            onTapOutside: (event) => _focusNode.unfocus(),
             controller: widget.controller,
+            initialValue: widget.initialValue,
             enabled: widget.enabled,
             keyboardType: widget.keyboardType ?? TextInputType.text,
             textInputAction: widget.textInputAction ?? TextInputAction.next,

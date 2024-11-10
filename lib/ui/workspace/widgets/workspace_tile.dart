@@ -181,9 +181,7 @@ class WorkspaceActions extends StatelessWidget {
       content: 'Are you sure you want to leave this workspace?',
     );
 
-    if (isConfirmed && context.mounted) {
-      Navigator.of(context).pushNamed(WorkspaceScreen.routeName);
-    }
+    // TODO: Implement leave workspace
   }
 
   List<Widget> _buildWorkspaceActions(BuildContext context) {
