@@ -11,12 +11,18 @@ class WorkspacesManager with ChangeNotifier {
   List<Workspace> _workspaces = [];
   String? _selectedWorkspaceId;
   String? _defaultWorkspaceId;
+  bool isFetching = true;
 
   Future<void> fetchWorkspaces() async {
+    isFetching = true;
+
+    // Fetch the workspaces
     _workspaces = await _workspaceService.fetchAllWorkspaces();
     _defaultWorkspaceId = await _workspaceService.getDefaultWorkspace() ??
         _workspaces.firstOrNull?.id;
-    _selectedWorkspaceId = _defaultWorkspaceId;
+    setSelectedWorkspace(_defaultWorkspaceId);
+
+    isFetching = false;
     notifyListeners();
   }
 
@@ -30,10 +36,28 @@ class WorkspacesManager with ChangeNotifier {
       image,
       members,
     );
+    if (_defaultWorkspaceId == null) {
+      await setDefaultWorkspace(newWorkspace!);
+    }
     _workspaces.add(newWorkspace!);
     setSelectedWorkspace(newWorkspace.id);
     notifyListeners();
     return newWorkspace.id;
+  }
+
+  Future<void> deleteWorkspace(String workspaceId) async {
+    await _workspaceService.deleteWorkspace(workspaceId);
+
+    _workspaces.removeWhere((workspace) => workspace.id == workspaceId);
+
+    if (workspaceId == _defaultWorkspaceId) {
+      _defaultWorkspaceId =
+          _workspaces.isNotEmpty ? _workspaces.first.id : null;
+    }
+
+    _selectedWorkspaceId = _defaultWorkspaceId;
+
+    notifyListeners();
   }
 
   Future<bool> deleteWorkspaceMember(User member) async {
@@ -54,6 +78,7 @@ class WorkspacesManager with ChangeNotifier {
     String workspaceId,
   ) async {
     await _workspaceService.addWorkspaceMembers(members, workspaceId);
+    await fetchSelectedWorkspace();
   }
 
   Workspace? getSelectedWorkspace() {
@@ -62,7 +87,7 @@ class WorkspacesManager with ChangeNotifier {
         .firstWhere((workspace) => workspace.id == _selectedWorkspaceId);
   }
 
-  void setSelectedWorkspace(String newWorkspaceId) {
+  void setSelectedWorkspace(String? newWorkspaceId) {
     _selectedWorkspaceId = newWorkspaceId;
     notifyListeners();
   }
@@ -102,19 +127,8 @@ class WorkspacesManager with ChangeNotifier {
     return [];
   }
 
-  void add(Workspace workspace) {
-    _workspaces.add(workspace);
-  }
-
-  void update(Workspace workspace) {
-    final index = _workspaces.indexWhere((w) => w.id == workspace.id);
-    if (index != -1) {
-      _workspaces[index] = workspace;
-    }
-  }
-
-  void delete(Workspace workspace) {
-    _workspaces.remove(workspace);
+  String? getSelectedWorkspaceId() {
+    return _selectedWorkspaceId;
   }
 
   Workspace? getById(String id) {

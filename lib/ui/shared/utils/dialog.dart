@@ -11,61 +11,62 @@ Future<bool> showConfirmDialog({
   String cancelText = 'No',
 }) async {
   return await showDialog(
-    context: context,
-    builder: (context) {
-      return Dialog(
-        child: Padding(
-          padding: const EdgeInsets.only(
-            left: 20.0,
-            right: 20.0,
-            top: 20.0,
-            bottom: 10.0,
-          ),
-          child: Column(
-            mainAxisSize: MainAxisSize.min,
-            crossAxisAlignment: CrossAxisAlignment.start,
-            children: <Widget>[
-              // Title
-              Text(
-                title,
-                style: Theme.of(context).textTheme.titleLarge,
+        context: context,
+        builder: (context) {
+          return Dialog(
+            child: Padding(
+              padding: const EdgeInsets.only(
+                left: 20.0,
+                right: 20.0,
+                top: 20.0,
+                bottom: 10.0,
               ),
-              const Divider(height: 20.0),
-              const SizedBox(height: 10.0),
-
-              // Content
-              Text(
-                content,
-                style: Theme.of(context).textTheme.bodyMedium,
-              ),
-              const SizedBox(height: 20.0),
-
-              // Buttons
-              Row(
-                mainAxisAlignment: MainAxisAlignment.end,
+              child: Column(
+                mainAxisSize: MainAxisSize.min,
+                crossAxisAlignment: CrossAxisAlignment.start,
                 children: <Widget>[
-                  TextButton(
-                    onPressed: () => Navigator.of(context).pop(false),
-                    child: Text(
-                      cancelText,
-                      style: Theme.of(context).textTheme.titleMedium,
-                    ),
+                  // Title
+                  Text(
+                    title,
+                    style: Theme.of(context).textTheme.titleLarge,
                   ),
-                  TextButton(
-                    onPressed: () => Navigator.of(context).pop(true),
-                    child: Text(
-                      confirmText,
-                      style: Theme.of(context).textTheme.titleMedium,
-                    ),
+                  const Divider(height: 20.0),
+                  const SizedBox(height: 10.0),
+
+                  // Content
+                  Text(
+                    content,
+                    style: Theme.of(context).textTheme.bodyMedium,
+                  ),
+                  const SizedBox(height: 20.0),
+
+                  // Buttons
+                  Row(
+                    mainAxisAlignment: MainAxisAlignment.end,
+                    children: <Widget>[
+                      TextButton(
+                        onPressed: () => Navigator.of(context).pop(false),
+                        child: Text(
+                          cancelText,
+                          style: Theme.of(context).textTheme.titleMedium,
+                        ),
+                      ),
+                      TextButton(
+                        onPressed: () => Navigator.of(context).pop(true),
+                        child: Text(
+                          confirmText,
+                          style: Theme.of(context).textTheme.titleMedium,
+                        ),
+                      ),
+                    ],
                   ),
                 ],
               ),
-            ],
-          ),
-        ),
-      );
-    },
-  );
+            ),
+          );
+        },
+      ) ??
+      false;
 }
 
 void showInfoDialog({

@@ -54,7 +54,7 @@ class User {
   Map<String, dynamic> toJson() {
     return {
       'fullname': fullname,
-      'jobtitle': jobTitle,
+      'job_title': jobTitle,
       'username': username,
       'email': email,
     };
@@ -65,7 +65,7 @@ class User {
       id: json['id'],
       avatarUrl: json.getImageUrl('avatar') ?? defaultUserAvatarUrl,
       fullname: json['fullname'],
-      jobTitle: json['jobTitle'],
+      jobTitle: json['job_title'],
       username: json['username'],
       email: json['email'],
     );

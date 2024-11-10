@@ -86,4 +86,47 @@ class AuthService {
       throw ServiceException(exception);
     }
   }
+
+  Future<void> updateUserInfo(User newUserInfo) async {
+    try {
+      final pb = await PocketBaseService.getInstance();
+      final userId = pb.authStore.model.id;
+
+      final body = <String, dynamic>{
+        "username": newUserInfo.username,
+        "email": newUserInfo.email,
+        "fullname": newUserInfo.fullname,
+        "job_title": newUserInfo.jobTitle,
+      };
+
+      final updatedUserModel =
+          await pb.collection('users').update(userId, body: body);
+
+      pb.authStore.save(pb.authStore.token, updatedUserModel);
+      onAuthChanged?.call(User.fromJson(updatedUserModel.toJson()));
+    } on Exception catch (exception) {
+      throw ServiceException(exception);
+    }
+  }
+
+  Future<void> updatePassword(Map<String, dynamic> passwords) async {
+    try {
+      final pb = await PocketBaseService.getInstance();
+      final userId = pb.authStore.model.id;
+      final body = <String, dynamic>{
+        'password': passwords['password'],
+        'passwordConfirm': passwords['passwordConfirm'],
+        'oldPassword': passwords['oldPassword'],
+      };
+
+      final updatedUserModel =
+          await pb.collection('users').update(userId, body: body);
+
+      print(updatedUserModel);
+      pb.authStore.save(pb.authStore.token, updatedUserModel);
+      onAuthChanged?.call(User.fromJson(updatedUserModel.toJson()));
+    } on Exception catch (exception) {
+      throw ServiceException(exception);
+    }
+  }
 }

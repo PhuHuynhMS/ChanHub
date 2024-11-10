@@ -44,13 +44,35 @@ class _AddWorkspaceMembersScreenState extends State<AddWorkspaceMembersScreen> {
           Navigator.of(context).popUntil((route) => route.isFirst);
         }
       });
-    } else {}
+    } else {
+      context.executeWithErrorHandling(() async {
+        final selectedWorkspaceId =
+            context.read<WorkspacesManager>().getSelectedWorkspaceId();
+        await context
+            .read<WorkspacesManager>()
+            .addWorkspaceMembers(selectedUsers, selectedWorkspaceId!);
+        if (context.mounted) {
+          Navigator.of(context).popUntil((route) => route.isFirst);
+        }
+      });
+    }
   }
 
-  void updateSelectedMembers(List<User> newMembers) {
-    setState(() {
-      selectedUsers = newMembers;
-    });
+  void _updateSelectedUsers(List<User> users) {
+    selectedUsers = users;
+    setState(() {});
+  }
+
+  Widget _buildActions() {
+    return widget.isCreating
+        ? TextButton(
+            onPressed: () => _onSubmit(isSkip: true, context: context),
+            child: Text(
+              'Skip',
+              style: Theme.of(context).primaryTextTheme.titleSmall,
+            ),
+          )
+        : Container();
   }
 
   @override
@@ -59,13 +81,7 @@ class _AddWorkspaceMembersScreenState extends State<AddWorkspaceMembersScreen> {
       appBar: AppBar(
         title: const Text('Add Collaborators'),
         actions: [
-          TextButton(
-            onPressed: () => _onSubmit(isSkip: true, context: context),
-            child: Text(
-              'Skip',
-              style: Theme.of(context).primaryTextTheme.titleSmall,
-            ),
-          ),
+          _buildActions(),
         ],
       ),
       body: Center(
@@ -88,8 +104,9 @@ class _AddWorkspaceMembersScreenState extends State<AddWorkspaceMembersScreen> {
                 ),
                 const SizedBox(height: 20.0),
                 InviteMembersBar(
-                    selectedUsers: selectedUsers,
-                    onSelectedMembersChanged: updateSelectedMembers),
+                  selectedUsers: selectedUsers,
+                  onSelectedMembersChanged: _updateSelectedUsers,
+                ),
                 // Invite button
                 const SizedBox(height: 20.0),
                 SizedBox(
@@ -98,7 +115,9 @@ class _AddWorkspaceMembersScreenState extends State<AddWorkspaceMembersScreen> {
                     onPressed: selectedUsers.isNotEmpty
                         ? () => _onSubmit(context: context)
                         : null,
-                    child: const Text('Create And Invite'),
+                    child: widget.isCreating
+                        ? const Text('Create And Invite')
+                        : const Text('Invite'),
                   ),
                 ),
               ],

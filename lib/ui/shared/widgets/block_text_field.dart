@@ -4,6 +4,7 @@ class BlockTextField extends StatefulWidget {
   const BlockTextField({
     super.key,
     this.margin = const EdgeInsets.symmetric(horizontal: 0.0, vertical: 0.0),
+    this.controller,
     this.backgroundColor,
     this.labelText,
     this.textStyle,
@@ -24,6 +25,7 @@ class BlockTextField extends StatefulWidget {
 
   final EdgeInsets margin;
   final Color? backgroundColor;
+  final TextEditingController? controller;
   final String? labelText;
   final TextStyle? textStyle;
   final Widget? prefixIcon;
@@ -67,7 +69,7 @@ class _BlockTextFieldState extends State<BlockTextField> {
   }
 
   String? _validate(String? value) {
-    _error = widget.validator!(value);
+    _error = widget.validator?.call(value);
     setState(() {});
     return _error;
   }
@@ -113,6 +115,9 @@ class _BlockTextFieldState extends State<BlockTextField> {
                     : focusedInactiveShadow,
           ),
           child: TextFormField(
+            autofocus: false,
+            onTapOutside: (event) => _focusNode.unfocus(),
+            controller: widget.controller,
             initialValue: widget.initialValue,
             enabled: widget.enabled,
             keyboardType: widget.keyboardType ?? TextInputType.text,
