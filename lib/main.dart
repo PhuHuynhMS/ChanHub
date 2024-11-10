@@ -199,19 +199,14 @@ class ChanHub extends StatelessWidget {
     }
 
     // Thread Detail
-    // if (settings.name == ThreadScreen.routeName) {
-    //   final String threadId = settings.arguments as String;
-    //   final Thread thread = ThreadsManager('abc').getById(threadId)!;
-    //   final Channel channel = ChannelsManager().getById('1')!;
-
-    //   return MaterialPageRoute(
-    //     builder: (context) => SafeArea(
-    //       child: SafeArea(
-    //         child: ThreadScreen(thread, channelName: channel.name),
-    //       ),
-    //     ),
-    //   );
-    // }
+    if (settings.name == ThreadScreen.routeName) {
+      final String threadId = settings.arguments as String;
+      return CustomSlideTransition(
+        page: SafeArea(
+          child: ThreadScreen(threadId),
+        ),
+      );
+    }
 
     // Profile
     if (settings.name == ProfileScreen.routeName) {

@@ -88,7 +88,14 @@ class Thread {
                 (reaction) => Reaction.fromJson(reaction),
               )
               .toList(),
-      comments: [],
+      comments: json['expand']['comments_via_thread'] == null
+          ? []
+          : (json['expand']['comments_via_thread']
+                  as List<Map<String, dynamic>>)
+              .map(
+                (reaction) => Comment.fromJson(reaction),
+              )
+              .toList(),
       tasks: json['expand']['thread_tasks_via_thread'] == null
           ? []
           : (json['expand']['thread_tasks_via_thread']

@@ -38,7 +38,7 @@ class ChannelScreen extends StatelessWidget {
 
     // Mark all threads as read when open the channel
     context.executeWithErrorHandling(() async {
-      context.read<ChannelsManager>().markAllThreadsAsRead(channel.id!);
+      await context.read<ChannelsManager>().markAllThreadsAsRead(channel.id!);
     }, isShowLoading: false, ignoreError: true);
 
     return Scaffold(
@@ -73,7 +73,6 @@ class ChannelScreen extends StatelessWidget {
         onClosing: () {},
         enableDrag: false,
         builder: (context) => MessageInput(
-          onAddMedia: () {},
           onSend: (message, mediaFiles, tasks) => _onSendMessage(
             threadsManager,
             message,

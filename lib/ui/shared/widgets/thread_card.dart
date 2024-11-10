@@ -14,12 +14,14 @@ class ThreadCard extends StatelessWidget {
     this.tasks,
     this.reactions,
     this.comments,
+    this.updatedAt,
     required this.onReactionPressed,
     required this.onChangeTaskStatus,
   });
 
   final User creator;
   final DateTime createdAt;
+  final DateTime? updatedAt;
   final String? content;
   final List<String>? mediaUrls;
   final List<Task>? tasks;
@@ -46,7 +48,11 @@ class ThreadCard extends StatelessWidget {
               crossAxisAlignment: CrossAxisAlignment.start,
               children: <Widget>[
                 // Header
-                ThreadTitle(creator, createdAt),
+                ThreadTitle(
+                  creator,
+                  createdAt,
+                  updatedAt: updatedAt,
+                ),
 
                 // Body (Content, Media, Reaction)
                 if (content != null) ThreadContent(content!),
@@ -95,25 +101,33 @@ class ThreadTitle extends StatelessWidget {
     this.user,
     this.createdAt, {
     super.key,
+    this.updatedAt,
   });
 
   final User user;
   final DateTime createdAt;
+  final DateTime? updatedAt;
 
   @override
   Widget build(BuildContext context) {
     return Container(
       alignment: Alignment.centerLeft,
       child: Row(
-        mainAxisAlignment: MainAxisAlignment.spaceBetween,
+        // mainAxisAlignment: MainAxisAlignment.spaceBetween,
         children: [
           // Username
           Text(
             user.fullname,
             style: Theme.of(context).textTheme.titleMedium,
           ),
+          const Spacer(),
 
           // Timestamp
+          if (updatedAt?.isAfter(createdAt) ?? false) ...[
+            const Icon(Icons.update_outlined, size: 15.0),
+            const SizedBox(width: 5.0),
+          ],
+
           Text(
             formatTime(createdAt),
             style: Theme.of(context).textTheme.labelSmall,
