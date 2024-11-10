@@ -48,14 +48,16 @@ class ChannelsManager with ChangeNotifier {
     return threadsManagers[_selectedChannelId!]!;
   }
 
-  bool hasNewThreads(String channelId) {
+  bool hasNewThreads(String channelId, User loggedInUser) {
     final channel = getById(channelId);
     if (channel?.lastReadAt == null) {
       return threadsManagers[channelId]!.getAll().isNotEmpty;
     }
-    return threadsManagers[channelId]!
-        .getAll()
-        .any((thread) => thread.createdAt!.isAfter(channel!.lastReadAt!));
+    return threadsManagers[channelId]!.getAll().any(
+          (thread) =>
+              thread.createdAt!.isAfter(channel!.lastReadAt!) &&
+              thread.creator?.id != loggedInUser.id,
+        );
   }
 
   Future<bool> markAllThreadsAsRead(String channelId) async {

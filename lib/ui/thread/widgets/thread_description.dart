@@ -1,55 +1,46 @@
 import 'package:flutter/material.dart';
+import 'package:provider/provider.dart';
 
-import '../../../common/enums.dart';
 import '../../../models/index.dart';
+import '../../../managers/index.dart';
 import '../../shared/widgets/index.dart';
 
 class ThreadDescription extends StatelessWidget {
-  ThreadDescription(
+  const ThreadDescription(
     this.thread, {
     super.key,
   });
 
   final Thread thread;
 
-  // TODO: User who is currently logged in
-  final User user = User(
-    id: '1',
-    fullname: 'John Doe',
-    jobTitle: 'Software Developer',
-    username: 'johndoe',
-    avatarUrl: 'https://picsum.photos/300/300',
-    email: 'john@gmail.com',
-  );
-
-  bool _hasReaction(List<Reaction> listReaction, ReactionType type) {
-    return listReaction.any(
-        (reaction) => reaction.creator!.id == user.id && reaction.type == type);
+  Future<void> _onChangeTaskStatus(
+      ThreadsManager threadsManager, Task task) async {
+    await threadsManager.changeTaskStatus(task);
   }
 
-  void _onReactionPressed(ReactionType type) {
-    if (_hasReaction(thread.reactions, type)) {
-      // Remove reaction
-      thread.reactions.removeWhere((reaction) =>
-          reaction.creator!.id == user.id && reaction.type == type);
-    } else {
-      // add reaction
-    }
+  Future<void> _onReactionPressed(
+      ThreadsManager threadsManager, Reaction reaction) async {
+    await threadsManager.reactToThread(thread, reaction);
   }
 
   @override
   Widget build(BuildContext context) {
+    final threadsManager =
+        context.read<ChannelsManager>().getCurrentThreadsManager();
     return Container(
       color: Theme.of(context).colorScheme.primary.withOpacity(0.1),
       child: ThreadCard(
         creator: thread.creator!,
         createdAt: thread.createdAt!,
+        updatedAt: thread.updatedAt,
         content: thread.content,
         mediaUrls: thread.mediaUrls,
         reactions: thread.reactions,
         tasks: thread.tasks,
-        onReactionPressed: (reaction) async {},
-        onChangeTaskStatus: (task) async {},
+        onReactionPressed: (reaction) async =>
+            await _onReactionPressed(threadsManager, reaction),
+        onChangeTaskStatus: (task) async =>
+            await _onChangeTaskStatus(threadsManager, task),
       ),
     );
   }

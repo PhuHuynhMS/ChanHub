@@ -19,8 +19,14 @@ class ThreadService {
         filter: """
           channel.id='$channelId'
         """,
-        expand:
-            'creator,thread_tasks_via_thread,thread_tasks_via_thread.assignee,thread_tasks_via_thread.completed_by,thread_reactions_via_thread,thread_reactions_via_thread.creator',
+        expand: 'creator,'
+            'thread_tasks_via_thread,'
+            'thread_tasks_via_thread.assignee,'
+            'thread_tasks_via_thread.completed_by,'
+            'thread_reactions_via_thread,'
+            'thread_reactions_via_thread.creator,'
+            'comments_via_thread,'
+            'comments_via_thread.creator',
         page: page,
         perPage: perPage,
         sort: '-created',
@@ -41,6 +47,7 @@ class ThreadService {
     Function(RecordSubscriptionEvent) threadCallback,
     Function(RecordSubscriptionEvent) taskCallback,
     Function(RecordSubscriptionEvent) reactionCallback,
+    Function(RecordSubscriptionEvent) commentCallback,
   ) async {
     try {
       final pb = await PocketBaseService.getInstance();
@@ -64,6 +71,14 @@ class ThreadService {
       pb.collection('thread_reactions').subscribe(
             '*',
             reactionCallback,
+            filter: """
+                      thread.channel.id='$channelId'
+                    """,
+            expand: 'creator',
+          );
+      pb.collection('comments').subscribe(
+            '*',
+            commentCallback,
             filter: """
                       thread.channel.id='$channelId'
                     """,
@@ -176,6 +191,48 @@ class ThreadService {
     try {
       final pb = await PocketBaseService.getInstance();
       await pb.collection('thread_reactions').delete(reaction.id!);
+      return true;
+    } on Exception catch (exception) {
+      throw ServiceException(exception);
+    }
+  }
+
+  Future<bool> addComment(String threadId, Comment comment) async {
+    try {
+      final pb = await PocketBaseService.getInstance();
+      final userId = pb.authStore.model!.id;
+
+      await pb.collection('comments').create(
+            body: comment.toJson()
+              ..['creator'] = userId
+              ..['thread'] = threadId,
+            files: await _createMultipartFiles(comment.mediaFiles),
+          );
+      return true;
+    } on Exception catch (exception) {
+      throw ServiceException(exception);
+    }
+  }
+
+  Future<bool> updateComment(Comment comment) async {
+    try {
+      final pb = await PocketBaseService.getInstance();
+
+      await pb.collection('comments').update(
+            comment.id!,
+            body: comment.toJson(),
+          );
+      return true;
+    } on Exception catch (exception) {
+      throw ServiceException(exception);
+    }
+  }
+
+  Future<bool> deleteComment(Comment comment) async {
+    try {
+      final pb = await PocketBaseService.getInstance();
+
+      await pb.collection('comments').delete(comment.id!);
       return true;
     } on Exception catch (exception) {
       throw ServiceException(exception);

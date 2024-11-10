@@ -7,23 +7,23 @@ import '../../shared/widgets/index.dart';
 import '../../shared/utils/index.dart';
 import '../../shared/extensions/index.dart';
 
-class EditThreadForm extends StatefulWidget {
-  const EditThreadForm(this.thread, {super.key});
+class EditCommentForm extends StatefulWidget {
+  const EditCommentForm(this.comment, {super.key});
 
-  final Thread thread;
+  final Comment comment;
 
   @override
-  State<EditThreadForm> createState() => _EditThreadFormState();
+  State<EditCommentForm> createState() => _EditCommentFormState();
 }
 
-class _EditThreadFormState extends State<EditThreadForm> {
+class _EditCommentFormState extends State<EditCommentForm> {
   final GlobalKey<FormState> _formKey = GlobalKey<FormState>();
-  late Thread _editedThread;
+  late Comment _editedComment;
 
   @override
   void initState() {
     super.initState();
-    _editedThread = widget.thread;
+    _editedComment = widget.comment;
   }
 
   @override
@@ -32,8 +32,8 @@ class _EditThreadFormState extends State<EditThreadForm> {
       key: _formKey,
       child: Column(
         children: <Widget>[
-          // Thread content field
-          _buildThreadContentField(),
+          // Comment content field
+          _buildCommentContentField(),
           Align(
             alignment: Alignment.centerRight,
             child: Text(
@@ -45,24 +45,11 @@ class _EditThreadFormState extends State<EditThreadForm> {
           const SizedBox(height: 10),
 
           // Media preview
-          if (widget.thread.mediaUrls.isNotEmpty) ...[
+          if (widget.comment.mediaUrls.isNotEmpty)
             MediaPreview(
-              widget.thread.mediaUrls,
+              widget.comment.mediaUrls,
               height: 100,
               width: 100,
-            ),
-            const SizedBox(height: 10),
-          ],
-
-          // Task preview
-          if (widget.thread.tasks.isNotEmpty)
-            Align(
-              alignment: Alignment.centerLeft,
-              child: Text(
-                '+ ${widget.thread.tasks.length} task${widget.thread.tasks.length > 1 ? 's' : ''}',
-                style: Theme.of(context).textTheme.titleMedium,
-                textAlign: TextAlign.end,
-              ),
             ),
 
           // Actions
@@ -84,16 +71,16 @@ class _EditThreadFormState extends State<EditThreadForm> {
     );
   }
 
-  Widget _buildThreadContentField() {
+  Widget _buildCommentContentField() {
     return TextFormField(
-      initialValue: widget.thread.content,
+      initialValue: widget.comment.content,
       decoration: underlineInputDecoration(context, 'Type a message'),
       style: Theme.of(context).textTheme.bodyMedium,
       validator: Validator.compose([
         Validator.maxLength(1024, 'Message is too long'),
       ]),
       onSaved: (value) =>
-          _editedThread = _editedThread.copyWith(content: value),
+          _editedComment = _editedComment.copyWith(content: value),
     );
   }
 
@@ -111,7 +98,7 @@ class _EditThreadFormState extends State<EditThreadForm> {
       await context
           .read<ChannelsManager>()
           .getCurrentThreadsManager()
-          .updateThread(_editedThread);
+          .updateComment(_editedComment);
     }, isShowLoading: false);
 
     Navigator.of(context).pop();
