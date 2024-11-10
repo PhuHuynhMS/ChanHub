@@ -155,20 +155,18 @@ class ChanHub extends StatelessWidget {
     }
 
     if (settings.name == EditChannelScreen.routeName) {
-      final Channel channel = ChannelsManager().getById('1')!;
+      final Channel channel = settings.arguments as Channel;
 
-      return MaterialPageRoute(
-        builder: (context) => SafeArea(
-          child: EditChannelScreen(
-            channel,
-          ),
+      return CustomSlideTransition(
+        page: SafeArea(
+          child: EditChannelScreen(channel),
         ),
       );
     }
 
     if (settings.name == AddChannelScreen.routeName) {
-      return MaterialPageRoute(
-        builder: (context) => const SafeArea(
+      return CustomSlideTransition(
+        page: const SafeArea(
           child: AddChannelScreen(),
         ),
       );
