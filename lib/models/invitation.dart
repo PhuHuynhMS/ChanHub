@@ -26,4 +26,13 @@ class Invitation {
       createdAt: createdAt ?? this.createdAt,
     );
   }
+
+  factory Invitation.fromJson(Map<String, dynamic> json) {
+    return Invitation(
+      id: json['id'],
+      workspace: Workspace.fromJson(json['expand']['workspace']),
+      creator: User.fromJson(json['expand']['workspace']['expand']['creator']),
+      createdAt: DateTime.parse(json['created']),
+    );
+  }
 }

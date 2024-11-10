@@ -1,5 +1,7 @@
 import 'package:flutter/material.dart';
+import 'package:provider/provider.dart';
 
+import '../../models/index.dart';
 import './widgets/index.dart';
 import '../screens.dart';
 import '../../managers/index.dart';
@@ -14,12 +16,23 @@ class ProfileScreen extends StatefulWidget {
 }
 
 class _ProfileScreenState extends State<ProfileScreen> {
-  void _viewInvitation(BuildContext context) {
-    Navigator.of(context).pushNamed(InvitationScreen.routeName);
+  @override
+  void initState() {
+    context.read<InvitationsManager>().fetchInvitations();
+    super.initState();
+  }
+
+  void _viewInvitation(BuildContext context, List<Invitation> invitations) {
+    Navigator.of(context).pushNamed(InvitationScreen.routeName, arguments: {
+      'invitations': invitations,
+    });
   }
 
   @override
   Widget build(BuildContext context) {
+    final List<Invitation> invitation =
+        context.watch<InvitationsManager>().getAll();
+
     bool isMyProfile = true;
 
     return Scaffold(
@@ -28,10 +41,10 @@ class _ProfileScreenState extends State<ProfileScreen> {
         actions: [
           IconButton(
             icon: Badge.count(
-              count: InvitationsManager().count(),
+              count: context.watch<InvitationsManager>().count(),
               child: const Icon(Icons.mail),
             ),
-            onPressed: () => _viewInvitation(context),
+            onPressed: () => _viewInvitation(context, invitation),
           ),
           const SizedBox(width: 10.0),
         ],

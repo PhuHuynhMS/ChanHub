@@ -103,8 +103,6 @@ class WorkspacesManager with ChangeNotifier {
       getDefaultWorkspace(),
       newWorkspace,
     );
-    print(_defaultWorkspaceId);
-
     _defaultWorkspaceId = newWorkspace.id;
     notifyListeners();
   }

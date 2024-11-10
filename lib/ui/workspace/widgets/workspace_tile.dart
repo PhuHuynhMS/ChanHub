@@ -187,7 +187,6 @@ class WorkspaceActions extends StatelessWidget {
   }
 
   List<Widget> _buildWorkspaceActions(BuildContext context) {
-    const iconSize = 25.0;
     final userId = context.read<AuthManager>().loggedInUser?.id;
     bool isAdmin = context.read<WorkspacesManager>().isWorkspaceAdmin(userId!);
 

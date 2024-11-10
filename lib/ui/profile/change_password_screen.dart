@@ -1,4 +1,3 @@
-import 'package:ct484_project/ui/authentication/login_or_register_screen.dart';
 import 'package:flutter/material.dart';
 import 'package:provider/provider.dart';
 

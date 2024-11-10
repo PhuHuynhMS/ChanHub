@@ -28,6 +28,7 @@ class ChanHub extends StatelessWidget {
         ChangeNotifierProvider(create: (_) => OnboardingManager()..init()),
         ChangeNotifierProvider(create: (_) => AuthManager()),
         ChangeNotifierProvider(create: (_) => WorkspacesManager()),
+        ChangeNotifierProvider(create: (_) => InvitationsManager()),
         ListenableProxyProvider<WorkspacesManager, ChannelsManager>(
             create: (_) => ChannelsManager(),
             update: (_, workspacesManager, channelsManager) => channelsManager!
@@ -126,6 +127,7 @@ class ChanHub extends StatelessWidget {
       final workspaceName = agrs['workspaceName'];
       final image = agrs['image'];
       final isCreating = agrs['isCreating'];
+
       return MaterialPageRoute(
         builder: (context) => SafeArea(
           child: AddWorkspaceMembersScreen(
@@ -221,9 +223,11 @@ class ChanHub extends StatelessWidget {
     }
 
     if (settings.name == InvitationScreen.routeName) {
+      final agrs = settings.arguments as Map<String, dynamic>;
+      final invitations = agrs['invitations'];
       return MaterialPageRoute(
-        builder: (context) => const SafeArea(
-          child: InvitationScreen(),
+        builder: (context) => SafeArea(
+          child: InvitationScreen(invitations: invitations),
         ),
       );
     }

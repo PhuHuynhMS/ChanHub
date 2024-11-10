@@ -1,6 +1,9 @@
 import 'package:flutter/material.dart';
+import 'package:provider/provider.dart';
 
+import '../../../managers/index.dart';
 import '../../../models/index.dart';
+import '../../shared/extensions/index.dart';
 import '../../shared/utils/index.dart';
 import './button_container.dart';
 
@@ -14,13 +17,22 @@ class InvitationTile extends StatelessWidget {
   final Invitation invitation;
   final void Function(Invitation invitation) onRemoveInvitation;
 
-  void onAcceptInvite() {
-    //TODO: Add workspace to this user
-
+  void onAcceptInvite(BuildContext context) async {
+    context.executeWithErrorHandling(() async {
+      await context
+          .read<InvitationsManager>()
+          .acceptedInvitation(invitation.id);
+      if (context.mounted) {
+        await context.read<WorkspacesManager>().fetchWorkspaces();
+      }
+    });
     onRemoveInvitation(invitation);
   }
 
-  void onIgnoreInvite() {
+  void onIgnoreInvite(BuildContext context) async {
+    context.executeWithErrorHandling(() async {
+      await context.read<InvitationsManager>().ignoredInvitation(invitation.id);
+    });
     onRemoveInvitation(invitation);
   }
 
@@ -62,8 +74,8 @@ class InvitationTile extends StatelessWidget {
                   const SizedBox(height: 10.0),
                   ButtonContainer(
                     invitation: invitation,
-                    onIgnoreInvite: onIgnoreInvite,
-                    onAcceptInvite: onAcceptInvite,
+                    onIgnoreInvite: () => onIgnoreInvite(context),
+                    onAcceptInvite: () => onAcceptInvite(context),
                   )
                 ],
               ),
