@@ -5,10 +5,10 @@ import './user.dart';
 class Channel {
   final String? id;
   final String name;
-  final String description;
+  final String? description;
   final ChannelPrivacy privacy;
-  final DateTime createdAt;
-  User creator;
+  final DateTime? createdAt;
+  User? creator;
   List<User> members;
 
   final String? channelMemberId;
@@ -21,8 +21,8 @@ class Channel {
     required this.name,
     required this.description,
     required this.privacy,
-    required this.createdAt,
-    required this.creator,
+    this.createdAt,
+    this.creator,
     this.members = const [],
     this.channelMemberId,
     this.lastReadAt,
@@ -50,6 +50,14 @@ class Channel {
       channelMemberId: channelMemberId ?? this.channelMemberId,
       lastReadAt: lastReadAt ?? this.lastReadAt,
     );
+  }
+
+  Map<String, dynamic> toJson() {
+    return {
+      'name': name,
+      'description': description,
+      'privacy': channelPrivacyString[privacy],
+    };
   }
 
   factory Channel.fromJson(Map<String, dynamic> json) {

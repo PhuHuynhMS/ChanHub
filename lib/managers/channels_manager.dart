@@ -7,6 +7,8 @@ import './index.dart';
 class ChannelsManager with ChangeNotifier {
   final ChannelService _channelService = ChannelService();
 
+  String? _selectedWorkspaceId;
+
   List<Channel> _channels = [];
   String? _selectedChannelId;
   bool _isFetching = false;
@@ -21,6 +23,7 @@ class ChannelsManager with ChangeNotifier {
     _isFetching = true;
     notifyListeners();
 
+    _selectedWorkspaceId = selectedWorkspaceId;
     _channels = await _channelService.fetchAllChannels(selectedWorkspaceId);
     _initThreadsManagers();
 
@@ -46,6 +49,33 @@ class ChannelsManager with ChangeNotifier {
 
   ThreadsManager getCurrentThreadsManager() {
     return threadsManagers[_selectedChannelId!]!;
+  }
+
+  Future<bool> createChannel(Channel channel) async {
+    await _channelService.createChannel(_selectedWorkspaceId!, channel);
+
+    await fetchChannels(_selectedWorkspaceId);
+    notifyListeners();
+
+    return true;
+  }
+
+  Future<bool> updateChannel(Channel channel) async {
+    await _channelService.updateChannel(channel);
+
+    await fetchChannels(_selectedWorkspaceId);
+    notifyListeners();
+
+    return true;
+  }
+
+  Future<bool> deleteChannel(Channel channel) async {
+    await _channelService.deleteChannel(channel);
+
+    await fetchChannels(_selectedWorkspaceId);
+    notifyListeners();
+
+    return true;
   }
 
   bool hasNewThreads(String channelId, User loggedInUser) {
