@@ -1,18 +1,14 @@
-import 'dart:io';
-
 import 'package:flutter/material.dart';
-import 'package:image_picker/image_picker.dart';
 import 'package:provider/provider.dart';
 
 import '../../managers/index.dart';
-import '../../common/enums.dart';
 import '../../models/index.dart';
 import '../shared/utils/index.dart';
 import '../shared/extensions/index.dart';
 import '../shared/widgets/index.dart';
 
 class EditWorkspaceScreen extends StatefulWidget {
-  static const String routeName = '/edit-workspace-screen';
+  static const String routeName = '/workspace/edit';
 
   const EditWorkspaceScreen(this.workspace, {super.key});
 
@@ -42,7 +38,7 @@ class _EditWorkspaceScreenState extends State<EditWorkspaceScreen> {
     });
 
     if (context.mounted) {
-      Navigator.of(context).pop();
+      Navigator.of(context).popUntil((route) => route.isFirst);
     }
   }
 
@@ -63,34 +59,27 @@ class _EditWorkspaceScreenState extends State<EditWorkspaceScreen> {
   }
 
   Widget _buildWorkspacePreview() {
-    return Column(
+    return Row(
       children: [
         Card(
-          elevation: 4,
-          shape: RoundedRectangleBorder(
-            borderRadius: BorderRadius.circular(10),
-          ),
           child: ClipRRect(
             borderRadius: BorderRadius.circular(10),
-            child: Container(
-              width: 150,
-              height: 150,
-              decoration: BoxDecoration(
-                border: Border.all(width: 1, color: Colors.grey.shade300),
-              ),
-              child: _editedWorkspace.image == null
-                  ? Image.network(
-                      _editedWorkspace.imageUrl!,
-                      fit: BoxFit.cover,
-                    )
-                  : Image.file(
-                      _editedWorkspace.image!,
-                      fit: BoxFit.cover,
-                    ),
-            ),
+            child: _editedWorkspace.image == null
+                ? Image.network(
+                    width: 150,
+                    height: 150,
+                    _editedWorkspace.imageUrl!,
+                    fit: BoxFit.cover,
+                  )
+                : Image.file(
+                    width: 150,
+                    height: 150,
+                    _editedWorkspace.image!,
+                    fit: BoxFit.cover,
+                  ),
           ),
         ),
-        const SizedBox(height: 10),
+        const Spacer(),
         _buildImagePickerButton(),
       ],
     );
@@ -98,39 +87,15 @@ class _EditWorkspaceScreenState extends State<EditWorkspaceScreen> {
 
   TextButton _buildImagePickerButton() {
     return TextButton.icon(
-      style: TextButton.styleFrom(
-        padding: const EdgeInsets.symmetric(vertical: 12, horizontal: 24),
-        backgroundColor: Theme.of(context).primaryColor.withOpacity(0.1),
-        shape: RoundedRectangleBorder(
-          borderRadius: BorderRadius.circular(8),
-        ),
-      ),
-      icon: const Icon(Icons.camera_alt_outlined, color: Colors.blueAccent),
-      label: const Text(
+      icon: const Icon(Icons.camera_alt_outlined),
+      label: Text(
         'Choose Image',
-        style: TextStyle(color: Colors.blueAccent),
+        style: Theme.of(context).textTheme.titleMedium,
       ),
       onPressed: () async {
-        final imagePicker = ImagePicker();
-        try {
-          final imageFile = await imagePicker.pickImage(
-            source: ImageSource.gallery,
-          );
-          if (imageFile == null) {
-            return;
-          }
-          _editedWorkspace =
-              _editedWorkspace.copyWith(image: File(imageFile.path));
-          setState(() {});
-        } catch (error) {
-          if (mounted) {
-            showInfoDialog(
-              confirmText: 'Something went wrong',
-              context: context,
-              status: StatusType.error,
-            );
-          }
-        }
+        final image = await showImagePicker(context);
+        _editedWorkspace = _editedWorkspace.copyWith(image: image);
+        setState(() {});
       },
     );
   }
@@ -144,8 +109,7 @@ class _EditWorkspaceScreenState extends State<EditWorkspaceScreen> {
       body: Center(
         child: SingleChildScrollView(
           child: Padding(
-            padding:
-                const EdgeInsets.symmetric(horizontal: 24.0, vertical: 16.0),
+            padding: const EdgeInsets.all(20.0),
             child: Form(
               key: _formKey,
               child: Column(
@@ -153,46 +117,24 @@ class _EditWorkspaceScreenState extends State<EditWorkspaceScreen> {
                 children: [
                   // Title
                   Text(
-                    'Edit Workspace Details',
-                    style: Theme.of(context).textTheme.titleLarge?.copyWith(
-                          fontWeight: FontWeight.bold,
-                          color: Colors.blueGrey.shade700,
-                        ),
+                    'What\'s the updated of your company or team?',
+                    style: Theme.of(context).textTheme.headlineSmall,
                     textAlign: TextAlign.center,
                   ),
-                  const SizedBox(height: 30),
+                  const SizedBox(height: 30.0),
+
+                  // Input field section
+                  _buildWorkspaceNameField(),
+                  const SizedBox(height: 20),
 
                   // Image preview section
                   _buildWorkspacePreview(),
-                  const SizedBox(height: 30),
-
-                  // Input field section
-                  Card(
-                    elevation: 3,
-                    shape: RoundedRectangleBorder(
-                      borderRadius: BorderRadius.circular(8),
-                    ),
-                    child: Padding(
-                      padding: const EdgeInsets.all(16.0),
-                      child: Column(
-                        children: [
-                          _buildWorkspaceNameField(),
-                        ],
-                      ),
-                    ),
-                  ),
-                  const SizedBox(height: 30),
+                  const SizedBox(height: 20),
 
                   // Next button
                   SizedBox(
                     width: double.infinity,
                     child: ElevatedButton(
-                      style: ElevatedButton.styleFrom(
-                        padding: const EdgeInsets.symmetric(vertical: 16),
-                        shape: RoundedRectangleBorder(
-                          borderRadius: BorderRadius.circular(8),
-                        ),
-                      ),
                       onPressed: () => _onContinue(context),
                       child: const Text('Update'),
                     ),

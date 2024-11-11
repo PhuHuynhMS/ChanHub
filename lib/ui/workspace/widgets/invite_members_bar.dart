@@ -12,10 +12,12 @@ class InviteMembersBar extends StatelessWidget {
     super.key,
     required this.selectedUsers,
     required this.onSelectedMembersChanged,
+    this.isCreating = false,
   });
 
   final List<User> selectedUsers;
   final void Function(List<User>) onSelectedMembersChanged;
+  final bool isCreating;
 
   Future<List<User>> _filterMembers(
       BuildContext context, String filter, List<User> members) async {
@@ -43,10 +45,12 @@ class InviteMembersBar extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    final workspaceMembers =
-        context.read<WorkspacesManager>().getSelectedWorkspace()!.members;
-    final workspaceInvitations =
-        context.read<WorkspacesManager>().getSelectedWorkspace()!.invitations;
+    final workspaceMembers = isCreating
+        ? <User>[]
+        : context.read<WorkspacesManager>().getSelectedWorkspace()!.members;
+    final workspaceInvitations = isCreating
+        ? <User>[]
+        : context.read<WorkspacesManager>().getSelectedWorkspace()!.invitations;
 
     return DropdownSearch<User>.multiSelection(
       mode: Mode.form,

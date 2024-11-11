@@ -1,10 +1,6 @@
-import 'dart:io';
-
 import 'package:flutter/material.dart';
-import 'package:image_picker/image_picker.dart';
 import 'package:provider/provider.dart';
 
-import '../../../common/enums.dart';
 import '../../../managers/index.dart';
 import '../../../models/index.dart';
 import '../../shared/utils/index.dart';
@@ -77,100 +73,68 @@ class _ProfileHeaderState extends State<ProfileHeader> {
       context: context,
       children: [
         Center(
-          child: Padding(
-            padding: const EdgeInsets.all(16.0),
-            child: StatefulBuilder(
-              builder: (BuildContext context, StateSetter setModalState) {
-                return Column(
-                  mainAxisSize: MainAxisSize.min,
-                  children: [
-                    Card(
-                      elevation: 4,
-                      shape: RoundedRectangleBorder(
-                        borderRadius: BorderRadius.circular(10),
-                      ),
-                      child: ClipRRect(
-                        borderRadius: BorderRadius.circular(10),
-                        child: Container(
-                          width: 150,
-                          height: 150,
-                          decoration: BoxDecoration(
-                            border: Border.all(
-                                width: 1, color: Colors.grey.shade300),
-                          ),
-                          child: _editedUser.avatar == null
-                              ? Image.network(
-                                  _editedUser.avatarUrl,
-                                  fit: BoxFit.cover,
-                                )
-                              : Image.file(
-                                  _editedUser.avatar!,
-                                  fit: BoxFit.cover,
-                                ),
-                        ),
-                      ),
+          child: StatefulBuilder(
+            builder: (BuildContext context, StateSetter setModalState) {
+              return Column(
+                mainAxisSize: MainAxisSize.min,
+                children: [
+                  // Avatar preview
+                  SizedBox(
+                    width: 140,
+                    height: 140,
+                    child: ClipRRect(
+                      borderRadius: BorderRadius.circular(70),
+                      child: _editedUser.avatar == null
+                          ? Image.network(
+                              _editedUser.avatarUrl,
+                              fit: BoxFit.cover,
+                            )
+                          : Image.file(
+                              _editedUser.avatar!,
+                              fit: BoxFit.cover,
+                            ),
                     ),
-                    const SizedBox(height: 10),
-                    SizedBox(
-                      width: double.infinity,
-                      child: TextButton.icon(
-                        style: TextButton.styleFrom(
-                          padding: const EdgeInsets.symmetric(
-                              vertical: 12, horizontal: 24),
-                          backgroundColor:
-                              Theme.of(context).primaryColor.withOpacity(0.1),
-                          shape: RoundedRectangleBorder(
-                            borderRadius: BorderRadius.circular(8),
-                          ),
-                        ),
-                        icon: const Icon(Icons.camera_alt_outlined,
-                            color: Colors.blueAccent),
-                        label: const Text(
-                          'Choose Image',
-                          style: TextStyle(color: Colors.blueAccent),
-                        ),
-                        onPressed: () async {
-                          final imagePicker = ImagePicker();
-                          try {
-                            final imageFile = await imagePicker.pickImage(
-                              source: ImageSource.gallery,
-                            );
-                            if (imageFile == null) {
-                              return;
-                            }
-                            setModalState(() {
-                              _editedUser = _editedUser.copyWith(
-                                  avatar: File(imageFile.path));
-                            });
-                          } catch (error) {
-                            if (context.mounted) {
-                              showInfoDialog(
-                                confirmText: 'Something went wrong',
-                                context: context,
-                                status: StatusType.error,
-                              );
-                            }
-                          }
-                        },
+                  ),
+                  const SizedBox(height: 10),
+
+                  // Choose from gallery
+                  SizedBox(
+                    child: TextButton.icon(
+                      icon: const Icon(Icons.camera_alt_outlined),
+                      label: Text(
+                        'Choose from gallery',
+                        style: Theme.of(context).textTheme.titleMedium,
                       ),
+                      onPressed: () async {
+                        final image = await showImagePicker(context);
+                        _editedUser = _editedUser.copyWith(avatar: image);
+                        setModalState(() {});
+                      },
                     ),
-                    const SizedBox(
-                      height: 10,
-                    ),
-                    SizedBox(
-                      width: double.infinity,
-                      child: TextButton(
-                        onPressed: () {
-                          _onChangeAvatar();
-                        },
-                        child: const Text('Save'),
-                      ),
-                    ),
-                  ],
-                );
-              },
-            ),
+                  ),
+                ],
+              );
+            },
           ),
+        ),
+        const SizedBox(height: 10),
+
+        // Action buttons
+        Row(
+          children: [
+            const Spacer(),
+            TextButton(
+              onPressed: () => Navigator.of(context).pop(),
+              child: Text('Cancel',
+                  style: Theme.of(context).textTheme.titleMedium!.copyWith(
+                        color: Theme.of(context).colorScheme.error,
+                      )),
+            ),
+            TextButton(
+              onPressed: () => _onChangeAvatar(),
+              child: const Text('Save'),
+            ),
+          ],
         ),
       ],
     );

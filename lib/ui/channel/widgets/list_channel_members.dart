@@ -1,8 +1,7 @@
-import 'package:ct484_project/managers/index.dart';
-import 'package:ct484_project/ui/profile/change_password_screen.dart';
 import 'package:flutter/material.dart';
 import 'package:provider/provider.dart';
 
+import '../../../managers/index.dart';
 import '../../../models/index.dart';
 import '../../shared/utils/index.dart';
 import '../../screens.dart';

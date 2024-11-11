@@ -1,7 +1,6 @@
 import 'dart:io';
 
 import 'package:flutter/material.dart';
-import 'package:image_picker/image_picker.dart';
 
 import '../shared/utils/index.dart';
 import '../shared/widgets/index.dart';
@@ -19,13 +18,7 @@ class CreateWorkspaceScreen extends StatefulWidget {
 class _CreateWorkspaceScreenState extends State<CreateWorkspaceScreen> {
   final GlobalKey<FormState> _formKey = GlobalKey<FormState>();
   final _nameController = TextEditingController();
-  late File? image;
-
-  @override
-  void initState() {
-    image = null;
-    super.initState();
-  }
+  File? _image;
 
   @override
   void dispose() {
@@ -34,14 +27,14 @@ class _CreateWorkspaceScreenState extends State<CreateWorkspaceScreen> {
   }
 
   void _onContinue() {
-    if (!_formKey.currentState!.validate() || image == null) {
+    if (!_formKey.currentState!.validate() || _image == null) {
       return;
     }
     Navigator.of(context).pushNamed(
       AddWorkspaceMembersScreen.routeName,
       arguments: {
         'workspaceName': _nameController.text,
-        'image': image,
+        'image': _image,
         'isCreating': true,
       },
     );
@@ -53,8 +46,8 @@ class _CreateWorkspaceScreenState extends State<CreateWorkspaceScreen> {
       children: [
         Container(
           alignment: Alignment.center,
-          width: 100,
-          height: 100,
+          width: 150,
+          height: 150,
           margin: const EdgeInsets.only(top: 8, right: 10),
           decoration: BoxDecoration(
             borderRadius: const BorderRadius.all(Radius.circular(5.0)),
@@ -63,7 +56,7 @@ class _CreateWorkspaceScreenState extends State<CreateWorkspaceScreen> {
               color: Theme.of(context).colorScheme.tertiary,
             ),
           ),
-          child: image == null
+          child: _image == null
               ? const Text(
                   'Workspace image',
                   textAlign: TextAlign.center,
@@ -71,16 +64,14 @@ class _CreateWorkspaceScreenState extends State<CreateWorkspaceScreen> {
               : ClipRRect(
                   borderRadius: const BorderRadius.all(Radius.circular(5.0)),
                   child: Image.file(
-                    image!,
+                    _image!,
                     fit: BoxFit.cover,
                   ),
                 ),
         ),
-        Expanded(
-          child: SizedBox(
-            height: 100,
-            child: _buildImagePickerButton(),
-          ),
+        const Spacer(),
+        SizedBox(
+          child: _buildImagePickerButton(),
         )
       ],
     );
@@ -91,19 +82,8 @@ class _CreateWorkspaceScreenState extends State<CreateWorkspaceScreen> {
       icon: const Icon(Icons.camera),
       label: const Text('Pick Image'),
       onPressed: () async {
-        final imagePicker = ImagePicker();
-        try {
-          final imageFile = await imagePicker.pickImage(
-            source: ImageSource.gallery,
-          );
-          if (imageFile == null) {
-            return;
-          }
-          image = File(imageFile.path);
-          setState(() {});
-        } catch (error) {
-          // ignore error
-        }
+        _image = await showImagePicker(context);
+        setState(() {});
       },
     );
   }

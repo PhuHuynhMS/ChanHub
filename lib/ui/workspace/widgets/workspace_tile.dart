@@ -183,10 +183,7 @@ class WorkspaceActions extends StatelessWidget {
 
     if (isConfirmed && context.mounted) {
       context.executeWithErrorHandling(() async {
-        final member = context.read<AuthManager>().loggedInUser;
-        await context
-            .read<WorkspacesManager>()
-            .deleteWorkspaceMember(member!, workspace);
+        await context.read<WorkspacesManager>().leaveWorkspace(workspace);
         if (context.mounted) {
           await context.read<WorkspacesManager>().fetchWorkspaces();
         }
@@ -198,9 +195,8 @@ class WorkspaceActions extends StatelessWidget {
   }
 
   void _navigateToEditWorkspace(BuildContext context, Workspace workspace) {
-    Navigator.of(context).pushNamed(EditWorkspaceScreen.routeName, arguments: {
-      'workspace': workspace,
-    });
+    Navigator.of(context)
+        .pushNamed(EditWorkspaceScreen.routeName, arguments: workspace);
   }
 
   List<Widget> _buildWorkspaceActions(BuildContext context) {
@@ -224,32 +220,6 @@ class WorkspaceActions extends StatelessWidget {
           ),
         ),
         ListTile(
-          onTap: () => _navigateToManageMembers(context),
-          leading: Icon(
-            Icons.manage_accounts,
-            color: Theme.of(context).colorScheme.onSurface,
-          ),
-          title: Text(
-            'Manage members',
-            style: Theme.of(context).textTheme.bodyMedium!.copyWith(
-                  color: Theme.of(context).colorScheme.onSurface,
-                ),
-          ),
-        ),
-        ListTile(
-          onTap: () => _navigateToAddWorkspacesMembers(context),
-          leading: Icon(
-            Icons.person_add,
-            color: Theme.of(context).colorScheme.onSurface,
-          ),
-          title: Text(
-            'Add members',
-            style: Theme.of(context).textTheme.bodyMedium!.copyWith(
-                  color: Theme.of(context).colorScheme.onSurface,
-                ),
-          ),
-        ),
-        ListTile(
           onTap: () => _deleteWorkspace(context),
           leading: Icon(
             Icons.delete,
@@ -265,19 +235,6 @@ class WorkspaceActions extends StatelessWidget {
       ];
     } else {
       return [
-        ListTile(
-          onTap: () => _navigateToManageMembers(context),
-          leading: Icon(
-            Icons.people,
-            color: Theme.of(context).colorScheme.onSurface,
-          ),
-          title: Text(
-            'View members',
-            style: Theme.of(context).textTheme.bodyMedium!.copyWith(
-                  color: Theme.of(context).colorScheme.onSurface,
-                ),
-          ),
-        ),
         ListTile(
           onTap: () => _leaveWorkspace(context),
           leading: Icon(

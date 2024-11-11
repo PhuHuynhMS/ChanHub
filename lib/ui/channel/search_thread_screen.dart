@@ -144,6 +144,12 @@ class _SearchThreadScreenState extends State<SearchThreadScreen> {
             ],
           ),
 
+          // No threads
+          if (!_isFetching && _threads.isEmpty) ...[
+            const SizedBox(height: 20.0),
+            const Text('No threads found'),
+          ],
+
           // Threads
           Expanded(
             child: ListView.builder(
@@ -153,6 +159,7 @@ class _SearchThreadScreenState extends State<SearchThreadScreen> {
                   _buildThreadDetail(_threads, index),
             ),
           ),
+
           if (_isFetching) getLoadingAnimation(context),
         ],
       ),
