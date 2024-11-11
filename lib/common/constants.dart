@@ -32,9 +32,9 @@ const String defaultUserAvatarUrl = 'https://picsum.photos/300/300';
 
 const Map<SearchThreadFilter, String> searchThreadFilterString = {
   SearchThreadFilter.all: 'All Threads',
-  SearchThreadFilter.unread: 'Unread',
+  // SearchThreadFilter.unread: 'Unread',
   SearchThreadFilter.myThreads: 'My Threads',
-  SearchThreadFilter.tagged: 'Tagged',
+  // SearchThreadFilter.tagged: 'Tagged',
 };
 
 const Map<StatusType, Color> statusColor = {
