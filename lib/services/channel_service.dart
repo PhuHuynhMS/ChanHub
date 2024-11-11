@@ -110,4 +110,21 @@ class ChannelService {
       throw ServiceException(exception);
     }
   }
+
+  Future<RecordModel?> addChannelMember(
+      String memberId, String channelId) async {
+    try {
+      final pb = await PocketBaseService.getInstance();
+
+      final body = <String, dynamic>{
+        "member": memberId,
+        "channel": channelId,
+      };
+
+      final record = await pb.collection('channel_members').create(body: body);
+      return record;
+    } on Exception catch (exception) {
+      throw ServiceException(exception);
+    }
+  }
 }

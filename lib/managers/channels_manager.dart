@@ -107,6 +107,17 @@ class ChannelsManager with ChangeNotifier {
     return true;
   }
 
+  Future<void> addChannelMember(User member) async {
+    final record =
+        await _channelService.addChannelMember(member.id, _selectedChannelId!);
+    if (record != null) {
+      final index =
+          _channels.indexWhere((channel) => channel.id == _selectedChannelId);
+      _channels[index].members.add(member);
+      notifyListeners();
+    }
+  }
+
   Channel? getById(String channelId) {
     try {
       return _channels.firstWhere((channel) => channel.id == channelId);
@@ -120,5 +131,13 @@ class ChannelsManager with ChangeNotifier {
       threadsManagers[channel.id!] =
           ThreadsManager(channel.id!, notifyListeners)..init();
     }
+  }
+
+  List<User> getAllChannelMembers() {
+    final selectedChannel = getSelectedChannel();
+    if (selectedChannel != null) {
+      return [...selectedChannel.members];
+    }
+    return [];
   }
 }

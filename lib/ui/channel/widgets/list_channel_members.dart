@@ -1,4 +1,7 @@
+import 'package:ct484_project/managers/index.dart';
+import 'package:ct484_project/ui/profile/change_password_screen.dart';
 import 'package:flutter/material.dart';
+import 'package:provider/provider.dart';
 
 import '../../../models/index.dart';
 import '../../shared/utils/index.dart';
@@ -31,6 +34,7 @@ class ListChannelMembers extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
+    final userId = context.read<AuthManager>().loggedInUser?.id;
     return ListView.builder(
       itemCount: filteredMembers.length,
       itemBuilder: (context, index) {
@@ -45,13 +49,15 @@ class ListChannelMembers extends StatelessWidget {
             member.email,
             style: Theme.of(context).textTheme.labelSmall,
           ),
-          trailing: IconButton(
-            icon: Icon(
-              Icons.delete,
-              color: Theme.of(context).colorScheme.error,
-            ),
-            onPressed: () => _onRemoveMember(context, member),
-          ),
+          trailing: userId == member.id
+              ? null
+              : IconButton(
+                  icon: Icon(
+                    Icons.delete,
+                    color: Theme.of(context).colorScheme.error,
+                  ),
+                  onPressed: () => _onRemoveMember(context, member),
+                ),
           onTap: () => _onViewProfile(context, member),
         );
       },
