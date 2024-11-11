@@ -122,7 +122,6 @@ class AuthService {
       final updatedUserModel =
           await pb.collection('users').update(userId, body: body);
 
-      print(updatedUserModel);
       pb.authStore.save(pb.authStore.token, updatedUserModel);
       onAuthChanged?.call(User.fromJson(updatedUserModel.toJson()));
     } on Exception catch (exception) {

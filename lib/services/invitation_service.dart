@@ -9,7 +9,9 @@ class InvitationService {
       final invitationModels =
           await pb.collection('workspace_invitations').getFullList(
                 filter: "member = '$userId'",
-                expand: 'workspace, workspace.creator',
+                expand: 'workspace, workspace.creator,'
+                    'workspace.accepted_workspace_members_via_workspace.member,'
+                    'workspace.workspace_invitations_via_workspace.member',
               );
       if (invitationModels.isNotEmpty) {
         return invitationModels
