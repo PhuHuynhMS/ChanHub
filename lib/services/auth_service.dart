@@ -1,3 +1,4 @@
+import 'package:http/http.dart' as http;
 import 'package:pocketbase/pocketbase.dart';
 
 import '../models/index.dart';
@@ -99,8 +100,17 @@ class AuthService {
         "job_title": newUserInfo.jobTitle,
       };
 
-      final updatedUserModel =
-          await pb.collection('users').update(userId, body: body);
+      final updatedUserModel = await pb.collection('users').update(userId,
+          body: body,
+          files: newUserInfo.avatar != null
+              ? [
+                  http.MultipartFile.fromBytes(
+                    'avatar',
+                    await newUserInfo.avatar!.readAsBytes(),
+                    filename: newUserInfo.avatar!.uri.pathSegments.last,
+                  )
+                ]
+              : []);
 
       pb.authStore.save(pb.authStore.token, updatedUserModel);
       onAuthChanged?.call(User.fromJson(updatedUserModel.toJson()));
