@@ -53,6 +53,30 @@ class WorkspacesManager with ChangeNotifier {
     notifyListeners();
   }
 
+  Future<void> updateWorkspace(Workspace workspace) async {
+    final index = _workspaces.indexWhere((item) => item.id == workspace.id);
+    if (index >= 0) {
+      try {
+        // Update workspace in the backend via service
+        final updatedWorkspace =
+            await _workspaceService.updateWorkspace(workspace);
+
+        if (updatedWorkspace != null) {
+          // Update the local list if update was successful
+          _workspaces[index] = updatedWorkspace;
+          notifyListeners();
+        } else {
+          print('No workspace returned from service');
+        }
+      } catch (e) {
+        print('Error updating workspace: $e');
+        // You may also want to show an error message to the user
+      }
+    } else {
+      print('Workspace not found in the local list');
+    }
+  }
+
   Future<bool> deleteWorkspaceMember(User member) async {
     await _workspaceService.deleteWorkspaceMembers(
       member.id,

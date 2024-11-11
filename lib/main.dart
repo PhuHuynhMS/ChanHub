@@ -232,6 +232,16 @@ class ChanHub extends StatelessWidget {
       );
     }
 
+    if (settings.name == EditWorkspaceScreen.routeName) {
+      final agrs = settings.arguments as Map<String, dynamic>;
+      final workspace = agrs['workspace'];
+      return MaterialPageRoute(
+        builder: (context) => SafeArea(
+          child: EditWorkspaceScreen(workspace),
+        ),
+      );
+    }
+
     if (settings.name == ChangePasswordScreen.routeName) {
       return CustomSlideTransition(
         page: const SafeArea(

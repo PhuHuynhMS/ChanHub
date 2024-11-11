@@ -186,12 +186,31 @@ class WorkspaceActions extends StatelessWidget {
     }
   }
 
+  void _navigateToEditWorkspace(BuildContext context, Workspace workspace) {
+    Navigator.of(context).pushNamed(EditWorkspaceScreen.routeName, arguments: {
+      'workspace': workspace,
+    });
+  }
+
   List<Widget> _buildWorkspaceActions(BuildContext context) {
     final userId = context.read<AuthManager>().loggedInUser?.id;
     bool isAdmin = context.read<WorkspacesManager>().isWorkspaceAdmin(userId!);
 
     if (isAdmin) {
       return [
+        ListTile(
+          onTap: () => _navigateToEditWorkspace(context, workspace),
+          leading: Icon(
+            Icons.edit,
+            color: Theme.of(context).colorScheme.onSurface,
+          ),
+          title: Text(
+            'Edit workspace',
+            style: Theme.of(context).textTheme.bodyMedium!.copyWith(
+                  color: Theme.of(context).colorScheme.onSurface,
+                ),
+          ),
+        ),
         ListTile(
           onTap: () => _navigateToManageMembers(context),
           leading: Icon(
