@@ -1,6 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
 import 'package:flutter_dotenv/flutter_dotenv.dart';
+import 'package:flutter_native_splash/flutter_native_splash.dart';
 import 'package:provider/provider.dart';
 
 import './models/index.dart';
@@ -10,6 +11,10 @@ import './ui/screens.dart';
 import './ui/shared/transitions/index.dart';
 
 void main() async {
+  // Preserve the splash screen
+  WidgetsBinding widgetsBinding = WidgetsFlutterBinding.ensureInitialized();
+  FlutterNativeSplash.preserve(widgetsBinding: widgetsBinding);
+
   // Initialize services
   await dotenv.load();
   await LocalStorageService.getInstance();
@@ -53,6 +58,9 @@ class ChanHub extends StatelessWidget {
             ctx.read<WorkspacesManager>().fetchWorkspaces();
             ctx.read<InvitationsManager>().fetchInvitations();
           }
+
+          // Remove the splash screen
+          FlutterNativeSplash.remove();
 
           return MaterialApp(
             title: 'ChanHub',
