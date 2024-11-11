@@ -3,6 +3,7 @@ import 'package:provider/provider.dart';
 
 import '../../models/index.dart';
 import '../../managers/index.dart';
+import '../shared/utils/index.dart';
 import '../screens.dart';
 import './widgets/index.dart';
 
@@ -24,7 +25,7 @@ class ProfileScreen extends StatelessWidget {
         actions: isMyProfile
             ? [
                 _buildInvitationButton(context),
-                _buildLogoutButton(context),
+                _buildSettingsButton(context),
                 const SizedBox(width: 5.0),
               ]
             : null,
@@ -63,15 +64,15 @@ class ProfileScreen extends StatelessWidget {
     );
   }
 
-  Widget _buildLogoutButton(BuildContext context) {
+  Widget _buildSettingsButton(BuildContext context) {
     return IconButton(
-      icon: const Icon(Icons.logout),
-      onPressed: () => _logout(context),
+      icon: const Icon(Icons.settings),
+      onPressed: () => showActionDialog(
+        context: context,
+        title: 'Settings',
+        content: const SettingsForm(),
+      ),
     );
-  }
-
-  void _logout(BuildContext context) {
-    context.read<AuthManager>().logout();
   }
 
   void _viewInvitation(BuildContext context) {

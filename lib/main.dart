@@ -5,7 +5,6 @@ import 'package:provider/provider.dart';
 import './models/index.dart';
 import './managers/index.dart';
 import './services/index.dart';
-import './themes/chanhub_theme.dart';
 import './ui/screens.dart';
 import './ui/shared/transitions/index.dart';
 
@@ -25,6 +24,7 @@ class ChanHub extends StatelessWidget {
   Widget build(BuildContext context) {
     return MultiProvider(
       providers: [
+        ChangeNotifierProvider(create: (_) => ThemeManager()),
         ChangeNotifierProvider(create: (_) => OnboardingManager()..init()),
         ChangeNotifierProvider(create: (_) => AuthManager()),
         ChangeNotifierProvider(create: (_) => WorkspacesManager()),
@@ -35,8 +35,8 @@ class ChanHub extends StatelessWidget {
               ..fetchChannels(workspacesManager.getSelectedWorkspace()?.id)),
         ChangeNotifierProvider(create: (_) => UsersManager())
       ],
-      child: Consumer2<OnboardingManager, AuthManager>(
-        builder: (ctx, onboardingManager, authManager, child) {
+      child: Consumer3<OnboardingManager, AuthManager, ThemeManager>(
+        builder: (ctx, onboardingManager, authManager, themeManager, child) {
           if (authManager.isLoggedIn) {
             // Initialize the app
             ctx.read<WorkspacesManager>().fetchWorkspaces();
@@ -46,7 +46,7 @@ class ChanHub extends StatelessWidget {
           return MaterialApp(
             title: 'ChanHub',
             debugShowCheckedModeBanner: false,
-            theme: lightTheme,
+            theme: themeManager.getTheme(),
             home: SafeArea(
               child: _buildHomeScreen(context, authManager, onboardingManager),
             ),

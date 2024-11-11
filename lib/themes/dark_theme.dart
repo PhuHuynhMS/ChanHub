@@ -1,221 +1,221 @@
 import 'package:flutter/material.dart';
 import 'package:google_fonts/google_fonts.dart';
 
-import 'chanhub_colors.dart';
+import 'chanhub_dark_colors.dart';
 
-final TextTheme lightTextTheme = TextTheme(
+final TextTheme darkTextTheme = TextTheme(
   displayLarge: GoogleFonts.notoSans(
     fontWeight: FontWeight.bold,
-    color: ChanHubColors.primary,
+    color: ChanHubDarkColors.primary,
   ),
   displayMedium: GoogleFonts.notoSans(
     fontWeight: FontWeight.w700,
-    color: ChanHubColors.primary,
+    color: ChanHubDarkColors.primary,
   ),
   displaySmall: GoogleFonts.notoSans(
     fontWeight: FontWeight.w600,
-    color: ChanHubColors.primary,
+    color: ChanHubDarkColors.primary,
   ),
   headlineLarge: GoogleFonts.notoSans(
     fontSize: 40.0,
     fontWeight: FontWeight.w600,
-    color: ChanHubColors.primary,
+    color: ChanHubDarkColors.primary,
   ),
   headlineMedium: GoogleFonts.notoSans(
     fontSize: 32.0,
     fontWeight: FontWeight.bold,
-    color: ChanHubColors.primary,
+    color: ChanHubDarkColors.primary,
   ),
   headlineSmall: GoogleFonts.notoSans(
     fontSize: 20.0,
     fontWeight: FontWeight.bold,
-    color: ChanHubColors.primary,
+    color: ChanHubDarkColors.primary,
   ),
   titleLarge: GoogleFonts.notoSans(
     fontSize: 20.0,
     fontWeight: FontWeight.w600,
-    color: ChanHubColors.primary,
+    color: ChanHubDarkColors.primary,
   ),
   titleMedium: GoogleFonts.notoSans(
     fontSize: 14.0,
     fontWeight: FontWeight.w600,
-    color: ChanHubColors.primary,
+    color: ChanHubDarkColors.primary,
   ),
   titleSmall: GoogleFonts.notoSans(
     fontSize: 12.0,
     fontWeight: FontWeight.w600,
-    color: ChanHubColors.primary,
+    color: ChanHubDarkColors.primary,
   ),
   bodyLarge: GoogleFonts.notoSans(
     fontSize: 16.0,
     fontWeight: FontWeight.w500,
-    color: ChanHubColors.onSurface,
+    color: ChanHubDarkColors.onSurface,
   ),
   bodyMedium: GoogleFonts.notoSans(
     fontSize: 14.0,
     fontWeight: FontWeight.w400,
-    color: ChanHubColors.onSurface,
+    color: ChanHubDarkColors.onSurface,
   ),
   bodySmall: GoogleFonts.notoSans(
     fontSize: 12.0,
     fontWeight: FontWeight.w400,
-    color: ChanHubColors.onSurface,
+    color: ChanHubDarkColors.onSurface,
   ),
   labelLarge: GoogleFonts.notoSans(
     fontSize: 16.0,
     fontWeight: FontWeight.w500,
-    color: ChanHubColors.onSurface,
+    color: ChanHubDarkColors.onSurface,
   ),
   labelMedium: GoogleFonts.notoSans(
     fontSize: 14.0,
     fontWeight: FontWeight.w400,
-    color: ChanHubColors.onSurface.withOpacity(0.4),
+    color: ChanHubDarkColors.onSurface.withOpacity(0.4),
   ),
   labelSmall: GoogleFonts.notoSans(
     fontSize: 12.0,
     fontWeight: FontWeight.w400,
-    color: ChanHubColors.onSurface.withOpacity(0.4),
+    color: ChanHubDarkColors.onSurface.withOpacity(0.4),
   ),
 );
 
-final TextTheme lightPrimaryTextTheme = TextTheme(
+final TextTheme darkPrimaryTextTheme = TextTheme(
   displayLarge: GoogleFonts.notoSans(
     fontWeight: FontWeight.bold,
-    color: ChanHubColors.onPrimary,
+    color: ChanHubDarkColors.onPrimary,
   ),
   displayMedium: GoogleFonts.notoSans(
     fontWeight: FontWeight.w700,
-    color: ChanHubColors.onPrimary,
+    color: ChanHubDarkColors.onPrimary,
   ),
   displaySmall: GoogleFonts.notoSans(
     fontWeight: FontWeight.w600,
-    color: ChanHubColors.onPrimary,
+    color: ChanHubDarkColors.onPrimary,
   ),
   headlineLarge: GoogleFonts.notoSans(
     fontSize: 40.0,
     fontWeight: FontWeight.w600,
-    color: ChanHubColors.onPrimary,
+    color: ChanHubDarkColors.onPrimary,
   ),
   headlineMedium: GoogleFonts.notoSans(
     fontSize: 32.0,
     fontWeight: FontWeight.bold,
-    color: ChanHubColors.onPrimary,
+    color: ChanHubDarkColors.onPrimary,
   ),
   headlineSmall: GoogleFonts.notoSans(
     fontSize: 24.0,
     fontWeight: FontWeight.bold,
-    color: ChanHubColors.onPrimary,
+    color: ChanHubDarkColors.onPrimary,
   ),
   titleLarge: GoogleFonts.notoSans(
     fontSize: 20.0,
     fontWeight: FontWeight.w600,
-    color: ChanHubColors.onPrimary,
+    color: ChanHubDarkColors.onPrimary,
   ),
   titleMedium: GoogleFonts.notoSans(
     fontSize: 14.0,
     fontWeight: FontWeight.w600,
-    color: ChanHubColors.onPrimary,
+    color: ChanHubDarkColors.onPrimary,
   ),
   titleSmall: GoogleFonts.notoSans(
     fontSize: 12.0,
     fontWeight: FontWeight.w600,
-    color: ChanHubColors.onPrimary,
+    color: ChanHubDarkColors.onPrimary,
   ),
   bodyLarge: GoogleFonts.notoSans(
     fontSize: 16.0,
     fontWeight: FontWeight.w500,
-    color: ChanHubColors.onSurface,
+    color: ChanHubDarkColors.onSurface,
   ),
   bodyMedium: GoogleFonts.notoSans(
     fontSize: 14.0,
     fontWeight: FontWeight.w400,
-    color: ChanHubColors.onSurface,
+    color: ChanHubDarkColors.onSurface,
   ),
   bodySmall: GoogleFonts.notoSans(
     fontSize: 12.0,
     fontWeight: FontWeight.w400,
-    color: ChanHubColors.onSurface,
+    color: ChanHubDarkColors.onSurface,
   ),
   labelLarge: GoogleFonts.notoSans(
     fontSize: 16.0,
     fontWeight: FontWeight.w500,
-    color: ChanHubColors.onSurface,
+    color: ChanHubDarkColors.onSurface,
   ),
   labelMedium: GoogleFonts.notoSans(
     fontSize: 14.0,
     fontWeight: FontWeight.w500,
-    color: ChanHubColors.onSurface,
+    color: ChanHubDarkColors.onSurface,
   ),
   labelSmall: GoogleFonts.notoSans(
     fontSize: 12.0,
     fontWeight: FontWeight.w300,
-    color: ChanHubColors.onSurface,
+    color: ChanHubDarkColors.onSurface,
   ),
 );
 
-const lightColorScheme = ColorScheme(
-  brightness: Brightness.light,
-  primary: ChanHubColors.primary,
-  onPrimary: ChanHubColors.onPrimary,
-  secondary: ChanHubColors.secondary,
-  onSecondary: ChanHubColors.onSecondary,
-  tertiary: ChanHubColors.tertiary,
-  onTertiary: ChanHubColors.onTertiary,
-  error: ChanHubColors.error,
-  onError: ChanHubColors.onError,
-  surface: ChanHubColors.surface,
-  onSurface: ChanHubColors.onSurface,
+const darkColorScheme = ColorScheme(
+  brightness: Brightness.dark,
+  primary: ChanHubDarkColors.primary,
+  onPrimary: ChanHubDarkColors.onPrimary,
+  secondary: ChanHubDarkColors.secondary,
+  onSecondary: ChanHubDarkColors.onSecondary,
+  tertiary: ChanHubDarkColors.tertiary,
+  onTertiary: ChanHubDarkColors.onTertiary,
+  error: ChanHubDarkColors.error,
+  onError: ChanHubDarkColors.onError,
+  surface: ChanHubDarkColors.surface,
+  onSurface: ChanHubDarkColors.onSurface,
 );
 
-final ThemeData lightTheme = ThemeData(
-  colorScheme: lightColorScheme,
+final ThemeData darkTheme = ThemeData(
+  colorScheme: darkColorScheme,
   fontFamily: GoogleFonts.notoSans().fontFamily,
-  textTheme: lightTextTheme,
-  primaryTextTheme: lightPrimaryTextTheme,
+  textTheme: darkTextTheme,
+  primaryTextTheme: darkPrimaryTextTheme,
 
   // Define the default color of the app.
 
   // IconThemeData
-  iconTheme: const IconThemeData(color: ChanHubColors.primary),
-  primaryIconTheme: const IconThemeData(color: ChanHubColors.onPrimary),
+  iconTheme: const IconThemeData(color: ChanHubDarkColors.primary),
+  primaryIconTheme: const IconThemeData(color: ChanHubDarkColors.onPrimary),
 
   // Splash
-  splashColor: ChanHubColors.onSurface.withOpacity(0.1),
-  highlightColor: ChanHubColors.primary.withOpacity(0.1),
+  splashColor: ChanHubDarkColors.onSurface.withOpacity(0.1),
+  highlightColor: ChanHubDarkColors.primary.withOpacity(0.1),
 
   // Scaffold
   appBarTheme: const AppBarTheme(
-    foregroundColor: ChanHubColors.onPrimary,
-    backgroundColor: ChanHubColors.primary,
+    foregroundColor: ChanHubDarkColors.onPrimary,
+    backgroundColor: ChanHubDarkColors.primary,
     centerTitle: false,
-    iconTheme: IconThemeData(color: ChanHubColors.onPrimary),
-    actionsIconTheme: IconThemeData(color: ChanHubColors.onPrimary),
+    iconTheme: IconThemeData(color: ChanHubDarkColors.onPrimary),
+    actionsIconTheme: IconThemeData(color: ChanHubDarkColors.onPrimary),
   ),
   drawerTheme: const DrawerThemeData(
-    backgroundColor: ChanHubColors.surface,
+    backgroundColor: ChanHubDarkColors.surface,
   ),
   floatingActionButtonTheme: const FloatingActionButtonThemeData(
-    foregroundColor: ChanHubColors.onPrimary,
-    backgroundColor: ChanHubColors.primary,
+    foregroundColor: ChanHubDarkColors.onPrimary,
+    backgroundColor: ChanHubDarkColors.primary,
   ),
   navigationBarTheme: NavigationBarThemeData(
     labelTextStyle: WidgetStateProperty.resolveWith((states) {
       if (states.contains(WidgetState.selected)) {
-        return const TextStyle(color: ChanHubColors.primary);
+        return const TextStyle(color: ChanHubDarkColors.primary);
       }
-      return const TextStyle(color: ChanHubColors.secondary);
+      return const TextStyle(color: ChanHubDarkColors.secondary);
     }),
     iconTheme: WidgetStateProperty.resolveWith(
       (states) {
         if (states.contains(WidgetState.selected)) {
-          return const IconThemeData(color: ChanHubColors.primary);
+          return const IconThemeData(color: ChanHubDarkColors.primary);
         }
-        return const IconThemeData(color: ChanHubColors.secondary);
+        return const IconThemeData(color: ChanHubDarkColors.secondary);
       },
     ),
   ),
   bottomSheetTheme: const BottomSheetThemeData(
-    backgroundColor: ChanHubColors.surface,
+    backgroundColor: ChanHubDarkColors.surface,
     shape: RoundedRectangleBorder(
       borderRadius: BorderRadius.only(
         topLeft: Radius.circular(20.0),
@@ -224,7 +224,7 @@ final ThemeData lightTheme = ThemeData(
     ),
   ),
   dialogTheme: const DialogTheme(
-    backgroundColor: ChanHubColors.surface,
+    backgroundColor: ChanHubDarkColors.surface,
     shape: RoundedRectangleBorder(
       borderRadius: BorderRadius.all(Radius.circular(20.0)),
     ),
@@ -240,13 +240,13 @@ final ThemeData lightTheme = ThemeData(
       backgroundColor: WidgetStateProperty.resolveWith<Color>(
         (Set<WidgetState> states) {
           if (states.contains(WidgetState.disabled)) {
-            return lightColorScheme.primary.withOpacity(0.4);
+            return darkColorScheme.primary.withOpacity(0.4);
           }
-          return lightColorScheme.primary;
+          return darkColorScheme.primary;
         },
       ),
-      foregroundColor: WidgetStatePropertyAll(lightColorScheme.onPrimary),
-      textStyle: WidgetStatePropertyAll(lightTextTheme.titleMedium),
+      foregroundColor: WidgetStatePropertyAll(darkColorScheme.onPrimary),
+      textStyle: WidgetStatePropertyAll(darkTextTheme.titleMedium),
       shape: WidgetStatePropertyAll(
         RoundedRectangleBorder(
           borderRadius: BorderRadius.circular(20.0),
@@ -256,17 +256,17 @@ final ThemeData lightTheme = ThemeData(
   ),
   textButtonTheme: TextButtonThemeData(
     style: ButtonStyle(
-      foregroundColor: WidgetStatePropertyAll(lightColorScheme.primary),
+      foregroundColor: WidgetStatePropertyAll(darkColorScheme.primary),
       backgroundColor: const WidgetStatePropertyAll(Colors.transparent),
-      textStyle: WidgetStatePropertyAll(lightTextTheme.titleMedium),
+      textStyle: WidgetStatePropertyAll(darkTextTheme.titleMedium),
     ),
   ),
   dropdownMenuTheme: DropdownMenuThemeData(
     inputDecorationTheme: InputDecorationTheme(
-      hintStyle: lightTextTheme.labelMedium,
-      floatingLabelStyle: lightTextTheme.titleMedium,
-      labelStyle: lightTextTheme.labelMedium,
-      prefixIconColor: ChanHubColors.primary,
+      hintStyle: darkTextTheme.labelMedium,
+      floatingLabelStyle: darkTextTheme.titleMedium,
+      labelStyle: darkTextTheme.labelMedium,
+      prefixIconColor: ChanHubDarkColors.primary,
     ),
   ),
   iconButtonTheme: const IconButtonThemeData(
@@ -275,61 +275,61 @@ final ThemeData lightTheme = ThemeData(
     ),
   ),
   chipTheme: ChipThemeData(
-    backgroundColor: lightColorScheme.primary.withOpacity(0.1),
-    disabledColor: lightColorScheme.primary.withOpacity(0.3),
-    selectedColor: lightColorScheme.tertiary,
-    secondarySelectedColor: lightColorScheme.tertiary.withOpacity(0.3),
+    backgroundColor: darkColorScheme.primary.withOpacity(0.1),
+    disabledColor: darkColorScheme.primary.withOpacity(0.3),
+    selectedColor: darkColorScheme.tertiary,
+    secondarySelectedColor: darkColorScheme.tertiary.withOpacity(0.3),
     labelPadding: const EdgeInsets.symmetric(horizontal: 5.0),
     padding: const EdgeInsets.all(5.0),
     shape: RoundedRectangleBorder(
       borderRadius: BorderRadius.circular(20.0),
     ),
     side: BorderSide.none,
-    labelStyle: lightTextTheme.bodySmall,
-    secondaryLabelStyle: lightTextTheme.bodySmall,
-    brightness: lightColorScheme.brightness,
-    deleteIconColor: lightColorScheme.error,
+    labelStyle: darkTextTheme.bodySmall,
+    secondaryLabelStyle: darkTextTheme.bodySmall,
+    brightness: darkColorScheme.brightness,
+    deleteIconColor: darkColorScheme.error,
     deleteIconBoxConstraints:
         const BoxConstraints.expand(width: 20.0, height: 20.0),
   ),
 
   // InputDecorationTheme
   inputDecorationTheme: InputDecorationTheme(
-    hintStyle: lightTextTheme.labelMedium,
-    floatingLabelStyle: lightTextTheme.titleMedium,
-    labelStyle: lightTextTheme.labelMedium,
-    prefixIconColor: ChanHubColors.primary,
+    hintStyle: darkTextTheme.labelMedium,
+    floatingLabelStyle: darkTextTheme.titleMedium,
+    labelStyle: darkTextTheme.labelMedium,
+    prefixIconColor: ChanHubDarkColors.primary,
   ),
   switchTheme: SwitchThemeData(
     thumbColor: WidgetStateProperty.resolveWith<Color>(
       (Set<WidgetState> states) {
         if (states.contains(WidgetState.selected)) {
-          return ChanHubColors.primary;
+          return ChanHubDarkColors.primary;
         }
-        return ChanHubColors.tertiary;
+        return ChanHubDarkColors.tertiary;
       },
     ),
     overlayColor: WidgetStateProperty.resolveWith<Color>(
       (Set<WidgetState> states) {
         if (states.contains(WidgetState.hovered)) {
-          return ChanHubColors.primary.withOpacity(0.1);
+          return ChanHubDarkColors.primary.withOpacity(0.1);
         }
-        return ChanHubColors.primary.withOpacity(0.1);
+        return ChanHubDarkColors.primary.withOpacity(0.1);
       },
     ),
     trackColor: WidgetStateProperty.resolveWith<Color>(
       (Set<WidgetState> states) {
         if (states.contains(WidgetState.selected)) {
-          return ChanHubColors.primary.withOpacity(0.3);
+          return ChanHubDarkColors.primary.withOpacity(0.3);
         }
-        return ChanHubColors.tertiary.withOpacity(0.3);
+        return ChanHubDarkColors.tertiary.withOpacity(0.3);
       },
     ),
   ),
 
   // CardTheme
   cardTheme: CardTheme(
-    color: ChanHubColors.surface,
+    color: ChanHubDarkColors.surface,
     shape: RoundedRectangleBorder(
       borderRadius: BorderRadius.circular(20.0),
     ),
@@ -337,22 +337,23 @@ final ThemeData lightTheme = ThemeData(
 
   // Other
   listTileTheme: ListTileThemeData(
-    titleTextStyle: lightTextTheme.bodyMedium,
-    selectedColor: ChanHubColors.tertiary,
-    iconColor: ChanHubColors.primary,
-    textColor: ChanHubColors.onSurface,
+    titleTextStyle: darkTextTheme.bodyMedium,
+    tileColor: ChanHubDarkColors.surface,
+    selectedColor: ChanHubDarkColors.tertiary,
+    iconColor: ChanHubDarkColors.primary,
+    textColor: ChanHubDarkColors.onSurface,
     contentPadding: const EdgeInsets.symmetric(horizontal: 16.0, vertical: 0.0),
     dense: true,
   ),
   expansionTileTheme: const ExpansionTileThemeData(
-    backgroundColor: ChanHubColors.surface,
-    iconColor: ChanHubColors.primary,
-    collapsedIconColor: ChanHubColors.primary,
-    textColor: ChanHubColors.onSurface,
+    backgroundColor: ChanHubDarkColors.surface,
+    iconColor: ChanHubDarkColors.primary,
+    collapsedIconColor: ChanHubDarkColors.primary,
+    textColor: ChanHubDarkColors.onSurface,
     shape: Border(),
   ),
   dividerTheme: DividerThemeData(
-    color: lightColorScheme.primary.withOpacity(0.3),
+    color: darkColorScheme.primary.withOpacity(0.3),
     thickness: 1.0,
     space: 0.0,
   ),
