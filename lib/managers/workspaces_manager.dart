@@ -60,17 +60,35 @@ class WorkspacesManager with ChangeNotifier {
     notifyListeners();
   }
 
-  Future<bool> deleteWorkspaceMember(User member) async {
+  Future<void> updateWorkspace(Workspace workspace) async {
+    final index = _workspaces.indexWhere((item) => item.id == workspace.id);
+    if (index != -1) {
+      final updatedWorkspace =
+          await _workspaceService.updateWorkspace(workspace);
+
+      if (updatedWorkspace != null) {
+        _workspaces[index] = updatedWorkspace;
+        notifyListeners();
+      }
+    }
+  }
+
+  Future<bool> deleteWorkspaceMember(User member, Workspace workspace) async {
     await _workspaceService.deleteWorkspaceMembers(
       member.id,
-      _selectedWorkspaceId!,
+      workspace.id,
     );
     notifyListeners();
     return true;
   }
 
-  bool isWorkspaceAdmin(String userId) {
-    return userId == getSelectedWorkspace()?.creator.id;
+  Future<bool> leaveWorkspace(Workspace workspace) async {
+    await _workspaceService.leaveWorkspace(workspace.workspaceMemberId!);
+    return false;
+  }
+
+  bool isWorkspaceAdmin(String userId, Workspace workspace) {
+    return userId == workspace.creator.id;
   }
 
   Future<void> addWorkspaceMembers(

@@ -138,16 +138,13 @@ class ChanHub extends StatelessWidget {
 
     if (settings.name == AddWorkspaceMembersScreen.routeName) {
       final agrs = settings.arguments as Map<String, dynamic>;
-      final workspaceName = agrs['workspaceName'];
-      final image = agrs['image'];
-      final isCreating = agrs['isCreating'];
 
       return CustomSlideTransition(
         page: SafeArea(
           child: AddWorkspaceMembersScreen(
-            workspaceName: workspaceName,
-            image: image,
-            isCreating: isCreating,
+            workspaceName: agrs['workspaceName'],
+            image: agrs['image'],
+            isCreating: agrs['isCreating'],
           ),
         ),
       );
@@ -228,6 +225,13 @@ class ChanHub extends StatelessWidget {
     if (settings.name == InvitationScreen.routeName) {
       return CustomSlideTransition(
         page: const SafeArea(child: InvitationScreen()),
+      );
+    }
+
+    if (settings.name == EditWorkspaceScreen.routeName) {
+      final workspace = settings.arguments as Workspace;
+      return CustomSlideTransition(
+        page: SafeArea(child: EditWorkspaceScreen(workspace)),
       );
     }
 

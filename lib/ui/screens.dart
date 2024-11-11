@@ -30,6 +30,7 @@ export './workspace/workspace_screen.dart';
 export './workspace/create_workspace_screen.dart';
 export './workspace/add_workspace_members_screen.dart';
 export './workspace/workspace_members_screen.dart';
+export './workspace/edit_workspace_screen.dart';
 
 // Splash
 export './splash_screen.dart';

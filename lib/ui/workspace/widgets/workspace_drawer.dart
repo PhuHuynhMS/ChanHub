@@ -21,9 +21,7 @@ class WorkSpaceDrawer extends StatelessWidget {
   }
 
   void _goToHelp(BuildContext context) {
-    // TODO: For testing purposes
-    context.read<AuthManager>().logout();
-    Navigator.of(context).popUntil((route) => route.isFirst);
+    // TODO: Add help screen
   }
 
   bool _isSelectedWorkspace(Workspace workspace, Workspace? selectedWorkspace) {
