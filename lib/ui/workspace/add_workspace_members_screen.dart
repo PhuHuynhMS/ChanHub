@@ -58,10 +58,9 @@ class _AddWorkspaceMembersScreenState extends State<AddWorkspaceMembersScreen> {
     }
   }
 
-  void updateSelectedMembers(List<User> newMembers) {
-    setState(() {
-      selectedUsers = newMembers;
-    });
+  void _updateSelectedUsers(List<User> users) {
+    selectedUsers = users;
+    setState(() {});
   }
 
   Widget _buildActions() {
@@ -105,8 +104,9 @@ class _AddWorkspaceMembersScreenState extends State<AddWorkspaceMembersScreen> {
                 ),
                 const SizedBox(height: 20.0),
                 InviteMembersBar(
-                    selectedUsers: selectedUsers,
-                    onSelectedMembersChanged: updateSelectedMembers),
+                  selectedUsers: selectedUsers,
+                  onSelectedMembersChanged: _updateSelectedUsers,
+                ),
                 // Invite button
                 const SizedBox(height: 20.0),
                 SizedBox(

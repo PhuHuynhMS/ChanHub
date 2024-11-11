@@ -1,5 +1,8 @@
 import 'package:flutter/material.dart';
+import 'package:provider/provider.dart';
 
+import '../../../common/enums.dart';
+import '../../../managers/index.dart';
 import '../../shared/utils/index.dart';
 import '../../screens.dart';
 
@@ -10,8 +13,13 @@ class ChannelDrawer extends StatelessWidget {
     Navigator.of(context).pushNamed(SearchThreadScreen.routeName);
   }
 
-  void _onEditChannelDescription(BuildContext context) {
-    Navigator.of(context).pushNamed(EditChannelScreen.routeName);
+  void _onEditChannel(BuildContext context) {
+    final selectedChannel =
+        context.read<ChannelsManager>().getSelectedChannel();
+    Navigator.of(context).pushNamed(
+      EditChannelScreen.routeName,
+      arguments: selectedChannel,
+    );
   }
 
   void _onViewMembers(BuildContext context) {
@@ -37,6 +45,10 @@ class ChannelDrawer extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
+    final loggedInUser = context.read<AuthManager>().loggedInUser;
+    final selectedChannel =
+        context.read<ChannelsManager>().getSelectedChannel();
+
     return Drawer(
       child: Column(
         crossAxisAlignment: CrossAxisAlignment.start,
@@ -60,34 +72,41 @@ class ChannelDrawer extends StatelessWidget {
                   title: const Text('Search thread'),
                   onTap: () => _onSearchThread(context),
                 ),
-                ListTile(
-                  leading: const Icon(Icons.edit),
-                  title: const Text('Edit channel'),
-                  onTap: () => _onEditChannelDescription(context),
-                ),
+                if (loggedInUser!.id == selectedChannel!.creator!.id &&
+                    selectedChannel.privacy == ChannelPrivacy.private) ...[
+                  ListTile(
+                    leading: const Icon(Icons.edit),
+                    title: const Text('Edit channel'),
+                    onTap: () => _onEditChannel(context),
+                  ),
+                  ListTile(
+                    leading: const Icon(Icons.person_add),
+                    title: const Text('Add member'),
+                    onTap: () => _onAddChannelMember(context),
+                  ),
+                ],
                 ListTile(
                   leading: const Icon(Icons.people),
                   title: const Text('View members'),
                   onTap: () => _onViewMembers(context),
                 ),
-                ListTile(
-                  leading: const Icon(Icons.person_add),
-                  title: const Text('Add member'),
-                  onTap: () => _onAddChannelMember(context),
-                ),
               ],
             ),
           ),
-          const Divider(),
 
-          // Workspace Actions
-          ListTile(
-            onTap: () => _onLeaveChannel(context),
-            leading: const Icon(Icons.exit_to_app),
-            title: const Text('Leave channel'),
-            textColor: Theme.of(context).colorScheme.error,
-            iconColor: Theme.of(context).colorScheme.error,
-          ),
+          if (loggedInUser.id != selectedChannel.creator!.id &&
+              selectedChannel.privacy == ChannelPrivacy.private) ...[
+            const Divider(),
+
+            // Workspace Actions
+            ListTile(
+              onTap: () => _onLeaveChannel(context),
+              leading: const Icon(Icons.exit_to_app),
+              title: const Text('Leave channel'),
+              textColor: Theme.of(context).colorScheme.error,
+              iconColor: Theme.of(context).colorScheme.error,
+            ),
+          ],
         ],
       ),
     );

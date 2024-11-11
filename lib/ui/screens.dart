@@ -20,6 +20,7 @@ export './management/management_screen.dart';
 // Profile
 export './profile/profile_screen.dart';
 export './profile/change_password_screen.dart';
+export './profile/invitation_screen.dart';
 
 // Thread
 export './thread/thread_screen.dart';
@@ -30,9 +31,6 @@ export './workspace/create_workspace_screen.dart';
 export './workspace/add_workspace_members_screen.dart';
 export './workspace/workspace_members_screen.dart';
 export './workspace/edit_workspace_screen.dart';
-
-// Invitation
-export './invitation/invitation_screen.dart';
 
 // Splash
 export './splash_screen.dart';

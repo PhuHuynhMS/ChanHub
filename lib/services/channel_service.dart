@@ -1,7 +1,8 @@
 import 'package:pocketbase/pocketbase.dart';
 
-import './index.dart';
+import '../common/enums.dart';
 import '../models/index.dart';
+import './index.dart';
 
 class ChannelService {
   Future<List<Channel>> fetchAllChannels(String workspaceId) async {
@@ -12,7 +13,6 @@ class ChannelService {
       final channelModels = await pb.collection('channels').getFullList(
         filter: """
               workspace.id='$workspaceId' && 
-              deleted = null && 
               (privacy = 'public' ||
               (privacy = 'private' && channel_members_via_channel.member.id ?= '$userId'))
             """,
@@ -25,6 +25,55 @@ class ChannelService {
         );
       }
       return channels;
+    } on Exception catch (exception) {
+      throw ServiceException(exception);
+    }
+  }
+
+  Future<bool> createChannel(String workspaceId, Channel channel) async {
+    try {
+      final pb = await PocketBaseService.getInstance();
+      final userId = pb.authStore.model!.id;
+      final channelModel = await pb.collection('channels').create(
+            body: channel.toJson()
+              ..['creator'] = userId
+              ..['workspace'] = workspaceId,
+          );
+
+      if (channel.privacy == ChannelPrivacy.private) {
+        await pb.collection('channel_members').create(
+          body: {
+            'channel': channelModel.id,
+            'member': userId,
+          },
+        );
+      }
+      return true;
+    } on Exception catch (exception) {
+      throw ServiceException(exception);
+    }
+  }
+
+  Future<bool> updateChannel(Channel channel) async {
+    try {
+      final pb = await PocketBaseService.getInstance();
+      await pb.collection('channels').update(
+            channel.id!,
+            body: channel.toJson(),
+          );
+
+      return true;
+    } on Exception catch (exception) {
+      throw ServiceException(exception);
+    }
+  }
+
+  Future<bool> deleteChannel(Channel channel) async {
+    try {
+      final pb = await PocketBaseService.getInstance();
+      await pb.collection('channels').delete(channel.id!);
+
+      return true;
     } on Exception catch (exception) {
       throw ServiceException(exception);
     }

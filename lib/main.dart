@@ -157,20 +157,18 @@ class ChanHub extends StatelessWidget {
     }
 
     if (settings.name == EditChannelScreen.routeName) {
-      final Channel channel = ChannelsManager().getById('1')!;
+      final Channel channel = settings.arguments as Channel;
 
-      return MaterialPageRoute(
-        builder: (context) => SafeArea(
-          child: EditChannelScreen(
-            channel,
-          ),
+      return CustomSlideTransition(
+        page: SafeArea(
+          child: EditChannelScreen(channel),
         ),
       );
     }
 
     if (settings.name == AddChannelScreen.routeName) {
-      return MaterialPageRoute(
-        builder: (context) => const SafeArea(
+      return CustomSlideTransition(
+        page: const SafeArea(
           child: AddChannelScreen(),
         ),
       );
@@ -201,33 +199,30 @@ class ChanHub extends StatelessWidget {
     }
 
     // Thread Detail
-    // if (settings.name == ThreadScreen.routeName) {
-    //   final String threadId = settings.arguments as String;
-    //   final Thread thread = ThreadsManager('abc').getById(threadId)!;
-    //   final Channel channel = ChannelsManager().getById('1')!;
-
-    //   return MaterialPageRoute(
-    //     builder: (context) => SafeArea(
-    //       child: SafeArea(
-    //         child: ThreadScreen(thread, channelName: channel.name),
-    //       ),
-    //     ),
-    //   );
-    // }
+    if (settings.name == ThreadScreen.routeName) {
+      final String threadId = settings.arguments as String;
+      return CustomSlideTransition(
+        page: SafeArea(
+          child: ThreadScreen(threadId),
+        ),
+      );
+    }
 
     // Profile
     if (settings.name == ProfileScreen.routeName) {
+      final User user = settings.arguments as User;
+
       return CustomSlideTransition(
-        page: const SafeArea(child: ProfileScreen()),
+        page: SafeArea(
+          child: ProfileScreen(user),
+        ),
       );
     }
 
     if (settings.name == InvitationScreen.routeName) {
-      final agrs = settings.arguments as Map<String, dynamic>;
-      final invitations = agrs['invitations'];
-      return MaterialPageRoute(
-        builder: (context) => SafeArea(
-          child: InvitationScreen(invitations: invitations),
+      return CustomSlideTransition(
+        page: const SafeArea(
+          child: InvitationScreen(),
         ),
       );
     }

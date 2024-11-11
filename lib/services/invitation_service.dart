@@ -7,8 +7,8 @@ class InvitationService {
       final pb = await PocketBaseService.getInstance();
       final userId = pb.authStore.model.id;
       final invitationModels =
-          await pb.collection('workspace_members').getFullList(
-                filter: "member = '$userId' && status='pending'",
+          await pb.collection('workspace_invitations').getFullList(
+                filter: "member = '$userId'",
                 expand: 'workspace, workspace.creator',
               );
       if (invitationModels.isNotEmpty) {

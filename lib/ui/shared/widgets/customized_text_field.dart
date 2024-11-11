@@ -6,7 +6,7 @@ class CustomizedTextField extends StatelessWidget {
     this.controller,
     this.validator,
     this.maxLength,
-    this.maxLines = 1,
+    this.maxLines,
     this.labelText,
     this.hintText,
     this.readOnly = false,
@@ -24,7 +24,7 @@ class CustomizedTextField extends StatelessWidget {
   final String? hintText;
   final bool readOnly;
   final String? initialValue;
-  final String? Function(String?)? onSaved;
+  final Function(String?)? onSaved;
 
   @override
   Widget build(BuildContext context) {

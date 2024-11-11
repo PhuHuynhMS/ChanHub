@@ -7,110 +7,100 @@ import '../../../models/index.dart';
 import '../../shared/utils/index.dart';
 import '../../shared/widgets/index.dart';
 
-class InviteMembersBar extends StatefulWidget {
-  const InviteMembersBar(
-      {this.isPopup = false,
-      super.key,
-      required this.selectedUsers,
-      required this.onSelectedMembersChanged});
+class InviteMembersBar extends StatelessWidget {
+  const InviteMembersBar({
+    super.key,
+    required this.selectedUsers,
+    required this.onSelectedMembersChanged,
+  });
 
   final List<User> selectedUsers;
-  final bool isPopup;
   final void Function(List<User>) onSelectedMembersChanged;
 
-  @override
-  State<InviteMembersBar> createState() => _MemberSearchBarState();
-}
-
-class _MemberSearchBarState extends State<InviteMembersBar> {
-  void _updateSelectedMembers() {
-    widget.onSelectedMembersChanged(widget.selectedUsers);
-  }
-
-  List<User> _filterMembers(BuildContext context, String filter) {
-    if (filter.isEmpty) {
-      return context.read<UsersManager>().getAll();
-    } else {
-      return context
-          .read<UsersManager>()
-          .getAll()
-          .where((user) =>
-              user.username.toLowerCase().contains(filter.toLowerCase()))
-          .toList();
-    }
+  Future<List<User>> _filterMembers(
+      BuildContext context, String filter, List<User> members) async {
+    final users = await context.read<UsersManager>().searchUsers(filter);
+    return users
+        .where((user) => !members.any((member) => member.id == user.id))
+        .toList();
   }
 
   void _onDeleted(User user) {
-    widget.selectedUsers.remove(user);
-    setState(() {});
+    selectedUsers.remove(user);
+    onSelectedMembersChanged(selectedUsers);
   }
 
   void _onAdded(BuildContext context, List<User> selectedUsers) {
-    widget.selectedUsers.clear();
-    widget.selectedUsers.addAll(selectedUsers);
-    _updateSelectedMembers();
-    setState(() {});
+    selectedUsers.addAll(
+      selectedUsers
+          .where((user) =>
+              !selectedUsers.any((selectedUser) => selectedUser.id == user.id))
+          .toList(),
+    );
+    onSelectedMembersChanged(selectedUsers);
+    Navigator.of(context).pop();
   }
 
-//TODO: fetch users who are not in workspace && show users with invitation status
   @override
   Widget build(BuildContext context) {
-    return FutureBuilder(
-        future: context.read<UsersManager>().fetchUsers(),
-        builder: (context, snapshot) {
-          if (snapshot.connectionState == ConnectionState.waiting) {
-            return getLoadingAnimation(context);
-          }
-          return DropdownSearch<User>.multiSelection(
-            mode: Mode.form,
-            dropdownBuilder: (context, selectedItems) =>
-                _buildSelectedUsers(selectedItems),
-            compareFn: (item1, item2) => item1.id == item2.id,
-            items: (filter, loadProps) => _filterMembers(context, filter),
-            selectedItems: [...widget.selectedUsers],
-            decoratorProps: DropDownDecoratorProps(
-              decoration: outlinedInputDecoration(
-                context,
-                'Invite your collaborators',
-                prefixIcon: const Icon(Icons.person_add),
-              ),
-            ),
+    final workspaceMembers =
+        context.read<WorkspacesManager>().getSelectedWorkspace()!.members;
+    final workspaceInvitations =
+        context.read<WorkspacesManager>().getSelectedWorkspace()!.invitations;
 
-            // Popup
-            popupProps: PopupPropsMultiSelection.dialog(
-              validationBuilder: (context, selectedItems) =>
-                  _buildInviteButton(selectedItems),
-              disableFilter: true,
-              showSearchBox: true,
-              searchFieldProps: TextFieldProps(
-                decoration: underlineInputDecoration(
-                  context,
-                  'Search for members',
-                  prefixIcon: const Icon(Icons.search),
-                ),
-              ),
-              dialogProps: const DialogProps(
-                alignment: Alignment.center,
-                contentPadding: EdgeInsets.symmetric(
-                  horizontal: 20.0,
-                  vertical: 10.0,
-                ),
-                insetPadding: EdgeInsets.all(20.0),
-              ),
-              itemBuilder: _userModelPopupItem,
-            ),
-          );
-        });
+    return DropdownSearch<User>.multiSelection(
+      mode: Mode.form,
+      dropdownBuilder: (context, selectedItems) =>
+          _buildSelectedUsers(selectedItems),
+      compareFn: (item1, item2) => item1.id == item2.id,
+      items: (filter, loadProps) =>
+          _filterMembers(context, filter, workspaceMembers),
+      selectedItems: [...selectedUsers],
+      decoratorProps: DropDownDecoratorProps(
+        decoration: outlinedInputDecoration(
+          context,
+          'Invite your collaborators',
+          prefixIcon: const Icon(Icons.person_add),
+        ),
+      ),
+
+      // Popup
+      popupProps: PopupPropsMultiSelection.dialog(
+        validationBuilder: _buildInviteButton,
+        disableFilter: true,
+        showSearchBox: true,
+        searchFieldProps: TextFieldProps(
+          decoration: underlineInputDecoration(
+            context,
+            'Search for members',
+            prefixIcon: const Icon(Icons.search),
+          ),
+          style: Theme.of(context).textTheme.bodyMedium,
+        ),
+        dialogProps: const DialogProps(
+          alignment: Alignment.center,
+          contentPadding: EdgeInsets.symmetric(
+            horizontal: 20.0,
+            vertical: 10.0,
+          ),
+          insetPadding: EdgeInsets.all(20),
+        ),
+        itemBuilder: _userModelPopupItem,
+        disabledItemFn: (item) =>
+            workspaceInvitations.any((user) => user.id == item.id),
+        searchDelay: const Duration(milliseconds: 500),
+      ),
+    );
   }
 
-  Widget _buildInviteButton(List<User> selectedUsers) {
+  Widget _buildInviteButton(BuildContext context, List<User> selectedUsers) {
     return Padding(
       padding: const EdgeInsets.only(top: 10.0),
       child: Align(
         alignment: Alignment.centerRight,
         child: TextButton(
           onPressed: () => _onAdded(context, selectedUsers),
-          child: const Text("Add"),
+          child: Text(selectedUsers.isEmpty ? 'Cancel' : 'Add'),
         ),
       ),
     );
@@ -152,7 +142,7 @@ class ColabChip extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return Padding(
-      padding: const EdgeInsets.only(bottom: 5.0, top: 5.0),
+      padding: const EdgeInsets.symmetric(vertical: 0.0),
       child: Wrap(
         children: <Widget>[
           Chip(onDeleted: onDeleted, label: Text(username)),

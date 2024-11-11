@@ -32,10 +32,10 @@ class ChannelDescription extends StatelessWidget {
               TextSpan(
                 style: Theme.of(context).textTheme.bodySmall,
                 children: [
-                  createUserTag(user: channel.creator),
+                  createUserTag(user: channel.creator!),
                   TextSpan(
                     text:
-                        ' created this channel on ${channel.createdAt.day}/${channel.createdAt.month}/${channel.createdAt.year}. '
+                        ' created this channel on ${channel.createdAt!.day}/${channel.createdAt!.month}/${channel.createdAt!.year}. '
                         'This is a very begining of the #${channel.name} channel.',
                   ),
                 ],
@@ -45,7 +45,7 @@ class ChannelDescription extends StatelessWidget {
 
             // Channel description
             Text(
-              channel.description,
+              channel.description ?? '',
               style: Theme.of(context).textTheme.bodySmall,
             ),
           ],
