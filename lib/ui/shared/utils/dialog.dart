@@ -181,7 +181,6 @@ void showActionDialog({
                 style: Theme.of(context).textTheme.titleLarge,
               ),
               const Divider(height: 20.0),
-              const SizedBox(height: 10.0),
 
               // Content
               Flexible(

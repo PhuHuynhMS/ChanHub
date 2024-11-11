@@ -1,15 +1,20 @@
 import 'package:flutter/material.dart';
+import 'package:flutter/services.dart';
 import 'package:flutter_dotenv/flutter_dotenv.dart';
+import 'package:flutter_native_splash/flutter_native_splash.dart';
 import 'package:provider/provider.dart';
 
 import './models/index.dart';
 import './managers/index.dart';
 import './services/index.dart';
-import './themes/chanhub_theme.dart';
 import './ui/screens.dart';
 import './ui/shared/transitions/index.dart';
 
 void main() async {
+  // Preserve the splash screen
+  WidgetsBinding widgetsBinding = WidgetsFlutterBinding.ensureInitialized();
+  FlutterNativeSplash.preserve(widgetsBinding: widgetsBinding);
+
   // Initialize services
   await dotenv.load();
   await LocalStorageService.getInstance();
@@ -25,6 +30,7 @@ class ChanHub extends StatelessWidget {
   Widget build(BuildContext context) {
     return MultiProvider(
       providers: [
+        ChangeNotifierProvider(create: (_) => ThemeManager()),
         ChangeNotifierProvider(create: (_) => OnboardingManager()..init()),
         ChangeNotifierProvider(create: (_) => AuthManager()),
         ChangeNotifierProvider(create: (_) => WorkspacesManager()),
@@ -35,17 +41,31 @@ class ChanHub extends StatelessWidget {
               ..fetchChannels(workspacesManager.getSelectedWorkspace()?.id)),
         ChangeNotifierProvider(create: (_) => UsersManager())
       ],
-      child: Consumer2<OnboardingManager, AuthManager>(
-        builder: (ctx, onboardingManager, authManager, child) {
+      child: Consumer3<OnboardingManager, AuthManager, ThemeManager>(
+        builder: (ctx, onboardingManager, authManager, themeManager, child) {
+          // Set the status bar color
+          SystemChrome.setSystemUIOverlayStyle(
+            SystemUiOverlayStyle(
+              systemNavigationBarColor:
+                  themeManager.getTheme().scaffoldBackgroundColor,
+              statusBarColor:
+                  themeManager.getTheme().appBarTheme.backgroundColor,
+            ),
+          );
+
           if (authManager.isLoggedIn) {
             // Initialize the app
             ctx.read<WorkspacesManager>().fetchWorkspaces();
+            ctx.read<InvitationsManager>().fetchInvitations();
           }
+
+          // Remove the splash screen
+          FlutterNativeSplash.remove();
 
           return MaterialApp(
             title: 'ChanHub',
             debugShowCheckedModeBanner: false,
-            theme: lightTheme,
+            theme: themeManager.getTheme(),
             home: SafeArea(
               child: _buildHomeScreen(context, authManager, onboardingManager),
             ),
@@ -87,10 +107,8 @@ class ChanHub extends StatelessWidget {
   Route _onGenerateRoute(RouteSettings settings) {
     // Onboarding
     if (settings.name == OnboardingScreen.routeName) {
-      return MaterialPageRoute(
-        builder: (context) => const SafeArea(
-          child: OnboardingScreen(),
-        ),
+      return CustomSlideTransition(
+        page: const SafeArea(child: OnboardingScreen()),
       );
     }
 
@@ -98,8 +116,8 @@ class ChanHub extends StatelessWidget {
     if (settings.name == LoginOrRegisterScreen.routeName) {
       final bool isLogin = settings.arguments as bool;
 
-      return MaterialPageRoute(
-        builder: (context) => SafeArea(
+      return CustomSlideTransition(
+        page: SafeArea(
           child: LoginOrRegisterScreen(isLogin: isLogin),
         ),
       );
@@ -107,18 +125,14 @@ class ChanHub extends StatelessWidget {
 
     // Workspace
     if (settings.name == WorkspaceScreen.routeName) {
-      return MaterialPageRoute(
-        builder: (context) => const SafeArea(
-          child: WorkspaceScreen(),
-        ),
+      return CustomSlideTransition(
+        page: const SafeArea(child: WorkspaceScreen()),
       );
     }
 
     if (settings.name == CreateWorkspaceScreen.routeName) {
-      return MaterialPageRoute(
-        builder: (context) => const SafeArea(
-          child: CreateWorkspaceScreen(),
-        ),
+      return CustomSlideTransition(
+        page: const SafeArea(child: CreateWorkspaceScreen()),
       );
     }
 
@@ -128,8 +142,8 @@ class ChanHub extends StatelessWidget {
       final image = agrs['image'];
       final isCreating = agrs['isCreating'];
 
-      return MaterialPageRoute(
-        builder: (context) => SafeArea(
+      return CustomSlideTransition(
+        page: SafeArea(
           child: AddWorkspaceMembersScreen(
             workspaceName: workspaceName,
             image: image,
@@ -140,8 +154,8 @@ class ChanHub extends StatelessWidget {
     }
 
     if (settings.name == WorkspaceMembersScreen.routeName) {
-      return MaterialPageRoute(
-        builder: (context) => const SafeArea(
+      return CustomSlideTransition(
+        page: const SafeArea(
           child: WorkspaceMembersScreen(),
         ),
       );
@@ -175,26 +189,22 @@ class ChanHub extends StatelessWidget {
     }
 
     if (settings.name == ViewChannelMembersScreen.routeName) {
-      return MaterialPageRoute(
-        builder: (context) => const SafeArea(
-          child: ViewChannelMembersScreen(),
-        ),
+      return CustomSlideTransition(
+        page: const SafeArea(child: ViewChannelMembersScreen()),
       );
     }
 
     if (settings.name == AddChannelMembersScreen.routeName) {
-      return MaterialPageRoute(
-        builder: (context) => const SafeArea(
+      return CustomSlideTransition(
+        page: const SafeArea(
           child: AddChannelMembersScreen(),
         ),
       );
     }
 
     if (settings.name == SearchThreadScreen.routeName) {
-      return MaterialPageRoute(
-        builder: (context) => const SafeArea(
-          child: SearchThreadScreen(),
-        ),
+      return CustomSlideTransition(
+        page: const SafeArea(child: SearchThreadScreen()),
       );
     }
 
@@ -202,9 +212,7 @@ class ChanHub extends StatelessWidget {
     if (settings.name == ThreadScreen.routeName) {
       final String threadId = settings.arguments as String;
       return CustomSlideTransition(
-        page: SafeArea(
-          child: ThreadScreen(threadId),
-        ),
+        page: SafeArea(child: ThreadScreen(threadId)),
       );
     }
 
@@ -213,17 +221,13 @@ class ChanHub extends StatelessWidget {
       final User user = settings.arguments as User;
 
       return CustomSlideTransition(
-        page: SafeArea(
-          child: ProfileScreen(user),
-        ),
+        page: SafeArea(child: ProfileScreen(user)),
       );
     }
 
     if (settings.name == InvitationScreen.routeName) {
       return CustomSlideTransition(
-        page: const SafeArea(
-          child: InvitationScreen(),
-        ),
+        page: const SafeArea(child: InvitationScreen()),
       );
     }
 
@@ -239,9 +243,7 @@ class ChanHub extends StatelessWidget {
 
     if (settings.name == ChangePasswordScreen.routeName) {
       return CustomSlideTransition(
-        page: const SafeArea(
-          child: ChangePasswordScreen(),
-        ),
+        page: const SafeArea(child: ChangePasswordScreen()),
       );
     }
 

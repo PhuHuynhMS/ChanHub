@@ -45,15 +45,15 @@ class ChannelDrawer extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    final loggedInUser = context.read<AuthManager>().loggedInUser;
+    final loggedInUser = context.read<AuthManager>().loggedInUser!;
     final selectedChannel =
-        context.read<ChannelsManager>().getSelectedChannel();
+        context.read<ChannelsManager>().getSelectedChannel()!;
 
     return Drawer(
       child: Column(
         crossAxisAlignment: CrossAxisAlignment.start,
         children: [
-          // Workspaces Header
+          // Channel Header
           Padding(
             padding: const EdgeInsets.only(left: 20.0, top: 15.0),
             child: Text(
@@ -63,7 +63,7 @@ class ChannelDrawer extends StatelessWidget {
           ),
           const Divider(height: 20.0),
 
-          // Workspaces List
+          // Channel Action
           Expanded(
             child: ListView(
               children: [
@@ -72,19 +72,19 @@ class ChannelDrawer extends StatelessWidget {
                   title: const Text('Search thread'),
                   onTap: () => _onSearchThread(context),
                 ),
-                if (loggedInUser!.id == selectedChannel!.creator!.id &&
-                    selectedChannel.privacy == ChannelPrivacy.private) ...[
+                if (loggedInUser.id == selectedChannel.creator!.id)
                   ListTile(
                     leading: const Icon(Icons.edit),
                     title: const Text('Edit channel'),
                     onTap: () => _onEditChannel(context),
                   ),
+                if (loggedInUser.id == selectedChannel.creator!.id &&
+                    selectedChannel.privacy == ChannelPrivacy.private)
                   ListTile(
                     leading: const Icon(Icons.person_add),
                     title: const Text('Add member'),
                     onTap: () => _onAddChannelMember(context),
                   ),
-                ],
                 ListTile(
                   leading: const Icon(Icons.people),
                   title: const Text('View members'),
