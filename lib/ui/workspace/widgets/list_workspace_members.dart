@@ -34,7 +34,11 @@ class ListWorkspaceMembers extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     final userId = context.read<AuthManager>().loggedInUser?.id;
-    bool isAdmin = context.read<WorkspacesManager>().isWorkspaceAdmin(userId!);
+    final selectedWorkspace =
+        context.watch<WorkspacesManager>().getSelectedWorkspace();
+    bool isAdmin = context
+        .read<WorkspacesManager>()
+        .isWorkspaceAdmin(userId!, selectedWorkspace!);
 
     return ListView.builder(
       itemCount: filteredMembers.length,

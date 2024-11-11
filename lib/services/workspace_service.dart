@@ -162,7 +162,7 @@ class WorkspaceService {
 
       final workspaceMemberModel =
           await pb.collection('workspace_members').getFirstListItem(
-                "member = '$memberId' && workspace = '$workspaceId",
+                "member = '$memberId' && workspace = '$workspaceId'",
               );
       await pb.collection('workspace_members').delete(
             workspaceMemberModel.toJson()['id'],

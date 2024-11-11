@@ -181,7 +181,20 @@ class WorkspaceActions extends StatelessWidget {
       content: 'Are you sure you want to leave this workspace?',
     );
 
-    // TODO: Implement leave workspace
+    if (isConfirmed && context.mounted) {
+      context.executeWithErrorHandling(() async {
+        final member = context.read<AuthManager>().loggedInUser;
+        await context
+            .read<WorkspacesManager>()
+            .deleteWorkspaceMember(member!, workspace);
+        if (context.mounted) {
+          await context.read<WorkspacesManager>().fetchWorkspaces();
+        }
+        if (context.mounted) {
+          Navigator.of(context).popUntil((route) => route.isFirst);
+        }
+      });
+    }
   }
 
   void _navigateToEditWorkspace(BuildContext context, Workspace workspace) {
@@ -192,7 +205,8 @@ class WorkspaceActions extends StatelessWidget {
 
   List<Widget> _buildWorkspaceActions(BuildContext context) {
     final userId = context.read<AuthManager>().loggedInUser?.id;
-    bool isAdmin = context.read<WorkspacesManager>().isWorkspaceAdmin(userId!);
+    bool isAdmin =
+        context.read<WorkspacesManager>().isWorkspaceAdmin(userId!, workspace);
 
     if (isAdmin) {
       return [

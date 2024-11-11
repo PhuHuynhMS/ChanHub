@@ -64,12 +64,10 @@ class WorkspacesManager with ChangeNotifier {
     final index = _workspaces.indexWhere((item) => item.id == workspace.id);
     if (index >= 0) {
       try {
-        // Update workspace in the backend via service
         final updatedWorkspace =
             await _workspaceService.updateWorkspace(workspace);
 
         if (updatedWorkspace != null) {
-          // Update the local list if update was successful
           _workspaces[index] = updatedWorkspace;
           notifyListeners();
         } else {
@@ -77,24 +75,23 @@ class WorkspacesManager with ChangeNotifier {
         }
       } catch (e) {
         print('Error updating workspace: $e');
-        // You may also want to show an error message to the user
       }
     } else {
       print('Workspace not found in the local list');
     }
   }
 
-  Future<bool> deleteWorkspaceMember(User member) async {
+  Future<bool> deleteWorkspaceMember(User member, Workspace workspace) async {
     await _workspaceService.deleteWorkspaceMembers(
       member.id,
-      _selectedWorkspaceId!,
+      workspace.id,
     );
     notifyListeners();
     return true;
   }
 
-  bool isWorkspaceAdmin(String userId) {
-    return userId == getSelectedWorkspace()?.creator.id;
+  bool isWorkspaceAdmin(String userId, Workspace workspace) {
+    return userId == workspace.creator.id;
   }
 
   Future<void> addWorkspaceMembers(

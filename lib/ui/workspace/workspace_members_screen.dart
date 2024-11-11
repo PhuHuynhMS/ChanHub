@@ -32,8 +32,11 @@ class _WorkspaceMembersScreenState extends State<WorkspaceMembersScreen> {
 
   void _onRemoveMember(BuildContext context, User member) async {
     context.executeWithErrorHandling(() async {
-      bool isDeleted =
-          await context.read<WorkspacesManager>().deleteWorkspaceMember(member);
+      final selectedWorkspace =
+          context.read<WorkspacesManager>().getSelectedWorkspace();
+      bool isDeleted = await context
+          .read<WorkspacesManager>()
+          .deleteWorkspaceMember(member, selectedWorkspace!);
 
       if (context.mounted && isDeleted) {
         await context.read<WorkspacesManager>().fetchSelectedWorkspace();

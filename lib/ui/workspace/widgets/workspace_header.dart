@@ -66,7 +66,8 @@ class WorkspaceHeader extends StatelessWidget {
   List<Widget> _buildWorkspaceActions(BuildContext context) {
     const iconSize = 25.0;
     final userId = context.read<AuthManager>().loggedInUser?.id;
-    bool isAdmin = context.read<WorkspacesManager>().isWorkspaceAdmin(userId!);
+    bool isAdmin =
+        context.read<WorkspacesManager>().isWorkspaceAdmin(userId!, workspace);
 
     if (isAdmin) {
       return [
