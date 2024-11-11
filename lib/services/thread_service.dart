@@ -3,11 +3,12 @@ import 'dart:io';
 import 'package:pocketbase/pocketbase.dart';
 import 'package:http/http.dart' as http;
 
+import '../common/enums.dart';
 import '../models/index.dart';
 import './index.dart';
 
 class ThreadService {
-  Future<List<Thread>> fetchThreads(
+  Future<(List<Thread>, bool)> fetchThreads(
     String channelId, {
     int page = 1,
     int perPage = 10,
@@ -36,7 +37,47 @@ class ThreadService {
         threads.add(Thread.fromJson(threadModel.toJson()));
       }
 
-      return threads;
+      bool hasMoreThreads = threadModels.totalPages > page;
+
+      return (threads, hasMoreThreads);
+    } on Exception catch (exception) {
+      throw ServiceException(exception);
+    }
+  }
+
+  Future<(List<Thread>, bool)> searchThreads(
+    String channelId,
+    String query, {
+    SearchThreadFilter filter = SearchThreadFilter.all,
+    int page = 1,
+    int perPage = 10,
+  }) async {
+    final List<Thread> threads = [];
+    try {
+      final pb = await PocketBaseService.getInstance();
+      final userId = pb.authStore.model!.id;
+      final threadModels = await pb.collection('threads').getList(
+            filter: "channel.id='$channelId' && content ~ '%$query%'"
+                "${filter == SearchThreadFilter.myThreads ? " && creator='$userId'" : ''}",
+            expand: 'creator,'
+                'thread_tasks_via_thread,'
+                'thread_tasks_via_thread.assignee,'
+                'thread_tasks_via_thread.completed_by,'
+                'thread_reactions_via_thread,'
+                'thread_reactions_via_thread.creator,'
+                'comments_via_thread,'
+                'comments_via_thread.creator',
+            sort: '-created',
+            page: page,
+            perPage: perPage,
+          );
+      for (final threadModel in threadModels.items) {
+        threads.add(Thread.fromJson(threadModel.toJson()));
+      }
+
+      bool hasMoreThreads = threadModels.totalPages > page;
+
+      return (threads, hasMoreThreads);
     } on Exception catch (exception) {
       throw ServiceException(exception);
     }

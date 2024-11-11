@@ -2,6 +2,7 @@ import 'dart:io';
 
 import 'package:pocketbase/pocketbase.dart';
 
+import '../common/enums.dart';
 import '../services/thread_service.dart';
 import '../models/index.dart';
 
@@ -24,10 +25,12 @@ class ThreadsManager {
 
   void init() async {
     _isFetching = true;
-    _threads = await _threadService.fetchThreads(_channelId);
-    if (_threads.isEmpty || _threads.length % 10 != 0) {
-      _hasMoreThreads = false;
-    }
+    final (threads, hasMoreThreads) =
+        await _threadService.fetchThreads(_channelId);
+
+    _threads = threads;
+    _hasMoreThreads = hasMoreThreads;
+
     await _threadService.subscribeToChannel(
       _channelId,
       _onReceiveThread,
@@ -41,24 +44,33 @@ class ThreadsManager {
 
   Future<bool> fetchMoreThreads() async {
     int currentPage = (_threads.length / 10).ceil() + 1;
-    final threads =
+    final (threads, hasMoreThreads) =
         await _threadService.fetchThreads(_channelId, page: currentPage);
 
-    if (threads.isEmpty) {
-      _hasMoreThreads = false;
-      _notifyChannelListeners();
-      return false;
-    }
+    _hasMoreThreads = hasMoreThreads;
 
     for (final fetchThread in threads) {
       if (_threads.indexWhere((thread) => thread.id == fetchThread.id) == -1) {
         _threads.add(fetchThread);
       }
     }
-
-    _hasMoreThreads = true;
     _notifyChannelListeners();
     return true;
+  }
+
+  Future<(List<Thread>, bool)> searchThreads(
+    String query, {
+    SearchThreadFilter filter = SearchThreadFilter.all,
+    int page = 1,
+    int perPage = 10,
+  }) async {
+    return await _threadService.searchThreads(
+      _channelId,
+      query,
+      filter: filter,
+      page: page,
+      perPage: perPage,
+    );
   }
 
   List<Thread> getAll() {

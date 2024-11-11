@@ -91,16 +91,17 @@ class _ProfileDetailsState extends State<ProfileDetails> {
           _buildEmailField(context),
           const SizedBox(height: 10),
           _buildUsernameField(context),
-          const SizedBox(height: 40),
 
           // Editing buttons
           if (_isMyProfile && _isEditing) ...[
+            const SizedBox(height: 40),
             _buildSaveButton(context),
             _buildCancelButton(context),
           ],
 
           // Non-editing buttons
           if (_isMyProfile && !_isEditing) ...[
+            const SizedBox(height: 40),
             _buildEditButton(context),
             _buildChangePasswordButton(context),
           ],
