@@ -1,4 +1,5 @@
 import 'package:flutter/material.dart';
+import 'package:flutter/services.dart';
 import 'package:flutter_dotenv/flutter_dotenv.dart';
 import 'package:provider/provider.dart';
 
@@ -37,6 +38,16 @@ class ChanHub extends StatelessWidget {
       ],
       child: Consumer3<OnboardingManager, AuthManager, ThemeManager>(
         builder: (ctx, onboardingManager, authManager, themeManager, child) {
+          // Set the status bar color
+          SystemChrome.setSystemUIOverlayStyle(
+            SystemUiOverlayStyle(
+              systemNavigationBarColor:
+                  themeManager.getTheme().scaffoldBackgroundColor,
+              statusBarColor:
+                  themeManager.getTheme().appBarTheme.backgroundColor,
+            ),
+          );
+
           if (authManager.isLoggedIn) {
             // Initialize the app
             ctx.read<WorkspacesManager>().fetchWorkspaces();
