@@ -148,8 +148,8 @@ class WorkspaceService {
         ..addAll({
           'userId': pb.authStore.model!.id,
         }));
-    } on Exception catch (exception) {
-      throw ServiceException(exception);
+    } on Exception catch (_) {
+      return null;
     }
   }
 

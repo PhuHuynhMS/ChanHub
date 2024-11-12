@@ -84,6 +84,15 @@ class WorkspacesManager with ChangeNotifier {
 
   Future<bool> leaveWorkspace(Workspace workspace) async {
     await _workspaceService.leaveWorkspace(workspace.workspaceMemberId!);
+    _workspaces.removeWhere((item) => item.id == workspace.id);
+
+    if (workspace.id == _defaultWorkspaceId) {
+      _defaultWorkspaceId =
+          _workspaces.isNotEmpty ? _workspaces.first.id : null;
+    }
+
+    _selectedWorkspaceId = _defaultWorkspaceId;
+    notifyListeners();
     return false;
   }
 
@@ -100,7 +109,7 @@ class WorkspacesManager with ChangeNotifier {
   }
 
   Workspace? getSelectedWorkspace() {
-    if (_selectedWorkspaceId == null) return null;
+    if (_selectedWorkspaceId == null && _workspaces.isEmpty) return null;
     return _workspaces
         .firstWhere((workspace) => workspace.id == _selectedWorkspaceId);
   }
@@ -119,7 +128,7 @@ class WorkspacesManager with ChangeNotifier {
   }
 
   Workspace? getDefaultWorkspace() {
-    if (_defaultWorkspaceId == null) return null;
+    if (_defaultWorkspaceId == null && _workspaces.isEmpty) return null;
     return _workspaces
         .firstWhere((workspace) => workspace.id == _defaultWorkspaceId);
   }

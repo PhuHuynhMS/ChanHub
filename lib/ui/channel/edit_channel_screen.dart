@@ -43,7 +43,7 @@ class _EditChannelScreenState extends State<EditChannelScreen> {
                   Image.asset(
                     'assets/images/edit_channel.png',
                     fit: BoxFit.cover,
-                    height: 150.0,
+                    height: 200.0,
                   ),
                   const SizedBox(height: 20.0),
                   Row(children: [
