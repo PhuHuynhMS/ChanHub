@@ -18,6 +18,7 @@ class ProfileScreen extends StatelessWidget {
   Widget build(BuildContext context) {
     final loggedInUser = context.read<AuthManager>().loggedInUser!;
     bool isMyProfile = loggedInUser.id == user.id;
+    context.read<InvitationsManager>().fetchInvitations();
 
     return Scaffold(
       appBar: AppBar(

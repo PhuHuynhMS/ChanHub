@@ -49,9 +49,9 @@ class _AddChannelScreenState extends State<AddChannelScreen> {
                 children: [
                   // Tilte image
                   Image.asset(
-                    'assets/images/create_channel.png',
+                    'assets/images/logo.png',
                     fit: BoxFit.cover,
-                    height: 150.0,
+                    height: 200.0,
                   ),
                   const SizedBox(height: 20.0),
 

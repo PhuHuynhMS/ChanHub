@@ -36,7 +36,7 @@ class WorkspaceHeader extends StatelessWidget {
       context.executeWithErrorHandling(() async {
         await context.read<WorkspacesManager>().leaveWorkspace(workspace);
         if (context.mounted) {
-          await context.read<WorkspacesManager>().fetchWorkspaces();
+          context.read<WorkspacesManager>().fetchWorkspaces();
         }
         if (context.mounted) {
           Navigator.of(context).popUntil((route) => route.isFirst);
@@ -59,11 +59,9 @@ class WorkspaceHeader extends StatelessWidget {
 
         if (context.mounted) {
           if (context.read<WorkspacesManager>().getAll().isEmpty) {
-            Navigator.of(context)
-                .pushReplacementNamed(CreateWorkspaceScreen.routeName);
+            Navigator.of(context).popUntil((route) => route.isFirst);
           } else {
-            Navigator.of(context)
-                .pushReplacementNamed(WorkspaceScreen.routeName);
+            Navigator.of(context).popUntil((route) => route.isFirst);
           }
         }
       });

@@ -50,15 +50,9 @@ class _ChangePasswordScreenState extends State<ChangePasswordScreen> {
           'oldPassword': _currentPasswordController.text,
         });
 
-        // if (context.mounted) {
-        //   showInfoDialog(
-        //     confirmText: 'Your password has been updated. Please log in again.',
-        //     context: context,
-        //   );
-
-        //   Navigator.of(context)
-        //       .pushReplacementNamed(LoginOrRegisterScreen.routeName);
-        // }
+        if (context.mounted) {
+          Navigator.of(context).pop();
+        }
       });
     }
   }

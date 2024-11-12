@@ -119,7 +119,8 @@ class AuthService {
     }
   }
 
-  Future<void> updatePassword(Map<String, dynamic> passwords) async {
+  Future<void> updatePassword(
+      Map<String, dynamic> passwords, String email) async {
     try {
       final pb = await PocketBaseService.getInstance();
       final userId = pb.authStore.model.id;
@@ -133,6 +134,8 @@ class AuthService {
           await pb.collection('users').update(userId, body: body);
 
       pb.authStore.save(pb.authStore.token, updatedUserModel);
+
+      login(email: email, password: passwords['password']);
       onAuthChanged?.call(User.fromJson(updatedUserModel.toJson()));
     } on Exception catch (exception) {
       throw ServiceException(exception);

@@ -56,7 +56,6 @@ class ChanHub extends StatelessWidget {
           if (authManager.isLoggedIn) {
             // Initialize the app
             ctx.read<WorkspacesManager>().fetchWorkspaces();
-            ctx.read<InvitationsManager>().fetchInvitations();
           }
 
           // Remove the splash screen
