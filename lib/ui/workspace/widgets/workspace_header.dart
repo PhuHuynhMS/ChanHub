@@ -33,7 +33,15 @@ class WorkspaceHeader extends StatelessWidget {
     );
 
     if (isConfirmed && context.mounted) {
-      Navigator.of(context).pushNamed(WorkspaceScreen.routeName);
+      context.executeWithErrorHandling(() async {
+        await context.read<WorkspacesManager>().leaveWorkspace(workspace);
+        if (context.mounted) {
+          context.read<WorkspacesManager>().fetchWorkspaces();
+        }
+        if (context.mounted) {
+          Navigator.of(context).popUntil((route) => route.isFirst);
+        }
+      });
     }
   }
 
@@ -51,11 +59,9 @@ class WorkspaceHeader extends StatelessWidget {
 
         if (context.mounted) {
           if (context.read<WorkspacesManager>().getAll().isEmpty) {
-            Navigator.of(context)
-                .pushReplacementNamed(CreateWorkspaceScreen.routeName);
+            Navigator.of(context).popUntil((route) => route.isFirst);
           } else {
-            Navigator.of(context)
-                .pushReplacementNamed(WorkspaceScreen.routeName);
+            Navigator.of(context).popUntil((route) => route.isFirst);
           }
         }
       });

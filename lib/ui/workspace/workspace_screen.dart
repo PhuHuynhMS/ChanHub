@@ -4,6 +4,7 @@ import 'package:provider/provider.dart';
 import '../../models/index.dart';
 import '../../managers/index.dart';
 import '../shared/utils/loading_animation.dart';
+import '../shared/extensions/index.dart';
 import './widgets/index.dart';
 
 class WorkspaceScreen extends StatelessWidget {
@@ -30,10 +31,14 @@ class WorkspaceScreen extends StatelessWidget {
       ),
       body: RefreshIndicator(
           onRefresh: () {
-            if (selectedWorkspace != null) {
-              return context.read<WorkspacesManager>().fetchSelectedWorkspace();
-            }
-            return context.read<WorkspacesManager>().fetchWorkspaces();
+            return context.executeWithErrorHandling(() async {
+              if (selectedWorkspace != null) {
+                return context
+                    .read<WorkspacesManager>()
+                    .fetchSelectedWorkspace();
+              }
+              return context.read<WorkspacesManager>().fetchWorkspaces();
+            });
           },
           child: _buildWorkspaceBody(
               context, workspaces, selectedWorkspace, isFetching)),

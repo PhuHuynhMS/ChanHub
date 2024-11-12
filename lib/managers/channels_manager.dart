@@ -20,11 +20,14 @@ class ChannelsManager with ChangeNotifier {
     if (selectedWorkspaceId == null) {
       return;
     }
+    print(selectedWorkspaceId);
     _isFetching = true;
     notifyListeners();
 
     _selectedWorkspaceId = selectedWorkspaceId;
     _channels = await _channelService.fetchAllChannels(selectedWorkspaceId);
+    print('===========================');
+    print(_channels);
     _initThreadsManagers();
 
     _isFetching = false;

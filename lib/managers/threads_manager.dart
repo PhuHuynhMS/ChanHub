@@ -92,6 +92,10 @@ class ThreadsManager {
     );
   }
 
+  Future<void> createThreadEvent(String content) async {
+    await _threadService.createThreadEvent(_channelId, content);
+  }
+
   Future<void> updateThread(Thread updatedThread) async {
     await _threadService.updateThread(updatedThread);
   }
