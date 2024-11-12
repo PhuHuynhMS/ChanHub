@@ -169,7 +169,6 @@ const lightColorScheme = ColorScheme(
 
 final ThemeData lightTheme = ThemeData(
   colorScheme: lightColorScheme,
-  splashColor: Colors.white,
   fontFamily: GoogleFonts.notoSans().fontFamily,
   textTheme: lightTextTheme,
   primaryTextTheme: lightPrimaryTextTheme,
@@ -179,6 +178,10 @@ final ThemeData lightTheme = ThemeData(
   // IconThemeData
   iconTheme: const IconThemeData(color: ChanHubColors.primary),
   primaryIconTheme: const IconThemeData(color: ChanHubColors.onPrimary),
+
+  // Splash
+  splashColor: ChanHubColors.onSurface.withOpacity(0.1),
+  highlightColor: ChanHubColors.primary.withOpacity(0.1),
 
   // Scaffold
   appBarTheme: const AppBarTheme(

@@ -16,6 +16,10 @@ class InvitationTile extends StatelessWidget {
   Widget build(BuildContext context) {
     return Card(
       elevation: 1.0,
+      shape: RoundedRectangleBorder(
+        borderRadius: BorderRadius.circular(10.0),
+      ),
+      margin: const EdgeInsets.symmetric(vertical: 5.0, horizontal: 10.0),
       child: Padding(
         padding: const EdgeInsets.only(left: 10.0, right: 10.0, top: 10.0),
         child: Column(

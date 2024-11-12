@@ -106,6 +106,7 @@ class _AddWorkspaceMembersScreenState extends State<AddWorkspaceMembersScreen> {
                 InviteMembersBar(
                   selectedUsers: selectedUsers,
                   onSelectedMembersChanged: _updateSelectedUsers,
+                  isCreating: widget.isCreating,
                 ),
                 // Invite button
                 const SizedBox(height: 20.0),

@@ -1,4 +1,7 @@
+import 'dart:io';
+
 import 'package:flutter/material.dart';
+import 'package:image_picker/image_picker.dart';
 
 import '../../../common/enums.dart';
 import '../../../common/constants.dart';
@@ -181,7 +184,6 @@ void showActionDialog({
                 style: Theme.of(context).textTheme.titleLarge,
               ),
               const Divider(height: 20.0),
-              const SizedBox(height: 10.0),
 
               // Content
               Flexible(
@@ -234,4 +236,24 @@ Future<DateTime?> showDateTimePicker(BuildContext context) async {
     pickedTime.hour,
     pickedTime.minute,
   );
+}
+
+Future<File?> showImagePicker(BuildContext context) async {
+  final imagePicker = ImagePicker();
+  try {
+    final imageFile = await imagePicker.pickImage(
+      source: ImageSource.gallery,
+    );
+
+    return imageFile == null ? null : File(imageFile.path);
+  } catch (error) {
+    if (context.mounted) {
+      showInfoDialog(
+        confirmText: 'Something went wrong',
+        context: context,
+        status: StatusType.error,
+      );
+    }
+    return null;
+  }
 }

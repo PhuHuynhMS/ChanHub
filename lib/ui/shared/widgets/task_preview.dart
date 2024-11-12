@@ -175,7 +175,7 @@ class TaskPreview extends StatelessWidget {
               ),
               if (task.isCompleted) ...[
                 Text(
-                  'Completed by: ${task.completedBy!.fullname}',
+                  'Completed by: ${task.completedBy?.fullname ?? ''}',
                   style: Theme.of(context).textTheme.labelSmall,
                 ),
               ],

@@ -28,13 +28,14 @@ const Map<TaskStatus, String> taskStatusString = {
   TaskStatus.overdueCompleted: 'Overdue Completed',
 };
 
-const String defaultUserAvatarUrl = 'https://picsum.photos/300/300';
+const String defaultUserAvatarUrl =
+    'https://cdn.icon-icons.com/icons2/1378/PNG/512/avatardefault_92824.png';
 
 const Map<SearchThreadFilter, String> searchThreadFilterString = {
   SearchThreadFilter.all: 'All Threads',
-  SearchThreadFilter.unread: 'Unread',
+  // SearchThreadFilter.unread: 'Unread',
   SearchThreadFilter.myThreads: 'My Threads',
-  SearchThreadFilter.tagged: 'Tagged',
+  // SearchThreadFilter.tagged: 'Tagged',
 };
 
 const Map<StatusType, Color> statusColor = {

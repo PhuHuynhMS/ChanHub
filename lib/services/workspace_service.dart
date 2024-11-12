@@ -172,20 +172,33 @@ class WorkspaceService {
     }
   }
 
+  Future<void> leaveWorkspace(String workspaceMemberId) async {
+    try {
+      final pb = await PocketBaseService.getInstance();
+
+      await pb.collection('workspace_members').delete(workspaceMemberId);
+    } on Exception catch (exception) {
+      throw ServiceException(exception);
+    }
+  }
+
   Future<Workspace?> updateWorkspace(Workspace workspace) async {
     try {
       final pb = await PocketBaseService.getInstance();
-      final workspaceModel =
-          await pb.collection('workspaces').update(workspace.id,
-              body: workspace.toJson(),
-              expand: 'creator',
-              files: workspace.image != null
-                  ? [
-                      http.MultipartFile.fromBytes(
-                          'image', await workspace.image!.readAsBytes(),
-                          filename: workspace.image!.uri.pathSegments.last)
-                    ]
-                  : []);
+      final workspaceModel = await pb.collection('workspaces').update(
+            workspace.id,
+            body: workspace.toJson(),
+            expand: 'creator,'
+                'accepted_workspace_members_via_workspace.member,'
+                'workspace_invitations_via_workspace.member',
+            files: workspace.image != null
+                ? [
+                    http.MultipartFile.fromBytes(
+                        'image', await workspace.image!.readAsBytes(),
+                        filename: workspace.image!.uri.pathSegments.last)
+                  ]
+                : [],
+          );
 
       return Workspace.fromJson(workspaceModel.toJson());
     } on Exception catch (exception) {

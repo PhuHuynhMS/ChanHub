@@ -21,9 +21,9 @@ enum TaskStatus {
 
 enum SearchThreadFilter {
   all,
-  unread,
+  // unread,
   myThreads,
-  tagged,
+  // tagged,
 }
 
 enum StatusType {
