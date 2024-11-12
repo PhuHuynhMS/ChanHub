@@ -153,6 +153,24 @@ class ThreadService {
     }
   }
 
+  Future<bool> createThreadEvent(String channelId, String content) async {
+    try {
+      final pb = await PocketBaseService.getInstance();
+      final user = pb.authStore.model;
+      final body = <String, dynamic>{
+        "creator": user.id,
+        "channel": channelId,
+        "content": content,
+        "type": "event",
+      };
+
+      await pb.collection('threads').create(body: body);
+      return true;
+    } on Exception catch (exception) {
+      throw ServiceException(exception);
+    }
+  }
+
   Future<bool> updateThread(Thread thread) async {
     try {
       final pb = await PocketBaseService.getInstance();

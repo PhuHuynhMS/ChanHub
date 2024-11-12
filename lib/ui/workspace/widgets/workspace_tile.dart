@@ -164,17 +164,6 @@ class WorkspaceActions extends StatelessWidget {
     });
   }
 
-  void _navigateToManageMembers(BuildContext context) {
-    Navigator.of(context).pushNamed(WorkspaceMembersScreen.routeName);
-  }
-
-  void _navigateToAddWorkspacesMembers(BuildContext context) {
-    Navigator.of(context)
-        .pushNamed(AddWorkspaceMembersScreen.routeName, arguments: {
-      'isCreating': false,
-    });
-  }
-
   void _leaveWorkspace(BuildContext context) async {
     bool isConfirmed = await showConfirmDialog(
       context: context,

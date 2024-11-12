@@ -33,7 +33,15 @@ class WorkspaceHeader extends StatelessWidget {
     );
 
     if (isConfirmed && context.mounted) {
-      Navigator.of(context).pushNamed(WorkspaceScreen.routeName);
+      context.executeWithErrorHandling(() async {
+        await context.read<WorkspacesManager>().leaveWorkspace(workspace);
+        if (context.mounted) {
+          await context.read<WorkspacesManager>().fetchWorkspaces();
+        }
+        if (context.mounted) {
+          Navigator.of(context).popUntil((route) => route.isFirst);
+        }
+      });
     }
   }
 
