@@ -99,8 +99,9 @@ class _EditCommentFormState extends State<EditCommentForm> {
           .read<ChannelsManager>()
           .getCurrentThreadsManager()
           .updateComment(_editedComment);
-    }, isShowLoading: false);
-
-    Navigator.of(context).pop();
+      if (mounted) {
+        Navigator.of(context).pop();
+      }
+    }, isShowLoading: true);
   }
 }

@@ -142,6 +142,14 @@ class WorkspacesManager with ChangeNotifier {
     notifyListeners();
   }
 
+  void clear() {
+    _workspaces = [];
+    _selectedWorkspaceId = null;
+    _defaultWorkspaceId = null;
+    isFetching = true;
+    notifyListeners();
+  }
+
   List<Workspace> getAll() {
     return [..._workspaces];
   }

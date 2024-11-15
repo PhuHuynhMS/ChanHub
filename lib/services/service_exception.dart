@@ -15,11 +15,36 @@ class ServiceException implements Exception {
     return isMultiple ? _getMultipleMessage() : _getSingleMessage();
   }
 
-  String _getSingleMessage() {
+  int get statusCode {
     if (exception is ClientException) {
-      if ((exception as ClientException).statusCode == 429) {
-        return 'Too many requests. Please try again later.';
+      final ClientException clientException = exception as ClientException;
+      if ((clientException.statusCode == 400 &&
+              clientException.response['message'] ==
+                  'Failed to create record.') ||
+          (clientException.statusCode == 404 &&
+              clientException.response['message'] ==
+                  'The requested resource wasn\'t found.')) {
+        return 403;
       }
+      return clientException.statusCode;
+    }
+    return 500;
+  }
+
+  String _getSingleMessage() {
+    if (statusCode == 403) {
+      return 'You do not have permission to perform this action.';
+    }
+    if (statusCode == 429) {
+      return 'Too many requests. Please try again later.';
+    }
+    if (statusCode == 400 &&
+        exception is ClientException &&
+        (exception as ClientException).response['message'] ==
+            'Failed to authenticate.') {
+      return 'Username or password is incorrect.';
+    }
+    if (exception is ClientException) {
       final Map<String, dynamic> response =
           (exception as ClientException).response;
 

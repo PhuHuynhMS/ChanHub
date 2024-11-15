@@ -4,6 +4,7 @@ import 'package:provider/provider.dart';
 import '../../managers/index.dart';
 import '../../models/index.dart';
 import '../shared/utils/index.dart';
+import '../shared/extensions/index.dart';
 import '../screens.dart';
 import './widgets/index.dart';
 
@@ -47,6 +48,17 @@ class _ViewChannelMembersScreenState extends State<ViewChannelMembersScreen> {
   void _onRemoveMember(User member) {
     allMembers.remove(member);
     filteredMembers.remove(member);
+    context.executeWithErrorHandling(() async {
+      final user = context.read<AuthManager>().loggedInUser;
+      final actionMessage = "${user!.fullname} kicked ${member.fullname}";
+      await context.read<ChannelsManager>().removeChannelMember(member);
+      if (mounted) {
+        await context
+            .read<ChannelsManager>()
+            .getCurrentThreadsManager()
+            .createThreadEvent(actionMessage);
+      }
+    });
     setState(() {});
   }
 

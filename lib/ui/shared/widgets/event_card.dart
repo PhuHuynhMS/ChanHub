@@ -26,9 +26,13 @@ class EventCard extends StatelessWidget {
             color: Theme.of(context).colorScheme.secondary,
           ),
           const SizedBox(width: 5.0),
-          Text(
-            '$content',
-            style: Theme.of(context).textTheme.labelSmall,
+          SizedBox(
+            width: MediaQuery.of(context).size.width * 0.8,
+            child: Text(
+              '$content',
+              style: Theme.of(context).textTheme.labelSmall,
+              softWrap: true,
+            ),
           ),
         ],
       ),

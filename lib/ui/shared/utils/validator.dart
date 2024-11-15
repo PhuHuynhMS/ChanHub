@@ -15,7 +15,7 @@ class Validator {
 
   static ValidatorFunction required(String? errorMessage) {
     return (String? value) {
-      if (value == null || value.isEmpty) {
+      if (value == null || value.trim().isEmpty) {
         return errorMessage ?? 'This field is required';
       }
       return null;
@@ -27,7 +27,7 @@ class Validator {
       final RegExp emailRegExp = RegExp(
         r'^[a-zA-Z0-9._%+-]+@[a-zA-Z0-9.-]+\.[a-zA-Z]{2,}$',
       );
-      if (value == null || !emailRegExp.hasMatch(value)) {
+      if (value == null || !emailRegExp.hasMatch(value.trim())) {
         return errorMessage ?? 'Please enter a valid email address';
       }
       return null;

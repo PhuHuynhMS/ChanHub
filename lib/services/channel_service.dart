@@ -111,8 +111,7 @@ class ChannelService {
     }
   }
 
-  Future<RecordModel?> addChannelMember(
-      String memberId, String channelId) async {
+  Future<bool> addChannelMember(String memberId, String channelId) async {
     try {
       final pb = await PocketBaseService.getInstance();
 
@@ -121,8 +120,35 @@ class ChannelService {
         "channel": channelId,
       };
 
-      final record = await pb.collection('channel_members').create(body: body);
-      return record;
+      await pb.collection('channel_members').create(body: body);
+      return true;
+    } on Exception catch (exception) {
+      throw ServiceException(exception);
+    }
+  }
+
+  Future<bool> removeChannelMember(String memberId, String channelId) async {
+    try {
+      final pb = await PocketBaseService.getInstance();
+
+      final channelMemberModel =
+          await pb.collection('channel_members').getFirstListItem(
+                "member = '$memberId' && channel = '$channelId'",
+              );
+
+      await pb.collection('channel_members').delete(channelMemberModel.id);
+      return true;
+    } on Exception catch (exception) {
+      throw ServiceException(exception);
+    }
+  }
+
+  Future<bool> leaveChannel(String channelMemberId) async {
+    try {
+      final pb = await PocketBaseService.getInstance();
+
+      await pb.collection('channel_members').delete(channelMemberId);
+      return true;
     } on Exception catch (exception) {
       throw ServiceException(exception);
     }

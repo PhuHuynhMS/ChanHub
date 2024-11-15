@@ -25,11 +25,11 @@ class WorkSpaceContent extends StatelessWidget {
           expandedAlignment: Alignment.centerLeft,
           initiallyExpanded: true,
           title: Text(
-            'Online Members',
+            'Members',
             style: Theme.of(context).textTheme.titleMedium,
           ),
           children: <Widget>[
-            OnlineMemberList(workspace),
+            OnlineMemberGrid(workspace),
           ],
         ),
 

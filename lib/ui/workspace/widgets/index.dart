@@ -9,5 +9,5 @@ export './channel_tile.dart';
 export './channel_list.dart';
 export './list_workspace_members.dart';
 export './online_member_tile.dart';
-export './online_member_list.dart';
+export './online_member_grid.dart';
 export './invite_members_bar.dart';

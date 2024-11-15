@@ -14,9 +14,6 @@ export './channel/add_channel_members_screen.dart';
 export './channel/view_channel_members_screen.dart';
 export './channel/search_thread_screen.dart';
 
-// Management
-export './management/management_screen.dart';
-
 // Profile
 export './profile/profile_screen.dart';
 export './profile/change_password_screen.dart';

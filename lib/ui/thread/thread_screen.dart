@@ -6,6 +6,7 @@ import 'package:provider/provider.dart';
 import '../../models/index.dart';
 import '../../managers/index.dart';
 import '../shared/widgets/index.dart';
+import '../shared/extensions/index.dart';
 import './widgets/index.dart';
 
 class ThreadScreen extends StatelessWidget {
@@ -52,6 +53,7 @@ class ThreadScreen extends StatelessWidget {
           builder: (context) {
             return MessageInput(
               onSend: (content, mediaFiles, _) => _onSendMessage(
+                context,
                 channelsManager.getCurrentThreadsManager(),
                 content,
                 mediaFiles,
@@ -63,11 +65,14 @@ class ThreadScreen extends StatelessWidget {
   }
 
   void _onSendMessage(
+    BuildContext context,
     ThreadsManager threadsManager,
     String message,
     List<File> mediaFiles,
   ) async {
-    final thread = threadsManager.getById(threadId)!;
-    await threadsManager.addCommentToThread(thread, message, mediaFiles);
+    context.executeWithErrorHandling(() async {
+      final thread = threadsManager.getById(threadId)!;
+      await threadsManager.addCommentToThread(thread, message, mediaFiles);
+    }, isShowLoading: false);
   }
 }

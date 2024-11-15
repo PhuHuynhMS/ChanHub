@@ -29,8 +29,10 @@ class CommentActions extends StatelessWidget {
         context.read<ChannelsManager>().getCurrentThreadsManager();
     context.executeWithErrorHandling(() async {
       await threadsManager.deleteComment(comment);
-    }, isShowLoading: false);
-    Navigator.of(context).pop();
+      if (context.mounted) {
+        Navigator.of(context).pop();
+      }
+    }, isShowLoading: true);
   }
 
   @override

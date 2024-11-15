@@ -14,7 +14,7 @@ void showSuccessSnackBar({
   Color iconColor = ChanHubColors.primary,
 }) {
   ScaffoldMessenger.of(context)
-    ..hideCurrentSnackBar
+    ..removeCurrentSnackBar()
     ..showSnackBar(
       SnackBar(
         elevation: 0.0,
@@ -56,7 +56,7 @@ void showErrorSnackBar({
   Color iconColor = ChanHubColors.error,
 }) {
   ScaffoldMessenger.of(context)
-    ..hideCurrentSnackBar
+    ..removeCurrentSnackBar()
     ..showSnackBar(
       SnackBar(
         elevation: 0.0,
@@ -98,7 +98,7 @@ void showInfoSnackBar({
   Color iconColor = ChanHubColors.secondary,
 }) {
   ScaffoldMessenger.of(context)
-    ..hideCurrentSnackBar
+    ..removeCurrentSnackBar()
     ..showSnackBar(
       SnackBar(
         elevation: 0.0,

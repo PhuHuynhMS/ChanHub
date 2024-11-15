@@ -4,6 +4,7 @@ import 'package:provider/provider.dart';
 import '../../../common/enums.dart';
 import '../../../managers/index.dart';
 import '../../shared/utils/index.dart';
+import '../../shared/extensions/index.dart';
 import '../../screens.dart';
 
 class ChannelDrawer extends StatelessWidget {
@@ -38,8 +39,21 @@ class ChannelDrawer extends StatelessWidget {
     );
 
     if (isConfirmed && context.mounted) {
-      // TODO: Implement leave channel
-      Navigator.of(context).popUntil((route) => route.isFirst);
+      context.executeWithErrorHandling(() async {
+        final loggedInUser = context.read<AuthManager>().loggedInUser!;
+        final actionMessage = "${loggedInUser.fullname} left the channel";
+        await context
+            .read<ChannelsManager>()
+            .getCurrentThreadsManager()
+            .createThreadEvent(actionMessage);
+        if (context.mounted) {
+          await context.read<ChannelsManager>().leaveChannel();
+        }
+        if (context.mounted) {
+          context.read<WorkspacesManager>().fetchSelectedWorkspace();
+          Navigator.of(context).popUntil((route) => route.isFirst);
+        }
+      });
     }
   }
 

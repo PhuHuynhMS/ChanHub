@@ -89,7 +89,7 @@ class _LoginFormState extends State<LoginForm> {
         Validator.required('Email is required'),
         Validator.email('Invalid email address'),
       ]),
-      onSaved: (value) => _formData['email'] = value,
+      onSaved: (value) => _formData['email'] = value?.trim(),
     );
   }
 
@@ -103,7 +103,7 @@ class _LoginFormState extends State<LoginForm> {
         Validator.minLength(8, 'Password must be at least 8 characters'),
         Validator.maxLength(40, 'Password must be at most 20 characters'),
       ]),
-      onSaved: (value) => _formData['password'] = value,
+      onSaved: (value) => _formData['password'] = value?.trim(),
     );
   }
 

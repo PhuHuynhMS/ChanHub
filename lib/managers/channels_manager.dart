@@ -20,14 +20,11 @@ class ChannelsManager with ChangeNotifier {
     if (selectedWorkspaceId == null) {
       return;
     }
-    print(selectedWorkspaceId);
     _isFetching = true;
     notifyListeners();
 
     _selectedWorkspaceId = selectedWorkspaceId;
     _channels = await _channelService.fetchAllChannels(selectedWorkspaceId);
-    print('===========================');
-    print(_channels);
     _initThreadsManagers();
 
     _isFetching = false;
@@ -111,14 +108,31 @@ class ChannelsManager with ChangeNotifier {
   }
 
   Future<void> addChannelMember(User member) async {
-    final record =
+    final isCreated =
         await _channelService.addChannelMember(member.id, _selectedChannelId!);
-    if (record != null) {
+    if (isCreated) {
       final index =
           _channels.indexWhere((channel) => channel.id == _selectedChannelId);
       _channels[index].members.add(member);
       notifyListeners();
     }
+  }
+
+  Future<void> removeChannelMember(User member) async {
+    final isDeleted = await _channelService.removeChannelMember(
+      member.id,
+      _selectedChannelId!,
+    );
+    if (isDeleted) {
+      final index =
+          _channels.indexWhere((channel) => channel.id == _selectedChannelId);
+      _channels[index].members.removeWhere((m) => m.id == member.id);
+      notifyListeners();
+    }
+  }
+
+  Future<void> leaveChannel() async {
+    await _channelService.leaveChannel(getSelectedChannel()!.channelMemberId!);
   }
 
   Channel? getById(String channelId) {

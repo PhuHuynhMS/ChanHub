@@ -65,7 +65,6 @@ class WorkspaceHeader extends StatelessWidget {
           }
         }
       });
-      // }
     }
   }
 
@@ -122,13 +121,20 @@ class WorkspaceHeader extends StatelessWidget {
         mainAxisAlignment: MainAxisAlignment.spaceEvenly,
         children: [
           // Workspace Image
-          ClipRRect(
-            borderRadius: BorderRadius.circular(10.0),
-            child: Image.network(
-              workspace.imageUrl!,
-              fit: BoxFit.cover,
-              width: 120,
-              height: 120,
+          GestureDetector(
+            onTap: () => showPhotoViewGallery(
+              context,
+              [NetworkImage(workspace.imageUrl!)],
+              0,
+            ),
+            child: ClipRRect(
+              borderRadius: BorderRadius.circular(10.0),
+              child: Image.network(
+                workspace.imageUrl!,
+                fit: BoxFit.cover,
+                width: 120,
+                height: 120,
+              ),
             ),
           ),
 

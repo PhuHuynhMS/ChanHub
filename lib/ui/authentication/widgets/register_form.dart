@@ -82,7 +82,7 @@ class _RegisterFormState extends State<RegisterForm> {
         Validator.required('Email is required'),
         Validator.email('Please enter a valid email address'),
       ]),
-      onSaved: (value) => _formData['email'] = value,
+      onSaved: (value) => _formData['email'] = value?.trim(),
     );
   }
 
@@ -95,7 +95,7 @@ class _RegisterFormState extends State<RegisterForm> {
         Validator.required('Password is required'),
         Validator.minLength(8, 'Password must be at least 8 characters'),
       ]),
-      onSaved: (value) => _formData['password'] = value,
+      onSaved: (value) => _formData['password'] = value?.trim(),
       onChanged: _onPasswordChanged,
     );
   }
@@ -124,7 +124,7 @@ class _RegisterFormState extends State<RegisterForm> {
         Validator.required('Username is required'),
         Validator.minLength(3, 'Username must be at least 3 characters'),
       ]),
-      onSaved: (value) => _formData['username'] = value,
+      onSaved: (value) => _formData['username'] = value?.trim(),
     );
   }
 

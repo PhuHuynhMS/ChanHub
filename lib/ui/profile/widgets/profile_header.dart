@@ -35,7 +35,7 @@ class _ProfileHeaderState extends State<ProfileHeader> {
     return Stack(
       children: [
         UserAvatar(
-          widget.user,
+          isMyProfile ? loggedInUser! : widget.user,
           size: 140,
           borderRadius: 70,
           isTappable: false,
@@ -50,7 +50,7 @@ class _ProfileHeaderState extends State<ProfileHeader> {
                 backgroundColor: Theme.of(context).colorScheme.surface,
               ),
               icon: const Icon(Icons.edit),
-              onPressed: () => _showEditAvatarModal(context),
+              onPressed: () => _showEditAvatarModal(context, loggedInUser!),
             ),
           ),
         ],
@@ -63,11 +63,12 @@ class _ProfileHeaderState extends State<ProfileHeader> {
       await context.read<AuthManager>().updateUserInfo(_editedUser);
     });
     if (mounted) {
-      Navigator.of(context).popUntil((route) => route.isFirst);
+      Navigator.of(context).pop();
     }
   }
 
-  void _showEditAvatarModal(BuildContext context) {
+  void _showEditAvatarModal(BuildContext context, User loggedInUser) {
+    _editedUser = loggedInUser;
     showActionDialog(
       title: "Change Your Avatar",
       context: context,

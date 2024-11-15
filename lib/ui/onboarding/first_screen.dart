@@ -14,7 +14,7 @@ class _FirstScreenState extends State<FirstScreen> {
   @override
   void initState() {
     super.initState();
-    // TODO: Initialize the app
+    // Initialize the app
     Timer(const Duration(seconds: 2), () {
       Navigator.of(context).pushReplacementNamed(OnboardingScreen.routeName);
     });
