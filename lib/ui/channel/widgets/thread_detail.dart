@@ -6,6 +6,7 @@ import '../../../models/index.dart';
 import '../../../managers/index.dart';
 import '../../shared/utils/index.dart';
 import '../../shared/widgets/index.dart';
+import '../../shared/extensions/index.dart';
 import '../../screens.dart';
 import './index.dart';
 
@@ -15,13 +16,17 @@ class ThreadDetail extends StatelessWidget {
   final Thread thread;
 
   Future<void> _onChangeTaskStatus(
-      ThreadsManager threadsManager, Task task) async {
-    await threadsManager.changeTaskStatus(task);
+      BuildContext context, ThreadsManager threadsManager, Task task) async {
+    context.executeWithErrorHandling(() async {
+      await threadsManager.changeTaskStatus(task);
+    }, isShowLoading: false);
   }
 
-  Future<void> _onReactionPressed(
+  Future<void> _onReactionPressed(BuildContext context,
       ThreadsManager threadsManager, Reaction reaction) async {
-    await threadsManager.reactToThread(thread, reaction);
+    context.executeWithErrorHandling(() async {
+      await threadsManager.reactToThread(thread, reaction);
+    }, isShowLoading: false);
   }
 
   void _showThreadActions(BuildContext context) {
@@ -58,9 +63,9 @@ class ThreadDetail extends StatelessWidget {
           comments: thread.comments,
           tasks: thread.tasks,
           onReactionPressed: (reaction) async =>
-              await _onReactionPressed(threadsManager, reaction),
+              await _onReactionPressed(context, threadsManager, reaction),
           onChangeTaskStatus: (task) async =>
-              await _onChangeTaskStatus(threadsManager, task),
+              await _onChangeTaskStatus(context, threadsManager, task),
         ),
       );
     }

@@ -112,8 +112,9 @@ class _EditThreadFormState extends State<EditThreadForm> {
           .read<ChannelsManager>()
           .getCurrentThreadsManager()
           .updateThread(_editedThread);
-    }, isShowLoading: false);
-
-    Navigator.of(context).pop();
+      if (mounted) {
+        Navigator.of(context).pop();
+      }
+    });
   }
 }

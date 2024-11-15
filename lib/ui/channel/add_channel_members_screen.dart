@@ -51,7 +51,7 @@ class _AddChannelMembersState extends State<AddChannelMembersScreen> {
   void _onAddMember(User member) {
     context.executeWithErrorHandling(() async {
       final user = context.read<AuthManager>().loggedInUser;
-      final actionMessage = "'${user!.fullname}' added '${member.fullname}'";
+      final actionMessage = "${user!.fullname} added ${member.fullname}";
       await context.read<ChannelsManager>().addChannelMember(member);
       if (mounted) {
         await context

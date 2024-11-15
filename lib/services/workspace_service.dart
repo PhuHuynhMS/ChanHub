@@ -38,9 +38,9 @@ class WorkspaceService {
       final pb = await PocketBaseService.getInstance();
       final userId = pb.authStore.model!.id;
       final workspaceModels =
-          await pb.collection("workspace_members").getFullList(
+          await pb.collection("accepted_workspace_members").getFullList(
                 filter: "member.id = '$userId' && "
-                    "status = 'accepted' && is_default = true",
+                    "is_default = true",
               );
       if (workspaceModels.isEmpty) {
         return null;
@@ -161,7 +161,7 @@ class WorkspaceService {
       final pb = await PocketBaseService.getInstance();
 
       final workspaceMemberModel =
-          await pb.collection('workspace_members').getFirstListItem(
+          await pb.collection('accepted_workspace_members').getFirstListItem(
                 "member = '$memberId' && workspace = '$workspaceId'",
               );
       await pb.collection('workspace_members').delete(

@@ -11,7 +11,7 @@ class ThreadService {
   Future<(List<Thread>, bool)> fetchThreads(
     String channelId, {
     int page = 1,
-    int perPage = 10,
+    int perPage = 20,
   }) async {
     final List<Thread> threads = [];
     try {
@@ -50,7 +50,7 @@ class ThreadService {
     String query, {
     SearchThreadFilter filter = SearchThreadFilter.all,
     int page = 1,
-    int perPage = 10,
+    int perPage = 20,
   }) async {
     final List<Thread> threads = [];
     try {

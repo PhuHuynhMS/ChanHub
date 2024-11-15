@@ -37,8 +37,10 @@ class ThreadActions extends StatelessWidget {
         context.read<ChannelsManager>().getCurrentThreadsManager();
     context.executeWithErrorHandling(() async {
       await threadsManager.deleteThread(thread);
-    }, isShowLoading: false);
-    Navigator.of(context).pop();
+      if (context.mounted) {
+        Navigator.of(context).pop();
+      }
+    }, isShowLoading: true);
   }
 
   @override

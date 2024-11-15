@@ -31,8 +31,8 @@ class ChannelScreen extends StatelessWidget {
           threadsManager.hasMoreThreads &&
           !threadsManager.isFetching) {
         context.executeWithErrorHandling(() async {
-          threadsManager.fetchMoreThreads();
-        }, isShowLoading: false, ignoreError: true);
+          await threadsManager.fetchMoreThreads();
+        }, isShowLoading: false);
       }
     });
 
@@ -74,6 +74,7 @@ class ChannelScreen extends StatelessWidget {
         enableDrag: false,
         builder: (context) => MessageInput(
           onSend: (message, mediaFiles, tasks) => _onSendMessage(
+            context,
             threadsManager,
             message,
             mediaFiles,
@@ -112,12 +113,15 @@ class ChannelScreen extends StatelessWidget {
   }
 
   void _onSendMessage(
+    BuildContext context,
     ThreadsManager threadsManager,
     String message,
     List<File> mediaFiles,
     List<Task> tasks,
   ) async {
-    await threadsManager.createThread(message, mediaFiles, tasks);
+    context.executeWithErrorHandling(() async {
+      await threadsManager.createThread(message, mediaFiles, tasks);
+    }, isShowLoading: false);
   }
 
   Widget _buildThreadDetail(

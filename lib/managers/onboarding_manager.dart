@@ -28,7 +28,7 @@ class OnboardingManager with ChangeNotifier {
     notifyListeners();
   }
 
-  // TODO: For testing purposes
+  // For testing purposes
   Future<void> resetOnboarding() async {
     await _onboardingService.resetOnboarding();
     _isFirstTime = true;

@@ -92,8 +92,8 @@ class _CreateWorkspaceScreenState extends State<CreateWorkspaceScreen> {
     return CustomizedTextField(
       controller: _nameController,
       validator: Validator.compose([
-        Validator.minLength(6, 'Workspace name must be at least 6 characters'),
-        Validator.maxLength(15, 'Workspace name must be at most 15 characters')
+        Validator.minLength(6, 'Name must be at least 6 characters'),
+        Validator.maxLength(30, 'Name must be at most 30 characters')
       ]),
       labelText: 'Workspace Name',
       hintText: 'Eg. Acme Co.',

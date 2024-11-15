@@ -2,6 +2,7 @@ import 'package:flutter/material.dart';
 import 'package:provider/provider.dart';
 
 import '../../../managers/index.dart';
+import '../../shared/extensions/index.dart';
 
 class SettingsForm extends StatelessWidget {
   const SettingsForm({super.key});
@@ -40,9 +41,14 @@ class SettingsForm extends StatelessWidget {
     );
   }
 
-  void _logout(BuildContext context) {
-    context.read<AuthManager>().logout();
-    Navigator.of(context).popUntil((route) => route.isFirst);
+  void _logout(BuildContext context) async {
+    context.executeWithErrorHandling(() async {
+      await context.read<AuthManager>().logout();
+      if (context.mounted) {
+        context.read<WorkspacesManager>().clear();
+        Navigator.of(context).popUntil((route) => route.isFirst);
+      }
+    });
   }
 
   void _toggleDarkMode(BuildContext context) {

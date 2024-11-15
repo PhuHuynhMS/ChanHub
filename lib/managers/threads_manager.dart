@@ -43,7 +43,7 @@ class ThreadsManager {
   }
 
   Future<bool> fetchMoreThreads() async {
-    int currentPage = (_threads.length / 10).ceil() + 1;
+    int currentPage = (_threads.length / 20).ceil() + 1;
     final (threads, hasMoreThreads) =
         await _threadService.fetchThreads(_channelId, page: currentPage);
 
@@ -62,7 +62,7 @@ class ThreadsManager {
     String query, {
     SearchThreadFilter filter = SearchThreadFilter.all,
     int page = 1,
-    int perPage = 10,
+    int perPage = 20,
   }) async {
     return await _threadService.searchThreads(
       _channelId,
