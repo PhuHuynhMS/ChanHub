@@ -24,10 +24,12 @@ class _WorkspaceMembersScreenState extends State<WorkspaceMembersScreen> {
   void _filterMembers(String query, List<User> allMembers) {
     if (query.isEmpty) {
       filteredMembers = allMembers;
+    } else {
+      filteredMembers = allMembers.where((member) {
+        return member.fullname.toLowerCase().contains(query.toLowerCase());
+      }).toList();
     }
-    filteredMembers = allMembers.where((member) {
-      return member.fullname.toLowerCase().contains(query.toLowerCase());
-    }).toList();
+    setState(() {});
   }
 
   void _onRemoveMember(BuildContext context, User member) async {
@@ -48,9 +50,14 @@ class _WorkspaceMembersScreenState extends State<WorkspaceMembersScreen> {
   }
 
   @override
+  void initState() {
+    allMembers = context.read<WorkspacesManager>().getAllMembers();
+    filteredMembers = [...allMembers];
+    super.initState();
+  }
+
+  @override
   Widget build(BuildContext context) {
-    final allMembers = context.watch<WorkspacesManager>().getAllMembers();
-    final filteredMembers = [...allMembers];
     return Scaffold(
       appBar: AppBar(
         title: const Text('Workspace Members'),
