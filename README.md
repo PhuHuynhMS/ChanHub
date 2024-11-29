@@ -1,15 +1,37 @@
-# Project học phần PTUD Di động (CT484)
+# ChanHub - Mobile App for Group Communication  
 
-Học kỳ 1, Năm học 2024-2025
+ChanHub is a Flutter-based mobile application designed to enhance group communication and collaboration. With an intuitive user interface and robust functionality, ChanHub helps teams stay connected, organized, and productive.  
 
-**Tên dự án**: ChanHub - Ứng dụng hỗ trợ giao tiếp, hợp tác nhóm
+---
 
-**MSSV 1**: B2105546
+## Features  
+- **Real-time Messaging:** Instant group and direct messaging to keep everyone in sync.    
+- **File Sharing:** Share documents, images, and other files easily within groups.  
+- **Task Management:** Assign, track, and manage tasks to boost team productivity.  
+- **Customizable Channels:** Create topic-specific channels to organize discussions.
 
-**Họ tên SV 1**: Nguyễn Trọng Hữu
+---
 
-**MSSV 2**: B2111859
+## Tech Stack  
+- **Framework:** Flutter (Dart) for a consistent and performant UI across platforms.  
+- **Backend:** PocketBase for real-time database and authentication.  
+- **State Management:** Provider.
 
-**Họ tên SV 2**: Huỳnh Thiên Phú
+### Prerequisites  
+- Install Flutter SDK: [Flutter Installation Guide](https://flutter.dev/docs/get-started/install)  
+- Set up an emulator or connect a physical device.  
+- Ensure you have a PocketBase project.  
 
-**Lớp học phần**: CT48402
+### Steps  
+1. Clone the repository:  
+   ```bash
+   git clone https://github.com/PhuHuynhMS/ChanHub
+2. Navigate to the project directory:
+   ```bash
+   cd chanhub
+3. Install dependencies:
+   ```bash
+   flutter pub get
+4. Run the app on your emulator or device:
+   ```bash
+   flutter run
